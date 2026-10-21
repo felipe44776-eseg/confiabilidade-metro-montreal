@@ -31,7 +31,7 @@ flowchart LR
 | Medida | Resultado (2026-10-21) |
 |---|---|
 | Custo do cálculo por quadro no pico (posições de todos os trens, pontos no traçado e bloqueios), `tests/simulador/animacao.test.ts` | 0,10 ms em Node; o orçamento de um quadro a 30 fps é 33 ms |
-| Contador de fps na página (canto do mapa) | 60 fps no Chrome sem janela com SwiftShader (WebGL por software), teste de ponta a ponta em 2026-10-21 |
+| Contador de fps na página (canto do mapa) | Registro anterior: "60 fps no Chrome sem janela com SwiftShader (WebGL por software), teste de ponta a ponta em 2026-10-21". Corrigido em 2026-10-21 (revisão crítica, rodada 3, D46): o contador conta os quadros do `requestAnimationFrame` também com a animação parada, e o teste lia a página oculta, com o contador congelado. Com a página visível e a animação tocando a 300× das 07:30 às 07:45 (pico da manhã), `publicacao/testa_navegador.py` mediu no Edge sem janela, com WebGL por software: 34 fps em tamanho de notebook (1366×768) e 60 em tamanho de celular (390×844); parada, 60 nos dois |
 | A conferir pela equipe | fps num notebook comum, com WebGL de verdade, no endereço publicado |
 
 ## Decisões

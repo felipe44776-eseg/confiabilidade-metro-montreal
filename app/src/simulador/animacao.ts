@@ -6,6 +6,7 @@ import { uniao } from '../motor/dia';
 import type { Rede } from '../motor/rede';
 import { estacaoGlobal } from '../motor/rede';
 import type { Sentido } from '../motor/tipos';
+import { num } from '../ui/formato';
 import { kmEntreEstacoes } from './tracado';
 
 export interface PosicaoTrem {
@@ -119,4 +120,12 @@ export function relogio(t: number): string {
   const h = Math.floor(t / 3600);
   const m = Math.floor((t % 3600) / 60);
   return `${String(h % 24).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+}
+
+/** Texto do contador de quadros: com a animação parada, a página continua a pedir quadros e a taxa
+ *  medida não diz nada sobre a animação (achado 7 da crítica de 2026-10-21, rodada 3). */
+export const FPS_PARADO = 'parado';
+export function textoFps(tocando: boolean, quadros: number, ms: number): string {
+  if (!tocando) return FPS_PARADO;
+  return ms > 0 ? `${num((quadros * 1000) / ms, 0)} fps` : '— fps';
 }

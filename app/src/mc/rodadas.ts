@@ -170,7 +170,7 @@ export function anualiza(porTipo: Partial<Record<TipoDia, Estimativa>>, dias: Re
 }
 
 /** Rodadas necessárias para a meia-largura do IC95 ficar em `alvo` × média (spec 009: 5%). */
-export function rodadasParaPrecisao(e: Estimativa, alvo = 0.05): number {
+export function rodadasParaPrecisao(e: Estimativa, alvo = PRECISAO_ALVO): number {
   if (!(e.media > 0) || !(e.dp > 0)) return e.n;
   return Math.ceil(((Z95 * e.dp) / (alvo * e.media)) ** 2);
 }

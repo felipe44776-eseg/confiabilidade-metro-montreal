@@ -99,7 +99,7 @@ cd app && npm test                                  # 87 testes: motor e interfa
 python -I pipeline/verifica_fontes.py --recalcula   # 25 números recalculados direto dos brutos
 ```
 
-Teste no navegador (opcional, fora do CI): `publicacao/testa_navegador.py` abre o simulador publicado num Edge ou Chrome sem janela, em tamanho de celular e de notebook, e mede rolagem lateral, WebGL, quadros por segundo e erros no console. Precisa de `websocket-client` num ambiente à parte.
+Teste no navegador (opcional, fora do CI): `publicacao/testa_navegador.py` abre o simulador publicado num Edge ou Chrome sem janela, em tamanho de celular e de notebook, e mede rolagem lateral, WebGL, quadros por segundo (com a animação parada e tocando a 300×, contados por `requestAnimationFrame` com a aba na frente), o resultado do Monte Carlo de abertura e erros no console. Precisa de `websocket-client` num ambiente à parte. Rode um tamanho por vez (`SO=celular`, depois `SO=notebook`).
 
 Todos rodam a cada publicação. Um teste novo para cada critério de aceite novo.
 

@@ -12,7 +12,7 @@
   <header class="topo">
     <a class="voltar" href="../">← Painel de confiabilidade</a>
     <h1>Simulador de tolerância a falhas</h1>
-    <p class="lead">Cada rodada é um dia de operação. As falhas são sorteadas dos modelos ajustados aos incidentes da STM de 2019 a junho de 2026, e os trens seguem o horário real (GTFS). Mude o cenário à esquerda; o link da página guarda tudo, inclusive a semente.</p>
+    <p class="lead">Cada rodada é um dia de operação. As falhas são sorteadas dos modelos ajustados aos incidentes da STM de 2019 a junho de 2026, e os trens seguem o horário real (GTFS). Mude o cenário no painel do cenário; o link da página guarda tudo, inclusive a semente.</p>
   </header>
 
   <nav class="abas" role="tablist" aria-label="Partes do simulador">
@@ -76,7 +76,7 @@
     <main class="principal">
       <div class="mapa-caixa" id="mapa-caixa">
         <div class="mapa" id="mapa" aria-label="Mapa do metrô com os trens da rodada"></div>
-        <div class="fps" id="fps" title="Quadros por segundo da animação">— fps</div>
+        <div class="fps" id="fps" title="Quadros por segundo da animação; mostra &quot;parado&quot; quando ela não toca">parado</div>
       </div>
 
       <section id="aba-dia" role="tabpanel" aria-labelledby="tab-dia" class="aba">
@@ -108,7 +108,7 @@
       </section>
 
       <section id="aba-comparar" role="tabpanel" aria-labelledby="tab-comparar" class="aba" hidden>
-        <p>Fixe o cenário de agora como <strong>A</strong>, mude o que quiser à esquerda (vira o <strong>B</strong>) e compare. As duas versões rodam com as mesmas sementes, dia a dia, para a diferença não ser só sorte.</p>
+        <p>Fixe o cenário de agora como <strong>A</strong>, mude o que quiser no painel do cenário (vira o <strong>B</strong>) e compare. As duas versões rodam com as mesmas sementes, dia a dia, para a diferença não ser só sorte.</p>
         <div class="acoes">
           <button type="button" id="b-fixa-a">Fixar o cenário atual como A</button>
           <button type="button" id="b-comparar" disabled>Comparar A com o cenário atual (B)</button>

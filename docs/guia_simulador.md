@@ -59,4 +59,4 @@ Todos os números do modelo: valor, intervalo de 95%, status (ajustado, deduzido
 
 ## Para conferir no seu computador
 
-O desempenho foi medido sem placa de vídeo (60 quadros por segundo com WebGL por software). Falta a equipe conferir num notebook comum, no celular e no Firefox e no Safari. Se algo não abrir, anote o navegador e o que apareceu no console (F12).
+O desempenho foi medido sem placa de vídeo, com WebGL por software e a animação tocando a 300× no pico da manhã: 34 quadros por segundo em tela de notebook e 60 em tela de celular (spec 010). Com a animação parada, o contador mostra o ritmo da página (60), não o da animação. Falta a equipe conferir num notebook comum, no celular e no Firefox e no Safari. Se algo não abrir, anote o navegador e o que apareceu no console (F12).

@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { preparaContexto } from '../../src/motor/contexto';
 import { simulaDia, trensEmViagem } from '../../src/motor/dia';
 import { NENHUMA_POLITICA } from '../../src/motor/politicas';
-import { blocosAtivos, blocosDoDia, minutosAte, ocorrenciasDoDia, posicoes, relogio } from '../../src/simulador/animacao';
+import { blocosAtivos, blocosDoDia, FPS_PARADO, minutosAte, ocorrenciasDoDia, posicoes, relogio, textoFps } from '../../src/simulador/animacao';
 import type { Coord } from '../../src/simulador/tracado';
 import { montaTracado, pontoNoKm } from '../../src/simulador/tracado';
 import { carregaFixture, carregaRede } from '../motor/apoio';
@@ -76,5 +76,13 @@ describe('animação do dia', () => {
     console.log(`custo por quadro (posições + pontos no traçado + bloqueios): ${msPorQuadro.toFixed(3)} ms`);
     expect(Number.isFinite(soma)).toBe(true);
     expect(msPorQuadro).toBeLessThan(5); // folga para 30 fps (33 ms por quadro) com o desenho do MapLibre
+  });
+});
+
+describe('contador de quadros', () => {
+  it('mostra "parado" quando a animação não toca, e a taxa só quando toca (achado 7, rodada 3)', () => {
+    expect(textoFps(false, 60, 1000)).toBe(FPS_PARADO);
+    expect(textoFps(true, 33, 1000)).toBe('33 fps');
+    expect(textoFps(true, 0, 0)).toBe('— fps');
   });
 });

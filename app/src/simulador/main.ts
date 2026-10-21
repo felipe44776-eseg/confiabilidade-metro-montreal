@@ -22,7 +22,7 @@ import { graficoBarras } from '../ui/graficos';
 import { casasPara, comIC, comSinal, inteiro, num, pct, pp } from '../ui/formato';
 import { montaRodape, REPO } from '../ui/rodape';
 import type { Bloco, Ocorrencia } from './animacao';
-import { blocosAtivos, blocosDoDia, minutosAte, ocorrenciasDoDia, posicoes, relogio } from './animacao';
+import { blocosAtivos, blocosDoDia, FPS_PARADO, minutosAte, ocorrenciasDoDia, posicoes, relogio, textoFps } from './animacao';
 import type { CandidatasJson } from './candidatas';
 import { candidatasDoJson } from './candidatas';
 import type { EstadoCenario, Greve } from './cenario';
@@ -362,12 +362,19 @@ let ultimoQuadro = 0;
 let quadros = 0;
 let inicioContagem = 0;
 function laco(agora: number): void {
-  if (!inicioContagem) inicioContagem = agora;
-  quadros++;
-  if (agora - inicioContagem >= 1000) {
-    $('fps').textContent = `${num((quadros * 1000) / (agora - inicioContagem), 0)} fps`;
+  if (!tocando) {
+    // parada, a página ainda pede quadros; a taxa não seria da animação
     quadros = 0;
     inicioContagem = agora;
+    if ($('fps').textContent !== FPS_PARADO) $('fps').textContent = textoFps(false, 0, 0);
+  } else {
+    if (!inicioContagem) inicioContagem = agora;
+    quadros++;
+    if (agora - inicioContagem >= 1000) {
+      $('fps').textContent = textoFps(true, quadros, agora - inicioContagem);
+      quadros = 0;
+      inicioContagem = agora;
+    }
   }
   if (tocando && dia) {
     const dt = ultimoQuadro ? Math.min(0.25, (agora - ultimoQuadro) / 1000) : 0;

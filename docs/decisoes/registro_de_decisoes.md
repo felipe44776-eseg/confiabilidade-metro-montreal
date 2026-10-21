@@ -104,7 +104,7 @@ Formato de cada item: **Decisão** · **Por quê** · **Alternativas** · **Cons
 
 - **Decisão:** precipitação da estação McTavish (10761), com o aeroporto (30165) de reserva; temperatura e condição do tempo da 51157. Condição ausente fica vazia, nunca "seco".
 - **Por quê:** a 51157 não tem precipitação horária; a 10761 não tem condição. Princípio 6.
-- **Consequência:** condição só existe em 45,8% das horas; o modelo tem a categoria "sem dado".
+- **Consequência:** condição só existe em 45,8% das horas de operação; o modelo tem a categoria "sem dado".
 
 ### D16 — Eventos externos com status
 
@@ -229,7 +229,7 @@ Formato de cada item: **Decisão** · **Por quê** · **Alternativas** · **Cons
 
 ### D36 — Reprodução do zero com tolerância declarada
 
-- **Decisão:** um workflow mensal (`reproduz.yml`) baixa as Releases e as fontes de origem, refaz o pipeline e os relatórios do simulador numa máquina limpa e compara com os publicados: tolerância relativa de 1e-9, e de 1e-3 nos modelos com bootstrap e otimização. Commit e tempo de execução gravados nos relatórios são ignorados.
+- **Decisão:** um workflow mensal (`reproduz.yml`) baixa as Releases e as fontes de origem, refaz o pipeline e os relatórios do simulador numa máquina limpa e compara com os publicados: tolerância relativa de 1e-9, e de 1e-3 nos modelos com bootstrap e otimização. Commit e tempo de execução gravados nos relatórios eram ignorados; desde a D45, só o tempo é ignorado, e o hash do código (`codigo_commit`, D43) é comparado.
 - **Por quê (depois de ver):** a primeira execução reproduziu todos os resultados e só acusou esses metadados e uma contagem de meses que olhava uma pasta ausente no CI.
 - **Resultado:** a segunda execução passou: 45 arquivos derivados idênticos byte a byte, 8 dentro da tolerância e 0 fora. No commit ba19e74, com o hash do código também comparado (D45): 48 idênticos, 5 na tolerância e 0 fora.
 
@@ -280,3 +280,15 @@ Formato de cada item: **Decisão** · **Por quê** · **Alternativas** · **Cons
 - **Decisão:** a fixture de testes e o teste de cenário deixam de ter o multiplicador de greve (D42) e a hipótese sem uso; as razões entre a média observada e a da lognormal saem de um relatório gerado (`fontes/verificacao/duracoes.md`); o relatório das políticas grava a meia-largura esperada com 50.000 dias e tira o tempo de relógio do JSON versionado; o comparador da reprodução passa a comparar o `codigo_commit`, que agora é determinístico; os cinco arquivos do GTFS que estavam fora do manifesto entraram nele.
 - **Por quê:** achados 3, 7, 8, 9, 10, 11, 12 e 13 da rodada 2. Nenhum número de modelo mudou.
 - **Registro:** `fontes/verificacao/critica_2026-10-21_rodada2.md`.
+
+### D46 — Correções da revisão crítica de 2026-10-21, rodada 3
+
+- **Decisão:** `publicacao/testa_navegador.py` traz a aba para a frente depois de carregar a página, conta os quadros por `requestAnimationFrame` durante 3 s (com teto de 8 s), com a animação parada e tocando a 300×, e lê o resultado do Monte Carlo de abertura. A spec 010 e o guia passam a citar os quadros por segundo com a animação tocando. Textos alinhados aos arquivos gerados: contagem de derivados no manifesto (spec 000), tempo da execução publicada (spec 009), regra do comparador na D36 e "horas de operação" na condição do tempo.
+- **Por quê (depois de ver):** o teste abria a página oculta (`visibilityState` "hidden"): o `requestAnimationFrame` não rodava e o contador da página ficava parado em "60 fps"; a animação também não era ligada. Com a aba na frente e a animação tocando, o Edge sem janela com WebGL por software deu 34 fps em tela de notebook e 60 em tela de celular. O critério de 30 fps continua atendido no teste disponível, com pouca folga. Nenhum critério de spec nem número de modelo mudou.
+- **Registro:** `fontes/verificacao/critica_2026-10-21_rodada3.md`.
+
+### D47 — Propostas da rodada 3, parte A
+
+- **Decisão:** o contador de quadros do simulador mostra "parado" quando a animação não toca e só mede enquanto ela toca. O comparador da reprodução (`pipeline/compara_derivados.py`) acusa também o arquivo que sobra na pasta refeita (gerado e não publicado), além do que falta. O relatório das políticas usa `MAX_RODADAS` e `PRECISAO_ALVO` em vez dos literais `50_000` e `5`. A página do simulador diz "no painel do cenário" em vez de "à esquerda". Na spec 013, o critério da versão final passa a dizer que o mecanismo atende e que a versão de entrega está pendente.
+- **Por quê (depois de ver):** achados 7, 13, 14, 15 e 16 da rodada 3. Parado, o contador mostrava 60 fps, que não era a taxa da animação. Uma pasta refeita com um arquivo a mais dava saída 0. Antes de mudar o comparador, os 53 arquivos de `dados/derivados/` no disco, no git e no manifesto conferem, e os scripts só gravam saídas com nome fixo. Nenhum critério de spec nem número de modelo mudou. A redação do critério da spec 013 não muda: muda a linha do resultado.
+- **Registro:** `fontes/verificacao/critica_2026-10-21_rodada3.md`, seção "Aplicação das propostas, parte A".

@@ -3,8 +3,12 @@
 Uso: python testa_navegador.py <pasta_saida>   (variáveis: URL, SO=celular|notebook, ESPERA=segundos)
 Precisa do pacote `websocket-client` (pip install websocket-client, num ambiente à parte: não é dependência do projeto)
 e do Edge ou do Chrome instalados. Mede, em tamanho de celular (390x844) e de notebook (1366x768): rolagem lateral,
-WebGL, quadros por segundo do mapa, erros no console; grava capturas e resultado.json na pasta de saída.
+WebGL, quadros por segundo com a animação parada e tocando a 300×, o resultado do Monte Carlo de abertura e os erros
+no console; grava capturas e resultado.json na pasta de saída.
 Rode um tamanho por vez (SO=...): reaproveitar a aba entre tamanhos perde o contexto WebGL por software.
+A aba é trazida para a frente (Page.bringToFront): sem isso, o navegador sem janela deixa a página oculta, o
+requestAnimationFrame não roda e o contador de fps da página fica parado no último valor (revisão crítica de
+2026-10-21, rodada 3). Os quadros são contados por requestAnimationFrame durante 3 s, com teto de 8 s.
 """
 import base64
 import json
@@ -25,6 +29,7 @@ perfil = os.path.join(SAIDA, "perfil_edge")
 proc = subprocess.Popen([EDGE, "--headless=new", f"--remote-debugging-port={PORTA}", f"--user-data-dir={perfil}",
                          "--no-first-run", "--enable-unsafe-swiftshader", "--use-gl=angle", "--use-angle=swiftshader", "--ignore-gpu-blocklist", "about:blank"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 try:
+    pagina = None
     for _ in range(60):
         try:
             alvos = json.load(urllib.request.urlopen(f"http://127.0.0.1:{PORTA}/json", timeout=5))
@@ -32,6 +37,8 @@ try:
             break
         except Exception:
             time.sleep(0.5)
+    if pagina is None:
+        sys.exit(f"o navegador ({EDGE}) não abriu a porta {PORTA} de depuração em 30 s")
     ws = websocket.create_connection(pagina["webSocketDebuggerUrl"], timeout=120, suppress_origin=True)
     seq = [0]
     eventos = []
@@ -58,6 +65,15 @@ try:
                 pass
         ws.settimeout(120)
 
+    # Quadros por segundo contados direto por requestAnimationFrame durante 3 s; teto de 8 s (página oculta não conta quadros)
+    QUADROS = """Promise.race([
+      new Promise(q => setTimeout(() => q({quadros_por_s: null, motivo: 'requestAnimationFrame parado', visibilidade: document.visibilityState}), 8000)),
+      new Promise(r => { let n = 0; const t0 = performance.now();
+        function f() { n++; if (performance.now() - t0 < 3000) requestAnimationFrame(f);
+          else r({quadros_por_s: Math.round(n * 1000 / (performance.now() - t0)), contador_da_pagina: document.getElementById('fps')?.textContent,
+                  relogio: document.getElementById('t-relogio')?.textContent, visibilidade: document.visibilityState}); }
+        requestAnimationFrame(f); })])"""
+
     cmd("Runtime.enable")
     cmd("Log.enable")
     cmd("Page.enable")
@@ -68,15 +84,21 @@ try:
         cmd("Emulation.setDeviceMetricsOverride", width=w, height=h, deviceScaleFactor=1, mobile=movel)
         cmd("Page.navigate", url=URL)
         espera(int(os.environ.get('ESPERA', '45')))  # dados, mapa e o Monte Carlo de abertura (1.000 dias em workers)
+        cmd("Page.bringToFront")  # depois de carregar: sem isto a página fica oculta e o requestAnimationFrame não roda
         medidas = avalia("""(() => {
           const d = document.documentElement;
           const txt = document.body.innerText;
           const largos = [...document.querySelectorAll('body *')].filter(e => e.getBoundingClientRect().right > d.clientWidth + 1).length;
           return {scrollWidth: d.scrollWidth, clientWidth: d.clientWidth, elementosAlemDaLargura: largos,
-                  temMapa: !!document.querySelector('canvas.maplibregl-canvas'), webgl2: !!document.createElement('canvas').getContext('webgl2'), fps: (document.body.innerText.match(/(\S+) fps/) || [''])[0],
-                  textoMC: (txt.match(/(\\d[\\d.]*) dias[^\\n]{0,80}/) || [''])[0],
+                  temMapa: !!document.querySelector('canvas.maplibregl-canvas'), webgl2: !!document.createElement('canvas').getContext('webgl2'),
+                  visibilidade: document.visibilityState,
+                  textoMC: document.getElementById('s-mc')?.textContent || '',
                   amostraTexto: txt.slice(0, 300)};
         })()""")
+        medidas["fps_parado"] = avalia(QUADROS)
+        avalia("""(() => { const v = document.getElementById('t-vel'); v.value = '300'; v.dispatchEvent(new Event('change'));
+                          const b = document.getElementById('b-play'); if (b.textContent.trim() === '▶') b.click(); return 1; })()""")
+        medidas["fps_tocando_300x"] = avalia(QUADROS)
         erros = [e for e in eventos if e.get("method") == "Runtime.exceptionThrown"
                  or (e.get("method") == "Runtime.consoleAPICalled" and e["params"].get("type") == "error")
                  or (e.get("method") == "Log.entryAdded" and e["params"]["entry"].get("level") == "error")]

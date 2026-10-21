@@ -37,3 +37,17 @@ def test_texto_diferente_nunca_passa(tmp_path):
     _grava(a / "e.json", json.dumps({"status": "medido"}))
     _grava(b / "e.json", json.dumps({"status": "estimado"}))
     assert cd.compara(str(a / "e.json"), str(b / "e.json"), "e.json")[0] == "DIFERE"
+
+
+def test_arquivo_que_falta_ou_sobra_na_refeita_e_problema(tmp_path, capsys):
+    # achado 14 da rodada 3: antes, um arquivo a mais na pasta refeita passava calado
+    a, b = tmp_path / "pub", tmp_path / "novo"
+    _grava(a / "x.json", json.dumps({"v": 1}))
+    _grava(b / "x.json", json.dumps({"v": 1}))
+    assert cd.percorre(str(a), str(b)) == 0
+    _grava(b / "sub/novo.json", json.dumps({"v": 2}))
+    assert cd.percorre(str(a), str(b)) == 1
+    assert "SOBRA   sub/novo.json" in capsys.readouterr().out
+    _grava(a / "so_publicado.csv", "a;b\n1;2\n")
+    assert cd.percorre(str(a), str(b)) == 2
+    assert "FALTA   so_publicado.csv" in capsys.readouterr().out

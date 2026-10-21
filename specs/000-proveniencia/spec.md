@@ -31,7 +31,7 @@ Script `pipeline/verifica_fontes.py`; manifesto `fontes/fontes_manifesto.json`; 
 |---|---|
 | Clone limpo: arquivos baixados da Release batem com o manifesto | **Atende**: a cada publicação no GitHub Actions, as Releases `dados-2026-10-20` e `dados-2026-10-21` são baixadas e conferidas; 0 problemas |
 | Recálculo independente sem diferença | **Atende**: 25 números recalculados direto dos dados brutos, com código que não importa o pipeline; 0 diferenças |
-| Todo arquivo de dados com editor, licença, URL, SHA-256 e script | **Atende**: 45 fontes primárias e 48 derivados no manifesto; cada derivado aponta para as fontes e o script |
+| Todo arquivo de dados com editor, licença, URL, SHA-256 e script | **Atende**: 45 fontes primárias e 53 derivados no manifesto (48 até 2026-10-21; os 5 arquivos restantes do GTFS entraram pela D45), ou seja, todos os arquivos versionados em `dados/derivados/`; cada derivado aponta para as fontes e o script |
 | Verificação que falha impede a publicação | **Atende**: aconteceu na primeira publicação da fase 0 (fim de linha convertido pelo Windows), e o site não foi publicado até a correção |
 | Mudança na origem vira aviso, não erro | **Atende**: a verificação semanal grava o relatório datado em `fontes/verificacao/online_AAAA-MM-DD.txt` e marca "MUDOU" sem quebrar |
 

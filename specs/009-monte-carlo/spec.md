@@ -31,7 +31,7 @@ Código em `app/src/mc/`; testes em `app/tests/motor/montecarlo.test.ts`; relat�
 | Laranja: IC contém 1.852 ou 1.797 min/ano | **Atende**: 1.704 (1.528 a 1.881) contém os dois. Antes da correção da duração (lognormal) dava 1.433, fora do intervalo; a diferença foi explicada e corrigida em 2026-10-21 |
 | Métricas: disponibilidade por linha e por par origem-destino (com tempo extra), trens-hora perdidos, minutos de interrupção | **Atende** |
 | Cada métrica com IC 95%, número de rodadas e semente | **Atende** |
-| Tempo de 5.000 rodadas medido | **Atende**: 12.000 dias (mais que as 5.000 pedidas) em 9,0 s numa thread, na execução publicada de `politicas.relatorio.ts` (o tempo muda a cada execução e com a máquina; ver `politicas.md`); na página, 1.000 dias em 2,6 a 3,8 s com 12 workers |
+| Tempo de 5.000 rodadas medido | **Atende**: 12.000 dias (mais que as 5.000 pedidas) em 7,8 s numa thread, na execução publicada de `politicas.relatorio.ts` (o tempo muda a cada execução e com a máquina; ver `politicas.md`); na página, 1.000 dias em 2,6 a 3,8 s com 12 workers (medição manual de 2026-10-21; na revisão crítica de 2026-10-21, rodada 3, o navegador sem janela levou 1,3 a 1,4 s) |
 
 ## Fora de escopo
 - Otimização automática de parâmetros.

@@ -72,7 +72,7 @@ Lista completa, com links, hashes e APIs acessadas: `fontes/FONTES.md`. Colunas 
 |---|---|---|
 | Normalização (spec 001) | 8.530 falhas técnicas com início e fim absolutos; horas 24:xx e 25:xx resolvidas; 45 eventos de causa comum (31 Verde e Laranja); 44 sem linha | 98,83% das durações na faixa oficial ou na vizinha, contra 99% pedidos; os 100 restantes estão listados |
 | Base geoespacial (spec 002) | Traçado com comprimento a até 3% do oficial; 73 de 73 estações casadas; 94,0% das falhas com posição | 5 estações de 104 a 142 m do nó do OSM; 6% das falhas sem posição (sobretudo subestações) |
-| Clima e eventos (spec 003) | 65.717 horas; precipitação em 99,99% das horas de operação; trocas de horário de verão testadas; chuva congelante de 2023-04-05 reproduzida; 348 eventos com URL e status | Condição do tempo só em 45,8% das horas |
+| Clima e eventos (spec 003) | 65.717 horas; precipitação em 99,99% das horas de operação; trocas de horário de verão testadas; chuva congelante de 2023-04-05 reproduzida; 348 eventos com URL e status | Condição do tempo só em 45,8% das horas de operação |
 | Exposição (spec 004) | Trens em viagem às 08:00: 26, 31, 2 e 9; erro mensal mediano de 0,44% contra o km real | 4 de 220 meses acima de 10% (abril de 2020 e junho de 2019 na Amarela) |
 
 ## 4. Métodos

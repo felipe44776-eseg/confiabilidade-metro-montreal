@@ -520,14 +520,14 @@ slide("Antes dos resultados", "Nenhum número sem fonte: qualquer pessoa pode re
   <div class="card"><div class="card-k">2</div><h3>Segunda implementação</h3><p><code>verifica_fontes.py</code>, em Python puro e sem usar o pipeline, recalcula <b>25 números</b> publicados direto dos dados brutos. Diferença: <b>zero</b>.</p></div>
   <div class="card"><div class="card-k">3</div><h3>Publicação bloqueada por erro</h3><p>Cada publicação baixa a Release, confere os hashes, recalcula e roda os testes. Um erro impede o site de ir ao ar.</p></div>
   <div class="card"><div class="card-k">4</div><h3>Auditoria independente</h3><p>Um agente sem acesso aos scripts tentou refutar os números com código próprio. Nenhuma divergência numérica; as 6 ressalvas de apresentação foram corrigidas.</p></div>
-  <div class="card"><div class="card-k">5</div><h3>Reprodução do zero</h3><p><code>reproduz.yml</code> refaz o pipeline numa máquina limpa e compara com o publicado. <span class="tag">passou em 2026-10-21: 45 arquivos idênticos byte a byte, 8 dentro da tolerância</span></p></div>
+  <div class="card"><div class="card-k">5</div><h3>Reprodução do zero</h3><p><code>reproduz.yml</code> refaz o pipeline numa máquina limpa e compara com o publicado. <span class="tag">passou em 2026-10-21 (commit ba19e74): 48 arquivos idênticos byte a byte, 5 dentro da tolerância, 0 fora</span></p></div>
   <div class="card"><div class="card-k">6</div><h3>Decisões com data (SDD)</h3><p>Critério de aceite escrito antes do código. Se o resultado não atende, vira exceção registrada: o critério não é afrouxado.</p></div>
 </div>
 <p class="nota">Verificação na origem: em 2026-10-20, 26 das 27 fontes baixadas de novo vieram idênticas byte a byte; a 27ª (mobilidade do Google, 98 MB) foi conferida pelo tamanho.</p>""",
-"docs/relatorio/relatorio.md §3.2; fontes/FONTES.md (resultado local, §5); specs/constitution.md; specs/013-publicacao/tasks.md",
+"docs/relatorio/relatorio.md §3.2; fontes/FONTES.md (resultado local, §5); specs/constitution.md; specs/013-publicacao/spec.md (Resultado) e tasks.md",
 """<p>Este slide vem antes dos resultados de propósito: a equipe quis que ninguém precisasse confiar em quem fez as contas.</p>
 <p>Destacar o item 2: um segundo programa, escrito à parte, refaz 25 números direto dos dados brutos e chega ao mesmo valor. E o item 3: o site não publica se essa conferência falhar.</p>
-<p>Item 5: a reprodução do zero rodou no GitHub Actions em 2026-10-21. A primeira execução reproduziu todos os resultados e só acusou metadados (commit e tempo de execução gravados nos relatórios); depois da correção, a segunda deu 45 arquivos idênticos byte a byte, 8 dentro da tolerância e nenhum fora.</p>
+<p>Item 5: a reprodução do zero rodou no GitHub Actions em 2026-10-21. A primeira execução reproduziu todos os resultados e só acusou metadados (commit e tempo de execução gravados nos relatórios); depois da correção, a segunda deu 45 arquivos idênticos byte a byte, 8 dentro da tolerância e nenhum fora. No commit ba19e74, com o hash do código também comparado, a execução 39556506384 deu 48 idênticos, 5 dentro da tolerância e 0 fora.</p>
 <p><b>Tempo:</b> 1 min 30 s.</p>""")
 
 # 4 ---------------------------------------------------------------
@@ -752,7 +752,7 @@ slide("Decisões tomadas depois de ver os dados", "Três mudanças feitas depois
 <div class="faixa">
   <div><span class="label">Exceções registradas, sem afrouxar o critério</span>98,83% das durações na faixa oficial (pedido: 99%) · 94,0% das falhas com posição (pedido: 95%) · 4 de 220 meses com erro de exposição acima de 10%</div>
 </div>""",
-"specs/006, 009 e 012 (Resultado); fontes/verificacao/backtest.md (registro de mudança); docs/relatorio/relatorio.md §3.3 e §4.3",
+"specs/006, 009 e 012 (Resultado); fontes/verificacao/duracoes.md (razões das médias); fontes/verificacao/backtest.md (registro de mudança); docs/relatorio/relatorio.md §3.3 e §4.3",
 """<p>Mudar o modelo depois de ver os dados é normal; o problema é esconder. Aqui as três mudanças estão registradas com data, e o motivo de cada uma está no repositório.</p>
 <p>As duas primeiras apareceram quando o simulador não batia com o painel: a média das durações estava baixa e a causa comum estava contada em dobro.</p>
 <p>A terceira veio do backtest. Embaixo, as exceções aos critérios: o critério ficou como estava e o resultado aparece como exceção.</p>
@@ -768,7 +768,7 @@ slide("Limitações", "O que o modelo não sabe, e como isso aparece nos resulta
     <tr><td><b>Exposição de outubro de 2023 em diante</b></td><td>Estimada pelo horário: o km real vai até 2023-09. Status "estimado" em cada valor.</td></tr>
     <tr><td><b>Traçado das candidatas</b></td><td>Aproximação em linha reta entre estações, exceto a Azul até Anjou (em obras no OpenStreetMap).</td></tr>
     <tr><td><b>Duração registrada</b></td><td>Mede o tempo até o serviço voltar, não o reparo do equipamento.</td></tr>
-    <tr><td><b>Dados incompletos</b></td><td>6% das falhas sem posição (sobretudo subestações); condição do tempo só em 45,8% das horas. Aparecem como falta, nunca como zero.</td></tr>
+    <tr><td><b>Dados incompletos</b></td><td>6% das falhas sem posição (sobretudo subestações); condição do tempo só em 45,8% das horas de operação. Aparecem como falta, nunca como zero.</td></tr>
   </tbody>
 </table>""",
 "docs/relatorio/relatorio.md §6; fontes/FONTES.md §6; specs/002 e 003 (Resultado); fontes/verificacao/politicas.md (hipóteses)",
@@ -848,7 +848,7 @@ h3{font-size:19px;font-weight:650;margin:0 0 2px}
 .slide-body{flex:1;min-height:0;padding-bottom:50px;position:relative}
 .slide > footer{position:absolute;left:64px;right:64px;bottom:0;height:40px;border-top:1px solid var(--rule);
   display:flex;align-items:center;justify-content:space-between;gap:24px;font-size:11.5px;color:var(--muted)}
-.slide > footer .pg{font-variant-numeric:tabular-nums;font-weight:600}
+.slide > footer .pg{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap;flex:none}
 .label{display:block;font-size:13px;font-weight:650;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
 .sub{font-size:15px;color:var(--muted);margin:0 0 10px}
 .muted{color:var(--muted)}

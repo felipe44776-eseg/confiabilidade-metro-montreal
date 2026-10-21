@@ -28,12 +28,12 @@ Página `/simulador/` (código em `app/src/simulador/`); testes em `app/tests/si
 | Critério | Resultado |
 |---|---|
 | Trens andam sobre o traçado real, interpolados pelo horário simulado | **Atende**: as 73 estações caem a menos de 150 m da coordenada do GTFS no traçado (maior 129 m) |
-| ≥ 30 quadros por segundo no pico | **Atende no teste disponível**: 0,10 ms de cálculo por quadro (orçamento de 33 ms) e 60 fps no Chrome sem janela com WebGL por software. **Pendente**: conferir num notebook comum no endereço publicado |
+| ≥ 30 quadros por segundo no pico | **Atende no teste disponível, com pouca folga**: 0,10 ms de cálculo por quadro (orçamento de 33 ms) e, com a animação tocando a 300× no pico da manhã, 34 fps em tamanho de notebook e 60 em tamanho de celular no Edge sem janela com WebGL por software (`publicacao/testa_navegador.py`, revisão crítica de 2026-10-21, rodada 3). Os 60 fps registrados antes foram medidos com a animação parada e a página oculta (correção de 2026-10-21, D46). **Pendente**: conferir num notebook comum no endereço publicado |
 | Falha no local certo e trecho bloqueado com outra aparência até a retomada | **Atende** |
 | Incidente histórico clicável com código, falhas, tipo, status e método | **Atende** |
 | Atribuição ao OpenStreetMap, à STM e ao fornecedor do fundo | **Atende** |
 | Pausar, acelerar e voltar com mapa e indicadores sincronizados | **Atende** |
-| Celular sem rolagem lateral | **Pendente**: layout com gutter de 16 px, não conferido num aparelho |
+| Celular sem rolagem lateral | **Pendente**: layout com gutter de 16 px, não conferido num aparelho. No navegador sem janela em 390×844, a rolagem lateral é zero e nenhum elemento passa da largura (`publicacao/testa_navegador.py`, revisão crítica de 2026-10-21, rodada 3) |
 
 ## Fora de escopo
 - Mapa 3D, túneis em profundidade e plantas de estação.

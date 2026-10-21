@@ -3,7 +3,8 @@
 Uso: python -I pipeline/compara_derivados.py <pasta_publicada> <pasta_refeita>
 Bytes iguais → IGUAL. Senão, compara o conteúdo: texto e categorias exatos; números com tolerância relativa
 (TOL_PADRAO, ou TOL_MODELOS para os ajustes com bootstrap e otimização, que variam no último dígito entre
-plataformas e versões de BLAS). Sai com código 1 se algum arquivo passar da tolerância ou faltar.
+plataformas e versões de BLAS). Sai com código 1 se algum arquivo passar da tolerância, faltar na pasta
+refeita ou sobrar nela (arquivo gerado que não foi publicado).
 """
 import csv
 import gzip
@@ -82,27 +83,43 @@ def compara(pub, novo, rel):
     return ("DENTRO DA TOLERÂNCIA" if not dif else "DIFERE"), dif
 
 
+def relativos(raiz_base):
+    """Caminhos relativos (com /) de todos os arquivos sob raiz_base."""
+    saida = set()
+    for raiz, _, arquivos in os.walk(raiz_base):
+        for nome in arquivos:
+            saida.add(os.path.relpath(os.path.join(raiz, nome), raiz_base).replace(os.sep, "/"))
+    return saida
+
+
+def percorre(pub_raiz, novo_raiz):
+    """Compara as duas pastas. Conta como problema: arquivo que difere, que falta na refeita
+    ou que sobra na refeita (gerado pelo pipeline e ausente do publicado; achado 14 da rodada 3)."""
+    problemas = 0
+    pubs, novos = relativos(pub_raiz), relativos(novo_raiz)
+    for rel in sorted(pubs | novos):
+        if rel not in novos:
+            print(f"  FALTA   {rel}")
+            problemas += 1
+            continue
+        if rel not in pubs:
+            print(f"  SOBRA   {rel}")
+            problemas += 1
+            continue
+        estado, dif = compara(os.path.join(pub_raiz, rel), os.path.join(novo_raiz, rel), rel)
+        problemas += estado == "DIFERE"
+        print(f"  {estado:<20} {rel}")
+        for d in dif[:5]:
+            print(f"      {d}")
+        if len(dif) > 5:
+            print(f"      ... mais {len(dif) - 5} diferenças")
+    return problemas
+
+
 def main():
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
-    pub_raiz, novo_raiz = sys.argv[1], sys.argv[2]
-    problemas = 0
-    for raiz, _, arquivos in os.walk(pub_raiz):
-        for nome in sorted(arquivos):
-            pub = os.path.join(raiz, nome)
-            rel = os.path.relpath(pub, pub_raiz).replace(os.sep, "/")
-            novo = os.path.join(novo_raiz, rel)
-            if not os.path.exists(novo):
-                print(f"  FALTA   {rel}")
-                problemas += 1
-                continue
-            estado, dif = compara(pub, novo, rel)
-            problemas += estado == "DIFERE"
-            print(f"  {estado:<20} {rel}")
-            for d in dif[:5]:
-                print(f"      {d}")
-            if len(dif) > 5:
-                print(f"      ... mais {len(dif) - 5} diferenças")
-    print(f"  -> {problemas} arquivo(s) fora da tolerância (padrão {TOL_PADRAO}, modelos {TOL_MODELOS})")
+    problemas = percorre(sys.argv[1], sys.argv[2])
+    print(f"  -> {problemas} arquivo(s) fora da tolerância, faltando ou sobrando (padrão {TOL_PADRAO}, modelos {TOL_MODELOS})")
     sys.exit(1 if problemas else 0)
 
 

@@ -5,7 +5,7 @@ import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { it } from 'vitest';
 import type { Estimativa, Rodada } from '../src/mc/rodadas';
-import { agrega, anualiza, estimativa, nomesMetricas, rodaRodadas, rodadasParaPrecisao } from '../src/mc/rodadas';
+import { agrega, anualiza, estimativa, MAX_RODADAS, nomesMetricas, PRECISAO_ALVO, rodaRodadas, rodadasParaPrecisao } from '../src/mc/rodadas';
 import { avisosDoCenario, preparaContexto } from '../src/motor/contexto';
 import type { NomePolitica } from '../src/motor/politicas';
 import { NENHUMA_POLITICA, NOMES_POLITICAS, soPolitica } from '../src/motor/politicas';
@@ -18,6 +18,7 @@ const N_POLITICA = 3000; // dias úteis por política e por tempo de reparo
 const N_ANO = 4000; // dias por tipo de dia para a comparação anual com o painel
 const REPAROS = [0.5, 1, 2, 4];
 const POLITICAS = Object.keys(NOMES_POLITICAS) as NomePolitica[];
+const META_PCT = 100 * PRECISAO_ALVO; // meta da spec 009 em % da média (5)
 const fmt = (x: number, c = 1) => x.toLocaleString('pt-BR', { minimumFractionDigits: c, maximumFractionDigits: c });
 const ic = (e: Estimativa, c = 1) => `${fmt(e.media, c)} (${fmt(e.ic95[0], c)} a ${fmt(e.ic95[1], c)})`;
 
@@ -62,8 +63,8 @@ it('relatório das políticas e do Monte Carlo', { timeout: 3_600_000 }, () => {
   saida.rodadas_para_5pct_dia_util = precisao;
   // tempo de relógio fica só no relatório .md: no JSON versionado, mudaria o hash a cada execução
   const meia50k: Record<string, number> = {};
-  for (const l of rede.ids) meia50k[l] = 5 * Math.sqrt(precisao[l] / 50_000); // meia-largura (% da média) esperada com o teto de 50.000 dias
-  saida.meia_largura_pct_com_50000_dias = meia50k;
+  for (const l of rede.ids) meia50k[l] = META_PCT * Math.sqrt(precisao[l] / MAX_RODADAS); // meia-largura (% da média) esperada no teto do modo adaptativo
+  saida[`meia_largura_pct_com_${MAX_RODADAS}_dias`] = meia50k;
   const disp: Record<string, Estimativa> = {};
   for (const l of rede.ids) disp[l] = porTipo.util.porMetrica[`${l}.disponibilidade`];
   saida.disponibilidade_dia_util = disp;
@@ -106,7 +107,7 @@ it('relatório das políticas e do Monte Carlo', { timeout: 3_600_000 }, () => {
     '',
     `${N_ANO} dias simulados por tipo de dia (útil, sábado, domingo), somados pelo calendário de 251, 52 e 62 dias. Tempo: ${fmt(segundos, 1)} s para ${3 * N_ANO} dias numa thread.`,
     '',
-    '| Linha | Minutos por ano (IC 95%) | Disponibilidade no dia útil | Rodadas para 5% de precisão no dia útil | Meia-largura com 50.000 dias (% da média) |',
+    `| Linha | Minutos por ano (IC 95%) | Disponibilidade no dia útil | Rodadas para ${fmt(META_PCT, 0)}% de precisão no dia útil | Meia-largura com ${MAX_RODADAS.toLocaleString('pt-BR')} dias (% da média) |`,
     '|---|---|---|---|---|',
   ];
   for (const l of rede.ids) L.push(`| ${l} | ${ic(anual[l], 0)} | ${fmt(100 * disp[l].media, 3)}% | ${precisao[l].toLocaleString('pt-BR')} | ${fmt(meia50k[l], 1)} |`);
