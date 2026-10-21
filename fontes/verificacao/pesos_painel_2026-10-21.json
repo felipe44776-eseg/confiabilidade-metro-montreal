@@ -1,0 +1,77 @@
+{
+ "gerado_por": "publicacao/testa_navegador.py (um tamanho por vez: SO=celular, depois SO=notebook; ESPERA=45)",
+ "data": "2026-10-21",
+ "url": "https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/simulador/",
+ "commit_publicado": "2009763",
+ "decisao": "D51",
+ "ambiente": "Edge sem janela (headless), WebGL por software (SwiftShader), sem placa de vídeo",
+ "nota": "Só os campos da decisão D51: a nota do método e o peso de cada variável no painel do cenário, o peso da neve no solo antes e depois de escolher mais de 10 cm (com chuva congelante), rolagem lateral e erros no console. As medidas de quadros por segundo continuam em navegador_2026-10-21.json.",
+ "celular": {
+  "scrollWidth": 390,
+  "clientWidth": 390,
+  "elementosAlemDaLargura": 0,
+  "peso_das_variaveis": {
+   "resumo": "Cada variável pesa como um multiplicador da taxa de falha por trem em circulação, estimado dos incidentes da STM por regressão binomial negativa, com todas as v",
+   "passos": 6,
+   "faixas_na_tabela": 6,
+   "resumo_do_ajuste_carregou": true,
+   "pesos": {
+    "p-tipo": "Peso: 1 (referência). O tipo de dia também troca o horário (quantos trens circulam).",
+    "c-estacao": "Estação do ano no modelo: outono; peso: 1 (referência).",
+    "p-temp": "Peso: 1 (referência).",
+    "p-precip": "Peso: 1 (referência).",
+    "p-cond": "Peso: MR ×0,89 (0,54–1,40) · EF ×0,69 (0,28–0,99).",
+    "p-neve": "Peso: MR ×1,37 (1,10–1,67) · EF ×1,38 (1,10–1,70).",
+    "p-jogo": "Se marcado, peso das 18h às 23h: MR ×1,26 (1,00–1,59) · EF ×0,91 (0,65–1,16).",
+    "p-gp": "Se marcado, peso: MR ×1,16 (0,59–1,65) · EF ×0,76 (0,36–1,25).",
+    "p-feriado": "Se marcado, peso: MR ×0,89 (0,60–1,23) · EF ×1,11 (0,67–1,60).",
+    "p-greve": "Sem peso na taxa: o multiplicador medido foi MR ×1,17 (0,56–2,24) · EF ×1,11 (0,52–1,73), com intervalo que contém 1, e a greve entra só pelo horário, com menos trens (decisão D42)."
+   }
+  },
+  "cenario": {
+   "mudados": [
+    "Condição: chuva congelante",
+    "Neve no solo: mais de 10 cm"
+   ],
+   "peso_neve_antes": "Peso: 1 (referência).",
+   "peso_neve_depois": "Peso: MR ×1,37 (1,10–1,67) · EF ×1,38 (1,10–1,70).",
+   "esperado_antes": "Falhas esperadas por dia neste cenário: 3,35 (cenário padrão: 3,35; ×1,00). Por linha:  Verde 1,15 ·",
+   "esperado_depois": "Falhas esperadas por dia neste cenário: 3,52 (cenário padrão: 3,35; ×1,05). Por linha:  Verde 1,23 ·"
+  },
+  "erros_console": []
+ },
+ "notebook": {
+  "scrollWidth": 1351,
+  "clientWidth": 1351,
+  "elementosAlemDaLargura": 0,
+  "peso_das_variaveis": {
+   "resumo": "Cada variável pesa como um multiplicador da taxa de falha por trem em circulação, estimado dos incidentes da STM por regressão binomial negativa, com todas as v",
+   "passos": 6,
+   "faixas_na_tabela": 6,
+   "resumo_do_ajuste_carregou": true,
+   "pesos": {
+    "p-tipo": "Peso: 1 (referência). O tipo de dia também troca o horário (quantos trens circulam).",
+    "c-estacao": "Estação do ano no modelo: outono; peso: 1 (referência).",
+    "p-temp": "Peso: 1 (referência).",
+    "p-precip": "Peso: 1 (referência).",
+    "p-cond": "Peso: MR ×0,89 (0,54–1,40) · EF ×0,69 (0,28–0,99).",
+    "p-neve": "Peso: MR ×1,37 (1,10–1,67) · EF ×1,38 (1,10–1,70).",
+    "p-jogo": "Se marcado, peso das 18h às 23h: MR ×1,26 (1,00–1,59) · EF ×0,91 (0,65–1,16).",
+    "p-gp": "Se marcado, peso: MR ×1,16 (0,59–1,65) · EF ×0,76 (0,36–1,25).",
+    "p-feriado": "Se marcado, peso: MR ×0,89 (0,60–1,23) · EF ×1,11 (0,67–1,60).",
+    "p-greve": "Sem peso na taxa: o multiplicador medido foi MR ×1,17 (0,56–2,24) · EF ×1,11 (0,52–1,73), com intervalo que contém 1, e a greve entra só pelo horário, com menos trens (decisão D42)."
+   }
+  },
+  "cenario": {
+   "mudados": [
+    "Condição: chuva congelante",
+    "Neve no solo: mais de 10 cm"
+   ],
+   "peso_neve_antes": "Peso: 1 (referência).",
+   "peso_neve_depois": "Peso: MR ×1,37 (1,10–1,67) · EF ×1,38 (1,10–1,70).",
+   "esperado_antes": "Falhas esperadas por dia neste cenário: 3,35 (cenário padrão: 3,35; ×1,00). Por linha:  Verde 1,15 ·",
+   "esperado_depois": "Falhas esperadas por dia neste cenário: 3,52 (cenário padrão: 3,35; ×1,05). Por linha:  Verde 1,23 ·"
+  },
+  "erros_console": []
+ }
+}
