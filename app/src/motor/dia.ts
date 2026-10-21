@@ -250,15 +250,6 @@ export function simulaDia(ctx: Contexto, politicas: Politicas, semente: number, 
     return ctx.fontes.find((f) => f.li === li && f.causa === causa)?.duracao ?? SEM_DURACAO;
   }
 
-  function sorteiaDuracao(rng: Rng, d: Duracao): number {
-    const u = rng.uniforme();
-    const z = rng.normal(); // sempre sorteado, para manter o fluxo alinhado entre políticas
-    const v = rng.uniforme(); // idem: escolhe a duração na amostra observada
-    if (u < d.pZero) return 0;
-    if (d.amostra) return d.amostra[Math.min(d.amostra.length - 1, Math.floor(v * d.amostra.length))] * 60;
-    return Math.exp(d.mu + d.sigma * z) * 60;
-  }
-
   function bloqueia(linha: string, s: Sentido, local: number, b: Bloqueio): void {
     const es = estados[linha][s];
     const lista = es.bloqueios[local];
@@ -301,7 +292,7 @@ export function simulaDia(ctx: Contexto, politicas: Politicas, semente: number, 
         if (dur <= 0) continue;
         const n = rede.linhas[linha].n;
         for (const s of [0, 1] as Sentido[]) for (let j = 0; j < n - 1; j++) bloqueia(linha, s, j, { ini: t, fim: t + dur, causa: 'CC' });
-        bloqueiosOD.push({ ini: t, fim: t + dur, arestas: grafo.arestasDaLinha.get(linha) ?? [] });
+        bloqueiosOD.push({ ini: t, fim: t + dur, arestas: grafo.arestasDaLinha.get(linha) ?? [], origem: { causa: 'CC', linha, trecho: null, sentidos: [0, 1] } });
         anota({ t: t + dur, linha, trem: null, trecho: null, sentido: null, tipo: 'FIM_INTERRUPCAO', fluxo: fl, sorteio, duracaoS: dur, detalhe: `causa comum ${par}` });
       }
       continue;
@@ -341,7 +332,7 @@ export function simulaDia(ctx: Contexto, politicas: Politicas, semente: number, 
       anota({ t, linha, trem: null, trecho: g, sentido: sentidos.length === 1 ? sentidos[0] : null, tipo: 'FALHA_EF', fluxo: fl, sorteio, duracaoS: dur, detalhe: codigo ? `local ${codigo}` : `${sentidos.length} sentido(s)` });
       if (parada > 0) {
         for (const s of sentidos) bloqueia(linha, s, trechoFisico(n, s, g), { ini: t, fim: t + parada, causa: 'EF' });
-        bloqueiosOD.push({ ini: t, fim: t + parada, arestas: efeitoBloqueio(grafo, linha, g, sentidos, politicas.retornoParcial) });
+        bloqueiosOD.push({ ini: t, fim: t + parada, arestas: efeitoBloqueio(grafo, linha, g, sentidos, politicas.retornoParcial), origem: { causa: 'EF', linha, trecho: g, sentidos } });
         anota({ t: t + parada, linha, trem: null, trecho: g, sentido: sentidos.length === 1 ? sentidos[0] : null, tipo: 'FIM_INTERRUPCAO', fluxo: fl, sorteio, duracaoS: parada, detalhe: 'equipamento fixo' });
       }
       if (degradada) {
@@ -413,7 +404,7 @@ export function simulaDia(ctx: Contexto, politicas: Politicas, semente: number, 
     anota({ t, linha, trem: v.id, trecho: g, sentido: s, tipo: 'FALHA_TREM', fluxo: fl, sorteio, duracaoS: dur, detalhe: naEstacao ? `parado na estação ${nomeLocal(ctx, linha, s, local)}` : `entre ${nomeLocal(ctx, linha, s, local)} e ${nomeLocal(ctx, linha, s, local + 1)}` });
     if (parada > 0) {
       bloqueia(linha, s, trechoLocal, { ini: t, fim: t + parada, causa: 'MR' });
-      bloqueiosOD.push({ ini: t, fim: t + parada, arestas: efeitoBloqueio(grafo, linha, g, [s], politicas.retornoParcial) });
+      bloqueiosOD.push({ ini: t, fim: t + parada, arestas: efeitoBloqueio(grafo, linha, g, [s], politicas.retornoParcial), origem: { causa: 'MR', linha, trecho: g, sentidos: [s] } });
       anota({ t: t + parada, linha, trem: v.id, trecho: g, sentido: s, tipo: 'FIM_INTERRUPCAO', fluxo: fl, sorteio, duracaoS: parada, detalhe: 'material rodante' });
     }
     if (retira) {
@@ -503,6 +494,16 @@ export function simulaDia(ctx: Contexto, politicas: Politicas, semente: number, 
   if (opcoes.trajetorias) resultado.trajetorias = trajSaida;
   if (opcoes.bloqueiosOD) resultado.bloqueiosOD = bloqueiosOD;
   return resultado;
+}
+
+/** Duração da interrupção (s): zero com a massa em zero; senão da amostra observada (ou da lognormal). */
+export function sorteiaDuracao(rng: Rng, d: Duracao): number {
+  const u = rng.uniforme();
+  const z = rng.normal(); // sempre sorteado, para manter o fluxo alinhado entre políticas
+  const v = rng.uniforme(); // idem: escolhe a duração na amostra observada
+  if (u < d.pZero) return 0;
+  if (d.amostra) return d.amostra[Math.min(d.amostra.length - 1, Math.floor(v * d.amostra.length))] * 60;
+  return Math.exp(d.mu + d.sigma * z) * 60;
 }
 
 export function novoEstado(ls: LinhaSentido): EstadoSentido {

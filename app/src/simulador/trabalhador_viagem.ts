@@ -7,7 +7,8 @@ import type { Politicas } from '../motor/politicas';
 import type { Rede } from '../motor/rede';
 import { montaRede } from '../motor/rede';
 import type { Cenario, Parametros, RedeJson } from '../motor/tipos';
-import { preparaViagem, rodaViagem } from '../motor/viagem';
+import type { VariantePedida } from '../motor/viagem';
+import { avaliadoresViagem, rodaViagem } from '../motor/viagem';
 
 export interface PedidoViagem {
   redeJson: RedeJson;
@@ -19,6 +20,10 @@ export interface PedidoViagem {
   rodadas: number;
   origem: string; // id da estação
   destino: string;
+  /** Versões da rede com linhas novas (spec 016), medidas nos mesmos dias que a rede atual. */
+  variantes?: VariantePedida[];
+  /** A linha nova divide a causa comum com as linhas em que encosta. */
+  causaComumNova?: boolean;
 }
 
 export type PedidoLoteViagem = { tipo: 'viagem'; id: number; indices: number[] } & Omit<PedidoViagem, 'rodadas'>;
@@ -38,9 +43,8 @@ escopo.onmessage = (ev: MessageEvent<PedidoLoteViagem>) => {
   if (m.tipo !== 'viagem') return;
   try {
     const ctx = contexto(m);
-    const av = preparaViagem(ctx, m.origem, m.destino, m.politicas.rotaAlternativa);
-    if (!av) throw new Error('não há caminho entre as estações escolhidas');
-    const rodadas = rodaViagem(m.indices, ctx, m.politicas, m.sementeBase, av, (feitas) => escopo.postMessage({ tipo: 'progresso', id: m.id, feitas } satisfies RespostaViagem));
+    const avs = avaliadoresViagem(ctx, m.origem, m.destino, m.politicas, m.variantes ?? [], !!m.causaComumNova);
+    const rodadas = rodaViagem(m.indices, ctx, m.politicas, m.sementeBase, avs, (feitas) => escopo.postMessage({ tipo: 'progresso', id: m.id, feitas } satisfies RespostaViagem));
     escopo.postMessage({ tipo: 'resultado', id: m.id, rodadas } satisfies RespostaViagem);
   } catch (erro) {
     escopo.postMessage({ tipo: 'erro', id: m.id, mensagem: erro instanceof Error ? erro.message : String(erro) } satisfies RespostaViagem);

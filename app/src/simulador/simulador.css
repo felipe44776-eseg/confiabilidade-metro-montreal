@@ -121,6 +121,8 @@ progress { width: 10rem; }
 .ind .val { font-size: 1.25rem; font-variant-numeric: tabular-nums; }
 .ponto { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex: none; }
 .tbl { overflow-x: auto; }
+/* tabelas de comparação com muitas colunas: rolam dentro da caixa em vez de espremer as células */
+.tbl.larga table { min-width: 46rem; }
 table { border-collapse: collapse; width: 100%; font-size: 13px; font-variant-numeric: tabular-nums; }
 th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--grade); vertical-align: top; }
 th { font-weight: 600; color: var(--tinta-2); font-size: 12.5px; }
@@ -193,6 +195,16 @@ tr.futura td { color: var(--tinta-3); }
 .rota-viagem li.baldeacao::before { content: "↳ "; }
 #aba-viagem h4 { font-size: 14px; margin: 16px 0 4px; }
 .grafico-estreito { max-width: 640px; }
+.grafico-svg .grade-menor { opacity: 0.55; }
+.linhas-novas { border: 1px solid var(--linha-divisoria); border-radius: 8px; padding: 8px 12px 10px; margin: 10px 0; background: var(--painel); min-width: 0; }
+.linhas-novas legend { font-weight: 600; font-size: 14px; padding: 0 4px; }
+.caixas-linhas { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(16rem, 100%), 1fr)); gap: 4px 12px; margin: 6px 0; font-size: 14px; }
+.traco-linha { display: inline-block; width: 18px; height: 0; border-top: 3px dashed; vertical-align: middle; margin: 0 4px 0 2px; flex: none; }
+.caixas-linhas label.caixa { align-items: center; }
+.desenhadas { list-style: none; padding: 0; margin: 4px 0; display: grid; gap: 4px; font-size: 14px; }
+.desenhadas button { padding: 0 8px; font-size: 13px; margin-left: 6px; }
+.desenho { border-left: 3px solid var(--destaque); padding: 2px 0 2px 10px; margin: 6px 0; }
+.variantes { list-style: none; padding: 0; margin: 4px 0 6px; display: grid; gap: 4px; font-size: 14px; }
 
 @media (max-width: 860px) {
   .corpo { grid-template-columns: minmax(0, 1fr); }

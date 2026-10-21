@@ -33,7 +33,7 @@ for sub in ("painel", "geo", "simulador", "modelos"):
     if os.path.isdir(f"dados/derivados/{sub}"):
         shutil.copytree(f"dados/derivados/{sub}", f"{SAIDA}/dados/{sub}")
 for rel in ("modelo_taxa.md", "modelo_taxa_por_faixa.md", "modelo_taxa_por_faixa.svg", "distribuicoes.md", "backtest.md", "backtest_pit.svg",
-            "backtest_pit_C.svg", "exposicao.md", "politicas.md", "expansao.md", "viagem.md", "validacao_geo.md"):
+            "backtest_pit_C.svg", "exposicao.md", "politicas.md", "expansao.md", "viagem.md", "linhas_novas.md", "validacao_geo.md"):
     if os.path.exists(f"fontes/verificacao/{rel}"):
         os.makedirs(f"{SAIDA}/fontes/verificacao", exist_ok=True)
         shutil.copy(f"fontes/verificacao/{rel}", f"{SAIDA}/fontes/verificacao/{rel}")

@@ -37,7 +37,7 @@ flowchart LR
 | `contratos/` | Esquema JSON do contrato entre pipeline e simulador | JSON Schema |
 | `app/src/motor/` | Motor de eventos discretos: rede, taxas, falhas, frota, políticas, grafo, expansão | TypeScript |
 | `app/src/mc/` | Rodadas, agregação com IC 95%, pool de Web Workers | TypeScript |
-| `app/src/simulador/`, `app/src/ui/` | Página `/simulador/`: mapa, animação, cenário no link, peso de cada variável com a nota do método (`pesos.ts`), viagem de A a B (`pool_viagem.ts`; cálculo em `app/src/motor/viagem.ts`, spec 015), comparação, expansão | TypeScript + MapLibre |
+| `app/src/simulador/`, `app/src/ui/` | Página `/simulador/`: mapa, animação, cenário no link, peso de cada variável com a nota do método (`pesos.ts`), viagem de A a B (`pool_viagem.ts`; cálculo em `app/src/motor/viagem.ts`, spec 015) com linhas novas (`app/src/motor/linhas_novas.ts`, spec 016), escala para confiabilidade alta (`app/src/ui/escala.ts`), comparação, expansão | TypeScript + MapLibre |
 | `app/tests/` | Testes do motor e da interface (`vitest`) | TypeScript |
 | `app/relatorios/` | Relatórios que rodam o motor com os dados reais (`vitest.relatorios.config.ts`) | TypeScript |
 | `painel/` | Painel de confiabilidade (página única com d3 7.9.0 embutido) | Python + HTML |
@@ -69,7 +69,7 @@ python -I pipeline/diagnostico_taxa.py
 python -I pipeline/distribuicoes.py           # spec 006, ~10 min
 python -I pipeline/parametros.py              # contrato do simulador
 python -I pipeline/backtest.py                # spec 012, ~40 min
-cd app && npx vitest run --config vitest.relatorios.config.ts   # políticas, expansão e viagem
+cd app && npx vitest run --config vitest.relatorios.config.ts   # políticas, expansão, viagem e linhas novas
 ```
 
 **Memória:** rode `modelo_taxa`, `distribuicoes` e `backtest` um de cada vez. Juntos passam de 4 GB.
@@ -99,7 +99,7 @@ cd app && npm test                                  # 87 testes: motor e interfa
 python -I pipeline/verifica_fontes.py --recalcula   # 25 números recalculados direto dos brutos
 ```
 
-Teste no navegador (opcional, fora do CI): `publicacao/testa_navegador.py` abre o simulador publicado num Edge ou Chrome sem janela, em tamanho de celular e de notebook, e mede rolagem lateral, WebGL, quadros por segundo (com a animação parada e tocando a 300×, 1 h/s, 10 h/s e 1 dia/s, contados por `requestAnimationFrame` com a aba na frente, com a ocupação da thread da página em cada velocidade), o resultado do Monte Carlo de abertura e erros no console; a 1 dia/s conta os eventos vermelhos, os dias emendados e o placar, e depois muda o clima e confere que a faixa "Cenário aplicado" e o peso da neve no solo mudaram; abre a nota do método e captura o painel do cenário; por fim, roda a viagem padrão da aba "Viagem de A a B" e lê as tabelas. As falhas esperadas por dia vêm de `app/src/simulador/efeito.ts`, pela mesma taxa acumulada que o motor sorteia. Precisa de `websocket-client` num ambiente à parte. Rode um tamanho por vez (`SO=celular`, depois `SO=notebook`).
+Teste no navegador (opcional, fora do CI): `publicacao/testa_navegador.py` abre o simulador publicado num Edge ou Chrome sem janela, em tamanho de celular e de notebook, e mede rolagem lateral, WebGL, quadros por segundo (com a animação parada e tocando a 300×, 1 h/s, 10 h/s e 1 dia/s, contados por `requestAnimationFrame` com a aba na frente, com a ocupação da thread da página em cada velocidade), o resultado do Monte Carlo de abertura e erros no console; a 1 dia/s conta os eventos vermelhos, os dias emendados e o placar, e depois muda o clima e confere que a faixa "Cenário aplicado" e o peso da neve no solo mudaram; abre a nota do método e captura o painel do cenário; roda a viagem padrão da aba "Viagem de A a B" e lê as tabelas; por fim, marca a Linha Rosa, desenha uma linha pela lista, avalia a viagem com as linhas novas e lê a comparação. As falhas esperadas por dia vêm de `app/src/simulador/efeito.ts`, pela mesma taxa acumulada que o motor sorteia. Precisa de `websocket-client` num ambiente à parte. Rode um tamanho por vez (`SO=celular`, depois `SO=notebook`).
 
 Todos rodam a cada publicação. Um teste novo para cada critério de aceite novo.
 

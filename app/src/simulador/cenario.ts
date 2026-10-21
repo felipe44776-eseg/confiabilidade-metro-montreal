@@ -1,6 +1,7 @@
 // Cenário da página (spec 011): o que a pessoa escolhe, como vira o cenário do motor e como vai para o link.
 // Funções puras: o mesmo link dá o mesmo cenário, e o mesmo cenário com a mesma semente dá os mesmos números.
 
+import type { PontoDesenho } from '../motor/expansao';
 import type { NomePolitica, Politicas } from '../motor/politicas';
 import { NENHUMA_POLITICA } from '../motor/politicas';
 import type { Cenario, Condicoes, RedeJson, TipoDia } from '../motor/tipos';
@@ -28,7 +29,17 @@ export interface EstadoCenario {
   /** Viagem da aba "Viagem de A a B" (spec 015): ids das estações. Não muda o cenário. */
   viagemDe: string;
   viagemPara: string;
+  /** Linhas novas da viagem (spec 016): ids das candidatas publicadas (spec 014). Não mudam o cenário. */
+  linhasNovas: string[];
+  /** Linhas desenhadas na página: estações da rede (id) ou pontos do mapa (estação nova). */
+  linhasDesenhadas: PontoDesenho[][];
+  /** A linha nova divide a causa comum com as linhas em que encosta. */
+  ccNova: boolean;
 }
+
+/** Limites das linhas desenhadas (o link fica curto e a avaliação, rápida). */
+export const MAX_DESENHADAS = 4;
+export const MAX_PONTOS_DESENHO = 12;
 
 export const ORDEM_POLITICAS: readonly NomePolitica[] = ['reservaFria', 'retiradaTrem', 'operacaoDegradada', 'retornoParcial', 'rotaAlternativa', 'tratamentoCausaComum'];
 
@@ -99,10 +110,13 @@ export const PADRAO: EstadoCenario = {
   // Angrignon (Verde) a Saint-Michel (Azul): três linhas em série
   viagemDe: 'STATION_M118',
   viagemPara: 'STATION_M556',
+  linhasNovas: [],
+  linhasDesenhadas: [],
+  ccNova: false,
 };
 
 export function copia(e: EstadoCenario): EstadoCenario {
-  return { ...e, politicas: { ...e.politicas }, hipoteses: { ...e.hipoteses } };
+  return { ...e, politicas: { ...e.politicas }, hipoteses: { ...e.hipoteses }, linhasNovas: [...e.linhasNovas], linhasDesenhadas: e.linhasDesenhadas.map((l) => l.map((p) => (typeof p === 'string' ? p : { ...p }))) };
 }
 
 /** Cenário do motor. O clima muda a taxa só pelos multiplicadores da spec 005 (parametros.json). */
@@ -172,7 +186,25 @@ export function serializa(e: EstadoCenario): string {
   p.set('dia', String(e.dia));
   p.set('vo', e.viagemDe);
   p.set('vd', e.viagemPara);
+  if (e.linhasNovas.length) p.set('ln', e.linhasNovas.join(','));
+  if (e.linhasDesenhadas.length) p.set('ld', e.linhasDesenhadas.map((l) => l.map(textoPonto).join('~')).join('|'));
+  if (e.ccNova) p.set('lc', '1');
   return p.toString();
+}
+
+/** Ponto de linha desenhada no link: o id da estação ou "@lat,lon" com 5 casas (cerca de 1 m). */
+function textoPonto(p: PontoDesenho): string {
+  return typeof p === 'string' ? p : `@${p.lat.toFixed(5)},${p.lon.toFixed(5)}`;
+}
+
+function lePonto(t: string): PontoDesenho | null {
+  if (/^[A-Za-z0-9_]{1,40}$/.test(t)) return t;
+  const m = /^@(-?\d{1,2}\.\d{1,6}),(-?\d{1,3}\.\d{1,6})$/.exec(t);
+  if (!m) return null;
+  const lat = Number(m[1]);
+  const lon = Number(m[2]);
+  // só a região de Montreal (a rede e as candidatas ficam a menos de 1 grau do centro)
+  return Math.abs(lat - 45.5) <= 1 && Math.abs(lon + 73.6) <= 1 ? { lat, lon } : null;
 }
 
 function inteiro(v: string | null, padrao: number, min: number, max: number): number {
@@ -213,12 +245,23 @@ export function desserializa(texto: string): EstadoCenario {
   const id = (v: string | null, padrao: string) => (v !== null && /^[A-Za-z0-9_]{1,40}$/.test(v) ? v : padrao);
   e.viagemDe = id(p.get('vo'), PADRAO.viagemDe);
   e.viagemPara = id(p.get('vd'), PADRAO.viagemPara);
+  e.linhasNovas = [...new Set((p.get('ln') ?? '').split(',').filter((x) => /^[a-z0-9_+]{1,80}$/.test(x)))].slice(0, 8);
+  e.linhasDesenhadas = (p.get('ld') ?? '')
+    .split('|')
+    .filter(Boolean)
+    .slice(0, MAX_DESENHADAS)
+    .map((l) => l.split('~').slice(0, MAX_PONTOS_DESENHO).map(lePonto))
+    .filter((l): l is PontoDesenho[] => l.length >= 2 && l.every((x) => x !== null));
+  e.ccNova = p.get('lc') === '1';
   return e;
 }
 
-/** Chave do cenário sem o dia mostrado e sem a viagem: trocar de dia ou de viagem não muda o cenário nem o resultado do Monte Carlo. */
+/**
+ * Chave do cenário sem o dia mostrado, sem a viagem e sem as linhas novas da viagem: trocar de dia, de
+ * viagem ou de linha nova não muda o cenário nem o resultado do Monte Carlo.
+ */
 export function chaveCenario(e: EstadoCenario): string {
-  return serializa({ ...e, dia: 0, viagemDe: PADRAO.viagemDe, viagemPara: PADRAO.viagemPara });
+  return serializa({ ...e, dia: 0, viagemDe: PADRAO.viagemDe, viagemPara: PADRAO.viagemPara, linhasNovas: [], linhasDesenhadas: [], ccNova: false });
 }
 
 const NOMES_ESTACAO: Record<string, string> = { inverno: 'inverno', primavera: 'primavera', verao: 'verão', outono: 'outono' };

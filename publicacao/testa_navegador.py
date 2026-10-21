@@ -7,7 +7,8 @@ WebGL, quadros por segundo com a animação parada e tocando a 300×, 1 h/s, 10 
 da página em cada uma), o resultado do Monte Carlo de abertura,
 os erros no console e, a 1 dia/s, os eventos vermelhos, os dias emendados e o placar (decisão D49); depois muda o clima
 e confere que a faixa "Cenário aplicado" e o peso da neve no solo mudaram (decisões D50 e D51), abre a nota do método
-e captura o painel do cenário; por fim, roda a viagem padrão da aba "Viagem de A a B" e lê as tabelas (spec 015). Grava capturas e resultado.json na pasta de saída.
+e captura o painel do cenário; roda a viagem padrão da aba "Viagem de A a B" e lê as tabelas (spec 015); por fim, marca a
+Linha Rosa, desenha Angrignon–Snowdon pela lista, avalia a viagem com as linhas novas e lê a comparação (spec 016). Grava capturas e resultado.json na pasta de saída.
 Rode um tamanho por vez (SO=...): reaproveitar a aba entre tamanhos perde o contexto WebGL por software.
 A aba é trazida para a frente (Page.bringToFront): sem isso, o navegador sem janela deixa a página oculta, o
 requestAnimationFrame não roda e o contador de fps da página fica parado no último valor (revisão crítica de
@@ -128,6 +129,31 @@ try:
               elementosAlemDaLargura: [...document.querySelectorAll('body *')].filter(e => e.getBoundingClientRect().right > d.clientWidth + 1).length,
               principal: {x: p.left + scrollX, y: p.top + scrollY, w: p.width, h: p.height}}; })()"""
 
+    # linhas novas na viagem (spec 016): marca a Linha Rosa, desenha Angrignon–Snowdon pela lista e compara
+    LINHAS = """(async () => {
+      const rosa = [...document.querySelectorAll('#v-cands label')].find(l => /Rosa \\(proposta de 2017\\)$/.test(l.textContent.trim())).querySelector('input');
+      if (!rosa.checked) rosa.click();
+      document.getElementById('b-desenha').click();
+      const sel = document.getElementById('v-desenho-est');
+      for (const id of ['STATION_M118', 'STATION_M236']) { sel.value = id; document.getElementById('b-desenho-add').click(); }
+      document.getElementById('b-desenho-ok').click();
+      await new Promise(q => setTimeout(q, 1500));
+      const rota = document.getElementById('v-rota').innerText;
+      document.getElementById('b-viagem').click();
+      const t0 = performance.now();
+      while (!/versões da rede/.test(document.getElementById('s-viagem').textContent) && performance.now() - t0 < 240000) await new Promise(q => setTimeout(q, 250));
+      await new Promise(q => setTimeout(q, 500));
+      const caixa = document.getElementById('r-viagem');
+      const d = document.documentElement;
+      const p = document.querySelector('.principal').getBoundingClientRect();
+      return {hash: location.hash, rota: rota.slice(0, 1200), status: document.getElementById('s-viagem').textContent,
+              tabelas: [...caixa.querySelectorAll('table')].slice(0, 3).map(t => [...t.querySelectorAll('tbody tr')].map(tr => [...tr.cells].map(c => c.textContent.trim()))),
+              leituras: [...caixa.querySelectorAll('ul.leituras li')].map(x => x.textContent),
+              pontos_escala_log: caixa.querySelectorAll('svg .ponto').length,
+              segundos_ate_o_resultado: Math.round((performance.now() - t0) / 100) / 10,
+              scrollWidth: d.scrollWidth, clientWidth: d.clientWidth,
+              principal: {x: p.left + scrollX, y: p.top + scrollY, w: p.width, h: p.height}}; })()"""
+
     cmd("Runtime.enable")
     cmd("Log.enable")
     cmd("Page.enable")
@@ -192,6 +218,12 @@ try:
                    clip={"x": r["x"], "y": r["y"], "width": r["w"], "height": min(r["h"], 3200), "scale": 1})
         open(os.path.join(SAIDA, f"site_{nome}_viagem.png"), "wb").write(base64.b64decode(shot["data"]))
         medidas["viagem_de_a_a_b"] = viagem
+        linhas = avalia(LINHAS)
+        r = linhas.pop("principal")
+        shot = cmd("Page.captureScreenshot", format="png", captureBeyondViewport=True,
+                   clip={"x": r["x"], "y": r["y"], "width": r["w"], "height": min(r["h"], 4200), "scale": 1})
+        open(os.path.join(SAIDA, f"site_{nome}_linhas_novas.png"), "wb").write(base64.b64decode(shot["data"]))
+        medidas["linhas_novas_na_viagem"] = linhas
         erros = [e for e in eventos if e.get("method") == "Runtime.exceptionThrown"
                  or (e.get("method") == "Runtime.consoleAPICalled" and e["params"].get("type") == "error")
                  or (e.get("method") == "Log.entryAdded" and e["params"]["entry"].get("level") == "error")]

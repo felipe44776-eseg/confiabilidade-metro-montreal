@@ -12,9 +12,12 @@
 import type { Contexto } from './contexto';
 import type { ResultadoDia, Trajetoria } from './dia';
 import { calculaTrajetorias, novoEstado, simulaDia } from './dia';
-import type { Grafo, SegmentoBloqueado } from './grafo';
+import type { BloqueioOD, Grafo, SegmentoBloqueado } from './grafo';
 import { chave, dijkstra, melhorNo, segmentosBloqueados } from './grafo';
 import { hipotese } from './hipoteses';
+import type { ConexoesNovas, Cortes, VarianteRede } from './linhas_novas';
+import type { Candidata } from './expansao';
+import { bloqueiosDaVariante, cortada, cortesDe, preparaVariante } from './linhas_novas';
 import type { Politicas } from './politicas';
 import { sementeDaRodada } from './prng';
 import type { Rede } from './rede';
@@ -165,11 +168,24 @@ function indiceDasLinhas(g: Grafo): Map<string, IndiceLinha> {
 /** Bits reservados ao índice da conexão na chave de ordenação (até 2^20 conexões por dia). */
 const BITS_INDICE = 2 ** 20;
 
+/** Linhas novas na montagem das conexões (spec 016). */
+export interface ExtraConexoes {
+  /** Deslocamento dos índices de uma linha prolongada pelo começo, no grafo com as linhas novas. */
+  deslocamento: Record<string, number>;
+  /** Trens das linhas novas. */
+  novas: ConexoesNovas;
+  /** Paradas causadas pelas linhas novas (cortam também os trens das linhas atuais, no prolongamento). */
+  cortesAtuais: Cortes | null;
+  /** Todas as paradas do dia (cortam os trens das linhas novas). */
+  cortesNovas: Cortes | null;
+}
+
 /**
  * Conexões de um conjunto de trajetórias (chave linha:sentido), em ordem de partida. Com `permitida`
  * (por aresta), só as conexões que a pessoa pode usar: sem rota alternativa, as do caminho de sempre.
+ * Com `extra`, entram os trens das linhas novas e as paradas que elas causam (spec 016).
  */
-export function conexoesDe(g: Grafo, rede: Rede, trajetorias: Record<string, Trajetoria[]>, permitida: Uint8Array | null = null): Conexoes {
+export function conexoesDe(g: Grafo, rede: Rede, trajetorias: Record<string, Trajetoria[]>, permitida: Uint8Array | null = null, extra?: ExtraConexoes): Conexoes {
   const porLinha = indiceDasLinhas(g);
   // linhas-sentido com alguma aresta permitida (as outras nem entram)
   const usa = (linha: string, sentido: Sentido): boolean => {
@@ -183,6 +199,7 @@ export function conexoesDe(g: Grafo, rede: Rede, trajetorias: Record<string, Tra
     if (lista.length && !usa(linha, lista[0].viagem.sentido)) continue;
     for (const tr of lista) if (!tr.cancelada) total += Math.max(0, tr.ultima - tr.viagem.inicio);
   }
+  if (extra) total += extra.novas.dep.length;
   const dep0 = new Float64Array(total);
   const arr0 = new Float64Array(total);
   const de0 = new Int32Array(total);
@@ -196,6 +213,8 @@ export function conexoesDe(g: Grafo, rede: Rede, trajetorias: Record<string, Tra
     const n = rede.linhas[linha]?.n;
     const ix = porLinha.get(linha);
     if (!n || !ix || (lista.length && !usa(linha, lista[0].viagem.sentido))) continue;
+    const off = extra?.deslocamento[linha] ?? 0;
+    const cortes = extra?.cortesAtuais ?? null;
     for (const tr of lista) {
       if (tr.cancelada) continue;
       const v = tr.viagem;
@@ -205,10 +224,10 @@ export function conexoesDe(g: Grafo, rede: Rede, trajetorias: Record<string, Tra
         const p = s - v.inicio;
         const d = tr.partida[p];
         const c = tr.chegada[p + 1];
-        const a = ix.aresta[sentido][trechoFisico(n, sentido, s)];
-        const n1 = ix.no[estacaoGlobal(n, sentido, s)];
-        const n2 = ix.no[estacaoGlobal(n, sentido, s + 1)];
-        if (!Number.isFinite(d) || !Number.isFinite(c) || a < 0 || n1 < 0 || n2 < 0 || (permitida && !permitida[a])) continue;
+        const a = ix.aresta[sentido][trechoFisico(n, sentido, s) + off];
+        const n1 = ix.no[estacaoGlobal(n, sentido, s) + off];
+        const n2 = ix.no[estacaoGlobal(n, sentido, s + 1) + off];
+        if (!Number.isFinite(d) || !Number.isFinite(c) || a < 0 || n1 < 0 || n2 < 0 || (permitida && !permitida[a]) || cortada(cortes, a, d, c)) continue;
         dep0[m] = d;
         arr0[m] = c;
         de0[m] = n1;
@@ -218,6 +237,22 @@ export function conexoesDe(g: Grafo, rede: Rede, trajetorias: Record<string, Tra
         m++;
       }
     }
+  }
+  if (extra) {
+    const x = extra.novas;
+    const base = nViagens;
+    for (let k = 0; k < x.dep.length; k++) {
+      const a = x.aresta[k];
+      if ((permitida && !permitida[a]) || cortada(extra.cortesNovas, a, x.dep[k], x.arr[k])) continue;
+      dep0[m] = x.dep[k];
+      arr0[m] = x.arr[k];
+      de0[m] = x.de[k];
+      para0[m] = x.para[k];
+      viagem0[m] = base + x.viagem[k];
+      aresta0[m] = a;
+      m++;
+    }
+    nViagens += x.nViagens;
   }
   if (m >= BITS_INDICE) throw new Error(`conexões demais num dia: ${m}`);
   // ordena por partida (ao milissegundo) com a ordenação numérica nativa: chave = partida em ms × 2^20 + índice
@@ -240,6 +275,57 @@ export function conexoesDe(g: Grafo, rede: Rede, trajetorias: Record<string, Tra
     aresta[k] = aresta0[i];
   }
   return { dep, arr, de, para, viagem, aresta, nViagens };
+}
+
+/**
+ * Conexões da rede com as linhas novas a partir das conexões da rede atual no mesmo dia (montadas sem
+ * filtro de caminho): troca os índices pelos do grafo da variante e intercala os trens novos, sem ordenar
+ * de novo. Dá exatamente o resultado de conexoesDe no grafo da variante com `extra` (teste na spec 016).
+ */
+export function mesclaConexoes(base: Conexoes, v: VarianteRede, extra: ExtraConexoes): Conexoes {
+  const x = v.conexoes;
+  const ord = v.ordemConexoes;
+  const nb = base.dep.length;
+  const total = nb + ord.length;
+  const dep = new Float64Array(total);
+  const arr = new Float64Array(total);
+  const de = new Int32Array(total);
+  const para = new Int32Array(total);
+  const viagem = new Int32Array(total);
+  const aresta = new Int32Array(total);
+  let i = 0;
+  let j = 0;
+  let m = 0;
+  while (i < nb || j < ord.length) {
+    const daBase = j >= ord.length || (i < nb && Math.round(base.dep[i] * 1000) <= Math.round(x.dep[ord[j]] * 1000));
+    if (daBase) {
+      const a = v.mapaAresta[base.aresta[i]];
+      if (!cortada(extra.cortesAtuais, a, base.dep[i], base.arr[i])) {
+        dep[m] = base.dep[i];
+        arr[m] = base.arr[i];
+        de[m] = v.mapaNo[base.de[i]];
+        para[m] = v.mapaNo[base.para[i]];
+        viagem[m] = base.viagem[i];
+        aresta[m] = a;
+        m++;
+      }
+      i++;
+    } else {
+      const k = ord[j];
+      const a = x.aresta[k];
+      if (!cortada(extra.cortesNovas, a, x.dep[k], x.arr[k])) {
+        dep[m] = x.dep[k];
+        arr[m] = x.arr[k];
+        de[m] = x.de[k];
+        para[m] = x.para[k];
+        viagem[m] = base.nViagens + x.viagem[k];
+        aresta[m] = a;
+        m++;
+      }
+      j++;
+    }
+  }
+  return { dep: dep.subarray(0, m), arr: arr.subarray(0, m), de: de.subarray(0, m), para: para.subarray(0, m), viagem: viagem.subarray(0, m), aresta: aresta.subarray(0, m), nViagens: base.nViagens + x.nViagens };
 }
 
 function primeiraDesde(dep: Float64Array, t: number): number {
@@ -295,6 +381,9 @@ export function chegadaMaisCedo(
 // ---------- avaliação por dia ----------
 
 export interface AvaliadorViagem {
+  /** Grafo da viagem: o da rede atual ou, com linhas novas, o da variante (spec 016). */
+  g: Grafo;
+  variante: VarianteRede | null;
   rota: RotaViagem;
   rotaAlternativa: boolean;
   transferenciaS: number;
@@ -305,19 +394,32 @@ export interface AvaliadorViagem {
   chegadaSemFalhas: Float64Array;
   /** Horas (do dia de operação) que têm saídas, em ordem. */
   horas: number[];
+  /** Tempo médio da saída à chegada num dia sem falhas, com a espera na plataforma (min). */
+  tempoSemFalhasMin: number;
 }
 
-/** Trajetórias de um dia sem falhas: o horário com as mesmas regras de circulação do motor. */
+const semFalhas = new WeakMap<Contexto, Record<string, Trajetoria[]>>();
+
+/** Trajetórias de um dia sem falhas: o horário com as mesmas regras de circulação do motor (guardadas por contexto). */
 export function trajetoriasSemFalhas(ctx: Contexto): Record<string, Trajetoria[]> {
+  const guardada = semFalhas.get(ctx);
+  if (guardada) return guardada;
   const saida: Record<string, Trajetoria[]> = {};
   for (const linha of ctx.rede.ids) {
     for (const ls of ctx.horario.porLinha[linha]) saida[`${linha}:${ls.sentido}`] = calculaTrajetorias(novoEstado(ls), ctx.intervaloMinimoS);
   }
+  semFalhas.set(ctx, saida);
   return saida;
 }
 
-export function preparaViagem(ctx: Contexto, origemId: string, destinoId: string, rotaAlternativa: boolean): AvaliadorViagem | null {
-  const g = ctx.grafo;
+/** Linhas novas da variante na montagem das conexões, com as paradas do dia. */
+function extraDe(v: VarianteRede, daNova: readonly BloqueioOD[], todos: readonly BloqueioOD[]): ExtraConexoes {
+  return { deslocamento: v.deslocamento, novas: v.conexoes, cortesAtuais: cortesDe(daNova), cortesNovas: cortesDe(todos) };
+}
+
+/** Prepara a viagem na rede atual ou, com `variante`, na rede com as linhas novas (spec 016). */
+export function preparaViagem(ctx: Contexto, origemId: string, destinoId: string, rotaAlternativa: boolean, variante: VarianteRede | null = null): AvaliadorViagem | null {
+  const g = variante?.g ?? ctx.grafo;
   const rota = rotaDoPar(g, indiceEstacao(g, origemId), indiceEstacao(g, destinoId));
   if (!rota) return null;
   const transferenciaS = hipotese('tempo_transferencia_min', ctx.parametros, ctx.cenario) * 60;
@@ -326,7 +428,7 @@ export function preparaViagem(ctx: Contexto, origemId: string, destinoId: string
     permitida = new Uint8Array(g.arestas.length);
     for (const e of rota.arestas) permitida[e] = 1;
   }
-  const cx = conexoesDe(g, ctx.rede, trajetoriasSemFalhas(ctx), permitida);
+  const cx = conexoesDe(g, ctx.rede, trajetoriasSemFalhas(ctx), permitida, variante ? extraDe(variante, [], []) : undefined);
   const janela = ctx.horario.janelaRede;
   const saidas: number[] = [];
   const chegadas: number[] = [];
@@ -338,7 +440,32 @@ export function preparaViagem(ctx: Contexto, origemId: string, destinoId: string
     }
   }
   const horas = [...new Set(saidas.map((t) => Math.floor(t / 3600)))];
-  return { rota, rotaAlternativa, transferenciaS, permitida, janela: [janela[0], janela[1]], saidas: Float64Array.from(saidas), chegadaSemFalhas: Float64Array.from(chegadas), horas };
+  const tempoSemFalhasMin = saidas.length ? saidas.reduce((s, t, i) => s + (chegadas[i] - t), 0) / saidas.length / 60 : NaN;
+  return { g, variante, rota, rotaAlternativa, transferenciaS, permitida, janela: [janela[0], janela[1]], saidas: Float64Array.from(saidas), chegadaSemFalhas: Float64Array.from(chegadas), horas, tempoSemFalhasMin };
+}
+
+/** Versão da rede com linhas novas pedida pela página (spec 016). */
+export interface VariantePedida {
+  id: string;
+  nome: string;
+  linhas: Candidata[];
+}
+
+/**
+ * Avaliadores da viagem na rede atual (primeiro) e em cada versão com linhas novas. A página e o worker
+ * montam os mesmos: a página para nomear as métricas, o worker para medir.
+ */
+export function avaliadoresViagem(ctx: Contexto, origemId: string, destinoId: string, politicas: Politicas, variantes: readonly VariantePedida[], causaComumNova: boolean): AvaliadorViagem[] {
+  const base = preparaViagem(ctx, origemId, destinoId, politicas.rotaAlternativa);
+  if (!base) throw new Error('não há caminho entre as estações escolhidas');
+  const avs = [base];
+  for (const v of variantes) {
+    const variante = preparaVariante(ctx, v.linhas, { politicas, causaComumCompartilhada: causaComumNova, id: v.id, nome: v.nome });
+    const av = preparaViagem(ctx, origemId, destinoId, politicas.rotaAlternativa, variante);
+    if (!av) throw new Error(`não há caminho entre as estações escolhidas com ${v.nome}`);
+    avs.push(av);
+  }
+  return avs;
 }
 
 /** Nomes das métricas de um dia, na ordem de `metricasViagemDia`. */
@@ -351,25 +478,48 @@ export function nomesViagem(av: AvaliadorViagem): string[] {
     ...LIMIARES_ATRASO_MIN.map((m) => `atraso${m}`),
     'naoChega',
     'atrasoMedioMin',
+    'tempoMedioMin',
     ...av.horas.map((h) => `atraso${LIMIARES_ATRASO_MIN[0]}.h${h}`),
+    ...(av.variante ? ['falhasLinhaNova'] : []),
   ];
 }
 
-export function metricasViagemDia(ctx: Contexto, av: AvaliadorViagem, r: ResultadoDia): number[] {
-  const g = ctx.grafo;
+/** Conexões da rede atual sem filtro de caminho, guardadas por dia para as variantes (rota alternativa). */
+export interface CacheDia {
+  cxAtual?: Conexoes;
+}
+
+export function metricasViagemDia(ctx: Contexto, av: AvaliadorViagem, r: ResultadoDia, cache: CacheDia = {}): number[] {
+  const g = av.g;
   const T = Math.max(av.janela[1] - av.janela[0], 1);
-  const sem = semCaminho(g, av.rota, segmentosBloqueados(r.bloqueiosOD ?? [], av.janela), av.rotaAlternativa);
-  const cx = conexoesDe(g, ctx.rede, r.trajetorias ?? {}, av.permitida);
+  let bloqueios = r.bloqueiosOD ?? [];
+  let extra: ExtraConexoes | undefined;
+  let falhasNovas = 0;
+  if (av.variante) {
+    const b = bloqueiosDaVariante(ctx, av.variante, r);
+    bloqueios = b.todos;
+    falhasNovas = b.falhasNovas;
+    extra = extraDe(av.variante, b.daNova, b.todos);
+  }
+  const sem = semCaminho(g, av.rota, segmentosBloqueados(bloqueios, av.janela), av.rotaAlternativa);
+  let cx: Conexoes;
+  if (av.permitida === null) {
+    // rota alternativa: todas as linhas; a montagem da rede atual vale para as variantes do mesmo dia
+    cache.cxAtual ??= conexoesDe(ctx.grafo, ctx.rede, r.trajetorias ?? {}, null);
+    cx = av.variante && extra ? mesclaConexoes(cache.cxAtual, av.variante, extra) : cache.cxAtual;
+  } else cx = conexoesDe(g, ctx.rede, r.trajetorias ?? {}, av.permitida, extra);
   const acima = LIMIARES_ATRASO_MIN.map(() => 0);
   const porHora = new Map<number, [number, number]>(av.horas.map((h) => [h, [0, 0]]));
   let naoChega = 0;
   let somaAtraso = 0;
+  let somaTempo = 0;
   let chegaram = 0;
   av.saidas.forEach((t, i) => {
     const c = chegadaMaisCedo(g, cx, av.rota.origem, av.rota.destino, t, av.transferenciaS, av.permitida);
     const atraso = Number.isFinite(c) ? Math.max(0, c - av.chegadaSemFalhas[i]) : Infinity;
     if (Number.isFinite(atraso)) {
       somaAtraso += atraso / 60;
+      somaTempo += (c - t) / 60;
       chegaram++;
     } else naoChega++;
     LIMIARES_ATRASO_MIN.forEach((m, k) => {
@@ -388,11 +538,45 @@ export function metricasViagemDia(ctx: Contexto, av: AvaliadorViagem, r: Resulta
     ...acima.map((x) => x / n),
     naoChega / n,
     chegaram ? somaAtraso / chegaram : 0,
+    // sem nenhuma chegada no dia (a linha parada o dia todo), fica o tempo sem falhas
+    chegaram ? somaTempo / chegaram : av.tempoSemFalhasMin,
     ...av.horas.map((h) => {
       const [a, tot] = porHora.get(h) as [number, number];
       return tot ? a / tot : 0;
     }),
+    ...(av.variante ? [falhasNovas] : []),
   ];
+}
+
+/** Medidas que ganham diferença pareada (variante − rede atual) no mesmo dia (spec 016). */
+export const METRICAS_GANHO: readonly string[] = ['disp', 'minSemCaminho', 'diaComInterrupcao', ...LIMIARES_ATRASO_MIN.map((m) => `atraso${m}`), 'naoChega', 'atrasoMedioMin', 'tempoMedioMin'];
+
+/**
+ * Nomes das métricas de um dia com várias versões da rede: as da rede atual (os nomes da spec 015), as de
+ * cada variante k com o prefixo `v{k}.` e as diferenças pareadas com o prefixo `d{k}.`.
+ */
+export function nomesVariantes(avs: readonly AvaliadorViagem[]): string[] {
+  const saida = [...nomesViagem(avs[0])];
+  avs.slice(1).forEach((av, i) => {
+    saida.push(...nomesViagem(av).map((n) => `v${i + 1}.${n}`), ...METRICAS_GANHO.map((n) => `d${i + 1}.${n}`));
+  });
+  return saida;
+}
+
+/** Métricas de um dia para a rede atual (avs[0]) e cada variante, no mesmo dia simulado. */
+export function metricasVariantesDia(ctx: Contexto, avs: readonly AvaliadorViagem[], r: ResultadoDia): number[] {
+  const cache: CacheDia = {};
+  const base = metricasViagemDia(ctx, avs[0], r, cache);
+  if (avs.length === 1) return base;
+  const nomesBase = nomesViagem(avs[0]);
+  const iBase = METRICAS_GANHO.map((n) => nomesBase.indexOf(n));
+  const saida = [...base];
+  for (const av of avs.slice(1)) {
+    const v = metricasViagemDia(ctx, av, r, cache);
+    const nomes = nomesViagem(av);
+    saida.push(...v, ...METRICAS_GANHO.map((n, k) => v[nomes.indexOf(n)] - base[iBase[k]]));
+  }
+  return saida;
 }
 
 /** Simula o dia com o que a viagem precisa: trajetórias e bloqueios do grafo (sem a disponibilidade da rede toda). */
@@ -400,18 +584,22 @@ export function simulaDiaViagem(ctx: Contexto, politicas: Politicas, semente: nu
   return simulaDia(ctx, politicas, semente, { registrar: false, trajetorias: true, bloqueiosOD: true, odDaRede: false });
 }
 
-/** Rodadas da viagem: a rodada i usa a semente da rodada i do Monte Carlo (o mesmo dia sorteado). */
+/**
+ * Rodadas da viagem: a rodada i usa a semente da rodada i do Monte Carlo (o mesmo dia sorteado). Com uma
+ * lista de avaliadores (rede atual e variantes com linhas novas), cada dia é simulado uma vez e medido em todos.
+ */
 export function rodaViagem(
   indices: readonly number[],
   ctx: Contexto,
   politicas: Politicas,
   sementeBase: number,
-  av: AvaliadorViagem,
+  av: AvaliadorViagem | readonly AvaliadorViagem[],
   aoProgresso?: (feitas: number) => void,
 ): { indice: number; semente: number; valores: number[] }[] {
+  const avs: readonly AvaliadorViagem[] = Array.isArray(av) ? av : [av as AvaliadorViagem];
   return indices.map((indice, k) => {
     const semente = sementeDaRodada(sementeBase, indice);
-    const valores = metricasViagemDia(ctx, av, simulaDiaViagem(ctx, politicas, semente));
+    const valores = metricasVariantesDia(ctx, avs, simulaDiaViagem(ctx, politicas, semente));
     if (aoProgresso && (k + 1) % 25 === 0) aoProgresso(k + 1);
     return { indice, semente, valores };
   });

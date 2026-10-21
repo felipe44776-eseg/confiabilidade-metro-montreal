@@ -151,6 +151,27 @@
           <progress id="p-viagem" max="1" value="0" hidden></progress>
           <span class="nota" id="s-viagem" aria-live="polite"></span>
         </div>
+        <fieldset id="v-novas" class="linhas-novas">
+          <legend>Linhas novas: construir e comparar</legend>
+          <p class="nota">Marque linhas propostas ou desenhe uma ligando estações. A viagem é medida na rede atual e com cada linha nova nos mesmos dias simulados, então a diferença aparece mesmo quando as duas passam de 99%.</p>
+          <div id="v-cands" class="caixas-linhas"></div>
+          <ul id="v-desenhadas" class="desenhadas"></ul>
+          <div class="acoes">
+            <button type="button" id="b-desenha" class="secundario">Desenhar uma linha</button>
+          </div>
+          <div id="v-desenho" class="desenho" hidden>
+            <p class="nota" id="v-desenho-txt" aria-live="polite"></p>
+            <div class="acoes">
+              <label>Estação <select id="v-desenho-est"></select></label>
+              <button type="button" id="b-desenho-add" class="secundario">Acrescentar</button>
+              <button type="button" id="b-desenho-volta" class="secundario">Desfazer</button>
+              <button type="button" id="b-desenho-ok">Concluir a linha</button>
+              <button type="button" id="b-desenho-cancela" class="secundario">Cancelar</button>
+            </div>
+            <p class="nota">No mapa: toque numa estação para acrescentá-la; toque fora das estações para pôr uma estação nova ali.</p>
+          </div>
+          <label class="caixa"><input type="checkbox" id="v-cc"> A linha nova divide a causa comum (alimentação, controle) com as linhas em que encosta</label>
+        </fieldset>
         <div id="v-rota" class="rota-viagem"></div>
         <div id="r-viagem"></div>
       </section>

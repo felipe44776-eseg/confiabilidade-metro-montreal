@@ -49,7 +49,7 @@ python -I pipeline/verifica_fontes.py --baixa-release --recalcula
 
 | Pasta | Conteúdo |
 |---|---|
-| `specs/` | Especificações SDD: ciclo, princípios e uma pasta por parte do projeto (000 a 015) |
+| `specs/` | Especificações SDD: ciclo, princípios e uma pasta por parte do projeto (000 a 016) |
 | `fontes/` | Documentação das fontes, manifesto de hashes e relatórios de verificação e validação (`fontes/verificacao/`) |
 | `pipeline/` | Python: verificação independente, normalização, geografia, exposição, clima, modelos, parâmetros e backtest; testes em `pipeline/tests/` |
 | `contratos/` | Contrato entre o pipeline e o simulador (`parametros.schema.json`) |

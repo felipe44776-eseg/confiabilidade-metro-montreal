@@ -35,11 +35,23 @@ export interface ArestaGrafo {
   sentido: Sentido;
 }
 
+/** O que causou um bloqueio do grafo: permite refazer o efeito num grafo com linhas novas (spec 016). */
+export interface OrigemBloqueio {
+  causa: 'MR' | 'EF' | 'CC';
+  linha: string;
+  /** Trecho físico (null na causa comum, que para a linha inteira). */
+  trecho: number | null;
+  sentidos: Sentido[];
+  /** Falha sorteada numa linha nova (spec 016). */
+  nova?: boolean;
+}
+
 /** Arestas sem serviço durante [ini, fim) (segundos do dia de operação). */
 export interface BloqueioOD {
   ini: number;
   fim: number;
   arestas: number[];
+  origem?: OrigemBloqueio;
 }
 
 /** Intervalo [a, b) do dia em que o conjunto de arestas bloqueadas não muda (ids em ordem crescente). */

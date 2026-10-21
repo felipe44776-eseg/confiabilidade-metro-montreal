@@ -60,6 +60,8 @@ Para quem precisa ir de uma estação a outra. Escolha **De** e **Para** (⇄ in
 
 Com a política **Rota alternativa de passageiros** ligada no painel, a pessoa pode usar qualquer caminho livre: os caminhos ficam em paralelo. Ela escolhe sabendo quanto vai durar cada interrupção, o que é o limite otimista. Não entram ônibus de substituição, caminhada até a plataforma nem lotação. O atraso médio é puxado pelas poucas saídas que pegam paradas longas: a amostra de durações da STM tem paradas de horas. Origem e destino vão no link.
 
+**Linhas novas: construir e comparar** (spec 016). Marque linhas propostas (as cinco da aba **Que linha construir** e o projeto Rosa com a Azul) ou desenhe uma: **Desenhar uma linha**, depois escolha as estações na lista ou toque no mapa (perto de uma estação, ela entra; fora das estações, vira uma estação nova) e **Concluir a linha**. **Avaliar a viagem** passa a medir, nos mesmos dias simulados, a rede atual, cada linha nova sozinha e, com duas ou mais, todas juntas. A página mostra o caminho de sempre com cada linha (se ela encurta a viagem, ele passa por ela), uma tabela com disponibilidade, minutos sem caminho, noves, razão contra a rede atual, atraso e tempo médio da viagem, e o ganho medido dia a dia, com intervalo de 95%. A linha nova falha como as linhas atuais (taxa por km e durações herdadas): uma linha longa sem retorno parcial para inteira com uma falha em qualquer trecho, e pode deixar a viagem menos confiável. Sem a rota alternativa, a linha nova só conta se entrar no caminho de sempre; com ela, vale como caminho em paralelo. A opção da causa comum faz a linha nova parar junto com as linhas em que encosta. As linhas vão no link.
+
 ### Comparar cenários
 
 **Fixar o cenário atual como A**, mude o que quiser e **Comparar A com o cenário atual (B)**. Os dois lados usam as mesmas falhas sorteadas (números aleatórios comuns), então a diferença mostra só o efeito da mudança, com intervalo de 95%. É assim que se mede o efeito de uma política.
@@ -76,6 +78,7 @@ Todos os números do modelo: valor, intervalo de 95%, status (ajustado, deduzido
 
 - **Disponibilidade** é a fração do tempo de serviço sem bloqueio na linha. 99,5% num dia útil de 20 horas são cerca de 6 minutos parados.
 - **Disponibilidade origem-destino** é a fração dos pares de estações que têm caminho, ponderada pela oferta de trens (não há dado de passageiros).
+- **Noves** são −log₁₀ da indisponibilidade: 99% são 2 noves, 99,9% são 3, 99,99% são 4. Perto de 100%, a disponibilidade esconde as diferenças (99,5% e 99,9% parecem iguais, mas o tempo parado cai 5 vezes); os noves, os minutos parados e o gráfico em escala logarítmica, em que cada marca é 10 vezes a anterior, mostram a diferença.
 - **Intervalo de 95%** é a incerteza do Monte Carlo. Se o intervalo de uma diferença contém zero, o efeito não é detectável com aquele número de dias.
 - **Hipótese** é escolha nossa, sem dado. O resultado que depende dela deve ser lido como "se o reparo levar X dias, então...".
 

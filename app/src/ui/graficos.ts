@@ -141,3 +141,119 @@ export function graficoBarras(destino: HTMLElement, itens: readonly ItemBarra[],
   det.append(sum, tab);
   destino.append(fig, det);
 }
+
+// ---------- pontos com intervalo em escala logarítmica (spec 016, decisão D54) ----------
+// Para tempo sem caminho de viagens muito confiáveis: 0,2 e 20 minutos por dia ficam distantes, não
+// espremidos no canto. Pontos (não barras: barra em escala log engana, porque não começa no zero).
+// Zero não tem logaritmo: fica na borda esquerda, com marcador vazado e o rótulo "0".
+
+export interface ItemPonto {
+  rotulo: string;
+  valor: number;
+  ic?: [number, number];
+  cor: string;
+  dica?: string;
+}
+
+const RAIO_PONTO = 5;
+
+/** Décadas que cobrem os valores positivos (pelo menos uma). */
+export function dominioLog(valores: readonly number[]): [number, number] {
+  const pos = valores.filter((v) => Number.isFinite(v) && v > 0);
+  if (!pos.length) return [0.01, 1];
+  let a = Math.floor(Math.log10(Math.min(...pos)));
+  let b = Math.ceil(Math.log10(Math.max(...pos)));
+  if (b <= a) b = a + 1;
+  if (b - a > 6) a = b - 6; // até seis décadas; abaixo disso, na borda
+  return [10 ** a, 10 ** b];
+}
+
+export function graficoPontosLog(destino: HTMLElement, itens: readonly ItemPonto[], op: OpcoesBarras): void {
+  destino.replaceChildren();
+  const fig = document.createElement('figure');
+  fig.className = 'grafico';
+  const cap = document.createElement('figcaption');
+  cap.textContent = op.titulo;
+  fig.append(cap);
+  if (!itens.length) {
+    destino.append(fig);
+    return;
+  }
+  const [lo, hi] = dominioLog(itens.flatMap((i) => [i.valor, ...(i.ic ?? [])]));
+  const la = Math.log10(lo);
+  const lb = Math.log10(hi);
+  const largura = LARGURA - MARGEM_ROTULO - MARGEM_DIREITA;
+  const x = (v: number) => MARGEM_ROTULO + ((Math.log10(Math.min(Math.max(v, lo), hi)) - la) / (lb - la)) * largura;
+  const altura = itens.length * ALTURA_LINHA + 34;
+  const s = svg('svg', { viewBox: `0 0 ${LARGURA} ${altura}`, role: 'img', 'aria-label': op.titulo, class: 'grafico-svg' });
+  const base = itens.length * ALTURA_LINHA;
+  const decadas = Math.round(lb - la);
+  for (let k = Math.round(la); k <= Math.round(lb); k++) {
+    const v = 10 ** k;
+    s.append(svg('line', { x1: x(v), x2: x(v), y1: 0, y2: base, class: 'grade' }));
+    const rot = svg('text', { x: x(v), y: base + 16, 'text-anchor': 'middle', class: 'rotulo-eixo' });
+    rot.textContent = op.formata(v);
+    s.append(rot);
+    if (k < Math.round(lb) && decadas <= 3) for (const m of [2, 5]) s.append(svg('line', { x1: x(m * v), x2: x(m * v), y1: 0, y2: base, class: 'grade grade-menor' }));
+  }
+  const eixo = svg('text', { x: MARGEM_ROTULO + largura / 2, y: base + 31, 'text-anchor': 'middle', class: 'rotulo-eixo' });
+  eixo.textContent = op.eixo;
+  s.append(eixo);
+  const dica = document.createElement('div');
+  dica.className = 'dica-grafico';
+  dica.hidden = true;
+  itens.forEach((it, i) => {
+    const yc = i * ALTURA_LINHA + ALTURA_LINHA / 2;
+    const g = svg('g', { tabindex: 0, class: 'barra' });
+    const nome = svg('text', { x: MARGEM_ROTULO - 8, y: yc + 4, 'text-anchor': 'end', class: 'rotulo-barra' });
+    nome.textContent = it.rotulo;
+    g.append(nome);
+    if (it.ic && it.ic.every(Number.isFinite)) {
+      const [a, b] = [x(it.ic[0]), x(it.ic[1])];
+      g.append(svg('line', { x1: a, x2: b, y1: yc, y2: yc, class: 'bigode' }));
+      for (const v of [a, b]) g.append(svg('line', { x1: v, x2: v, y1: yc - 5, y2: yc + 5, class: 'bigode' }));
+    }
+    const zero = !(it.valor > 0);
+    g.append(svg('circle', { cx: x(it.valor), cy: yc, r: RAIO_PONTO, fill: zero ? 'var(--painel)' : it.cor, stroke: zero ? it.cor : 'var(--painel)', 'stroke-width': 2, class: 'marca ponto' }));
+    const ponta = Math.max(x(it.valor), it.ic && Number.isFinite(it.ic[1]) ? x(it.ic[1]) : 0);
+    const val = svg('text', { x: ponta + 8, y: yc + 4, class: 'valor-barra' });
+    val.textContent = zero ? '0' : op.formata(it.valor);
+    g.append(val);
+    g.append(svg('rect', { x: 0, y: i * ALTURA_LINHA, width: LARGURA, height: ALTURA_LINHA, class: 'alvo' }));
+    const texto = `${it.rotulo}: ${zero ? '0' : op.formata(it.valor)}${it.ic ? ` (IC 95%: ${op.formata(Math.max(0, it.ic[0]))} a ${op.formata(it.ic[1])})` : ''}${it.dica ? `. ${it.dica}` : ''}`;
+    const mostra = (ev: Event) => {
+      dica.textContent = texto;
+      dica.hidden = false;
+      const r = fig.getBoundingClientRect();
+      const px = ev instanceof MouseEvent ? ev.clientX - r.left : 16;
+      dica.style.left = `${Math.max(0, Math.min(px + 12, r.width - 260))}px`;
+      dica.style.top = `${((i + 1) * ALTURA_LINHA * r.width) / LARGURA + 24}px`;
+    };
+    g.addEventListener('mousemove', mostra);
+    g.addEventListener('focus', mostra);
+    g.addEventListener('mouseleave', () => (dica.hidden = true));
+    g.addEventListener('blur', () => (dica.hidden = true));
+    s.append(g);
+  });
+  fig.append(s, dica);
+  const det = document.createElement('details');
+  det.className = 'tabela-grafico';
+  const sum = document.createElement('summary');
+  sum.textContent = 'Ver como tabela';
+  const tab = document.createElement('table');
+  const cab = tab.createTHead().insertRow();
+  for (const t of ['', op.colunaValor ?? 'Valor', 'IC 95%']) {
+    const th = document.createElement('th');
+    th.textContent = t;
+    cab.append(th);
+  }
+  const corpo = tab.createTBody();
+  for (const it of itens) {
+    const r = corpo.insertRow();
+    r.insertCell().textContent = it.rotulo;
+    r.insertCell().textContent = it.valor > 0 ? op.formata(it.valor) : '0';
+    r.insertCell().textContent = it.ic ? `${op.formata(Math.max(0, it.ic[0]))} a ${op.formata(it.ic[1])}` : '—';
+  }
+  det.append(sum, tab);
+  destino.append(fig, det);
+}

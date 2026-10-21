@@ -131,6 +131,7 @@ export const FLUXOS = {
   frota: 6,
   politicas: 7,
   estados: 8,
+  linhas_novas: 9, // falhas das linhas novas na viagem (spec 016)
 } as const;
 export type Fluxo = keyof typeof FLUXOS;
 

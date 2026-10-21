@@ -1,4 +1,5 @@
-// Página /simulador/ (specs 010, 011 e 014): cenário, dia no mapa, Monte Carlo, comparação e expansão.
+// Página /simulador/ (specs 010, 011, 014, 015 e 016): cenário, dia no mapa, Monte Carlo, viagem de A a B
+// com linhas novas, comparação e expansão.
 import './simulador.css';
 import type { Local } from '../locais';
 import type { ResultadoMC } from '../mc/pool';
@@ -9,19 +10,21 @@ import type { Contexto } from '../motor/contexto';
 import { avisosDoCenario, preparaContexto } from '../motor/contexto';
 import type { ResultadoDia } from '../motor/dia';
 import { simulaDia } from '../motor/dia';
-import type { Candidata, ItemRanking } from '../motor/expansao';
-import { candidataLivre } from '../motor/expansao';
+import type { Candidata, ItemRanking, PontoDesenho } from '../motor/expansao';
+import { candidataDesenhada, candidataLivre } from '../motor/expansao';
+import { partesDe } from '../motor/linhas_novas';
 import { HIPOTESES_PADRAO } from '../motor/hipoteses';
 import type { NomePolitica } from '../motor/politicas';
 import { NOMES_POLITICAS } from '../motor/politicas';
 import { sementeDaRodada } from '../motor/prng';
 import type { Rede } from '../motor/rede';
-import { montaRede } from '../motor/rede';
+import { haversineKm, montaRede } from '../motor/rede';
 import type { Parametro, Parametros, RedeJson, TipoDia } from '../motor/tipos';
-import type { AvaliadorViagem } from '../motor/viagem';
-import { LIMIARES_ATRASO_MIN, nomesViagem, PASSO_SAIDAS_S, preparaViagem } from '../motor/viagem';
+import type { AvaliadorViagem, TrechoViagem, VariantePedida } from '../motor/viagem';
+import { avaliadoresViagem, LIMIARES_ATRASO_MIN, nomesVariantes, PASSO_SAIDAS_S } from '../motor/viagem';
 import { TIPOS_DIA } from '../motor/tipos';
-import { graficoBarras } from '../ui/graficos';
+import { noves, novesIC, razaoPareada, textoRazao } from '../ui/escala';
+import { graficoBarras, graficoPontosLog } from '../ui/graficos';
 import { casasPara, comIC, comSinal, inteiro, num, pct, pp } from '../ui/formato';
 import { montaRodape, REPO } from '../ui/rodape';
 import type { Bloco, Ocorrencia } from './animacao';
@@ -29,7 +32,7 @@ import { blocosAtivos, blocosDoDia, cruzadas, falhasAte, FPS_PARADO, fracaoNaBar
 import type { CandidatasJson } from './candidatas';
 import { candidatasDoJson } from './candidatas';
 import type { EstadoCenario, Greve } from './cenario';
-import { aplicaGreve, chaveCenario, chaveRede, copia, desserializa, itensDoCenario, JANELAS_GREVE, MESES, NIVEIS, ORDEM_POLITICAS, PADRAO, paraCenarioMotor, ROTULOS, serializa } from './cenario';
+import { aplicaGreve, chaveCenario, chaveRede, copia, desserializa, itensDoCenario, JANELAS_GREVE, MAX_DESENHADAS, MAX_PONTOS_DESENHO, MESES, NIVEIS, ORDEM_POLITICAS, PADRAO, paraCenarioMotor, ROTULOS, serializa } from './cenario';
 import type { Esperado } from './efeito';
 import { esperadoPorDia } from './efeito';
 import { avisosDeExtrapolacao } from './extrapolacao';
@@ -637,7 +640,7 @@ function mostraResultadoMC(r: Agregado): void {
   const esperado = contextoDoCenario().esperado;
   caixa.append(
     tabela(
-      ['Linha', 'Falhas por dia', 'Esperado pelo modelo', 'Minutos parados', 'Disponibilidade', 'Trens-hora perdidos', 'Viagens afetadas', 'Frota completa'],
+      ['Linha', 'Falhas por dia', 'Esperado pelo modelo', 'Minutos parados', 'Disponibilidade', 'Noves', 'Trens-hora perdidos', 'Viagens afetadas', 'Frota completa'],
       ids.map((l) => {
         const nome = el('span');
         const p = el('span', undefined, 'ponto');
@@ -650,14 +653,16 @@ function mostraResultadoMC(r: Agregado): void {
           num(esperado.porLinha[l].total, 2),
           estimativaTexto(m[`${l}.minutosInterrupcao`], num),
           estimativaTexto(m[`${l}.disponibilidade`], pctF, 1, 100),
+          novesTexto(m[`${l}.disponibilidade`]),
           estimativaTexto(m[`${l}.trensHoraPerdidos`], num),
           estimativaTexto(m[`${l}.viagensAfetadas`], num),
           estimativaTexto(m[`${l}.frotaCompleta`], pctF, 0, 100),
         ];
       }),
-      [1, 2, 3, 4, 5, 6, 7],
+      [1, 2, 3, 4, 5, 6, 7, 8],
     ),
   );
+  caixa.append(el('p', '"Noves": −log₁₀ da indisponibilidade (99% são 2 noves, 99,9% são 3), a escala que separa valores perto de 100%.', 'nota'));
   caixa.append(el('p', '"Esperado pelo modelo" é a taxa do cenário somada no dia, a mesma que o sorteio usa; a média dos dias simulados fica perto dela, e a diferença é a variação do sorteio.', 'nota'));
   caixa.append(
     el(
@@ -726,22 +731,96 @@ function marcaDesatualizado(): void {
   if (resultadoMC && resultadoMC.estado !== chaveCenario(estado)) $('s-mc').textContent = 'O cenário mudou: os resultados abaixo são do cenário anterior. Rode de novo.';
 }
 
-// ---------- viagem de A a B (spec 015) ----------
+// ---------- viagem de A a B (specs 015 e 016) ----------
 const poolViagem = new PoolViagem();
-let resultadoViagem: { chave: string; r: ResultadoViagem; av: AvaliadorViagem; estado: EstadoCenario } | null = null;
-let avaliadorGuardado: { chave: string; av: AvaliadorViagem | null } | null = null;
+/** Avaliadores da viagem: a rede atual (primeiro) e uma versão da rede por linha nova escolhida. */
+interface Avaliacao {
+  avs: AvaliadorViagem[];
+  variantes: VariantePedida[];
+  /** Por que a versão com todas juntas ficou de fora (linhas incompatíveis). */
+  aviso: string | null;
+}
+let resultadoViagem: { chave: string; r: ResultadoViagem; aval: Avaliacao; estado: EstadoCenario } | null = null;
+let avaliacaoGuardada: { chave: string; aval: Avaliacao | null; erro: string | null } | null = null;
+/** Linha em desenho no mapa (spec 016); null fora do modo de desenho. */
+let desenho: PontoDesenho[] | null = null;
 
-const chaveViagem = () => `${chaveCenario(estado)}|${estado.viagemDe}|${estado.viagemPara}`;
+const chaveViagem = () =>
+  `${chaveCenario(estado)}|${estado.viagemDe}|${estado.viagemPara}|${estado.linhasNovas.join(',')}|${JSON.stringify(estado.linhasDesenhadas)}|${estado.ccNova ? 1 : 0}`;
 const nomeDaEstacao = (id: string) => redeBase().estacoes.find((e) => e.id === id)?.nome ?? id;
 const relogioMin = (s: number) => `${String(Math.floor(s / 3600) % 24).padStart(2, '0')}:${String(Math.floor((s % 3600) / 60)).padStart(2, '0')}`;
+const abaViagemAtiva = () => $('tab-viagem').getAttribute('aria-selected') === 'true';
+/** Número com dois algarismos significativos (eixo e valores do gráfico em escala logarítmica). */
+function numSig(x: number): string {
+  if (!(x > 0)) return '0';
+  return num(x, Math.max(0, Math.min(4, 1 - Math.floor(Math.log10(x)))));
+}
+function novesTexto(e: Estimativa | undefined): string {
+  if (!e) return '—';
+  const n = novesIC(e);
+  const f = (x: number) => (Number.isFinite(x) ? num(x, 2) : '∞');
+  return `${f(n.media)} (${f(n.ic95[0])}–${f(n.ic95[1])})`;
+}
+function difTexto(e: Estimativa | undefined, f: (x: number, c: number) => string, escala = 1): string {
+  if (!e) return '—';
+  const c = Math.max(1, casasPara(e.meiaLargura * escala));
+  return `${f(e.media, c)} (${f(e.ic95[0], c)} a ${f(e.ic95[1], c)})`;
+}
 
-/** Caminho e saídas da viagem no cenário atual (guardado: preparar custa algumas dezenas de ms). */
-function avaliadorAtual(): AvaliadorViagem | null {
-  const chave = chaveViagem();
-  if (avaliadorGuardado?.chave !== chave) {
-    avaliadorGuardado = { chave, av: preparaViagem(contextoDoCenario().ctx, estado.viagemDe, estado.viagemPara, estado.politicas.rotaAlternativa) };
+/** Linhas novas escolhidas para a viagem: as propostas marcadas e as desenhadas (spec 016). */
+function linhasDaViagem(): Candidata[] {
+  const rede = redeBase();
+  const saida = estado.linhasNovas.map((id) => candidatas.find((c) => c.id === id)).filter((c): c is Candidata => !!c);
+  estado.linhasDesenhadas.forEach((pts, i) => {
+    try {
+      saida.push(candidataDesenhada(rede, pts, i));
+    } catch {
+      // ponto do link que não existe mais na rede: a linha fica de fora (a lista mostra o motivo)
+    }
+  });
+  return saida;
+}
+
+/** Uma versão da rede por linha nova e, com duas ou mais, todas juntas. */
+function variantesDaViagem(ctx: Contexto): { variantes: VariantePedida[]; aviso: string | null } {
+  const linhas = linhasDaViagem();
+  const variantes: VariantePedida[] = linhas.map((c) => ({ id: c.id, nome: c.nome, linhas: [c] }));
+  let aviso: string | null = null;
+  if (linhas.length > 1) {
+    try {
+      partesDe(ctx, linhas);
+      variantes.push({ id: 'todas', nome: 'Todas as linhas novas juntas', linhas });
+    } catch (e) {
+      aviso = `Sem a versão com todas juntas: ${e instanceof Error ? e.message : String(e)}.`;
+    }
   }
-  return avaliadorGuardado.av;
+  return { variantes, aviso };
+}
+
+/** Avaliadores da viagem no cenário atual, guardados: preparar custa dezenas de ms por versão da rede. */
+function avaliacaoAtual(): { aval: Avaliacao | null; erro: string | null } {
+  const chave = chaveViagem();
+  if (avaliacaoGuardada?.chave !== chave) {
+    let aval: Avaliacao | null = null;
+    let erro: string | null = null;
+    if (estado.viagemDe !== estado.viagemPara) {
+      const ctx = contextoDoCenario().ctx;
+      const { variantes, aviso } = variantesDaViagem(ctx);
+      try {
+        aval = { avs: avaliadoresViagem(ctx, estado.viagemDe, estado.viagemPara, estado.politicas, variantes, estado.ccNova), variantes, aviso };
+      } catch (e) {
+        erro = e instanceof Error ? e.message : String(e);
+        try {
+          // a rede atual sozinha, para a aba seguir útil
+          aval = { avs: avaliadoresViagem(ctx, estado.viagemDe, estado.viagemPara, estado.politicas, [], false), variantes: [], aviso: null };
+        } catch {
+          aval = null;
+        }
+      }
+    }
+    avaliacaoGuardada = { chave, aval, erro };
+  }
+  return avaliacaoGuardada;
 }
 
 function montaViagem(): void {
@@ -757,42 +836,182 @@ function montaViagem(): void {
       sel.value = estado[campo];
     }
   }
+  opcoes($('v-desenho-est'), itens, itens[0][0]);
+  montaLinhasNovas();
   mostraRotaViagem();
 }
 
-function sentidoDe(linha: string, de: number, ate: number): string {
-  const est = redeBase().linhas[linha].estacoes;
-  return (ate > de ? est[est.length - 1] : est[0]).nome;
+// ----- linhas novas (spec 016) -----
+function linhasMudaram(): void {
+  history.replaceState(null, '', `#${serializa(estado)}`);
+  mostraDesenhadas();
+  mostraRotaViagem();
+}
+
+function tracoDe(c: Candidata): HTMLElement {
+  const t = el('span', undefined, 'traco-linha');
+  t.style.borderTopColor = corDaCandidata(c, redeBase());
+  return t;
+}
+
+function montaLinhasNovas(): void {
+  const caixa = $('v-cands');
+  caixa.replaceChildren();
+  for (const c of candidatas) {
+    const lab = el('label', undefined, 'caixa');
+    const cx = el('input');
+    cx.type = 'checkbox';
+    cx.checked = estado.linhasNovas.includes(c.id);
+    cx.addEventListener('change', () => {
+      const marcadas = new Set(estado.linhasNovas);
+      if (cx.checked) marcadas.add(c.id);
+      else marcadas.delete(c.id);
+      estado.linhasNovas = candidatas.map((x) => x.id).filter((id) => marcadas.has(id));
+      linhasMudaram();
+    });
+    lab.append(cx, tracoDe(c), c.nome);
+    caixa.append(lab);
+  }
+  $<HTMLInputElement>('v-cc').checked = estado.ccNova;
+  mostraDesenhadas();
+}
+
+const nomePonto = (p: PontoDesenho) => (typeof p === 'string' ? nomeDaEstacao(p) : 'estação nova');
+
+function mostraDesenhadas(): void {
+  const ul = $('v-desenhadas');
+  ul.replaceChildren();
+  const rede = redeBase();
+  estado.linhasDesenhadas.forEach((pts, i) => {
+    const li = el('li');
+    try {
+      const c = candidataDesenhada(rede, pts, i);
+      const coord = (id: string) => rede.estacoes.find((e) => e.id === id) ?? c.estacoesNovas?.find((e) => e.id === id);
+      let km = 0;
+      for (let k = 1; k < c.sequencia.length; k++) {
+        const a = coord(c.sequencia[k - 1])!;
+        const b = coord(c.sequencia[k])!;
+        km += haversineKm(a.lat, a.lon, b.lat, b.lon);
+      }
+      li.append(tracoDe(c), `Linha desenhada ${i + 1}: ${pts.map(nomePonto).join(' – ')} (${num(km, 1)} km em linha reta)`);
+    } catch (e) {
+      li.append(`Linha desenhada ${i + 1}: fora da avaliação (${e instanceof Error ? e.message : String(e)})`);
+    }
+    const b = el('button', '✕', 'secundario');
+    b.type = 'button';
+    b.title = 'Remover esta linha';
+    b.setAttribute('aria-label', `Remover a linha desenhada ${i + 1}`);
+    b.addEventListener('click', () => {
+      estado.linhasDesenhadas.splice(i, 1);
+      linhasMudaram();
+    });
+    li.append(b);
+    ul.append(li);
+  });
+  $<HTMLButtonElement>('b-desenha').disabled = desenho !== null || estado.linhasDesenhadas.length >= MAX_DESENHADAS;
+}
+
+function coordsDoDesenho(): [number, number][] {
+  const rede = redeBase();
+  return (desenho ?? []).map((p) => {
+    if (typeof p !== 'string') return [p.lon, p.lat];
+    const e = rede.estacoes.find((x) => x.id === p)!;
+    return [e.lon, e.lat];
+  });
+}
+
+/** Linhas novas e a linha em desenho no mapa, só na aba da viagem. */
+function mostraLinhasNovasNoMapa(): void {
+  if (!abaViagemAtiva()) return;
+  // o projeto conjunto (Rosa com a Azul) aparece pelas partes: o mapa pula candidatas com extras
+  mapa.mostraCandidatas(linhasDaViagem().flatMap((c) => [{ ...c, extras: undefined }, ...(c.extras ?? [])]));
+  mapa.mostraDesenho(desenho ? coordsDoDesenho() : null);
+}
+
+function comecaDesenho(): void {
+  desenho = [];
+  $('v-desenho').hidden = false;
+  mapa.aoClicar((c) => acrescentaAoDesenho('estacao' in c ? c.estacao : { lat: Math.round(c.lat * 1e5) / 1e5, lon: Math.round(c.lon * 1e5) / 1e5 }));
+  atualizaDesenho();
+  mostraDesenhadas();
+}
+
+function terminaDesenho(salva: boolean): void {
+  if (salva && desenho && desenho.length >= 2 && estado.linhasDesenhadas.length < MAX_DESENHADAS) estado.linhasDesenhadas.push(desenho);
+  desenho = null;
+  $('v-desenho').hidden = true;
+  mapa.aoClicar(null);
+  mapa.mostraDesenho(null);
+  linhasMudaram();
+}
+
+function acrescentaAoDesenho(p: PontoDesenho): void {
+  if (!desenho || desenho.length >= MAX_PONTOS_DESENHO) return;
+  if (typeof p === 'string' && desenho.includes(p)) return; // a linha não passa duas vezes pela mesma estação
+  desenho.push(p);
+  atualizaDesenho();
+}
+
+function atualizaDesenho(): void {
+  if (!desenho) return;
+  const n = desenho.length;
+  $('v-desenho-txt').textContent = n
+    ? `Linha em desenho: ${desenho.map(nomePonto).join(' → ')} (${n} ${n === 1 ? 'estação' : 'estações'}${n >= MAX_PONTOS_DESENHO ? ', o máximo' : ''}).`
+    : 'Linha em desenho: escolha a primeira estação no mapa ou na lista.';
+  $<HTMLButtonElement>('b-desenho-ok').disabled = n < 2;
+  $<HTMLButtonElement>('b-desenho-volta').disabled = n === 0;
+  mapa.mostraDesenho(coordsDoDesenho());
+}
+
+// ----- caminho -----
+/** Nome, cor e sentido de uma linha do caminho, também das linhas novas. */
+function nomeNaRota(av: AvaliadorViagem, linha: string): string {
+  if (redeBase().linhas[linha]) return nomeLinha(linha);
+  return av.variante?.partes.find((p) => p.linha === linha)?.nome ?? linha;
+}
+function corNaRota(av: AvaliadorViagem, linha: string): string {
+  const parte = av.variante?.partes.find((p) => p.linha === linha);
+  return redeBase().linhas[linha] ? corLinha(linha) : parte ? corDaCandidata(parte, redeBase()) : '#6b6a64';
+}
+function sentidoNaRota(av: AvaliadorViagem, t: TrechoViagem): string {
+  const est = av.g.linhas.find((l) => l.id === t.linha)!.estacoes;
+  return (t.ate > t.de ? est[est.length - 1] : est[0]).nome;
+}
+const textoRota = (av: AvaliadorViagem) => av.rota.trechos.map((t) => `${nomeNaRota(av, t.linha)} até ${t.ateNome}`).join(', ');
+const mesmaRota = (a: AvaliadorViagem, b: AvaliadorViagem) => textoRota(a) === textoRota(b);
+
+function listaDaRota(av: AvaliadorViagem): HTMLElement {
+  const ul = el('ul');
+  av.rota.trechos.forEach((t, i) => {
+    if (i > 0) ul.append(el('li', `Baldeação em ${t.deNome}: ${num(av.transferenciaS / 60, 0)} min (hipótese tempo_transferencia_min)`, 'baldeacao'));
+    const li = el('li');
+    const p = el('span', undefined, 'ponto');
+    p.style.background = corNaRota(av, t.linha);
+    li.append(p, ` ${nomeNaRota(av, t.linha)}, sentido ${sentidoNaRota(av, t)}: ${t.deNome} → ${t.ateNome} (${t.paradas} ${t.paradas === 1 ? 'trecho' : 'trechos'}, ${num(t.minutos, 0)} min)`);
+    ul.append(li);
+  });
+  return ul;
 }
 
 function mostraRotaViagem(): void {
   const caixa = $('v-rota');
   if (!caixa) return;
   caixa.replaceChildren();
-  const ativa = $('tab-viagem').getAttribute('aria-selected') === 'true';
+  const ativa = abaViagemAtiva();
+  mostraLinhasNovasNoMapa();
   if (estado.viagemDe === estado.viagemPara) {
     caixa.append(el('p', 'Escolha duas estações diferentes.', 'nota'));
     if (ativa) mapa.mostraRota(null);
     return;
   }
-  const av = avaliadorAtual();
-  if (!av) {
-    caixa.append(el('p', 'Não há caminho entre essas estações no horário deste tipo de dia.', 'nota'));
+  const { aval, erro } = avaliacaoAtual();
+  if (!aval) {
+    caixa.append(el('p', erro && !erro.startsWith('não há caminho') ? `Erro: ${erro}` : 'Não há caminho entre essas estações no horário deste tipo de dia.', 'nota'));
     if (ativa) mapa.mostraRota(null);
     return;
   }
-  const transfer = av.transferenciaS / 60;
-  caixa.append(el('h3', `Caminho de sempre (o mais rápido sem falhas, ${ROTULOS[estado.tipoDia]})`));
-  const ol = el('ul');
-  av.rota.trechos.forEach((t, i) => {
-    if (i > 0) ol.append(el('li', `Baldeação em ${t.deNome}: ${num(transfer, 0)} min (hipótese tempo_transferencia_min)`, 'baldeacao'));
-    const li = el('li');
-    const p = el('span', undefined, 'ponto');
-    p.style.background = corLinha(t.linha);
-    li.append(p, ` ${nomeLinha(t.linha)}, sentido ${sentidoDe(t.linha, t.de, t.ate)}: ${t.deNome} → ${t.ateNome} (${t.paradas} ${t.paradas === 1 ? 'trecho' : 'trechos'}, ${num(t.minutos, 0)} min)`);
-    ol.append(li);
-  });
-  caixa.append(ol);
+  const av = aval.avs[0];
+  caixa.append(el('h3', `Caminho de sempre (o mais rápido sem falhas, ${ROTULOS[estado.tipoDia]})`), listaDaRota(av));
   const ini = av.saidas[0];
   const fim = av.saidas[av.saidas.length - 1];
   caixa.append(
@@ -803,13 +1022,31 @@ function mostraRotaViagem(): void {
       'nota',
     ),
   );
+  if (aval.avs.length > 1) {
+    caixa.append(el('h3', 'Com as linhas novas'));
+    const ul = el('ul', undefined, 'variantes');
+    aval.avs.slice(1).forEach((x, k) => {
+      const li = el('li');
+      li.append(el('strong', `${aval.variantes[k].nome}: `));
+      if (!mesmaRota(av, x)) li.append(`o caminho de sempre passa a ser ${textoRota(x)} (${num(x.rota.minutos, 0)} min, ${comSinal(x.rota.minutos - av.rota.minutos, 0)} min).`);
+      else
+        li.append(
+          `o caminho de sempre não muda (${num(x.rota.minutos, 0)} min)` +
+            (estado.politicas.rotaAlternativa ? '; a linha nova vale como caminho alternativo.' : '; sem a rota alternativa, a linha nova só pesa pelas falhas que causa nas linhas do caminho.'),
+        );
+      ul.append(li);
+    });
+    caixa.append(ul);
+    if (aval.aviso) caixa.append(el('p', aval.aviso, 'nota'));
+  }
+  if (erro) caixa.append(el('p', `Linhas novas fora da avaliação: ${erro}.`, 'erro'));
   if (ativa) mapa.mostraRota(av.rota.trechos.map((t) => ({ linha: t.linha, de: t.de, ate: t.ate })));
-  if (resultadoViagem && resultadoViagem.chave !== chaveViagem()) $('s-viagem').textContent = 'A viagem ou o cenário mudou: o resultado abaixo é do anterior. Avalie de novo.';
+  if (resultadoViagem && resultadoViagem.chave !== chaveViagem()) $('s-viagem').textContent = 'A viagem, as linhas novas ou o cenário mudaram: o resultado abaixo é do anterior. Avalie de novo.';
 }
 
 async function avaliaViagem(): Promise<void> {
-  const av = avaliadorAtual();
-  if (!av) {
+  const { aval } = avaliacaoAtual();
+  if (!aval) {
     mostraRotaViagem();
     return;
   }
@@ -832,13 +1069,15 @@ async function avaliaViagem(): Promise<void> {
         rodadas: estado.rodadas,
         origem: estado.viagemDe,
         destino: estado.viagemPara,
+        variantes: aval.variantes,
+        causaComumNova: estado.ccNova,
       },
-      nomesViagem(av),
+      nomesVariantes(aval.avs),
       progresso('p-viagem', 's-viagem'),
     );
-    resultadoViagem = { chave, r, av, estado: congelado };
-    $('s-viagem').textContent = `${inteiro(r.n)} dias em ${num(r.segundos, 1)} s com ${r.workers} worker(s); semente ${r.sementeBase}.`;
-    mostraResultadoViagem(r, av, congelado);
+    resultadoViagem = { chave, r, aval, estado: congelado };
+    $('s-viagem').textContent = `${inteiro(r.n)} dias em ${num(r.segundos, 1)} s com ${r.workers} worker(s); semente ${r.sementeBase}${aval.avs.length > 1 ? `; ${aval.avs.length} versões da rede medidas em cada dia` : ''}.`;
+    mostraResultadoViagem(r, aval, congelado);
   } catch (e) {
     if (!(e instanceof Error && e.message === 'cancelado')) mostraErro(e);
     else $('s-viagem').textContent = 'Cancelado.';
@@ -849,33 +1088,49 @@ async function avaliaViagem(): Promise<void> {
   }
 }
 
-function mostraResultadoViagem(r: Agregado, av: AvaliadorViagem, e: EstadoCenario): void {
-  const caixa = $('r-viagem');
-  caixa.replaceChildren();
-  // o intervalo normal perto de 0 (ou de 1, nas proporções) passa da faixa possível: mostra recortado
-  const m: Record<string, Estimativa> = Object.fromEntries(
-    Object.entries(r.porMetrica).map(([k, x]) => {
-      const teto = k === 'minSemCaminho' || k === 'atrasoMedioMin' ? Infinity : 1;
+/** Medidas que não ficam negativas e não têm teto 1 (as demais são proporções). */
+const SEM_TETO = new Set(['minSemCaminho', 'atrasoMedioMin', 'tempoMedioMin', 'falhasLinhaNova']);
+
+/** O intervalo normal perto de 0 (ou de 1, nas proporções) passa da faixa possível: mostra recortado. Diferenças ficam como estão. */
+function recortado(porMetrica: Record<string, Estimativa>): Record<string, Estimativa> {
+  return Object.fromEntries(
+    Object.entries(porMetrica).map(([k, x]) => {
+      if (/^d\d+\./.test(k)) return [k, x];
+      const teto = SEM_TETO.has(k.replace(/^v\d+\./, '')) ? Infinity : 1;
       return [k, { ...x, ic95: [Math.max(0, x.ic95[0]), Math.min(teto, x.ic95[1])] as [number, number] }];
     }),
   );
+}
+
+function mostraResultadoViagem(r: Agregado, aval: Avaliacao, e: EstadoCenario): void {
+  const caixa = $('r-viagem');
+  caixa.replaceChildren();
+  const m = recortado(r.porMetrica);
+  const av = aval.avs[0];
   const pctF = (x: number, c: number) => pct(x, Math.min(c, 4));
   const trechos = av.rota.trechos;
   caixa.append(el('h3', `${nomeDaEstacao(e.viagemDe)} → ${nomeDaEstacao(e.viagemPara)}: ${inteiro(r.n)} dias (${ROTULOS[e.tipoDia]}), média e intervalo de 95%`));
   caixa.append(el('p', `Cenário desta rodada: ${resumoCenario(e)} Os dias são os mesmos da aba "Muitos dias" (semente ${r.sementeBase}).`, 'nota'));
+  if (aval.avs.length > 1) {
+    mostraComparacaoViagem(caixa, r, m, aval, e);
+    caixa.append(el('h4', 'Rede atual em detalhe'));
+  }
 
   caixa.append(el('h4', 'Disponibilidade do caminho: fração do horário de serviço com caminho livre'));
+  const T = Math.max(av.janela[1] - av.janela[0], 1);
+  const minDe = (x: Estimativa): Estimativa => ({ ...x, media: ((1 - x.media) * T) / 60, ic95: [((1 - x.ic95[1]) * T) / 60, ((1 - x.ic95[0]) * T) / 60], meiaLargura: (x.meiaLargura * T) / 60 });
   const linhas: (string | Node)[][] = trechos.map((t, i) => {
     const nome = el('span');
     const p = el('span', undefined, 'ponto');
     p.style.background = corLinha(t.linha);
     nome.append(p, ` ${nomeLinha(t.linha)}: ${t.deNome} → ${t.ateNome}`);
-    return [nome, estimativaTexto(m[`disp.trecho.${i}`], pctF, 2, 100), '—'];
+    const d = m[`disp.trecho.${i}`];
+    return [nome, estimativaTexto(d, pctF, 2, 100), estimativaTexto(minDe(d), num), novesTexto(d)];
   });
   const produto = trechos.reduce((s, _, i) => s * (m[`disp.trecho.${i}`]?.media ?? 1), 1);
-  if (trechos.length > 1) linhas.push(['Produto dos trechos (em série, se as linhas falhassem de forma independente)', pct(produto, 2), '—']);
-  linhas.push([el('strong', 'Viagem inteira (simulada)'), estimativaTexto(m.disp, pctF, 2, 100), estimativaTexto(m.minSemCaminho, num)]);
-  caixa.append(tabela(['Parte da viagem', 'Disponibilidade (IC 95%)', 'Minutos por dia sem caminho'], linhas, [1, 2]));
+  if (trechos.length > 1) linhas.push(['Produto dos trechos (em série, se as linhas falhassem de forma independente)', pct(produto, 2), num(((1 - produto) * T) / 60, 1), num(noves(produto), 2)]);
+  linhas.push([el('strong', 'Viagem inteira (simulada)'), estimativaTexto(m.disp, pctF, 2, 100), estimativaTexto(m.minSemCaminho, num), novesTexto(m.disp)]);
+  caixa.append(tabela(['Parte da viagem', 'Disponibilidade (IC 95%)', 'Minutos por dia sem caminho', 'Noves'], linhas, [1, 2, 3]));
 
   const d = m.disp;
   const repetidas = [...new Set(trechos.map((t) => t.linha).filter((l, i, xs) => xs.indexOf(l) !== i))].map(nomeLinha);
@@ -894,6 +1149,27 @@ function mostraResultadoViagem(r: Agregado, av: AvaliadorViagem, e: EstadoCenari
     leitura = `O simulado (${pct(d.media, 2)}) fica acima do produto dos trechos (${pct(produto, 2)}): as interrupções de linhas diferentes coincidem no tempo mais do que se fossem independentes (a causa comum para várias linhas juntas), e o tempo total sem caminho é menor que a soma das partes.`;
   else leitura = `O simulado (${pct(d.media, 2)}) fica abaixo do produto dos trechos (${pct(produto, 2)}).`;
   caixa.append(el('p', `${leitura} Em ${estimativaTexto(m.diaComInterrupcao, pctF, 0, 100)} dos dias houve ao menos uma interrupção no caminho.`, 'nota'));
+  // escala logarítmica: os trechos e a viagem inteira lado a lado, mesmo quando todos passam de 99%
+  const gl = el('div', undefined, 'grafico-estreito');
+  graficoPontosLog(
+    gl,
+    [
+      ...trechos.map((t, i) => {
+        const x = minDe(m[`disp.trecho.${i}`]);
+        return { rotulo: `${nomeLinha(t.linha)} (trecho ${i + 1})`, valor: x.media, ic: x.ic95, cor: corLinha(t.linha), dica: `${t.deNome} → ${t.ateNome}` };
+      }),
+      { rotulo: 'Viagem inteira', valor: m.minSemCaminho.media, ic: m.minSemCaminho.ic95, cor: corTinta(), dica: 'simulada' },
+    ],
+    { titulo: 'Minutos por dia sem caminho, por trecho e na viagem inteira (escala logarítmica, IC 95%)', formata: numSig, eixo: 'minutos por dia (cada marca é 10 vezes a anterior)', colunaValor: 'Minutos por dia' },
+  );
+  caixa.append(gl);
+  caixa.append(
+    el(
+      'p',
+      'Escala: perto de 100%, a disponibilidade esconde as diferenças (99,5% e 99,9% parecem iguais, mas o tempo sem caminho cai 5 vezes). Por isso a tabela mostra também os minutos sem caminho e o número de noves (−log₁₀ da indisponibilidade: 99% são 2 noves, 99,9% são 3), e o gráfico usa escala logarítmica.',
+      'nota',
+    ),
+  );
 
   caixa.append(el('h4', `Atraso de quem viaja (saídas a cada ${PASSO_SAIDAS_S / 60} min, com os trens simulados do dia)`));
   const l1 = LIMIARES_ATRASO_MIN[0];
@@ -905,6 +1181,7 @@ function mostraResultadoViagem(r: Agregado, av: AvaliadorViagem, e: EstadoCenari
         ...LIMIARES_ATRASO_MIN.map((l) => [`Chance de chegar mais de ${l} min depois do programado`, estimativaTexto(m[`atraso${l}`], pctF, 2, 100)]),
         ['Chance de não chegar até o fim do serviço', estimativaTexto(m.naoChega, pctF, 2, 100)],
         ['Atraso médio por viagem (minutos)', estimativaTexto(m.atrasoMedioMin, num, 2)],
+        ['Tempo médio da saída à chegada, com a espera na plataforma (minutos)', estimativaTexto(m.tempoMedioMin, num, 1)],
       ],
       [1],
     ),
@@ -939,6 +1216,133 @@ function mostraResultadoViagem(r: Agregado, av: AvaliadorViagem, e: EstadoCenari
       'nota',
     ),
   );
+}
+
+const corTinta = () => getComputedStyle(document.documentElement).getPropertyValue('--tinta').trim() || '#1d1d1b';
+
+/** Rede atual contra cada versão com linhas novas, no mesmo dia simulado (spec 016). */
+function mostraComparacaoViagem(caixa: HTMLElement, r: Agregado, m: Record<string, Estimativa>, aval: Avaliacao, e: EstadoCenario): void {
+  const ms = r.porMetrica;
+  const pctF = (x: number, c: number) => pct(x, Math.min(c, 4));
+  const pre = (k: number) => (k === 0 ? '' : `v${k}.`);
+  const nomeRede = (k: number) => (k === 0 ? 'Rede atual' : aval.variantes[k - 1].nome);
+  const corRede = (k: number) => {
+    if (k === 0) return getComputedStyle(document.documentElement).getPropertyValue('--tinta-3').trim() || '#77766f';
+    const v = aval.variantes[k - 1];
+    return v.linhas.length === 1 ? corDaCandidata(v.linhas[0], redeBase()) : corTinta();
+  };
+  const nomeComCor = (k: number) => {
+    const s = el('span');
+    const p = el('span', undefined, 'ponto');
+    p.style.background = corRede(k);
+    s.append(p, ` ${nomeRede(k)}`);
+    return s;
+  };
+  const razaoDe = (k: number) => razaoPareada(ms[`v${k}.minSemCaminho`], ms.minSemCaminho, ms[`d${k}.minSemCaminho`]);
+  /** Nome no meio da frase ("Com todas as linhas novas juntas"). */
+  const nomeNaFrase = (k: number) => (aval.variantes[k - 1].id === 'todas' ? 'todas as linhas novas juntas' : nomeRede(k));
+  caixa.append(el('h4', `Com as linhas novas: os mesmos ${inteiro(r.n)} dias, com e sem cada linha`));
+  const av0 = aval.avs[0];
+  const larga = (t: HTMLElement) => {
+    t.classList.add('larga');
+    return t;
+  };
+  caixa.append(
+    larga(tabela(
+      ['Rede', 'Tempo programado', 'Disponibilidade (IC 95%)', 'Minutos por dia sem caminho', 'Noves', 'Sem caminho ÷ rede atual', 'Atraso de mais de 5 min', 'Tempo médio da viagem (min)'],
+      aval.avs.map((av, k) => {
+        const rz = k ? razaoDe(k) : null;
+        const cr = rz ? Math.max(2, casasPara((rz.ic95[1] - rz.ic95[0]) / 2)) : 2;
+        return [
+          nomeComCor(k),
+          `${num(av.rota.minutos, 0)} min${k && !mesmaRota(av0, av) ? ' (caminho novo)' : ''}`,
+          estimativaTexto(m[`${pre(k)}disp`], pctF, 2, 100),
+          estimativaTexto(m[`${pre(k)}minSemCaminho`], num),
+          novesTexto(m[`${pre(k)}disp`]),
+          k === 0 ? '1' : rz ? `${num(rz.media, cr)} (${num(rz.ic95[0], cr)}–${num(rz.ic95[1], cr)})` : '—',
+          estimativaTexto(m[`${pre(k)}atraso${LIMIARES_ATRASO_MIN[0]}`], pctF, 2, 100),
+          estimativaTexto(m[`${pre(k)}tempoMedioMin`], num),
+        ];
+      }),
+      [1, 2, 3, 4, 5, 6, 7],
+    )),
+  );
+  const g = el('div', undefined, 'grafico-estreito');
+  graficoPontosLog(
+    g,
+    aval.avs.map((_, k) => {
+      const x = m[`${pre(k)}minSemCaminho`];
+      const nome = nomeRede(k);
+      return { rotulo: nome.length > 22 ? `${nome.slice(0, 21)}…` : nome, valor: x.media, ic: x.ic95, cor: corRede(k), dica: nome };
+    }),
+    { titulo: 'Minutos por dia sem caminho, com e sem as linhas novas (escala logarítmica, IC 95%)', formata: numSig, eixo: 'minutos por dia (cada marca é 10 vezes a anterior)', colunaValor: 'Minutos por dia' },
+  );
+  caixa.append(g);
+  caixa.append(el('p', 'Ganho medido dia a dia: com a linha nova menos a rede atual, no mesmo dia simulado. As falhas da rede atual são as mesmas nas duas medidas, então o intervalo do ganho é bem mais estreito que o de cada valor; intervalo que não cruza o zero é diferença que não vem da sorte do sorteio, para estas hipóteses.', 'nota'));
+  caixa.append(
+    larga(tabela(
+      ['Linha nova', 'Disponibilidade', 'Minutos por dia sem caminho', 'Atraso de mais de 5 min', 'Atraso médio (min)', 'Tempo médio da viagem (min)'],
+      aval.avs.slice(1).map((_, i) => {
+        const k = i + 1;
+        const dd = (n: string) => ms[`d${k}.${n}`];
+        return [
+          nomeComCor(k),
+          difTexto(dd('disp'), (x, c) => pp(x, Math.min(c, 4)), 100),
+          difTexto(dd('minSemCaminho'), comSinal),
+          difTexto(dd(`atraso${LIMIARES_ATRASO_MIN[0]}`), (x, c) => pp(x, Math.min(c, 4)), 100),
+          difTexto(dd('atrasoMedioMin'), comSinal),
+          difTexto(dd('tempoMedioMin'), comSinal),
+        ];
+      }),
+      [1, 2, 3, 4, 5],
+    )),
+  );
+  // leitura: cada linha nova, com o motivo
+  const ul = el('ul', undefined, 'leituras');
+  aval.avs.slice(1).forEach((av, i) => {
+    const k = i + 1;
+    const dd = ms[`d${k}.disp`];
+    const x = m[`v${k}.minSemCaminho`].media;
+    const y = m.minSemCaminho.media;
+    const rz = razaoDe(k);
+    const muda = !mesmaRota(av0, av);
+    const nb = noves(m.disp.media);
+    const nv = noves(m[`v${k}.disp`].media);
+    const fN = (n: number) => (Number.isFinite(n) ? num(n, 2) : '∞');
+    const tempo = ms[`d${k}.tempoMedioMin`];
+    const tempoTxt = tempo && tempo.ic95[1] < 0 ? ` A viagem também fica ${num(-tempo.media, 1)} min mais curta em média, com as falhas.` : '';
+    let t: string;
+    const porque = muda ? 'O caminho de sempre passa pela linha nova.' : 'O caminho de sempre não muda: a linha nova vale como caminho alternativo.';
+    if (dd.ic95[0] > 0 && !(x > 0))
+      t = `Com ${nomeNaFrase(k)}, a viagem não ficou sem caminho em nenhum dos ${inteiro(r.n)} dias simulados (na rede atual, ${numSig(y)} min por dia; ${fN(nb)} noves). Com mais dias, o tempo sem caminho fica mensurável. ${porque}`;
+    else if (dd.ic95[0] > 0)
+      t = `Com ${nomeNaFrase(k)}, a viagem fica sem caminho ${numSig(x)} min por dia em vez de ${numSig(y)} (${rz ? textoRazao(rz.media, num) : 'menos'}; de ${fN(nb)} para ${fN(nv)} noves). ${porque}`;
+    else if (dd.ic95[1] < 0)
+      t =
+        `Com ${nomeNaFrase(k)}, a viagem piora: ${numSig(x)} min por dia sem caminho em vez de ${numSig(y)}. ` +
+        (muda
+          ? 'O caminho de sempre passa pela linha nova, que também falha (taxas por km herdadas das linhas atuais) e, sem retorno parcial, para inteira com uma falha em qualquer trecho.'
+          : 'A viagem não usa o trecho novo, mas ele prolonga uma linha do caminho: sem retorno parcial, a falha no trecho novo para a linha inteira.');
+    else
+      t = `Com ${nomeNaFrase(k)}, a diferença de disponibilidade (${pp(dd.media, 3)}) não se separa do zero com ${inteiro(r.n)} dias.` + (muda ? ' O caminho de sempre passa pela linha nova: ela tira as falhas das linhas antigas do caminho, mas traz as próprias.' : '');
+    if (!e.politicas.rotaAlternativa && !muda && dd.ic95[0] <= 0) t += ' Sem a rota alternativa, a linha nova só conta se entrar no caminho de sempre; ligue a política "Rota alternativa de passageiros" no painel para ver o efeito em paralelo.';
+    ul.append(el('li', t + tempoTxt));
+  });
+  caixa.append(ul);
+  const det = el('details');
+  det.append(el('summary', 'Hipóteses das linhas novas'));
+  const lh = el('ul');
+  const vistas = new Set<string>();
+  for (const av of aval.avs.slice(1)) {
+    for (const h of av.variante?.hipoteses ?? []) {
+      if (vistas.has(h)) continue;
+      vistas.add(h);
+      lh.append(el('li', h));
+    }
+  }
+  lh.append(el('li', 'Cada linha nova tem um fluxo de sorteio próprio: as falhas da rede atual e as de cada linha são as mesmas em todas as versões. Estações novas não entram como origem ou destino.'));
+  det.append(lh);
+  caixa.append(det);
 }
 
 // ---------- comparação A/B ----------
@@ -1297,7 +1701,9 @@ function trocaAba(id: string): void {
   const comMapa = id === 'dia' || id === 'expansao' || id === 'viagem';
   $('mapa-caixa').hidden = !comMapa;
   if (comMapa) requestAnimationFrame(() => mapa.resize());
+  if (id !== 'viagem' && desenho) terminaDesenho(false);
   mapa.mostraCandidatas(id === 'expansao' ? candidatas : null);
+  mapa.mostraDesenho(null);
   if (id === 'viagem') mostraRotaViagem();
   else mapa.mostraRota(null);
 }
@@ -1362,6 +1768,7 @@ async function inicia(): Promise<void> {
   $('b-padrao').addEventListener('click', () => {
     estado = copia(PADRAO);
     montaFormulario();
+    montaViagem();
     mudou();
   });
   $('b-link').addEventListener('click', async () => {
@@ -1421,6 +1828,18 @@ async function inicia(): Promise<void> {
   });
   $('b-viagem').addEventListener('click', avaliaViagem);
   $('b-viagem-cancela').addEventListener('click', () => poolViagem.cancela());
+  $('b-desenha').addEventListener('click', comecaDesenho);
+  $('b-desenho-add').addEventListener('click', () => acrescentaAoDesenho($<HTMLSelectElement>('v-desenho-est').value));
+  $('b-desenho-volta').addEventListener('click', () => {
+    desenho?.pop();
+    atualizaDesenho();
+  });
+  $('b-desenho-ok').addEventListener('click', () => terminaDesenho(true));
+  $('b-desenho-cancela').addEventListener('click', () => terminaDesenho(false));
+  $('v-cc').addEventListener('change', () => {
+    estado.ccNova = $<HTMLInputElement>('v-cc').checked;
+    linhasMudaram();
+  });
 
   simulaDiaMostrado();
   aplicado(true);

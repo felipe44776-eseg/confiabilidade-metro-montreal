@@ -58,8 +58,17 @@ export interface VistaMapa {
   mostraCandidatas(cands: readonly Candidata[] | null, destaque?: string): void;
   /** Caminho de uma viagem (spec 015): trechos por linha, entre índices de estação; null apaga. */
   mostraRota(trechos: readonly TrechoNoMapa[] | null): void;
+  /** Linha em desenho (spec 016): pontos [lon, lat] na ordem; null apaga. */
+  mostraDesenho(pontos: readonly Coord[] | null): void;
+  /** Modo de desenho: cada toque no mapa chama `cb` com a estação mais perto (até 14 px) ou o ponto; null desliga. */
+  aoClicar(cb: ((c: CliqueMapa) => void) | null): void;
   resize(): void;
 }
+
+export type CliqueMapa = { estacao: string } | { lat: number; lon: number };
+
+/** Distância máxima, em pixels, para o toque contar como na estação. */
+const RAIO_TOQUE_PX = 14;
 
 export interface TrechoNoMapa {
   linha: string;
@@ -76,6 +85,8 @@ export class VistaSemMapa implements VistaMapa {
   mostraLocais(): void {}
   mostraCandidatas(): void {}
   mostraRota(): void {}
+  mostraDesenho(): void {}
+  aoClicar(): void {}
   resize(): void {}
 }
 
@@ -86,6 +97,7 @@ export class MapaSimulador implements VistaMapa {
   private chaveBloqueios = '';
   private chaveFalhas = '';
   private pulsos: maplibregl.Marker[] = [];
+  private clique: ((c: CliqueMapa) => void) | null = null;
 
   constructor(
     container: string,
@@ -105,6 +117,12 @@ export class MapaSimulador implements VistaMapa {
       attributionControl: { customAttribution: ATRIBUICAO, compact: false },
     });
     this.mapa.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+    // o modo de desenho vale desde já, mesmo antes de o fundo do mapa terminar de carregar
+    this.mapa.on('click', (e) => {
+      if (!this.clique) return;
+      const id = this.estacaoPerto(e.point);
+      this.clique(id ? { estacao: id } : { lat: e.lngLat.lat, lon: e.lngLat.lng });
+    });
     this.pronto = new Promise((resolve) => this.mapa.on('load', () => (this.montaCamadas(), resolve())));
   }
 
@@ -127,6 +145,9 @@ export class MapaSimulador implements VistaMapa {
     m.addLayer({ id: 'rota-contorno', type: 'line', source: 'rota', filter: ['==', ['geometry-type'], 'LineString'], layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#1d1d1b', 'line-width': 11, 'line-opacity': 0.55 } });
     m.addLayer({ id: 'rota', type: 'line', source: 'rota', filter: ['==', ['geometry-type'], 'LineString'], layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': ['get', 'cor'], 'line-width': 7 } });
     m.addLayer({ id: 'rota-paradas', type: 'circle', source: 'rota', filter: ['==', ['geometry-type'], 'Point'], paint: { 'circle-radius': 6.5, 'circle-color': '#ffffff', 'circle-stroke-color': '#1d1d1b', 'circle-stroke-width': 2.5 } });
+    m.addSource('desenho', { type: 'geojson', data: VAZIO });
+    m.addLayer({ id: 'desenho', type: 'line', source: 'desenho', filter: ['==', ['geometry-type'], 'LineString'], layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#1d1d1b', 'line-width': 4, 'line-dasharray': [1.5, 1] } });
+    m.addLayer({ id: 'desenho-pontos', type: 'circle', source: 'desenho', filter: ['==', ['geometry-type'], 'Point'], paint: { 'circle-radius': 6, 'circle-color': '#ffffff', 'circle-stroke-color': '#1d1d1b', 'circle-stroke-width': 2.5 } });
     m.addSource('bloqueios', { type: 'geojson', data: VAZIO });
     m.addLayer({ id: 'bloqueios', type: 'line', source: 'bloqueios', layout: { 'line-cap': 'butt' }, paint: { 'line-color': '#c0262d', 'line-width': 6, 'line-dasharray': [1.2, 0.8] } });
     m.addSource('estacoes', { type: 'geojson', data: estacoesGeo });
@@ -178,6 +199,21 @@ export class MapaSimulador implements VistaMapa {
     const dica = new maplibregl.Popup({ closeButton: false, closeOnClick: false, offset: 8 });
     m.on('mousemove', 'estacoes', (e) => dica.setLngLat(e.lngLat).setText(String(e.features?.[0]?.properties?.estacao ?? '')).addTo(m));
     m.on('mouseleave', 'estacoes', () => dica.remove());
+  }
+
+  /** Estação da rede mais perto do ponto da tela, se estiver a até RAIO_TOQUE_PX. */
+  private estacaoPerto(p: maplibregl.Point): string | null {
+    let melhor: string | null = null;
+    let d2 = RAIO_TOQUE_PX * RAIO_TOQUE_PX;
+    for (const e of this.dados.rede.estacoes) {
+      const q = this.mapa.project([e.lon, e.lat]);
+      const d = (q.x - p.x) ** 2 + (q.y - p.y) ** 2;
+      if (d <= d2) {
+        d2 = d;
+        melhor = e.id;
+      }
+    }
+    return melhor;
   }
 
   private fonte(id: string): maplibregl.GeoJSONSource | undefined {
@@ -288,6 +324,22 @@ export class MapaSimulador implements VistaMapa {
       for (const g of [t.de, t.ate]) feats.push({ type: 'Feature', properties: {}, geometry: { type: 'Point', coordinates: pontoNoKm(tr, l.estacoes[g].km) } });
     }
     src.setData({ type: 'FeatureCollection', features: feats });
+  }
+
+  mostraDesenho(pontos: readonly Coord[] | null): void {
+    const src = this.fonte('desenho');
+    if (!src) return;
+    const feats: GeoJSON.Feature[] = [];
+    if (pontos?.length) {
+      if (pontos.length > 1) feats.push({ type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: pontos.map((c) => [...c]) } });
+      for (const c of pontos) feats.push({ type: 'Feature', properties: {}, geometry: { type: 'Point', coordinates: [...c] } });
+    }
+    src.setData({ type: 'FeatureCollection', features: feats });
+  }
+
+  aoClicar(cb: ((c: CliqueMapa) => void) | null): void {
+    this.clique = cb;
+    this.mapa.getCanvas().style.cursor = cb ? 'crosshair' : '';
   }
 
   resize(): void {

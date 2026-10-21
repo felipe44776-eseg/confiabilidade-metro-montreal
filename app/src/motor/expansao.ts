@@ -293,10 +293,10 @@ export interface ItemRanking {
   hipoteses: string[];
 }
 
-type Montagem = { linhas: LinhaGrafo[]; deslocamento: Record<string, number>; kms: number[]; trechos: { linha: string; g: number; km: number }[]; encosta: string[] };
+export type Montagem = { linhas: LinhaGrafo[]; deslocamento: Record<string, number>; kms: number[]; trechos: { linha: string; g: number; km: number }[]; encosta: string[] };
 
 /** Linhas do grafo com a candidata (e as linhas extras do mesmo projeto) e o deslocamento de índices de uma linha prolongada pelo começo. */
-function linhasComCandidata(ctx: Contexto, c: Candidata): Montagem {
+export function linhasComCandidata(ctx: Contexto, c: Candidata): Montagem {
   const base = linhasDoHorario(ctx.rede, ctx.horario, ctx.cenario.pontosRetorno);
   const conhecidas = new Map<string, { id: string; nome: string; lat: number; lon: number }>();
   for (const e of ctx.rede.estacoes) conhecidas.set(e.id, { id: e.id, nome: e.nome, lat: e.lat, lon: e.lon });
@@ -448,6 +448,39 @@ export function candidataLivre(rede: Rede, idA: string, idB: string, km?: number
   const b = rede.estacoes.find((e) => e.id === idB);
   if (!a || !b) throw new Error(`estação desconhecida: ${a ? idB : idA}`);
   return { id: `livre:${idA}-${idB}`, nome: `${a.nome} – ${b.nome}`, linha: `livre:${idA}-${idB}`, sequencia: [idA, idB], kmTrechos: km !== undefined ? [km] : undefined, status: 'livre' };
+}
+
+/** Ponto de uma linha desenhada: estação da rede atual (id) ou estação nova num ponto do mapa. */
+export type PontoDesenho = string | { lat: number; lon: number };
+
+/**
+ * Linha desenhada na interface (spec 016): passa pelas estações dadas, na ordem; pontos fora da rede viram
+ * estações novas. É uma linha nova (não prolonga a linha do terminal em que começa) e herda as taxas por km
+ * da média da rede, como a candidata livre.
+ */
+export function candidataDesenhada(rede: Rede, pontos: readonly PontoDesenho[], indice: number): Candidata {
+  if (pontos.length < 2) throw new Error('a linha desenhada precisa de pelo menos duas estações');
+  const linha = `desenhada${indice + 1}`;
+  const novas: EstacaoNova[] = [];
+  const sequencia = pontos.map((p, i) => {
+    if (typeof p === 'string') {
+      if (!rede.estacoes.some((e) => e.id === p)) throw new Error(`estação desconhecida: ${p}`);
+      return p;
+    }
+    const e = { id: `${linha}_e${i + 1}`, nome: `Estação nova ${novas.length + 1}`, lat: p.lat, lon: p.lon };
+    novas.push(e);
+    return e.id;
+  });
+  if (new Set(sequencia).size !== sequencia.length) throw new Error('a linha desenhada passa duas vezes pela mesma estação');
+  const nome = (id: string) => rede.estacoes.find((e) => e.id === id)?.nome ?? novas.find((e) => e.id === id)?.nome ?? id;
+  return {
+    id: linha,
+    nome: `Linha desenhada ${indice + 1} (${nome(sequencia[0])} – ${nome(sequencia[sequencia.length - 1])})`,
+    linha,
+    sequencia,
+    estacoesNovas: novas,
+    status: 'livre',
+  };
 }
 
 /** Todas as ligações diretas entre estações da rede atual até `distanciaMaxKm` em linha reta, sem as que já existem. */

@@ -74,6 +74,27 @@ describe('link compartilhável', () => {
     expect(ruim.viagemPara).toBe(PADRAO.viagemPara);
   });
 
+  it('as linhas novas da viagem vão no link e não mudam a chave do cenário (spec 016)', () => {
+    const e = copia(PADRAO);
+    e.linhasNovas = ['rosa_2017', 'azul_anjou'];
+    e.linhasDesenhadas = [['STATION_M134', { lat: 45.50123, lon: -73.61234 }, 'STATION_M536'], ['STATION_M118', 'STATION_M236']];
+    e.ccNova = true;
+    const volta = desserializa(`#${serializa(e)}`);
+    expect(volta.linhasNovas).toEqual(e.linhasNovas);
+    expect(volta.linhasDesenhadas).toEqual(e.linhasDesenhadas);
+    expect(volta.ccNova).toBe(true);
+    expect(chaveCenario(e)).toBe(chaveCenario(PADRAO));
+    // copia não compartilha os pontos
+    const c = copia(e);
+    (c.linhasDesenhadas[0][1] as { lat: number }).lat = 0;
+    expect((e.linhasDesenhadas[0][1] as { lat: number }).lat).toBe(45.50123);
+    // pontos inválidos, fora de Montreal ou linha de um ponto só: a linha cai, o resto fica
+    const ruim = desserializa('#ln=rosa_2017,<x>&ld=STATION_M134~%4010.0,-73.6|STATION_M118|STATION_M118~STATION_M236');
+    expect(ruim.linhasNovas).toEqual(['rosa_2017']);
+    expect(ruim.linhasDesenhadas).toEqual([['STATION_M118', 'STATION_M236']]);
+    expect(desserializa('#').linhasDesenhadas).toEqual([]);
+  });
+
   it('mesmo link e mesma semente: os mesmos números', () => {
     const rede = carregaRede();
     const p = carregaFixture();
