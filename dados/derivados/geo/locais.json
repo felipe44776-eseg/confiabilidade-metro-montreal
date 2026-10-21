@@ -1,0 +1,2770 @@
+[
+{
+"codigo": "STATION MONTMORENCY",
+"linha": "laranja",
+"n_tecnicos": 719,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.558434,
+"lon": -73.722423,
+"km_linha": 29.363,
+"estacoes": [
+"Montmorency"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "4S50",
+"linha": "amarela",
+"n_tecnicos": 561,
+"tipo": "plataforma_correspondencia",
+"status": "deduzido",
+"lat": 45.514852,
+"lon": -73.560106,
+"km_linha": 4.207,
+"estacoes": [
+"Berri-Uqam"
+],
+"metodo": "dedução: lacuna na numeração Mxyy do GTFS; não documentado pela STM"
+},
+{
+"codigo": "STATION COTE-VERTU",
+"linha": "laranja",
+"n_tecnicos": 445,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.514244,
+"lon": -73.682766,
+"km_linha": 0.021,
+"estacoes": [
+"Côte-Vertu"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION HONORE-BEAUGRAND",
+"linha": "verde",
+"n_tecnicos": 420,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.596495,
+"lon": -73.535053,
+"km_linha": 22.105,
+"estacoes": [
+"Honoré-Beaugrand"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION ANGRIGNON",
+"linha": "verde",
+"n_tecnicos": 398,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.446397,
+"lon": -73.603293,
+"km_linha": 0.031,
+"estacoes": [
+"Angrignon"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STAT. LONGUEUIL-UNIVERSITE-DE-SHERBROOKE",
+"linha": "amarela",
+"n_tecnicos": 386,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.524574,
+"lon": -73.522036,
+"km_linha": 0.042,
+"estacoes": [
+"Longueuil- U. De Sherbrooke"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "5S32",
+"linha": "azul",
+"n_tecnicos": 361,
+"tipo": "plataforma_correspondencia",
+"status": "deduzido",
+"lat": 45.485244,
+"lon": -73.627806,
+"km_linha": 0.0,
+"estacoes": [
+"Snowdon"
+],
+"metodo": "dedução: lacuna na numeração Mxyy do GTFS; não documentado pela STM"
+},
+{
+"codigo": "STATION ST-MICHEL",
+"linha": "azul",
+"n_tecnicos": 340,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.559708,
+"lon": -73.600167,
+"km_linha": 9.714,
+"estacoes": [
+"Saint-Michel"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION HENRI-BOURASSA",
+"linha": "laranja",
+"n_tecnicos": 174,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.55522,
+"lon": -73.668199,
+"km_linha": 24.917,
+"estacoes": [
+"Henri-Bourassa"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION BERRI-UQAM",
+"linha": "verde",
+"n_tecnicos": 136,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.514852,
+"lon": -73.560106,
+"km_linha": 11.993,
+"estacoes": [
+"Berri-Uqam"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "GARAGE HONORE-BEAUGRAND",
+"linha": "verde",
+"n_tecnicos": 84,
+"tipo": "garagem",
+"status": "aproximado",
+"lat": 45.596495,
+"lon": -73.535053,
+"km_linha": 22.105,
+"estacoes": [
+"Honoré-Beaugrand"
+],
+"metodo": "coordenada da estação de mesmo nome; posição real do pátio não verificada"
+},
+{
+"codigo": "STATION LIONEL-GROULX",
+"linha": "verde",
+"n_tecnicos": 79,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.482818,
+"lon": -73.579721,
+"km_linha": 6.801,
+"estacoes": [
+"Lionel-Groulx"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION JEAN DRAPEAU",
+"linha": "amarela",
+"n_tecnicos": 78,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.512335,
+"lon": -73.532703,
+"km_linha": 1.72,
+"estacoes": [
+"Jean-Drapeau"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "GARAGE HENRI-BOURASSA",
+"linha": "laranja",
+"n_tecnicos": 75,
+"tipo": "garagem",
+"status": "aproximado",
+"lat": 45.55522,
+"lon": -73.668199,
+"km_linha": 24.917,
+"estacoes": [
+"Henri-Bourassa"
+],
+"metodo": "coordenada da estação de mesmo nome; posição real do pátio não verificada"
+},
+{
+"codigo": "STATION VIAU",
+"linha": "verde",
+"n_tecnicos": 74,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.560976,
+"lon": -73.54703,
+"km_linha": 17.835,
+"estacoes": [
+"Viau"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION OUTREMONT",
+"linha": "azul",
+"n_tecnicos": 71,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.520363,
+"lon": -73.615012,
+"km_linha": 4.153,
+"estacoes": [
+"Outremont"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "2S60",
+"linha": "laranja",
+"n_tecnicos": 69,
+"tipo": "plataforma_correspondencia",
+"status": "deduzido",
+"lat": 45.514852,
+"lon": -73.560106,
+"km_linha": 15.321,
+"estacoes": [
+"Berri-Uqam"
+],
+"metodo": "dedução: lacuna na numeração Mxyy do GTFS; não documentado pela STM"
+},
+{
+"codigo": "ARRIERE-GARE COTE-VERTU",
+"linha": "laranja",
+"n_tecnicos": 69,
+"tipo": "arriere_gare",
+"status": "aproximado",
+"lat": 45.514244,
+"lon": -73.682766,
+"km_linha": 0.021,
+"estacoes": [
+"Côte-Vertu"
+],
+"metodo": "coordenada da estação de mesmo nome; posição real do pátio não verificada"
+},
+{
+"codigo": "ARRIERE-GARE HONORE-BEAUGRAND",
+"linha": "verde",
+"n_tecnicos": 68,
+"tipo": "arriere_gare",
+"status": "aproximado",
+"lat": 45.596495,
+"lon": -73.535053,
+"km_linha": 22.105,
+"estacoes": [
+"Honoré-Beaugrand"
+],
+"metodo": "coordenada da estação de mesmo nome; posição real do pátio não verificada"
+},
+{
+"codigo": "GARAGE ANGRIGNON",
+"linha": "verde",
+"n_tecnicos": 65,
+"tipo": "garagem",
+"status": "aproximado",
+"lat": 45.446397,
+"lon": -73.603293,
+"km_linha": 0.031,
+"estacoes": [
+"Angrignon"
+],
+"metodo": "coordenada da estação de mesmo nome; posição real do pátio não verificada"
+},
+{
+"codigo": "STATION SNOWDON",
+"linha": "laranja",
+"n_tecnicos": 62,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.485244,
+"lon": -73.627806,
+"km_linha": 6.066,
+"estacoes": [
+"Snowdon"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION ATWATER",
+"linha": "verde",
+"n_tecnicos": 61,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.490038,
+"lon": -73.585731,
+"km_linha": 8.572,
+"estacoes": [
+"Atwater"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "INTER.CREMAZIE/SAUVE",
+"linha": "laranja",
+"n_tecnicos": 61,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.54845310786189,
+"lon": -73.64736735640193,
+"km_linha": 23.118,
+"estacoes": [
+"Crémazie",
+"Sauvé"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "STATION MCGILL",
+"linha": "verde",
+"n_tecnicos": 60,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.504137,
+"lon": -73.571793,
+"km_linha": 10.481,
+"estacoes": [
+"Mcgill"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "5S48",
+"linha": "azul",
+"n_tecnicos": 58,
+"tipo": "plataforma_correspondencia",
+"status": "deduzido",
+"lat": 45.539074,
+"lon": -73.613814,
+"km_linha": 7.131,
+"estacoes": [
+"Jean-Talon"
+],
+"metodo": "dedução: lacuna na numeração Mxyy do GTFS; não documentado pela STM"
+},
+{
+"codigo": "STATION RADISSON",
+"linha": "verde",
+"n_tecnicos": 56,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.589614,
+"lon": -73.539753,
+"km_linha": 21.275,
+"estacoes": [
+"Radisson"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION DU COLLEGE",
+"linha": "laranja",
+"n_tecnicos": 56,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.508356,
+"lon": -73.673282,
+"km_linha": 1.009,
+"estacoes": [
+"Du Collège"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "ARRIERE-GARE ANGRIGNON",
+"linha": "verde",
+"n_tecnicos": 54,
+"tipo": "arriere_gare",
+"status": "aproximado",
+"lat": 45.446397,
+"lon": -73.603293,
+"km_linha": 0.031,
+"estacoes": [
+"Angrignon"
+],
+"metodo": "coordenada da estação de mesmo nome; posição real do pátio não verificada"
+},
+{
+"codigo": "STATION EDOUARD MONTPETIT",
+"linha": "azul",
+"n_tecnicos": 54,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.51022,
+"lon": -73.612344,
+"km_linha": 2.971,
+"estacoes": [
+"Édouard-Montpetit"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION CARTIER",
+"linha": "laranja",
+"n_tecnicos": 53,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.560398,
+"lon": -73.681719,
+"km_linha": 26.157,
+"estacoes": [
+"Cartier"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION PARC",
+"linha": "azul",
+"n_tecnicos": 53,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.530197,
+"lon": -73.624583,
+"km_linha": 5.799,
+"estacoes": [
+" Du Parc"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION D'IBERVILLE",
+"linha": "azul",
+"n_tecnicos": 52,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.553612,
+"lon": -73.602038,
+"km_linha": 8.988,
+"estacoes": [
+"Iberville"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION COTE-DES-NEIGES",
+"linha": "azul",
+"n_tecnicos": 52,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.496808,
+"lon": -73.62339,
+"km_linha": 1.245,
+"estacoes": [
+"Côte-Des-Neiges"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION PIE-IX",
+"linha": "verde",
+"n_tecnicos": 52,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.553658,
+"lon": -73.551696,
+"km_linha": 16.943,
+"estacoes": [
+"Pie Ix"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "ARRIERE-GARE SNOWDON",
+"linha": "azul",
+"n_tecnicos": 51,
+"tipo": "arriere_gare",
+"status": "aproximado",
+"lat": 45.485244,
+"lon": -73.627806,
+"km_linha": 0.0,
+"estacoes": [
+"Snowdon"
+],
+"metodo": "coordenada da estação de mesmo nome; posição real do pátio não verificada"
+},
+{
+"codigo": "STATION GUY-CONCORDIA",
+"linha": "verde",
+"n_tecnicos": 50,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.495692,
+"lon": -73.57925,
+"km_linha": 9.376,
+"estacoes": [
+"Guy-Concordia"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION PLACE-DES-ARTS",
+"linha": "verde",
+"n_tecnicos": 49,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.508173,
+"lon": -73.568313,
+"km_linha": 11.008,
+"estacoes": [
+"Place Des Arts"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION JOLIETTE",
+"linha": "verde",
+"n_tecnicos": 49,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.546819,
+"lon": -73.551427,
+"km_linha": 16.148,
+"estacoes": [
+"Joliette"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION UNIVERSITE DE MONTREAL",
+"linha": "azul",
+"n_tecnicos": 47,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.503671,
+"lon": -73.618478,
+"km_linha": 2.105,
+"estacoes": [
+"Université De Montreal"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION ACADIE",
+"linha": "azul",
+"n_tecnicos": 45,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.523467,
+"lon": -73.623211,
+"km_linha": 4.879,
+"estacoes": [
+"Acadie"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "INTER.PARC/DE CASTELNAU",
+"linha": "azul",
+"n_tecnicos": 44,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.53291473234004,
+"lon": -73.6224408861787,
+"km_linha": 6.147,
+"estacoes": [
+" Du Parc",
+"De Castelnau"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "STATION PAPINEAU",
+"linha": "verde",
+"n_tecnicos": 44,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.523717,
+"lon": -73.552073,
+"km_linha": 13.161,
+"estacoes": [
+"Papineau"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "INTER.PAPINEAU/FRONTENAC",
+"linha": "verde",
+"n_tecnicos": 43,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.52868301418553,
+"lon": -73.54886537219575,
+"km_linha": 13.762,
+"estacoes": [
+"Papineau",
+"Frontenac"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "STATION LANGELIER",
+"linha": "verde",
+"n_tecnicos": 43,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.582784,
+"lon": -73.543101,
+"km_linha": 20.474,
+"estacoes": [
+"Langelier"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION DE CASTELNAU",
+"linha": "azul",
+"n_tecnicos": 43,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.535483,
+"lon": -73.619871,
+"km_linha": 6.495,
+"estacoes": [
+"De Castelnau"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION VENDOME",
+"linha": "laranja",
+"n_tecnicos": 43,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.473861,
+"lon": -73.603865,
+"km_linha": 8.499,
+"estacoes": [
+"Vendôme"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION FABRE",
+"linha": "azul",
+"n_tecnicos": 43,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.547921,
+"lon": -73.607055,
+"km_linha": 8.245,
+"estacoes": [
+"Fabre"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION ST-LAURENT",
+"linha": "verde",
+"n_tecnicos": 43,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.51059,
+"lon": -73.56534,
+"km_linha": 11.371,
+"estacoes": [
+"St-Laurent"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION DE L'EGLISE",
+"linha": "verde",
+"n_tecnicos": 39,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.461911,
+"lon": -73.567107,
+"km_linha": 3.779,
+"estacoes": [
+"De L'Église"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION JOLICOEUR",
+"linha": "verde",
+"n_tecnicos": 39,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.456783,
+"lon": -73.581991,
+"km_linha": 2.165,
+"estacoes": [
+"Jolicoeur"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION DE LA SAVANE",
+"linha": "laranja",
+"n_tecnicos": 39,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.50033,
+"lon": -73.661537,
+"km_linha": 2.293,
+"estacoes": [
+"De La Savane"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION DE LA CONCORDE",
+"linha": "laranja",
+"n_tecnicos": 39,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.560544,
+"lon": -73.709337,
+"km_linha": 28.325,
+"estacoes": [
+"De La Concorde"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION CADILLAC",
+"linha": "verde",
+"n_tecnicos": 39,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.576859,
+"lon": -73.54669,
+"km_linha": 19.759,
+"estacoes": [
+"Cadillac"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION SAUVE",
+"linha": "laranja",
+"n_tecnicos": 38,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.550819,
+"lon": -73.65593,
+"km_linha": 23.835,
+"estacoes": [
+"Sauvé"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION BEAUDRY",
+"linha": "verde",
+"n_tecnicos": 37,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.518971,
+"lon": -73.55591,
+"km_linha": 12.554,
+"estacoes": [
+"Beaudry"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION VILLA-MARIA",
+"linha": "laranja",
+"n_tecnicos": 37,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.479559,
+"lon": -73.61979,
+"km_linha": 7.073,
+"estacoes": [
+"Villa-Maria"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "INTER.BERRI-UQAM/ILE-STE-HELENE",
+"linha": "amarela",
+"n_tecnicos": 36,
+"tipo": "outro",
+"status": "aproximado",
+"lat": 45.514852,
+"lon": -73.560106,
+"km_linha": 4.207,
+"estacoes": [
+"Berri-Uqam"
+],
+"metodo": "nome de estação contido no código"
+},
+{
+"codigo": "STATION MONK",
+"linha": "verde",
+"n_tecnicos": 36,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.451166,
+"lon": -73.593265,
+"km_linha": 1.018,
+"estacoes": [
+"Monk"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "POSTE DE REDR.VERSAILLES",
+"linha": "verde",
+"n_tecnicos": 35,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "STATION PLAMONDON",
+"linha": "laranja",
+"n_tecnicos": 35,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.494609,
+"lon": -73.638166,
+"km_linha": 4.545,
+"estacoes": [
+"Plamondon"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "INTER.BERRI-UQAM/BEAUDRY",
+"linha": "verde",
+"n_tecnicos": 34,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.51741173443081,
+"lon": -73.5591181874796,
+"km_linha": 12.274,
+"estacoes": [
+"Berri-Uqam",
+"Beaudry"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "STATION CHARLEVOIX",
+"linha": "verde",
+"n_tecnicos": 34,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.478467,
+"lon": -73.569366,
+"km_linha": 5.712,
+"estacoes": [
+"Charlevoix"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION LASALLE",
+"linha": "verde",
+"n_tecnicos": 34,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.470631,
+"lon": -73.566281,
+"km_linha": 4.754,
+"estacoes": [
+"Lasalle"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "INTER.COTE-VERTU/DU COLLEGE",
+"linha": "laranja",
+"n_tecnicos": 33,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.511271440893594,
+"lon": -73.67806066570509,
+"km_linha": 0.515,
+"estacoes": [
+"Côte-Vertu",
+"Du Collège"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "STATION JEAN-TALON",
+"linha": "laranja",
+"n_tecnicos": 33,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.539074,
+"lon": -73.613814,
+"km_linha": 20.304,
+"estacoes": [
+"Jean-Talon"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION FRONTENAC",
+"linha": "verde",
+"n_tecnicos": 32,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.533133,
+"lon": -73.552158,
+"km_linha": 14.363,
+"estacoes": [
+"Frontenac"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION VERDUN",
+"linha": "verde",
+"n_tecnicos": 31,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.459432,
+"lon": -73.571654,
+"km_linha": 3.202,
+"estacoes": [
+"Verdun"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION SHERBROOKE",
+"linha": "laranja",
+"n_tecnicos": 31,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.518407,
+"lon": -73.568263,
+"km_linha": 16.069,
+"estacoes": [
+"Sherbrooke"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "GARAGE COTE-VERTU",
+"linha": "laranja",
+"n_tecnicos": 31,
+"tipo": "garagem",
+"status": "aproximado",
+"lat": 45.514244,
+"lon": -73.682766,
+"km_linha": 0.021,
+"estacoes": [
+"Côte-Vertu"
+],
+"metodo": "coordenada da estação de mesmo nome; posição real do pátio não verificada"
+},
+{
+"codigo": "STATION SQUARE-VICTORIA-OACI",
+"linha": "laranja",
+"n_tecnicos": 31,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.501874,
+"lon": -73.563188,
+"km_linha": 13.492,
+"estacoes": [
+"Square Victoria-Oaci"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "INTER.PIE-IX/VIAU",
+"linha": "verde",
+"n_tecnicos": 30,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.55737887789749,
+"lon": -73.54959022122695,
+"km_linha": 17.389,
+"estacoes": [
+"Pie Ix",
+"Viau"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "STATION PREFONTAINE",
+"linha": "verde",
+"n_tecnicos": 29,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.54177,
+"lon": -73.554543,
+"km_linha": 15.539,
+"estacoes": [
+"Préfontaine"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "POSTE DE REDR.DES SEIGNEURS",
+"linha": "laranja",
+"n_tecnicos": 29,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "STATION PEEL",
+"linha": "verde",
+"n_tecnicos": 28,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.500895,
+"lon": -73.57471,
+"km_linha": 10.055,
+"estacoes": [
+"Peel"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "ARRIERE-GARE MONTMORENCY",
+"linha": "laranja",
+"n_tecnicos": 28,
+"tipo": "arriere_gare",
+"status": "aproximado",
+"lat": 45.558434,
+"lon": -73.722423,
+"km_linha": 29.363,
+"estacoes": [
+"Montmorency"
+],
+"metodo": "coordenada da estação de mesmo nome; posição real do pátio não verificada"
+},
+{
+"codigo": "INTER.ST-MICHEL/PIE-IX PL5",
+"linha": "azul",
+"n_tecnicos": 28,
+"tipo": "outro",
+"status": "aproximado",
+"lat": 45.559708,
+"lon": -73.600167,
+"km_linha": 9.714,
+"estacoes": [
+"Saint-Michel"
+],
+"metodo": "nome de estação contido no código"
+},
+{
+"codigo": "2S46",
+"linha": "laranja",
+"n_tecnicos": 28,
+"tipo": "plataforma_correspondencia",
+"status": "deduzido",
+"lat": 45.482818,
+"lon": -73.579721,
+"km_linha": 10.932,
+"estacoes": [
+"Lionel-Groulx"
+],
+"metodo": "dedução: lacuna na numeração Mxyy do GTFS; não documentado pela STM"
+},
+{
+"codigo": "INTER.J-DRAPEAU/LONGUEUIL-UDE SHERBROOKE",
+"linha": "amarela",
+"n_tecnicos": 27,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.51773391223715,
+"lon": -73.52516625011452,
+"km_linha": 0.881,
+"estacoes": [
+"Jean-Drapeau",
+"Longueuil- U. De Sherbrooke"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "STATION COTE STE-CATHERINE",
+"linha": "laranja",
+"n_tecnicos": 26,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.49236,
+"lon": -73.633146,
+"km_linha": 5.009,
+"estacoes": [
+"Côte-Ste-Catherine"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "INTER.HENRI-BOURASSA/CARTIER",
+"linha": "laranja",
+"n_tecnicos": 26,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.55664642062529,
+"lon": -73.67581582149738,
+"km_linha": 25.537,
+"estacoes": [
+"Henri-Bourassa",
+"Cartier"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "POSTE DE REDR.AHUNTSIC",
+"linha": "laranja",
+"n_tecnicos": 26,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "INTER.CONCORDE/MONTMORENCY",
+"linha": "laranja",
+"n_tecnicos": 25,
+"tipo": "outro",
+"status": "aproximado",
+"lat": 45.558434,
+"lon": -73.722423,
+"km_linha": 29.363,
+"estacoes": [
+"Montmorency"
+],
+"metodo": "nome de estação contido no código"
+},
+{
+"codigo": "INTER.SAUVE/HENRI-BOURASSA",
+"linha": "laranja",
+"n_tecnicos": 24,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.552713773981516,
+"lon": -73.66233287162294,
+"km_linha": 24.376,
+"estacoes": [
+"Sauvé",
+"Henri-Bourassa"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "STATION CHAMP-DE-MARS",
+"linha": "laranja",
+"n_tecnicos": 24,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.510031,
+"lon": -73.556462,
+"km_linha": 14.54,
+"estacoes": [
+"Champs De Mars"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION GEORGES-VANIER",
+"linha": "laranja",
+"n_tecnicos": 24,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.488962,
+"lon": -73.576435,
+"km_linha": 11.713,
+"estacoes": [
+"Georges-Vanier"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "INTER.CHARLEVOIX/LIONEL-GROULX",
+"linha": "verde",
+"n_tecnicos": 23,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.48186904963153,
+"lon": -73.57432828246333,
+"km_linha": 6.256,
+"estacoes": [
+"Charlevoix",
+"Lionel-Groulx"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "STATION CREMAZIE",
+"linha": "laranja",
+"n_tecnicos": 22,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.545972,
+"lon": -73.63887,
+"km_linha": 22.401,
+"estacoes": [
+"Crémazie"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "INTER.DU COLLEGE/DE LA SAVANE",
+"linha": "laranja",
+"n_tecnicos": 22,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.50455454584432,
+"lon": -73.66709164725705,
+"km_linha": 1.651,
+"estacoes": [
+"Du Collège",
+"De La Savane"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "INTER.BERRI-UQAM/SHERBROOKE",
+"linha": "laranja",
+"n_tecnicos": 22,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.51666020395307,
+"lon": -73.56415769863068,
+"km_linha": 15.695,
+"estacoes": [
+"Berri-Uqam",
+"Sherbrooke"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "STATION L'ASSOMPTION",
+"linha": "verde",
+"n_tecnicos": 21,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.569167,
+"lon": -73.546845,
+"km_linha": 18.813,
+"estacoes": [
+"De L'Assomption"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "INTER.NAMUR/PLAMONDON",
+"linha": "laranja",
+"n_tecnicos": 21,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.49474025316204,
+"lon": -73.64549102579424,
+"km_linha": 3.885,
+"estacoes": [
+"Namur",
+"Plamondon"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "INTER.VENDOME/PLACE ST-HENRI",
+"linha": "laranja",
+"n_tecnicos": 21,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.47836812066546,
+"lon": -73.59593630244224,
+"km_linha": 9.306,
+"estacoes": [
+"Vendôme",
+"Place St-Henri"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "STATION LUCIEN-L'ALLIER",
+"linha": "laranja",
+"n_tecnicos": 20,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.494814,
+"lon": -73.571215,
+"km_linha": 12.488,
+"estacoes": [
+"Lucien-L'Allier"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION LAURIER",
+"linha": "laranja",
+"n_tecnicos": 20,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.527388,
+"lon": -73.586858,
+"km_linha": 17.832,
+"estacoes": [
+"Laurier"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION BONAVENTURE",
+"linha": "laranja",
+"n_tecnicos": 19,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.498053,
+"lon": -73.567129,
+"km_linha": 12.969,
+"estacoes": [
+"Bonaventure"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "2999",
+"linha": "laranja",
+"n_tecnicos": 19,
+"tipo": "linha_sem_posicao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "código genérico da linha (x999), sem posição; significado não documentado"
+},
+{
+"codigo": "POSTE DE REDR.METCALFE",
+"linha": "verde",
+"n_tecnicos": 19,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "1999",
+"linha": "verde",
+"n_tecnicos": 19,
+"tipo": "linha_sem_posicao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "código genérico da linha (x999), sem posição; significado não documentado"
+},
+{
+"codigo": "INTER.D'IBERVILLE/ST-MICHEL",
+"linha": "azul",
+"n_tecnicos": 19,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.55663892275779,
+"lon": -73.6012174730096,
+"km_linha": 9.351,
+"estacoes": [
+"Iberville",
+"Saint-Michel"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "POSTE DE REDR.CLARK",
+"linha": "verde",
+"n_tecnicos": 18,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "INTER.ROSEMONT/BEAUBIEN",
+"linha": "laranja",
+"n_tecnicos": 18,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.53336164885147,
+"lon": -73.60122473590873,
+"km_linha": 19.138,
+"estacoes": [
+"Rosemont",
+"Beaubien"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "INTER.MONK/JOLICOEUR",
+"linha": "verde",
+"n_tecnicos": 17,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.45314011522367,
+"lon": -73.58648372008447,
+"km_linha": 1.591,
+"estacoes": [
+"Monk",
+"Jolicoeur"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "STATION JARRY",
+"linha": "laranja",
+"n_tecnicos": 17,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.543438,
+"lon": -73.628674,
+"km_linha": 21.559,
+"estacoes": [
+"Jarry"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "INTER.CH.-DE-MARS/BERRI-UQAM",
+"linha": "laranja",
+"n_tecnicos": 17,
+"tipo": "outro",
+"status": "aproximado",
+"lat": 45.514852,
+"lon": -73.560106,
+"km_linha": 15.321,
+"estacoes": [
+"Berri-Uqam"
+],
+"metodo": "nome de estação contido no código"
+},
+{
+"codigo": "INTER.LIONEL-GROULX/ATWATER",
+"linha": "verde",
+"n_tecnicos": 16,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.483210897308055,
+"lon": -73.58930043230671,
+"km_linha": 7.686,
+"estacoes": [
+"Lionel-Groulx",
+"Atwater"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "STATION ROSEMONT",
+"linha": "laranja",
+"n_tecnicos": 16,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.531023,
+"lon": -73.598493,
+"km_linha": 18.817,
+"estacoes": [
+"Rosemont"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "STATION NAMUR",
+"linha": "laranja",
+"n_tecnicos": 16,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.494637,
+"lon": -73.652755,
+"km_linha": 3.224,
+"estacoes": [
+"Namur"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "GARAGE MONTMORENCY",
+"linha": "laranja",
+"n_tecnicos": 16,
+"tipo": "garagem",
+"status": "aproximado",
+"lat": 45.558434,
+"lon": -73.722423,
+"km_linha": 29.363,
+"estacoes": [
+"Montmorency"
+],
+"metodo": "coordenada da estação de mesmo nome; posição real do pátio não verificada"
+},
+{
+"codigo": "POSTE DE REDR.HOGAN",
+"linha": "verde",
+"n_tecnicos": 16,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "STATION PLACE-D'ARMES",
+"linha": "laranja",
+"n_tecnicos": 15,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.506277,
+"lon": -73.559505,
+"km_linha": 14.06,
+"estacoes": [
+"Place D'Armes"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "INTER.C.STE-CATHERINE/-SNOWDON",
+"linha": "laranja",
+"n_tecnicos": 15,
+"tipo": "outro",
+"status": "aproximado",
+"lat": 45.485244,
+"lon": -73.627806,
+"km_linha": 6.066,
+"estacoes": [
+"Snowdon"
+],
+"metodo": "nome de estação contido no código"
+},
+{
+"codigo": "ARRIERE-GARE BERRI-UQAM",
+"linha": "amarela",
+"n_tecnicos": 15,
+"tipo": "arriere_gare",
+"status": "aproximado",
+"lat": 45.514852,
+"lon": -73.560106,
+"km_linha": 4.207,
+"estacoes": [
+"Berri-Uqam"
+],
+"metodo": "coordenada da estação de mesmo nome; posição real do pátio não verificada"
+},
+{
+"codigo": "POSTE DE DISTRICT DICKSON",
+"linha": "verde",
+"n_tecnicos": 15,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "INTER.ATWATER/GUY-CONCORDIA",
+"linha": "verde",
+"n_tecnicos": 14,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.49290659575173,
+"lon": -73.5825814528403,
+"km_linha": 8.974,
+"estacoes": [
+"Atwater",
+"Guy-Concordia"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "POSTE DE REDR.PLESSIS",
+"linha": "verde",
+"n_tecnicos": 14,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "INTER.LIONEL-GROULX/G.-VANIER",
+"linha": "laranja",
+"n_tecnicos": 14,
+"tipo": "outro",
+"status": "aproximado",
+"lat": 45.482818,
+"lon": -73.579721,
+"km_linha": 10.932,
+"estacoes": [
+"Lionel-Groulx"
+],
+"metodo": "nome de estação contido no código"
+},
+{
+"codigo": "INTER.CARTIER/2R83",
+"linha": "laranja",
+"n_tecnicos": 14,
+"tipo": "outro",
+"status": "aproximado",
+"lat": 45.560398,
+"lon": -73.681719,
+"km_linha": 26.157,
+"estacoes": [
+"Cartier"
+],
+"metodo": "nome de estação contido no código"
+},
+{
+"codigo": "INTER.JARRY/CREMAZIE",
+"linha": "laranja",
+"n_tecnicos": 14,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.544610286113844,
+"lon": -73.63382334750358,
+"km_linha": 21.98,
+"estacoes": [
+"Jarry",
+"Crémazie"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "INTER.L'ASSOMPTION/CADILLAC",
+"linha": "verde",
+"n_tecnicos": 14,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.572968656965124,
+"lon": -73.54909120192482,
+"km_linha": 19.286,
+"estacoes": [
+"De L'Assomption",
+"Cadillac"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "INTER.SNOWDON/COTE-DES-NEIGES",
+"linha": "azul",
+"n_tecnicos": 14,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.49182810994257,
+"lon": -73.62682728700997,
+"km_linha": 0.623,
+"estacoes": [
+"Snowdon",
+"Côte-Des-Neiges"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "5999",
+"linha": "azul",
+"n_tecnicos": 14,
+"tipo": "linha_sem_posicao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "código genérico da linha (x999), sem posição; significado não documentado"
+},
+{
+"codigo": "INTER.ANGRIGNON/MONK",
+"linha": "verde",
+"n_tecnicos": 14,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.44966133855762,
+"lon": -73.59916195897303,
+"km_linha": 0.524,
+"estacoes": [
+"Angrignon",
+"Monk"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "POSTE DE REDR.UNIVERSITE",
+"linha": "laranja",
+"n_tecnicos": 13,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "POSTE DE REDR.FAILLON",
+"linha": "laranja",
+"n_tecnicos": 13,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "INTER.VIAU/L'ASSOMPTION",
+"linha": "verde",
+"n_tecnicos": 13,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.56501889209764,
+"lon": -73.54477855107935,
+"km_linha": 18.324,
+"estacoes": [
+"Viau",
+"De L'Assomption"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "STATION MONT-ROYAL",
+"linha": "laranja",
+"n_tecnicos": 13,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.524716,
+"lon": -73.582234,
+"km_linha": 17.365,
+"estacoes": [
+"Mont-Royal"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "INTER.FRONTENAC/PREFONTAINE",
+"linha": "verde",
+"n_tecnicos": 12,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.53679698110383,
+"lon": -73.55665149478249,
+"km_linha": 14.951,
+"estacoes": [
+"Frontenac",
+"Préfontaine"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "POSTE DE REDR.JARRY",
+"linha": "azul",
+"n_tecnicos": 12,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "POSTE DE REDR.ILE NOTRE-DAME",
+"linha": "amarela",
+"n_tecnicos": 12,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "POSTE DE REDR.DULUTH",
+"linha": "laranja",
+"n_tecnicos": 12,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "POSTE DE REDR.ANDERSON",
+"linha": "laranja",
+"n_tecnicos": 12,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "INTER.JOLICOEUR/VERDUN",
+"linha": "verde",
+"n_tecnicos": 11,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.459604621074014,
+"lon": -73.57830092990463,
+"km_linha": 2.683,
+"estacoes": [
+"Jolicoeur",
+"Verdun"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "INTER.VILLA-MARIA/VENDOME",
+"linha": "laranja",
+"n_tecnicos": 11,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.476393833633935,
+"lon": -73.61183729055242,
+"km_linha": 7.786,
+"estacoes": [
+"Villa-Maria",
+"Vendôme"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "INTER.BEAUBIEN/JEAN-TALON",
+"linha": "laranja",
+"n_tecnicos": 11,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.53700177248508,
+"lon": -73.60923174925871,
+"km_linha": 19.881,
+"estacoes": [
+"Beaubien",
+"Jean-Talon"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "POSTE DE REDR.DECELLES",
+"linha": "azul",
+"n_tecnicos": 11,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "POSTE DE REDR.ARAGON",
+"linha": "verde",
+"n_tecnicos": 11,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "POSTE DE REDR.BELLECHASSE",
+"linha": "laranja",
+"n_tecnicos": 11,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "STATION BEAUBIEN",
+"linha": "laranja",
+"n_tecnicos": 11,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.535236,
+"lon": -73.6044,
+"km_linha": 19.459,
+"estacoes": [
+"Beaubien"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "INTER.LAURIER/ROSEMONT",
+"linha": "laranja",
+"n_tecnicos": 11,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.52982565808314,
+"lon": -73.59213832815273,
+"km_linha": 18.325,
+"estacoes": [
+"Laurier",
+"Rosemont"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "INTER.SNOWDON/VILLA-MARIA",
+"linha": "laranja",
+"n_tecnicos": 11,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.482088923584094,
+"lon": -73.62515852754584,
+"km_linha": 6.569,
+"estacoes": [
+"Snowdon",
+"Villa-Maria"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "INTER.JEAN-TALON/FABRE",
+"linha": "azul",
+"n_tecnicos": 11,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.543628668445,
+"lon": -73.61073399835428,
+"km_linha": 7.688,
+"estacoes": [
+"Jean-Talon",
+"Fabre"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "ARRIERE-GARE LONGUEUIL-U DE SHERBROOKE",
+"linha": "amarela",
+"n_tecnicos": 11,
+"tipo": "arriere_gare",
+"status": "aproximado",
+"lat": 45.524574,
+"lon": -73.522036,
+"km_linha": 0.042,
+"estacoes": [
+"Longueuil- U. De Sherbrooke"
+],
+"metodo": "coordenada da estação de mesmo nome; posição real do pátio não verificada"
+},
+{
+"codigo": "POSTE DE REDR.RICHELIEU",
+"linha": "laranja",
+"n_tecnicos": 10,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "POSTE GROUPES ELECTROGENES PROVIDENCE",
+"linha": "laranja",
+"n_tecnicos": 10,
+"tipo": "desconhecido",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": ""
+},
+{
+"codigo": "INTER.ACADIE/PARC",
+"linha": "azul",
+"n_tecnicos": 10,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.52633238886841,
+"lon": -73.62659299832436,
+"km_linha": 5.339,
+"estacoes": [
+"Acadie",
+" Du Parc"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "INTER.ST-LAURENT/BERRI-UQAM",
+"linha": "verde",
+"n_tecnicos": 10,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.51289484315578,
+"lon": -73.5631217145982,
+"km_linha": 11.682,
+"estacoes": [
+"St-Laurent",
+"Berri-Uqam"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "STATION PLACE SAINT-HENRI",
+"linha": "laranja",
+"n_tecnicos": 10,
+"tipo": "estacao",
+"status": "verificado",
+"lat": 45.477363,
+"lon": -73.586418,
+"km_linha": 10.114,
+"estacoes": [
+"Place St-Henri"
+],
+"metodo": "nome igual ao do GTFS na mesma linha"
+},
+{
+"codigo": "INTER.BEAUDRY/PAPINEAU",
+"linha": "verde",
+"n_tecnicos": 10,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.52182108129986,
+"lon": -73.55504639887272,
+"km_linha": 12.857,
+"estacoes": [
+"Beaudry",
+"Papineau"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "POSTE DISTRICT MONTMORENCY",
+"linha": "laranja",
+"n_tecnicos": 10,
+"tipo": "outro",
+"status": "aproximado",
+"lat": 45.558434,
+"lon": -73.722423,
+"km_linha": 29.363,
+"estacoes": [
+"Montmorency"
+],
+"metodo": "nome de estação contido no código"
+},
+{
+"codigo": "POSTE DE REDR.ST-MATHIEU",
+"linha": "verde",
+"n_tecnicos": 9,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "POSTE DE REDR.ST-GREGOIRE",
+"linha": "laranja",
+"n_tecnicos": 9,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "POSTE DE REDR.COTE VERTU",
+"linha": "laranja",
+"n_tecnicos": 9,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "INTER.ED.MONTPETIT/OUTREMONT",
+"linha": "azul",
+"n_tecnicos": 9,
+"tipo": "outro",
+"status": "aproximado",
+"lat": 45.520363,
+"lon": -73.615012,
+"km_linha": 4.153,
+"estacoes": [
+"Outremont"
+],
+"metodo": "nome de estação contido no código"
+},
+{
+"codigo": "POSTE DE REDR.BONSECOURS",
+"linha": "amarela",
+"n_tecnicos": 8,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "POSTE DE REDR.ANGRIGNON",
+"linha": "verde",
+"n_tecnicos": 8,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "INTER.L.-L'ALLIER/BONAVENTURE",
+"linha": "laranja",
+"n_tecnicos": 8,
+"tipo": "outro",
+"status": "aproximado",
+"lat": 45.498053,
+"lon": -73.567129,
+"km_linha": 12.969,
+"estacoes": [
+"Bonaventure"
+],
+"metodo": "nome de estação contido no código"
+},
+{
+"codigo": "INTER.LASALLE/CHARLEVOIX",
+"linha": "verde",
+"n_tecnicos": 8,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.4749290197,
+"lon": -73.56605735976987,
+"km_linha": 5.233,
+"estacoes": [
+"Lasalle",
+"Charlevoix"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "INTER.VERDUN/DE L'EGLISE",
+"linha": "verde",
+"n_tecnicos": 8,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.4595332914065,
+"lon": -73.5680054077492,
+"km_linha": 3.49,
+"estacoes": [
+"Verdun",
+"De L'Église"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "INTER.SHERBROOKE/MONT-ROYAL",
+"linha": "laranja",
+"n_tecnicos": 8,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.52177298889041,
+"lon": -73.57504964789932,
+"km_linha": 16.717,
+"estacoes": [
+"Sherbrooke",
+"Mont-Royal"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "INTER.JEAN-TALON/JARRY",
+"linha": "laranja",
+"n_tecnicos": 8,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.541065734652385,
+"lon": -73.62134771643011,
+"km_linha": 20.931,
+"estacoes": [
+"Jean-Talon",
+"Jarry"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "POSTE DE REDR.BOYCE",
+"linha": "verde",
+"n_tecnicos": 8,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "INTER.PL.ST-HENRI/L.GROULX",
+"linha": "laranja",
+"n_tecnicos": 8,
+"tipo": "desconhecido",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": ""
+},
+{
+"codigo": "POSTE DE REDR.SAURIOL",
+"linha": "laranja",
+"n_tecnicos": 8,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "INTER.DE L'EGLISE/LASALLE",
+"linha": "verde",
+"n_tecnicos": 8,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.46628195226025,
+"lon": -73.56666167258922,
+"km_linha": 4.266,
+"estacoes": [
+"De L'Église",
+"Lasalle"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "INTER.OUTREMONT/ACADIE",
+"linha": "azul",
+"n_tecnicos": 8,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.52165161585427,
+"lon": -73.61930105573651,
+"km_linha": 4.516,
+"estacoes": [
+"Outremont",
+"Acadie"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "POSTE DE REDR.RYDE",
+"linha": "verde",
+"n_tecnicos": 8,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "INTER.PLAMONDON/COTE STE-CATH.",
+"linha": "laranja",
+"n_tecnicos": 7,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.493467113434804,
+"lon": -73.63567445295219,
+"km_linha": 4.777,
+"estacoes": [
+"Plamondon",
+"Côte-Ste-Catherine"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "INTER.RADISSON/H.BEAUGRAND",
+"linha": "verde",
+"n_tecnicos": 7,
+"tipo": "outro",
+"status": "aproximado",
+"lat": 45.589614,
+"lon": -73.539753,
+"km_linha": 21.275,
+"estacoes": [
+"Radisson"
+],
+"metodo": "nome de estação contido no código"
+},
+{
+"codigo": "INTER.C.-DES-NEIGES/UNIVERSITE",
+"linha": "azul",
+"n_tecnicos": 7,
+"tipo": "desconhecido",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": ""
+},
+{
+"codigo": "POSTE DE REDR.DE CLUNY",
+"linha": "laranja",
+"n_tecnicos": 7,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "INTER.PL.DES-ARTS/ST-LAURENT",
+"linha": "verde",
+"n_tecnicos": 7,
+"tipo": "outro",
+"status": "aproximado",
+"lat": 45.51059,
+"lon": -73.56534,
+"km_linha": 11.371,
+"estacoes": [
+"St-Laurent"
+],
+"metodo": "nome de estação contido no código"
+},
+{
+"codigo": "INTER.MONT-ROYAL/LAURIER",
+"linha": "laranja",
+"n_tecnicos": 7,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.526123695782765,
+"lon": -73.58450775407259,
+"km_linha": 17.599,
+"estacoes": [
+"Mont-Royal",
+"Laurier"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "INTER.JOLIETTE/PIE-IX",
+"linha": "verde",
+"n_tecnicos": 7,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.55020117055908,
+"lon": -73.5513377858454,
+"km_linha": 16.546,
+"estacoes": [
+"Joliette",
+"Pie Ix"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "POSTE DE REDR.DUVERNAY",
+"linha": "verde",
+"n_tecnicos": 7,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "INTER.DE LA SAVANE/NAMUR",
+"linha": "laranja",
+"n_tecnicos": 7,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.49749129545554,
+"lon": -73.65714086854314,
+"km_linha": 2.759,
+"estacoes": [
+"De La Savane",
+"Namur"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "INTER.CADILLAC/LANGELIER",
+"linha": "verde",
+"n_tecnicos": 6,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.57982751585738,
+"lon": -73.54492147278124,
+"km_linha": 20.117,
+"estacoes": [
+"Cadillac",
+"Langelier"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "POSTE DE REDR.LONGUEUIL",
+"linha": "amarela",
+"n_tecnicos": 6,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "INTER.GUY-CONCORDIA/PEEL",
+"linha": "verde",
+"n_tecnicos": 6,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.498348679937514,
+"lon": -73.57711085566702,
+"km_linha": 9.715,
+"estacoes": [
+"Guy-Concordia",
+"Peel"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "CENTRE D'ATTACHEMENT DUVERNAY",
+"linha": "verde",
+"n_tecnicos": 6,
+"tipo": "desconhecido",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": ""
+},
+{
+"codigo": "INTER.G.VANIER/LUCIEN L'ALLIER",
+"linha": "laranja",
+"n_tecnicos": 6,
+"tipo": "outro",
+"status": "aproximado",
+"lat": 45.494814,
+"lon": -73.571215,
+"km_linha": 12.488,
+"estacoes": [
+"Lucien-L'Allier"
+],
+"metodo": "nome de estação contido no código"
+},
+{
+"codigo": "POSTE DE REDR.REGINA",
+"linha": "verde",
+"n_tecnicos": 6,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "INTER.MCGILL/PLACE-DES-ARTS",
+"linha": "verde",
+"n_tecnicos": 6,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.50604532042292,
+"lon": -73.56978614298475,
+"km_linha": 10.744,
+"estacoes": [
+"Mcgill",
+"Place Des Arts"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "4999",
+"linha": "amarela",
+"n_tecnicos": 6,
+"tipo": "linha_sem_posicao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "código genérico da linha (x999), sem posição; significado não documentado"
+},
+{
+"codigo": "POSTE DE REDR.GREENE",
+"linha": "verde",
+"n_tecnicos": 5,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "POSTE DE REDR.VIGER",
+"linha": "laranja",
+"n_tecnicos": 5,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "INTER.BONAVENTURE/SQ.-VICTORIA",
+"linha": "laranja",
+"n_tecnicos": 5,
+"tipo": "outro",
+"status": "aproximado",
+"lat": 45.498053,
+"lon": -73.567129,
+"km_linha": 12.969,
+"estacoes": [
+"Bonaventure"
+],
+"metodo": "nome de estação contido no código"
+},
+{
+"codigo": "INTER.UNIVERSITE/ED.MONTPETIT",
+"linha": "azul",
+"n_tecnicos": 5,
+"tipo": "desconhecido",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": ""
+},
+{
+"codigo": "POSTE PROVIDENCE",
+"linha": "laranja",
+"n_tecnicos": 5,
+"tipo": "desconhecido",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": ""
+},
+{
+"codigo": "INTER.FABRE/D'IBERVILLE",
+"linha": "azul",
+"n_tecnicos": 5,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.550698653423986,
+"lon": -73.60438988789244,
+"km_linha": 8.616,
+"estacoes": [
+"Fabre",
+"Iberville"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "POSTE DE REDR.ST-CLAUDE",
+"linha": "laranja",
+"n_tecnicos": 4,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "INTER.PL.-D'ARMES/CH.-DE-MARS",
+"linha": "laranja",
+"n_tecnicos": 4,
+"tipo": "desconhecido",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": ""
+},
+{
+"codigo": "POSTE DE REDR.POUPART",
+"linha": "verde",
+"n_tecnicos": 4,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "INTER.DE LA CONCORDE/2R83",
+"linha": "laranja",
+"n_tecnicos": 4,
+"tipo": "outro",
+"status": "aproximado",
+"lat": 45.560544,
+"lon": -73.709337,
+"km_linha": 28.325,
+"estacoes": [
+"De La Concorde"
+],
+"metodo": "nome de estação contido no código"
+},
+{
+"codigo": "POSTE DE REDR.DESMARCHAIS",
+"linha": "verde",
+"n_tecnicos": 4,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "INTER.SQ.-VICTORIA/PL.-D'ARMES",
+"linha": "laranja",
+"n_tecnicos": 4,
+"tipo": "desconhecido",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": ""
+},
+{
+"codigo": "INTER.DE CASTELNAU/JEAN-TALON",
+"linha": "azul",
+"n_tecnicos": 3,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.537455426964726,
+"lon": -73.61722709328271,
+"km_linha": 6.813,
+"estacoes": [
+"De Castelnau",
+"Jean-Talon"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "POSTE DE REDR.CHABANEL",
+"linha": "laranja",
+"n_tecnicos": 3,
+"tipo": "subestacao",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": "subestação de energia; a posição não é publicada pela STM"
+},
+{
+"codigo": "INTER.PREFONTAINE/JOLIETTE",
+"linha": "verde",
+"n_tecnicos": 2,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.54422621978759,
+"lon": -73.55272068080859,
+"km_linha": 15.843,
+"estacoes": [
+"Préfontaine",
+"Joliette"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "CFSPI FORMATION PREVENTION INCENDIE",
+"linha": "laranja",
+"n_tecnicos": 2,
+"tipo": "desconhecido",
+"status": "desconhecido",
+"lat": null,
+"lon": null,
+"km_linha": null,
+"estacoes": [],
+"metodo": ""
+},
+{
+"codigo": "INTER.PEEL/MCGILL",
+"linha": "verde",
+"n_tecnicos": 2,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.502461656717394,
+"lon": -73.57313449976179,
+"km_linha": 10.268,
+"estacoes": [
+"Peel",
+"Mcgill"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+},
+{
+"codigo": "INTER.LANGELIER/RADISSON",
+"linha": "verde",
+"n_tecnicos": 2,
+"tipo": "interestacao",
+"status": "verificado",
+"lat": 45.58612693503501,
+"lon": -73.54119927672629,
+"km_linha": 20.874,
+"estacoes": [
+"Langelier",
+"Radisson"
+],
+"metodo": "ponto médio no traçado entre as duas estações"
+}
+]

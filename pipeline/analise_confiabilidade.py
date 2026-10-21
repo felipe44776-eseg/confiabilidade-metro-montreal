@@ -1,7 +1,7 @@
 """Analise de confiabilidade e tolerancia a falhas do metro de Montreal (STM).
 
-Gera os conjuntos de dados do painel em dados/artefato/*.json (um arquivo por tabela).
-Uso (da raiz do projeto): python -I scripts/analise_confiabilidade.py
+Gera os conjuntos de dados do painel em dados/derivados/painel/*.json (um arquivo por tabela).
+Uso (da raiz do projeto): python -I pipeline/analise_confiabilidade.py
 
 Definicoes:
 - Falha tecnica: causa primaria "Matériel roulant" (material rodante) ou "Équipements fixes"
@@ -23,8 +23,9 @@ from datetime import date, datetime, timedelta
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-D = "dados"
-SAIDA = f"{D}/artefato"
+BRUTOS = "dados/brutos"
+DERIV = "dados/derivados"
+SAIDA = f"{DERIV}/painel"
 LINHAS = {"Ligne verte": "verde", "Ligne orange": "laranja", "Ligne jaune": "amarela", "Ligne bleue": "azul"}
 NUM_LINHA = {"1": "verde", "2": "laranja", "4": "amarela", "5": "azul"}
 ORDEM = ["verde", "laranja", "amarela", "azul"]
@@ -66,10 +67,10 @@ def salva(nome, linhas):
 
 
 # ---------------------------------------------------------------- leitura dos incidentes
-with open(f"{D}/stm_montreal/incidents_metro.csv", encoding="utf-8-sig", newline="") as f:
+with open(f"{BRUTOS}/stm/incidents_metro.csv", encoding="utf-8-sig", newline="") as f:
     bruto = list(csv.reader(f, delimiter=";"))
 cab = bruto[1]
-eventos, multi = [], []
+eventos, multi, sem_linha = [], [], []
 for row in bruto[2:]:
     if len(row) < len(cab) or not row[0].strip():
         continue
@@ -81,7 +82,7 @@ for row in bruto[2:]:
         "causa": TEC.get(e["Cause primaire"]), "causa_txt": e["Cause primaire"],
         "frota": e["Cause secondaire"] if e["Cause secondaire"] in ("MR-73", "MPM-10") else None,
         "local": e["Code de lieu"], "veiculo": e["Véhicule"] if e["Véhicule"] not in ("#", "") else None,
-        "evac": e["Évacuation"] not in ("#", ""), "linha_txt": e["Ligne"],
+        "evac": e["Évacuation"] not in ("#", ""), "linha_txt": e["Ligne"], "faixa": e["Incident en minutes"],
     }
     if e["Ligne"] in LINHAS:
         ev["linha"] = LINHAS[e["Ligne"]]
@@ -90,6 +91,8 @@ for row in bruto[2:]:
         ev["linhas"] = sorted({NUM_LINHA[x] for x in re.findall(r"\d", e["Ligne"]) if x in NUM_LINHA})
         if len(ev["linhas"]) >= 2:
             multi.append(ev)
+        else:
+            sem_linha.append(ev)
 
 tec = [e for e in eventos if e["causa"]]
 por_linha = {l: sorted((e for e in tec if e["linha"] == l), key=lambda e: e["op"]) for l in ORDEM}
@@ -101,7 +104,7 @@ km_ano_frota = defaultdict(float)
 km_mes = defaultdict(float)
 km_linha = defaultdict(float)
 comp_dia = defaultdict(set)
-with open(f"{D}/stm_montreal/km_reel.csv", encoding="utf-8-sig", newline="") as f:
+with open(f"{BRUTOS}/stm/km_reel.csv", encoding="utf-8-sig", newline="") as f:
     for row in csv.DictReader(f):
         l = LINHAS.get(row["Ligne"])
         km = num(row["Km voiture"])
@@ -119,12 +122,12 @@ with open(f"{D}/stm_montreal/km_reel.csv", encoding="utf-8-sig", newline="") as 
 # ---------------------------------------------------------------- clima e mobilidade
 clima = {}
 for ano in range(2019, 2027):
-    for row in csv.DictReader(open(f"{D}/clima_montreal/eccc_diario_{ano}.csv", encoding="utf-8-sig")):
+    for row in csv.DictReader(open(f"{BRUTOS}/eccc/eccc_diario_{ano}.csv", encoding="utf-8-sig")):
         clima[row["Date/Time"]] = {"tmax": num(row["Max Temp (°C)"]), "tmed": num(row["Mean Temp (°C)"]),
                                    "neve": num(row["Total Snow (cm)"]), "neve_solo": num(row["Snow on Grnd (cm)"]),
                                    "precip": num(row["Total Precip (mm)"])}
 mob = {row["date"]: num(row["transit_stations_percent_change_from_baseline"])
-       for row in csv.DictReader(open(f"{D}/mobilidade_google/google_mobilidade_montreal_2020_2022.csv", encoding="utf-8"))}
+       for row in csv.DictReader(open(f"{DERIV}/mobilidade/google_mobilidade_montreal_2020_2022.csv", encoding="utf-8"))}
 
 
 # ---------------------------------------------------------------- ajuste de distribuicoes
@@ -251,6 +254,15 @@ for l in ORDEM:
         n = sum(1 for v in tbf if a <= v < b)
         hist_out.append({"linha": l, "de_h": r(a, 3), "ate_h": r(b, 3), "n": n, "pct": r(n / len(tbf), 4)})
 
+FAIXA_OFICIAL = {"02 min et moins": (0, 2), "03 à 04 min": (3, 4), "05 à 09 min": (5, 9), "10 à 14 min": (10, 14),
+                 "15 à 19 min": (15, 19), "20 à 24 min": (20, 24), "25 à 29 min": (25, 29), "30 min et plus": (30, 10 ** 6)}
+
+
+def faixa_ok(e):
+    a, b = FAIXA_OFICIAL.get(e["faixa"], (None, None))
+    return a is not None and a <= e["dur"] <= b
+
+
 # Rede: qualquer falha tecnica em qualquer linha (sistema em serie de 4 linhas)
 todos = sorted(tec, key=lambda e: e["op"])
 tbf_rede = [(b["op"] - a["op"]) / 60 for a, b in zip(todos, todos[1:])]
@@ -280,6 +292,9 @@ linhas_out.append({
     "r_emp_1h": None, "r_emp_8h": None, "r_emp_20h": None,
     "evacuacoes": sum(1 for e in todos if e["evac"]),
     "trens_dia_util": sum(trens_dia_util.values()), "lambda_trem_dia": None,
+    "tecnicos_sem_linha": sum(1 for e in sem_linha if e["causa"]),
+    "tecnicos_multilinha": sum(1 for e in multi if e["causa"]),
+    "concordancia_faixa": r(sum(1 for e in todos if faixa_ok(e)) / len(todos), 4),
 })
 
 # ---------------------------------------------------------------- serie anual por linha
@@ -589,7 +604,7 @@ for e in tec:
 estacoes_out = []
 vistas = defaultdict(set)
 ROTA = {"1": "verde", "2": "laranja", "4": "amarela", "5": "azul"}
-with open(f"{D}/gtfs_stm/metro_sequencias.csv", encoding="utf-8") as f:
+with open(f"{DERIV}/gtfs/metro_sequencias.csv", encoding="utf-8") as f:
     seqs = [x for x in csv.DictReader(f, delimiter=";") if x["direction_id"] == "0"]
 for x in seqs:
     vistas[norma(x["estacao"])].add(ROTA[x["route_id"]])

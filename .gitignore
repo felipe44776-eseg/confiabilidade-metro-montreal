@@ -1,0 +1,14 @@
+# Dados brutos: a cópia exata fica na Release do GitHub (ver fontes/FONTES.md)
+dados/brutos/
+# Pesquisas de outros temas, fora do projeto publicado
+dados/outros_temas/
+# Notas internas da equipe
+ESTADO.md
+# Saídas de build e de verificação
+_site/
+_site_app/
+_verificacao/
+app/node_modules/
+__pycache__/
+*.pyc
+.venv/

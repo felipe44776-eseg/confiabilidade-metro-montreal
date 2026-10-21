@@ -1,0 +1,55 @@
+/* Layout: painel de legenda à esquerda e mapa ocupando o resto; no celular, legenda em cima e mapa embaixo.
+   Tema claro único, de propósito: o mapa de fundo (positron) é claro. */
+:root {
+  color-scheme: light;
+  --fundo: #f6f6f3;
+  --painel: #ffffff;
+  --tinta: #1d1d1b;
+  --tinta-2: #55544f;
+  --linha-divisoria: #e2e1da;
+  --destaque: #2a5bd7;
+  --st-verificado: #1d1d1b;
+  --st-deduzido: #6250d6;
+  --st-aproximado: #9a988f;
+  --st-desconhecido: #c9c8c0;
+  --fonte: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --fonte-titulo: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+}
+html, body { height: 100%; margin: 0; }
+body { background: var(--fundo); color: var(--tinta); font-family: var(--fonte); font-size: 15px; line-height: 1.5; }
+.pagina { display: grid; grid-template-columns: minmax(18rem, 24rem) 1fr; height: 100%; }
+.painel {
+  background: var(--painel); border-right: 1px solid var(--linha-divisoria); overflow-y: auto;
+  padding-block: 20px 28px; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: 20px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.mapa { min-height: 0; }
+.voltar { color: var(--destaque); text-decoration: none; font-size: 13px; }
+.voltar:hover { text-decoration: underline; }
+h1 { font-family: var(--fonte-titulo); font-weight: 400; font-size: 1.6rem; line-height: 1.15; margin: 0; text-wrap: balance; }
+h2 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--tinta-2); margin: 0 0 6px; font-weight: 600; }
+.lead { margin: 0; }
+.nota { margin: 6px 0 0; font-size: 12.5px; color: var(--tinta-2); line-height: 1.45; }
+a { color: var(--destaque); }
+ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.status label { display: grid; grid-template-columns: auto auto 1fr auto; align-items: center; gap: 8px; cursor: pointer; padding: 3px 0; }
+.status input { margin: 0; accent-color: var(--tinta); }
+.status input:focus-visible { outline: 2px solid var(--destaque); outline-offset: 2px; }
+.amostra { width: 12px; height: 12px; border-radius: 50%; display: inline-block; border: 1px solid #ffffff; box-shadow: 0 0 0 1px var(--linha-divisoria); }
+.num { font-variant-numeric: tabular-nums; color: var(--tinta-2); font-size: 13px; }
+.status .sem-mapa { opacity: 0.75; cursor: default; }
+.linhas li { display: grid; grid-template-columns: 14px 1fr auto; gap: 8px; align-items: center; font-size: 14px; }
+.traco { width: 14px; height: 4px; border-radius: 2px; }
+.erro { color: #b42318; font-size: 13px; margin: 0; }
+.carregando { color: var(--tinta-2); font-size: 13px; }
+.maplibregl-popup-content { font-family: var(--fonte); font-size: 13px; line-height: 1.45; padding: 10px 12px; max-width: 18rem; }
+.pop h3 { margin: 0 0 4px; font-size: 14px; font-weight: 600; }
+.pop dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 2px 8px; }
+.pop dt { color: var(--tinta-2); }
+.pop dd { margin: 0; font-variant-numeric: tabular-nums; }
+.pop .metodo { margin: 6px 0 0; color: var(--tinta-2); font-size: 12px; }
+@media (max-width: 760px) {
+  .pagina { grid-template-columns: 1fr; grid-template-rows: auto 70vh; height: auto; }
+  .painel { border-right: 0; border-bottom: 1px solid var(--linha-divisoria); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }

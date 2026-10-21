@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mapa de falhas do metrô de Montreal</title>
+<meta name="description" content="Traçado real das linhas, estações e local das falhas técnicas do metrô de Montreal, de 2019 a junho de 2026.">
+</head>
+<body>
+<div class="pagina">
+  <aside class="painel" aria-label="Legenda e filtros">
+    <a class="voltar" href="../">← Painel de confiabilidade</a>
+    <h1>Onde o metrô de Montreal falha</h1>
+    <p class="lead">Cada círculo é um local da base de incidentes da STM. A área é proporcional ao número de falhas técnicas registradas ali de 2019 a junho de 2026.</p>
+
+    <section aria-labelledby="t-status">
+      <h2 id="t-status">Posição de cada local</h2>
+      <ul class="status" id="lista-status"><li class="carregando">Carregando…</li></ul>
+      <p class="nota">Verificado: o nome do local é o mesmo de uma estação ou de um trecho do GTFS. Deduzido: código de plataforma de correspondência, interpretado por nós. Aproximado: garagem, arrière-gare ou outro local posto na estação de mesmo nome. Sem posição: subestações de energia e códigos genéricos, que a STM não localiza.</p>
+    </section>
+
+    <section aria-labelledby="t-linhas">
+      <h2 id="t-linhas">Linhas</h2>
+      <ul class="linhas" id="lista-linhas"></ul>
+      <p class="nota">Comprimento do traçado do OpenStreetMap contra o comprimento oficial.</p>
+    </section>
+
+    <p class="nota">Validação completa: <a id="link-validacao" href="https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/blob/main/fontes/verificacao/validacao_geo.md">validacao_geo.md</a>. Fontes de cada dado: <a href="../fontes/">fontes e verificação</a>.</p>
+    <p class="erro" id="erro" hidden></p>
+  </aside>
+  <main class="mapa" id="mapa" aria-label="Mapa das linhas e dos locais de falha"></main>
+</div>
+<script type="module" src="../src/mapa.ts"></script>
+</body>
+</html>

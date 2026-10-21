@@ -1,0 +1,1152 @@
+{
+ "gerado_em": "2026-10-21T01:16:43+00:00",
+ "release": "dados-2026-10-20",
+ "fontes": [
+  {
+   "id": "stm_incidentes",
+   "papel": "painel e simulador",
+   "arquivo": "dados/brutos/stm/incidents_metro.csv",
+   "distribuicao": "release",
+   "url": "https://donneesouvertes.stm.info/fichiers/Incidents%20m%C3%A9tro.csv",
+   "catalogo": [
+    "https://www.donneesquebec.ca/recherche/dataset/vmtl-incidents-du-reseau-du-metro",
+    "https://donnees.montreal.ca/dataset/incidents-du-reseau-du-metro"
+   ],
+   "editor": "Société de transport de Montréal (STM)",
+   "licenca": "CC BY 4.0",
+   "formato": "csv;",
+   "pula_linhas": 1,
+   "uso": "Todas as falhas, tempos e duracoes; locais dos incidentes (geo_base.py)",
+   "release": "https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/releases/download/dados-2026-10-20/incidents_metro.csv",
+   "bytes": 7954389,
+   "sha256": "03baafef3cc667392f2c333f40d960ea0941c97eefd788ce1b1f97e1c4094800",
+   "linhas": 45785,
+   "colunas": [
+    "Numero d'incident",
+    "Type d'incident",
+    "Cause primaire",
+    "Cause secondaire",
+    "Symptome",
+    "Ligne",
+    "Numéro de tournée",
+    "Heure de l'incident",
+    "Heure de reprise",
+    "Incident en minutes",
+    "Véhicule",
+    "Porte de voiture",
+    "Type de matériel",
+    "Code de lieu",
+    "Dommage matériel",
+    "KFS",
+    "Porte",
+    "Urgence métro",
+    "CAT",
+    "Évacuation",
+    "Année civile",
+    "Année civile/mois",
+    "Mois calendrier",
+    "Jour du mois",
+    "Jour de la semaine",
+    "Jour calendaire"
+   ]
+  },
+  {
+   "id": "stm_km_reel",
+   "papel": "painel e simulador",
+   "arquivo": "dados/brutos/stm/km_reel.csv",
+   "distribuicao": "release",
+   "url": "https://donneesouvertes.stm.info/fichiers/Kilom%C3%A9trage%20r%C3%A9el.csv",
+   "catalogo": [
+    "https://donnees.montreal.ca/dataset/stm-kilometrage-realise-par-les-voitures-de-metro-de-la-stm"
+   ],
+   "editor": "STM",
+   "licenca": "CC BY 4.0",
+   "formato": "csv,",
+   "uso": "Exposicao (km-carro) por linha e frota, trens em servico por dia, taxas por km, modelo k-de-n",
+   "release": "https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/releases/download/dados-2026-10-20/km_reel.csv",
+   "bytes": 56529490,
+   "sha256": "40b21aca5f136c106814b5c71b738084e0f49b218de0686e79c05a54f8b3d118",
+   "linhas": 559549,
+   "colunas": [
+    "Composition du train",
+    "Type matériel",
+    "Ligne",
+    "Tournee Metro",
+    "Code dégradation",
+    "Période exploitation",
+    "Type de jour",
+    "Année",
+    "Année/mois",
+    "Année/semaine",
+    "Année/Trimestre",
+    "Jour calendaire",
+    "Mois",
+    "Km voiture"
+   ]
+  },
+  {
+   "id": "stm_km_planifie",
+   "papel": "apoio",
+   "arquivo": "dados/brutos/stm/km_planifie.csv",
+   "distribuicao": "release",
+   "url": "https://donneesouvertes.stm.info/fichiers/Kilom%C3%A9trage%20m%C3%A9tro%20planif%C3%A9.csv",
+   "catalogo": [
+    "https://donnees.montreal.ca/dataset/stm-kilometrage-metro-des-periodes-de-service"
+   ],
+   "editor": "STM",
+   "licenca": "CC BY 4.0",
+   "formato": "csv,",
+   "uso": "Km planejado e tipo de dia no painel diario (monta_painel.py)",
+   "release": "https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/releases/download/dados-2026-10-20/km_planifie.csv",
+   "bytes": 717815,
+   "sha256": "1c3e00de59c4519ca148e75fa92d2d662984085bc2b3e5b327ca1293c8f0d25f",
+   "linhas": 8472,
+   "colunas": [
+    "Ligne",
+    "Période Exploitation",
+    "Type de Jour",
+    "Tournée",
+    "Année civile",
+    "Année civile/mois",
+    "Année civile/semaine",
+    "Jour calendaire",
+    "Jour de la semaine",
+    "Mois calendrier",
+    "KM planifié"
+   ]
+  },
+  {
+   "id": "stm_km_budgete",
+   "papel": "nao usado",
+   "arquivo": "dados/brutos/stm/km_budgete.csv",
+   "distribuicao": "release",
+   "url": "https://donneesouvertes.stm.info/fichiers/Kilom%C3%A9trage%20m%C3%A9tro%20budg%C3%A9t%C3%A9.csv",
+   "catalogo": [
+    "https://donnees.montreal.ca/dataset/stm-kilometrage-du-budget-d-exploitation-du-metro-de-la-stm"
+   ],
+   "editor": "STM",
+   "licenca": "CC BY 4.0",
+   "formato": "bruto",
+   "uso": "Baixado e descartado: substituido pelo km real",
+   "release": "https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/releases/download/dados-2026-10-20/km_budgete.csv",
+   "bytes": 41263,
+   "sha256": "33fa937d08394b5832a5b3754005102a28c6fb6a8a6d787b7a5a8ab4ab3e9adc"
+  },
+  {
+   "id": "gtfs_stm",
+   "papel": "painel e simulador",
+   "arquivo": "dados/brutos/gtfs/gtfs_stm_mdb-2126_latest.zip",
+   "distribuicao": "release",
+   "url": "https://files.mobilitydatabase.org/mdb-2126/latest.zip",
+   "catalogo": [
+    "https://www.stm.info/sites/default/files/gtfs/gtfs_stm.zip (original, inacessivel desta maquina)",
+    "https://files.mobilitydatabase.org/feeds_v2.csv (catalogo do Mobility Database, feed mdb-2126)"
+   ],
+   "editor": "STM, espelhado pelo Mobility Database",
+   "licenca": "CC BY 4.0 (STM)",
+   "formato": "zip",
+   "muda_com_tempo": true,
+   "uso": "Estacoes, horarios e coordenadas (extrai_gtfs_metro.py)",
+   "release": "https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/releases/download/dados-2026-10-20/gtfs_stm_mdb-2126_latest.zip",
+   "bytes": 66986453,
+   "sha256": "50c8481c9f67de7815c5c8ac64c541b6ecfbc730e9db1be641215e94ac63503e"
+  },
+  {
+   "id": "osm_metro",
+   "papel": "simulador",
+   "arquivo": "dados/brutos/osm/overpass_metro_mtl.json",
+   "distribuicao": "release",
+   "url": "https://overpass-api.de/api/interpreter",
+   "post": {
+    "data": "[out:json][timeout:150];(relation[\"route\"=\"subway\"](45.40,-73.80,45.62,-73.45);)->.r;.r out body geom;node[\"railway\"=\"station\"][\"station\"=\"subway\"](45.40,-73.80,45.62,-73.45);out body;"
+   },
+   "catalogo": [
+    "https://www.openstreetmap.org/relation/58433 (exemplo: linha verde)"
+   ],
+   "editor": "Colaboradores do OpenStreetMap",
+   "licenca": "ODbL 1.0",
+   "formato": "json",
+   "muda_com_tempo": true,
+   "uso": "Tracado real das linhas e nos de estacao (geo_base.py)",
+   "release": "https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/releases/download/dados-2026-10-20/overpass_metro_mtl.json",
+   "bytes": 171253,
+   "sha256": "392ba4d1bba44b76b0264617ca2ec3000650956830b6356970dfd643931f1f37"
+  },
+  {
+   "id": "wikidata_estacoes",
+   "papel": "validacao",
+   "arquivo": "dados/brutos/wikidata/estacoes_metro_mtl.json",
+   "distribuicao": "release",
+   "url": "https://query.wikidata.org/sparql?query=SELECT+%3Fs+%3FsLabel+%3Fcoord+WHERE+%7B+%3Fs+wdt%3AP16+wd%3AQ392377%3B+wdt%3AP625+%3Fcoord.+%3Fs+wdt%3AP31%2Fwdt%3AP279%2A+wd%3AQ928830.+SERVICE+wikibase%3Alabel+%7B+bd%3AserviceParam+wikibase%3Alanguage+%22fr%2Cen%22.+%7D+%7D",
+   "aceita": "application/sparql-results+json",
+   "catalogo": [
+    "https://www.wikidata.org/wiki/Q392377"
+   ],
+   "editor": "Wikidata",
+   "licenca": "CC0",
+   "formato": "json",
+   "muda_com_tempo": true,
+   "uso": "Segunda referencia de coordenadas das estacoes (geo_base.py)",
+   "release": "https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/releases/download/dados-2026-10-20/estacoes_metro_mtl.json",
+   "bytes": 41813,
+   "sha256": "591d502e531e058cf557ca1eb85940bd7bca7b42db81878e810a42b1a5ae39da"
+  },
+  {
+   "id": "google_mobilidade",
+   "papel": "painel",
+   "arquivo": "dados/brutos/google/google_Region_Mobility_Report_CSVs.zip",
+   "distribuicao": "origem",
+   "url": "https://www.gstatic.com/covid19/mobility/Region_Mobility_Report_CSVs.zip",
+   "catalogo": [
+    "https://www.google.com/covid19/mobility/"
+   ],
+   "editor": "Google LLC",
+   "licenca": "Termos do Google, com citacao; redistribuicao nao verificada",
+   "formato": "zip",
+   "grande": true,
+   "uso": "Correlacao diaria com mobilidade em estacoes (extrai_mobilidade.py)",
+   "bytes": 98167694,
+   "sha256": "303a1d7ba631c1e66b5c0ff7e1f7b29a121c717d7e040b0e39664f5de2059447"
+  },
+  {
+   "id": "eccc_2019",
+   "papel": "painel e simulador",
+   "arquivo": "dados/brutos/eccc/eccc_diario_2019.csv",
+   "distribuicao": "release",
+   "url": "https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=51157&Year=2019&Month=1&Day=1&time=&timeframe=2&submit=Download+Data",
+   "catalogo": [
+    "https://climate.weather.gc.ca/historical_data/search_historic_data_e.html"
+   ],
+   "editor": "Environment and Climate Change Canada, estacao MONTREAL INTL A (Climate ID 7025251)",
+   "licenca": "Licenca de Governo Aberto do Canada",
+   "formato": "csv,",
+   "muda_com_tempo": false,
+   "uso": "Temperatura e neve por dia (perfil e correlacoes)",
+   "release": "https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/releases/download/dados-2026-10-20/eccc_diario_2019.csv",
+   "bytes": 64977,
+   "sha256": "4a925bdfe7fedcf07ee027ad875499a764b063ec4b3f96a96a16135ff0889f1f",
+   "linhas": 365,
+   "colunas": [
+    "Longitude (x)",
+    "Latitude (y)",
+    "Station Name",
+    "Climate ID",
+    "Date/Time",
+    "Year",
+    "Month",
+    "Day",
+    "Data Quality",
+    "Max Temp (°C)",
+    "Max Temp Flag",
+    "Min Temp (°C)",
+    "Min Temp Flag",
+    "Mean Temp (°C)",
+    "Mean Temp Flag",
+    "Heat Deg Days (°C)",
+    "Heat Deg Days Flag",
+    "Cool Deg Days (°C)",
+    "Cool Deg Days Flag",
+    "Total Rain (mm)",
+    "Total Rain Flag",
+    "Total Snow (cm)",
+    "Total Snow Flag",
+    "Total Precip (mm)",
+    "Total Precip Flag",
+    "Snow on Grnd (cm)",
+    "Snow on Grnd Flag",
+    "Dir of Max Gust (10s deg)",
+    "Dir of Max Gust Flag",
+    "Spd of Max Gust (km/h)",
+    "Spd of Max Gust Flag"
+   ]
+  },
+  {
+   "id": "eccc_2020",
+   "papel": "painel e simulador",
+   "arquivo": "dados/brutos/eccc/eccc_diario_2020.csv",
+   "distribuicao": "release",
+   "url": "https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=51157&Year=2020&Month=1&Day=1&time=&timeframe=2&submit=Download+Data",
+   "catalogo": [
+    "https://climate.weather.gc.ca/historical_data/search_historic_data_e.html"
+   ],
+   "editor": "Environment and Climate Change Canada, estacao MONTREAL INTL A (Climate ID 7025251)",
+   "licenca": "Licenca de Governo Aberto do Canada",
+   "formato": "csv,",
+   "muda_com_tempo": false,
+   "uso": "Temperatura e neve por dia (perfil e correlacoes)",
+   "release": "https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/releases/download/dados-2026-10-20/eccc_diario_2020.csv",
+   "bytes": 65064,
+   "sha256": "eb032810b7af3dd5be6181ba1c9cfefc7ba2188af104ec1d58eeed31137a181d",
+   "linhas": 366,
+   "colunas": [
+    "Longitude (x)",
+    "Latitude (y)",
+    "Station Name",
+    "Climate ID",
+    "Date/Time",
+    "Year",
+    "Month",
+    "Day",
+    "Data Quality",
+    "Max Temp (°C)",
+    "Max Temp Flag",
+    "Min Temp (°C)",
+    "Min Temp Flag",
+    "Mean Temp (°C)",
+    "Mean Temp Flag",
+    "Heat Deg Days (°C)",
+    "Heat Deg Days Flag",
+    "Cool Deg Days (°C)",
+    "Cool Deg Days Flag",
+    "Total Rain (mm)",
+    "Total Rain Flag",
+    "Total Snow (cm)",
+    "Total Snow Flag",
+    "Total Precip (mm)",
+    "Total Precip Flag",
+    "Snow on Grnd (cm)",
+    "Snow on Grnd Flag",
+    "Dir of Max Gust (10s deg)",
+    "Dir of Max Gust Flag",
+    "Spd of Max Gust (km/h)",
+    "Spd of Max Gust Flag"
+   ]
+  },
+  {
+   "id": "eccc_2021",
+   "papel": "painel e simulador",
+   "arquivo": "dados/brutos/eccc/eccc_diario_2021.csv",
+   "distribuicao": "release",
+   "url": "https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=51157&Year=2021&Month=1&Day=1&time=&timeframe=2&submit=Download+Data",
+   "catalogo": [
+    "https://climate.weather.gc.ca/historical_data/search_historic_data_e.html"
+   ],
+   "editor": "Environment and Climate Change Canada, estacao MONTREAL INTL A (Climate ID 7025251)",
+   "licenca": "Licenca de Governo Aberto do Canada",
+   "formato": "csv,",
+   "muda_com_tempo": false,
+   "uso": "Temperatura e neve por dia (perfil e correlacoes)",
+   "release": "https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/releases/download/dados-2026-10-20/eccc_diario_2021.csv",
+   "bytes": 64840,
+   "sha256": "3ada7cb56443e2da261df101d5d5f2eb3ad5f77c0f62741395b2aa2cbfd3dadc",
+   "linhas": 365,
+   "colunas": [
+    "Longitude (x)",
+    "Latitude (y)",
+    "Station Name",
+    "Climate ID",
+    "Date/Time",
+    "Year",
+    "Month",
+    "Day",
+    "Data Quality",
+    "Max Temp (°C)",
+    "Max Temp Flag",
+    "Min Temp (°C)",
+    "Min Temp Flag",
+    "Mean Temp (°C)",
+    "Mean Temp Flag",
+    "Heat Deg Days (°C)",
+    "Heat Deg Days Flag",
+    "Cool Deg Days (°C)",
+    "Cool Deg Days Flag",
+    "Total Rain (mm)",
+    "Total Rain Flag",
+    "Total Snow (cm)",
+    "Total Snow Flag",
+    "Total Precip (mm)",
+    "Total Precip Flag",
+    "Snow on Grnd (cm)",
+    "Snow on Grnd Flag",
+    "Dir of Max Gust (10s deg)",
+    "Dir of Max Gust Flag",
+    "Spd of Max Gust (km/h)",
+    "Spd of Max Gust Flag"
+   ]
+  },
+  {
+   "id": "eccc_2022",
+   "papel": "painel e simulador",
+   "arquivo": "dados/brutos/eccc/eccc_diario_2022.csv",
+   "distribuicao": "release",
+   "url": "https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=51157&Year=2022&Month=1&Day=1&time=&timeframe=2&submit=Download+Data",
+   "catalogo": [
+    "https://climate.weather.gc.ca/historical_data/search_historic_data_e.html"
+   ],
+   "editor": "Environment and Climate Change Canada, estacao MONTREAL INTL A (Climate ID 7025251)",
+   "licenca": "Licenca de Governo Aberto do Canada",
+   "formato": "csv,",
+   "muda_com_tempo": false,
+   "uso": "Temperatura e neve por dia (perfil e correlacoes)",
+   "release": "https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/releases/download/dados-2026-10-20/eccc_diario_2022.csv",
+   "bytes": 64969,
+   "sha256": "b01df555a7c45bedb1a76212f57e7e8e8ec01551c14d226dd958fd4405bcd663",
+   "linhas": 365,
+   "colunas": [
+    "Longitude (x)",
+    "Latitude (y)",
+    "Station Name",
+    "Climate ID",
+    "Date/Time",
+    "Year",
+    "Month",
+    "Day",
+    "Data Quality",
+    "Max Temp (°C)",
+    "Max Temp Flag",
+    "Min Temp (°C)",
+    "Min Temp Flag",
+    "Mean Temp (°C)",
+    "Mean Temp Flag",
+    "Heat Deg Days (°C)",
+    "Heat Deg Days Flag",
+    "Cool Deg Days (°C)",
+    "Cool Deg Days Flag",
+    "Total Rain (mm)",
+    "Total Rain Flag",
+    "Total Snow (cm)",
+    "Total Snow Flag",
+    "Total Precip (mm)",
+    "Total Precip Flag",
+    "Snow on Grnd (cm)",
+    "Snow on Grnd Flag",
+    "Dir of Max Gust (10s deg)",
+    "Dir of Max Gust Flag",
+    "Spd of Max Gust (km/h)",
+    "Spd of Max Gust Flag"
+   ]
+  },
+  {
+   "id": "eccc_2023",
+   "papel": "painel e simulador",
+   "arquivo": "dados/brutos/eccc/eccc_diario_2023.csv",
+   "distribuicao": "release",
+   "url": "https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=51157&Year=2023&Month=1&Day=1&time=&timeframe=2&submit=Download+Data",
+   "catalogo": [
+    "https://climate.weather.gc.ca/historical_data/search_historic_data_e.html"
+   ],
+   "editor": "Environment and Climate Change Canada, estacao MONTREAL INTL A (Climate ID 7025251)",
+   "licenca": "Licenca de Governo Aberto do Canada",
+   "formato": "csv,",
+   "muda_com_tempo": false,
+   "uso": "Temperatura e neve por dia (perfil e correlacoes)",
+   "release": "https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/releases/download/dados-2026-10-20/eccc_diario_2023.csv",
+   "bytes": 64702,
+   "sha256": "ed15bc97f10802913a49c44d0d12ca268bc7dea630df1c279d7702390864b1c2",
+   "linhas": 365,
+   "colunas": [
+    "Longitude (x)",
+    "Latitude (y)",
+    "Station Name",
+    "Climate ID",
+    "Date/Time",
+    "Year",
+    "Month",
+    "Day",
+    "Data Quality",
+    "Max Temp (°C)",
+    "Max Temp Flag",
+    "Min Temp (°C)",
+    "Min Temp Flag",
+    "Mean Temp (°C)",
+    "Mean Temp Flag",
+    "Heat Deg Days (°C)",
+    "Heat Deg Days Flag",
+    "Cool Deg Days (°C)",
+    "Cool Deg Days Flag",
+    "Total Rain (mm)",
+    "Total Rain Flag",
+    "Total Snow (cm)",
+    "Total Snow Flag",
+    "Total Precip (mm)",
+    "Total Precip Flag",
+    "Snow on Grnd (cm)",
+    "Snow on Grnd Flag",
+    "Dir of Max Gust (10s deg)",
+    "Dir of Max Gust Flag",
+    "Spd of Max Gust (km/h)",
+    "Spd of Max Gust Flag"
+   ]
+  },
+  {
+   "id": "eccc_2024",
+   "papel": "painel e simulador",
+   "arquivo": "dados/brutos/eccc/eccc_diario_2024.csv",
+   "distribuicao": "release",
+   "url": "https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=51157&Year=2024&Month=1&Day=1&time=&timeframe=2&submit=Download+Data",
+   "catalogo": [
+    "https://climate.weather.gc.ca/historical_data/search_historic_data_e.html"
+   ],
+   "editor": "Environment and Climate Change Canada, estacao MONTREAL INTL A (Climate ID 7025251)",
+   "licenca": "Licenca de Governo Aberto do Canada",
+   "formato": "csv,",
+   "muda_com_tempo": false,
+   "uso": "Temperatura e neve por dia (perfil e correlacoes)",
+   "release": "https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/releases/download/dados-2026-10-20/eccc_diario_2024.csv",
+   "bytes": 64764,
+   "sha256": "6b3fe0ae20729748450fc5ae6604822592436d6b77be587df7b458b87da848fb",
+   "linhas": 366,
+   "colunas": [
+    "Longitude (x)",
+    "Latitude (y)",
+    "Station Name",
+    "Climate ID",
+    "Date/Time",
+    "Year",
+    "Month",
+    "Day",
+    "Data Quality",
+    "Max Temp (°C)",
+    "Max Temp Flag",
+    "Min Temp (°C)",
+    "Min Temp Flag",
+    "Mean Temp (°C)",
+    "Mean Temp Flag",
+    "Heat Deg Days (°C)",
+    "Heat Deg Days Flag",
+    "Cool Deg Days (°C)",
+    "Cool Deg Days Flag",
+    "Total Rain (mm)",
+    "Total Rain Flag",
+    "Total Snow (cm)",
+    "Total Snow Flag",
+    "Total Precip (mm)",
+    "Total Precip Flag",
+    "Snow on Grnd (cm)",
+    "Snow on Grnd Flag",
+    "Dir of Max Gust (10s deg)",
+    "Dir of Max Gust Flag",
+    "Spd of Max Gust (km/h)",
+    "Spd of Max Gust Flag"
+   ]
+  },
+  {
+   "id": "eccc_2025",
+   "papel": "painel e simulador",
+   "arquivo": "dados/brutos/eccc/eccc_diario_2025.csv",
+   "distribuicao": "release",
+   "url": "https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=51157&Year=2025&Month=1&Day=1&time=&timeframe=2&submit=Download+Data",
+   "catalogo": [
+    "https://climate.weather.gc.ca/historical_data/search_historic_data_e.html"
+   ],
+   "editor": "Environment and Climate Change Canada, estacao MONTREAL INTL A (Climate ID 7025251)",
+   "licenca": "Licenca de Governo Aberto do Canada",
+   "formato": "csv,",
+   "muda_com_tempo": false,
+   "uso": "Temperatura e neve por dia (perfil e correlacoes)",
+   "release": "https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/releases/download/dados-2026-10-20/eccc_diario_2025.csv",
+   "bytes": 64905,
+   "sha256": "f4a1e01e038b7f78d0417e79b8584bc766c9783121b5651c155f9eae2a6683b8",
+   "linhas": 365,
+   "colunas": [
+    "Longitude (x)",
+    "Latitude (y)",
+    "Station Name",
+    "Climate ID",
+    "Date/Time",
+    "Year",
+    "Month",
+    "Day",
+    "Data Quality",
+    "Max Temp (°C)",
+    "Max Temp Flag",
+    "Min Temp (°C)",
+    "Min Temp Flag",
+    "Mean Temp (°C)",
+    "Mean Temp Flag",
+    "Heat Deg Days (°C)",
+    "Heat Deg Days Flag",
+    "Cool Deg Days (°C)",
+    "Cool Deg Days Flag",
+    "Total Rain (mm)",
+    "Total Rain Flag",
+    "Total Snow (cm)",
+    "Total Snow Flag",
+    "Total Precip (mm)",
+    "Total Precip Flag",
+    "Snow on Grnd (cm)",
+    "Snow on Grnd Flag",
+    "Dir of Max Gust (10s deg)",
+    "Dir of Max Gust Flag",
+    "Spd of Max Gust (km/h)",
+    "Spd of Max Gust Flag"
+   ]
+  },
+  {
+   "id": "eccc_2026",
+   "papel": "painel e simulador",
+   "arquivo": "dados/brutos/eccc/eccc_diario_2026.csv",
+   "distribuicao": "release",
+   "url": "https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=51157&Year=2026&Month=1&Day=1&time=&timeframe=2&submit=Download+Data",
+   "catalogo": [
+    "https://climate.weather.gc.ca/historical_data/search_historic_data_e.html"
+   ],
+   "editor": "Environment and Climate Change Canada, estacao MONTREAL INTL A (Climate ID 7025251)",
+   "licenca": "Licenca de Governo Aberto do Canada",
+   "formato": "csv,",
+   "muda_com_tempo": true,
+   "uso": "Temperatura e neve por dia (perfil e correlacoes)",
+   "release": "https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/releases/download/dados-2026-10-20/eccc_diario_2026.csv",
+   "bytes": 62562,
+   "sha256": "84a06d70affdea1e4c9674e1db2459473a58fd99146f3a26556a7b40fdf7d127",
+   "linhas": 365,
+   "colunas": [
+    "Longitude (x)",
+    "Latitude (y)",
+    "Station Name",
+    "Climate ID",
+    "Date/Time",
+    "Year",
+    "Month",
+    "Day",
+    "Data Quality",
+    "Max Temp (°C)",
+    "Max Temp Flag",
+    "Min Temp (°C)",
+    "Min Temp Flag",
+    "Mean Temp (°C)",
+    "Mean Temp Flag",
+    "Heat Deg Days (°C)",
+    "Heat Deg Days Flag",
+    "Cool Deg Days (°C)",
+    "Cool Deg Days Flag",
+    "Total Rain (mm)",
+    "Total Rain Flag",
+    "Total Snow (cm)",
+    "Total Snow Flag",
+    "Total Precip (mm)",
+    "Total Precip Flag",
+    "Snow on Grnd (cm)",
+    "Snow on Grnd Flag",
+    "Dir of Max Gust (10s deg)",
+    "Dir of Max Gust Flag",
+    "Spd of Max Gust (km/h)",
+    "Spd of Max Gust Flag"
+   ]
+  },
+  {
+   "id": "nager_2019",
+   "papel": "apoio",
+   "arquivo": "dados/brutos/nager/nager_CA_2019.json",
+   "distribuicao": "origem",
+   "url": "https://date.nager.at/api/v3/PublicHolidays/2019/CA",
+   "catalogo": [
+    "https://date.nager.at/"
+   ],
+   "editor": "Nager.Date",
+   "licenca": "nao verificada",
+   "formato": "json",
+   "uso": "Feriados no painel diario",
+   "bytes": 5823,
+   "sha256": "8dbdb14578ae5a7d1bc38c0e02acd02b4a875880e30180034386d1b4e4c2aa9b"
+  },
+  {
+   "id": "nager_2020",
+   "papel": "apoio",
+   "arquivo": "dados/brutos/nager/nager_CA_2020.json",
+   "distribuicao": "origem",
+   "url": "https://date.nager.at/api/v3/PublicHolidays/2020/CA",
+   "catalogo": [
+    "https://date.nager.at/"
+   ],
+   "editor": "Nager.Date",
+   "licenca": "nao verificada",
+   "formato": "json",
+   "uso": "Feriados no painel diario",
+   "bytes": 5823,
+   "sha256": "8a1d47c72245dab84b6790133556daf66352bfa6880725755467f68d5c4b5a16"
+  },
+  {
+   "id": "nager_2021",
+   "papel": "apoio",
+   "arquivo": "dados/brutos/nager/nager_CA_2021.json",
+   "distribuicao": "origem",
+   "url": "https://date.nager.at/api/v3/PublicHolidays/2021/CA",
+   "catalogo": [
+    "https://date.nager.at/"
+   ],
+   "editor": "Nager.Date",
+   "licenca": "nao verificada",
+   "formato": "json",
+   "uso": "Feriados no painel diario",
+   "bytes": 5823,
+   "sha256": "0a451ba0af36b0ddfb8b60c89b9207fb36250014a8d503420758a626270546e4"
+  },
+  {
+   "id": "nager_2022",
+   "papel": "apoio",
+   "arquivo": "dados/brutos/nager/nager_CA_2022.json",
+   "distribuicao": "origem",
+   "url": "https://date.nager.at/api/v3/PublicHolidays/2022/CA",
+   "catalogo": [
+    "https://date.nager.at/"
+   ],
+   "editor": "Nager.Date",
+   "licenca": "nao verificada",
+   "formato": "json",
+   "uso": "Feriados no painel diario",
+   "bytes": 6040,
+   "sha256": "27bdf00fd5ddc24df96d97382df36c90fde29322a00a53f46c1451d8a79c983e"
+  },
+  {
+   "id": "nager_2023",
+   "papel": "apoio",
+   "arquivo": "dados/brutos/nager/nager_CA_2023.json",
+   "distribuicao": "origem",
+   "url": "https://date.nager.at/api/v3/PublicHolidays/2023/CA",
+   "catalogo": [
+    "https://date.nager.at/"
+   ],
+   "editor": "Nager.Date",
+   "licenca": "nao verificada",
+   "formato": "json",
+   "uso": "Feriados no painel diario",
+   "bytes": 5823,
+   "sha256": "556dd061397c8610bb3fa3bdefac6946ddfb42374d3d8f39c858612cd12f7974"
+  },
+  {
+   "id": "nager_2024",
+   "papel": "apoio",
+   "arquivo": "dados/brutos/nager/nager_CA_2024.json",
+   "distribuicao": "origem",
+   "url": "https://date.nager.at/api/v3/PublicHolidays/2024/CA",
+   "catalogo": [
+    "https://date.nager.at/"
+   ],
+   "editor": "Nager.Date",
+   "licenca": "nao verificada",
+   "formato": "json",
+   "uso": "Feriados no painel diario",
+   "bytes": 5823,
+   "sha256": "034ffc0e65a3ef8befec3a21e4ab3b29ea7478d8588d0b5f91da5522cb452ad4"
+  },
+  {
+   "id": "nager_2025",
+   "papel": "apoio",
+   "arquivo": "dados/brutos/nager/nager_CA_2025.json",
+   "distribuicao": "origem",
+   "url": "https://date.nager.at/api/v3/PublicHolidays/2025/CA",
+   "catalogo": [
+    "https://date.nager.at/"
+   ],
+   "editor": "Nager.Date",
+   "licenca": "nao verificada",
+   "formato": "json",
+   "uso": "Feriados no painel diario",
+   "bytes": 5823,
+   "sha256": "a5cfe20d27c7aa777a919493541d3756feb998a87baaaf4f418ea18a6d3ee9be"
+  },
+  {
+   "id": "nager_2026",
+   "papel": "apoio",
+   "arquivo": "dados/brutos/nager/nager_CA_2026.json",
+   "distribuicao": "origem",
+   "url": "https://date.nager.at/api/v3/PublicHolidays/2026/CA",
+   "catalogo": [
+    "https://date.nager.at/"
+   ],
+   "editor": "Nager.Date",
+   "licenca": "nao verificada",
+   "formato": "json",
+   "uso": "Feriados no painel diario",
+   "bytes": 5823,
+   "sha256": "2ba649e3c689d9024068c5a7408908027b28e1349d64769811edeea7b8f6d994"
+  },
+  {
+   "id": "stm_relatorio_2019",
+   "papel": "apoio",
+   "arquivo": "dados/brutos/stm_relatorios/ra2019.html",
+   "distribuicao": "origem",
+   "url": "https://web.archive.org/web/20200813103544id_/http://stm.info/fr/a-propos/informations-entreprise-et-financieres/rapport-annuel-2019/rapport-dactivite-2019",
+   "catalogo": [
+    "http://stm.info/fr/a-propos/informations-entreprise-et-financieres/rapport-annuel-2019/rapport-dactivite-2019 (original, inacessivel desta maquina)"
+   ],
+   "editor": "STM, copia do Internet Archive",
+   "licenca": "Documento publico da STM; redistribuicao nao verificada",
+   "formato": "html",
+   "uso": "Totais anuais de entradas citados na documentacao; nao entra no painel",
+   "bytes": 193425,
+   "sha256": "842a8c250ec873f0d6ae5f8ead329ba7bd29527458e6abff552c30450d24f175"
+  },
+  {
+   "id": "stm_relatorio_2020",
+   "papel": "apoio",
+   "arquivo": "dados/brutos/stm_relatorios/ra2020.html",
+   "distribuicao": "origem",
+   "url": "https://web.archive.org/web/20210419053621id_/http://www.stm.info/fr/a-propos/informations-entreprise-et-financieres/rapport-annuel-2020/rapport-dactivite-2020",
+   "catalogo": [
+    "http://www.stm.info/fr/a-propos/informations-entreprise-et-financieres/rapport-annuel-2020/rapport-dactivite-2020 (original, inacessivel desta maquina)"
+   ],
+   "editor": "STM, copia do Internet Archive",
+   "licenca": "Documento publico da STM; redistribuicao nao verificada",
+   "formato": "html",
+   "uso": "Totais anuais de entradas citados na documentacao; nao entra no painel",
+   "bytes": 186085,
+   "sha256": "d4eea61345c98ebb89ca8e0b90c459c1ddffce380c1a9be7a182b2d7e2146d87"
+  },
+  {
+   "id": "stm_relatorio_2021",
+   "papel": "apoio",
+   "arquivo": "dados/brutos/stm_relatorios/ra2021.html",
+   "distribuicao": "origem",
+   "url": "https://web.archive.org/web/20220811145211id_/https://www.stm.info/fr/a-propos/informations-entreprise-et-financieres/rapport-annuel-2021/rapport-dactivite-2021",
+   "catalogo": [
+    "https://www.stm.info/fr/a-propos/informations-entreprise-et-financieres/rapport-annuel-2021/rapport-dactivite-2021 (original, inacessivel desta maquina)"
+   ],
+   "editor": "STM, copia do Internet Archive",
+   "licenca": "Documento publico da STM; redistribuicao nao verificada",
+   "formato": "html",
+   "uso": "Totais anuais de entradas citados na documentacao; nao entra no painel",
+   "bytes": 166894,
+   "sha256": "296cdd4c16ddc4e96e87583a3a4fd409b40c008fb8c886eb480a8be7cc9cf91c"
+  },
+  {
+   "id": "stm_relatorio_2022",
+   "papel": "apoio",
+   "arquivo": "dados/brutos/stm_relatorios/ra2022.html",
+   "distribuicao": "origem",
+   "url": "https://web.archive.org/web/20230609165442id_/https://www.stm.info/fr/a-propos/informations-entreprise-et-financieres/rapport-annuel-2022/rapport-dactivite-2022",
+   "catalogo": [
+    "https://www.stm.info/fr/a-propos/informations-entreprise-et-financieres/rapport-annuel-2022/rapport-dactivite-2022 (original, inacessivel desta maquina)"
+   ],
+   "editor": "STM, copia do Internet Archive",
+   "licenca": "Documento publico da STM; redistribuicao nao verificada",
+   "formato": "html",
+   "uso": "Totais anuais de entradas citados na documentacao; nao entra no painel",
+   "bytes": 158967,
+   "sha256": "b19dfa54ecd55049428e7166f585b26a1e42c425fd7f2aba5abf0a51c001e56c"
+  },
+  {
+   "id": "stm_relatorio_2023",
+   "papel": "apoio",
+   "arquivo": "dados/brutos/stm_relatorios/ra2023.html",
+   "distribuicao": "origem",
+   "url": "https://web.archive.org/web/20240502220012id_/https://www.stm.info/fr/a-propos/informations-entreprise-et-financieres/rapport-annuel-2023/rapport-dactivite",
+   "catalogo": [
+    "https://www.stm.info/fr/a-propos/informations-entreprise-et-financieres/rapport-annuel-2023/rapport-dactivite (original, inacessivel desta maquina)"
+   ],
+   "editor": "STM, copia do Internet Archive",
+   "licenca": "Documento publico da STM; redistribuicao nao verificada",
+   "formato": "html",
+   "uso": "Totais anuais de entradas citados na documentacao; nao entra no painel",
+   "bytes": 129278,
+   "sha256": "5e8fad3b26abc1e8231bd8924cd45ec83cb818f837ee66d4ed9aa33bd28c8f38"
+  },
+  {
+   "id": "d3",
+   "papel": "painel",
+   "arquivo": "painel/vendor/d3.v7.9.0.min.js",
+   "distribuicao": "terceiros",
+   "url": "https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js",
+   "catalogo": [
+    "https://github.com/d3/d3"
+   ],
+   "editor": "Mike Bostock e colaboradores",
+   "licenca": "ISC",
+   "formato": "js",
+   "uso": "Graficos do painel, embutidos no site publico (gera_site.py)",
+   "bytes": 279706,
+   "sha256": "f2094bbf6141b359722c4fe454eb6c4b0f0e42cc10cc7af921fc158fceb86539"
+  }
+ ],
+ "derivados": [
+  {
+   "arquivo": "dados/derivados/gtfs/metro_sequencias.csv",
+   "de": [
+    "gtfs_stm"
+   ],
+   "script": "pipeline/extrai_gtfs_metro.py",
+   "bytes": 9476,
+   "sha256": "0fde78a0fdd9c68ad41bc090b644e58bc9a23a1f293c464e5830ad392a63c6ef"
+  },
+  {
+   "arquivo": "dados/derivados/gtfs/stops.txt",
+   "de": [
+    "gtfs_stm"
+   ],
+   "script": "pipeline/extrai_gtfs_metro.py",
+   "bytes": 946768,
+   "sha256": "085a19ad8652cdde4bbea2c52277c2224d6764bb065d5333f785b8e5b7f1b8ce"
+  },
+  {
+   "arquivo": "dados/derivados/mobilidade/google_mobilidade_montreal_2020_2022.csv",
+   "de": [
+    "google_mobilidade"
+   ],
+   "script": "pipeline/extrai_mobilidade.py",
+   "bytes": 87851,
+   "sha256": "7a127a760e195571a57292d9a9e6a1f30c18907204b020e428ca083b15a3004d"
+  },
+  {
+   "arquivo": "dados/derivados/painel_diario_linha.csv",
+   "de": [
+    "stm_incidentes",
+    "stm_km_reel",
+    "stm_km_planifie",
+    "eccc_*",
+    "nager_*",
+    "google_mobilidade"
+   ],
+   "script": "pipeline/monta_painel.py",
+   "bytes": 1118402,
+   "sha256": "0ed77476b57dcafda82eedcc6e13296574d62ca66704c3562d4f6a1c6b33457e"
+  },
+  {
+   "arquivo": "dados/derivados/painel/linhas.json",
+   "de": [
+    "stm_incidentes",
+    "stm_km_reel",
+    "eccc_*",
+    "google_mobilidade",
+    "gtfs_stm"
+   ],
+   "script": "pipeline/analise_confiabilidade.py",
+   "bytes": 3823,
+   "sha256": "1f4140744c1f701dac860bdb3c20257fda8b9873f9808bdc1c5bb13b1f18c927"
+  },
+  {
+   "arquivo": "dados/derivados/painel/ajustes.json",
+   "de": [
+    "stm_incidentes",
+    "stm_km_reel",
+    "eccc_*",
+    "google_mobilidade",
+    "gtfs_stm"
+   ],
+   "script": "pipeline/analise_confiabilidade.py",
+   "bytes": 1665,
+   "sha256": "e264bb4681ff4f354d7d595290391f868a2fc4613053e8f2c29b02814c5be20a"
+  },
+  {
+   "arquivo": "dados/derivados/painel/tbf_curvas.json",
+   "de": [
+    "stm_incidentes",
+    "stm_km_reel",
+    "eccc_*",
+    "google_mobilidade",
+    "gtfs_stm"
+   ],
+   "script": "pipeline/analise_confiabilidade.py",
+   "bytes": 19169,
+   "sha256": "bae350e8eb8c9923f560083ebeb74efc2351f398ce473ec59fbb0a38071ad58e"
+  },
+  {
+   "arquivo": "dados/derivados/painel/tbf_hist.json",
+   "de": [
+    "stm_incidentes",
+    "stm_km_reel",
+    "eccc_*",
+    "google_mobilidade",
+    "gtfs_stm"
+   ],
+   "script": "pipeline/analise_confiabilidade.py",
+   "bytes": 5035,
+   "sha256": "35debd2b552c4882a386cea52524a98556d38443da14669b7b347e3496d2326e"
+  },
+  {
+   "arquivo": "dados/derivados/painel/anual.json",
+   "de": [
+    "stm_incidentes",
+    "stm_km_reel",
+    "eccc_*",
+    "google_mobilidade",
+    "gtfs_stm"
+   ],
+   "script": "pipeline/analise_confiabilidade.py",
+   "bytes": 8396,
+   "sha256": "e81a58e75fb566414c72059cf83940c7b2ac433c13515c84b0bfc47a44df7d83"
+  },
+  {
+   "arquivo": "dados/derivados/painel/frota_anual.json",
+   "de": [
+    "stm_incidentes",
+    "stm_km_reel",
+    "eccc_*",
+    "google_mobilidade",
+    "gtfs_stm"
+   ],
+   "script": "pipeline/analise_confiabilidade.py",
+   "bytes": 1595,
+   "sha256": "29d2f90da83560af236c2d5da9a01ae5d2479fd3084e28b22f444f0e0dd24c51"
+  },
+  {
+   "arquivo": "dados/derivados/painel/ttr_faixas.json",
+   "de": [
+    "stm_incidentes",
+    "stm_km_reel",
+    "eccc_*",
+    "google_mobilidade",
+    "gtfs_stm"
+   ],
+   "script": "pipeline/analise_confiabilidade.py",
+   "bytes": 6507,
+   "sha256": "9b8b8666c45690cbedc48ab917ac8303022d6db0fa0272aff2d4482b50cd64f0"
+  },
+  {
+   "arquivo": "dados/derivados/painel/perfil.json",
+   "de": [
+    "stm_incidentes",
+    "stm_km_reel",
+    "eccc_*",
+    "google_mobilidade",
+    "gtfs_stm"
+   ],
+   "script": "pipeline/analise_confiabilidade.py",
+   "bytes": 7252,
+   "sha256": "533e02b708899eb678e56eda00f45de6f7a80febdcccb8839019a52edbc6054e"
+  },
+  {
+   "arquivo": "dados/derivados/painel/correlacoes.json",
+   "de": [
+    "stm_incidentes",
+    "stm_km_reel",
+    "eccc_*",
+    "google_mobilidade",
+    "gtfs_stm"
+   ],
+   "script": "pipeline/analise_confiabilidade.py",
+   "bytes": 2016,
+   "sha256": "0ed05fa5e0fe1ef972a194750b3603a88a21f0193ebacb8e9f1f188741f73706"
+  },
+  {
+   "arquivo": "dados/derivados/painel/locais.json",
+   "de": [
+    "stm_incidentes",
+    "stm_km_reel",
+    "eccc_*",
+    "google_mobilidade",
+    "gtfs_stm"
+   ],
+   "script": "pipeline/analise_confiabilidade.py",
+   "bytes": 2456,
+   "sha256": "ce195e775f20b80caa4b5e9484caa5c459e4a7ccf780f250a345ccb44276015b"
+  },
+  {
+   "arquivo": "dados/derivados/painel/pareto.json",
+   "de": [
+    "stm_incidentes",
+    "stm_km_reel",
+    "eccc_*",
+    "google_mobilidade",
+    "gtfs_stm"
+   ],
+   "script": "pipeline/analise_confiabilidade.py",
+   "bytes": 8831,
+   "sha256": "a9a284ec742c9398de547185d01caf1907cc4e107d9c13ee3d6c71f348fbff31"
+  },
+  {
+   "arquivo": "dados/derivados/painel/causa_comum.json",
+   "de": [
+    "stm_incidentes",
+    "stm_km_reel",
+    "eccc_*",
+    "google_mobilidade",
+    "gtfs_stm"
+   ],
+   "script": "pipeline/analise_confiabilidade.py",
+   "bytes": 751,
+   "sha256": "ff2a4abd2e471e753daefb3fc919bcc62de3a61310d7ec547163edec8a9ab2a0"
+  },
+  {
+   "arquivo": "dados/derivados/painel/corredor.json",
+   "de": [
+    "stm_incidentes",
+    "stm_km_reel",
+    "eccc_*",
+    "google_mobilidade",
+    "gtfs_stm"
+   ],
+   "script": "pipeline/analise_confiabilidade.py",
+   "bytes": 1475,
+   "sha256": "0df173ae74d3114099e43f548f4bb5debc4a84e1e9feefeb54321f5909a1cedd"
+  },
+  {
+   "arquivo": "dados/derivados/painel/sim_hist.json",
+   "de": [
+    "stm_incidentes",
+    "stm_km_reel",
+    "eccc_*",
+    "google_mobilidade",
+    "gtfs_stm"
+   ],
+   "script": "pipeline/analise_confiabilidade.py",
+   "bytes": 5517,
+   "sha256": "712e4637c307a5ebfdbcaf580c729c0f1ae7fac115e4ce9fe62a796b55e0ebe1"
+  },
+  {
+   "arquivo": "dados/derivados/painel/sim_amostra.json",
+   "de": [
+    "stm_incidentes",
+    "stm_km_reel",
+    "eccc_*",
+    "google_mobilidade",
+    "gtfs_stm"
+   ],
+   "script": "pipeline/analise_confiabilidade.py",
+   "bytes": 1455,
+   "sha256": "4fce1459cee58fbfc47b0f0ed474f3089f77d2b1669ca06403176b43403d691d"
+  },
+  {
+   "arquivo": "dados/derivados/painel/kdn.json",
+   "de": [
+    "stm_incidentes",
+    "stm_km_reel",
+    "eccc_*",
+    "google_mobilidade",
+    "gtfs_stm"
+   ],
+   "script": "pipeline/analise_confiabilidade.py",
+   "bytes": 21692,
+   "sha256": "fed2a2ff896e0d29ab2b1b68eeb1ba7f2a46a36980e7a3b6ae477a9e2d934901"
+  },
+  {
+   "arquivo": "dados/derivados/painel/estacoes.json",
+   "de": [
+    "stm_incidentes",
+    "stm_km_reel",
+    "eccc_*",
+    "google_mobilidade",
+    "gtfs_stm"
+   ],
+   "script": "pipeline/analise_confiabilidade.py",
+   "bytes": 9811,
+   "sha256": "552daee90c729439e953609db8ebc49675c6a782059153e46e3504603a7acd02"
+  },
+  {
+   "arquivo": "dados/derivados/geo/linhas.geojson",
+   "de": [
+    "osm_metro",
+    "wikidata_estacoes",
+    "gtfs_stm",
+    "stm_incidentes"
+   ],
+   "script": "pipeline/geo_base.py",
+   "bytes": 25177,
+   "sha256": "17c106d89b8c4a8156abd8350283f3bfece484a04b4c89d6afe41bef8c0746e2"
+  },
+  {
+   "arquivo": "dados/derivados/geo/estacoes.geojson",
+   "de": [
+    "osm_metro",
+    "wikidata_estacoes",
+    "gtfs_stm",
+    "stm_incidentes"
+   ],
+   "script": "pipeline/geo_base.py",
+   "bytes": 24765,
+   "sha256": "b6c606de29ce905f92624cf3cb3b71e8d1a079553cbca36d40e972521fa52cf4"
+  },
+  {
+   "arquivo": "dados/derivados/geo/locais.json",
+   "de": [
+    "osm_metro",
+    "wikidata_estacoes",
+    "gtfs_stm",
+    "stm_incidentes"
+   ],
+   "script": "pipeline/geo_base.py",
+   "bytes": 57189,
+   "sha256": "49ca0c79e9285de51d7a7eb019803e34899e49ef8128fa963b385ccbe6b3c9e7"
+  }
+ ]
+}

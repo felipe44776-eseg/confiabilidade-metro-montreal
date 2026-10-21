@@ -1,0 +1,211 @@
+route_id,agency_id,route_short_name,route_long_name,route_type,route_url,route_color,route_text_color,route_desc,route_desc_detail
+1,STM,1,Ligne 1 - Verte,1,https://www.stm.info/fr/infos/reseaux/metro/ligne-1---verte,00B300,FFFFFF,,
+2,STM,2,Ligne 2 - Orange,1,https://www.stm.info/fr/infos/reseaux/metro/ligne-2---orange,D95700,FFFFFF,,
+4,STM,4,Ligne 4 - Jaune,1,https://www.stm.info/fr/infos/reseaux/metro/ligne-4---jaune,FFD900,000000,,
+5,STM,5,Ligne 5 - Bleue,1,https://www.stm.info/fr/infos/reseaux/metro/ligne-5---bleue,0095E6,FFFFFF,,
+10,STM,10,De Lorimier,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+11,STM,11,Parc-du-Mont-Royal,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+12,STM,12,Île-des-Soeurs,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+13,STM,13,Christophe-Colomb,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+14,STM,14,Atateken,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+16,STM,16,Graham,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+17,STM,17,Décarie,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+18,STM,18,Beaubien,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente,Fréquence aux 2 à 12 minutes entre 6h et 20h du lundi au vendredi (dans les 2 directions)
+20,STM,20,Crémazie / Marché Central,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+22,STM,22,Notre-Dame,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+24,STM,24,Sherbrooke,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente,Fréquence aux 2 à 12 minutes entre 6h et 20h du lundi au vendredi (dans les 2 directions)
+25,STM,25,Angus,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+26,STM,26,Mercier-Est,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+27,STM,27,Saint-Joseph,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+28,STM,28,Honoré-Beaugrand,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+29,STM,29,Rachel,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+31,STM,31,Saint-Denis,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+32,STM,32,Lacordaire,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente pointe,Fréquence aux 2 à 12 minutes de 6h30 à 9h30 et de 15h à 18h du lundi au vendredi (dans la direction la plus achalandée)
+33,STM,33,Langelier,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente pointe,Fréquence aux 2 à 12 minutes de 6h30 à 9h30 et de 15h à 18h du lundi au vendredi (dans la direction la plus achalandée)
+34,STM,34,Sainte-Catherine,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+35,STM,35,Griffintown,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+36,STM,36,Monk,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+37,STM,37,Jolicoeur,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+38,STM,38,De l'Église,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+39,STM,39,Des Grandes-Prairies,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+40,STM,40,Henri-Bourassa-Est,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+41,STM,41,Saint-Michel / Ahuntsic,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+43,STM,43,Monselet,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+44,STM,44,Armand-Bombardier,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente pointe,Fréquence aux 2 à 12 minutes de 6h30 à 9h30 et de 15h à 18h du lundi au vendredi (dans la direction la plus achalandée)
+45,STM,45,Papineau,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente pointe,Fréquence aux 2 à 12 minutes de 6h30 à 9h30 et de 15h à 18h du lundi au vendredi (dans la direction la plus achalandée)
+47,STM,47,Masson,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+48,STM,48,Perras,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente pointe,Fréquence aux 2 à 12 minutes de 6h30 à 9h30 et de 15h à 18h du lundi au vendredi (dans la direction la plus achalandée)
+49,STM,49,Maurice-Duplessis,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente pointe,Fréquence aux 2 à 12 minutes de 6h30 à 9h30 et de 15h à 18h du lundi au vendredi (dans la direction la plus achalandée)
+50,STM,50,Vieux-Montréal / Vieux-Port,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+51,STM,51,Édouard-Montpetit,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente,Fréquence aux 2 à 12 minutes entre 6h et 20h du lundi au vendredi (dans les 2 directions)
+52,STM,52,De Liège,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+54,STM,54,Charland / Chabanel,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+55,STM,55,Saint-Laurent,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente pointe,Fréquence aux 2 à 12 minutes de 6h30 à 9h30 et de 15h à 18h du lundi au vendredi (dans la direction la plus achalandée)
+56,STM,56,St-Hubert,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+57,STM,57,Charlevoix,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+61,STM,61,Wellington,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+63,STM,63,Girouard,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+64,STM,64,Grenet,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente pointe,Fréquence aux 2 à 12 minutes de 6h30 à 9h30 et de 15h à 18h du lundi au vendredi (dans la direction la plus achalandée)
+66,STM,66,The Boulevard,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+67,STM,67,Saint-Michel,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente,Fréquence aux 2 à 12 minutes entre 6h et 20h du lundi au vendredi (dans les 2 directions)
+68,STM,68,Pierrefonds,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+69,STM,69,Henri-Bourassa,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente pointe,Fréquence aux 2 à 12 minutes de 6h30 à 9h30 et de 15h à 18h du lundi au vendredi (dans la direction la plus achalandée)
+70,STM,70,Poirier,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+71,STM,71,Pointe-Saint-Charles,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+72,STM,72,Alfred-Nobel,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+73,STM,73,Dalton,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+74,STM,74,Bridge,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+79,STM,79,Gouin,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+80,STM,80,Du Parc,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente pointe,Fréquence aux 2 à 12 minutes de 6h30 à 9h30 et de 15h à 18h du lundi au vendredi (dans la direction la plus achalandée)
+81,STM,81,Saint-Jean-Baptiste,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+85,STM,85,Hochelaga,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+86,STM,86,Pointe-aux-Trembles,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+90,STM,90,Saint-Jacques,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente pointe,Fréquence aux 2 à 12 minutes de 6h30 à 9h30 et de 15h à 18h du lundi au vendredi (dans la direction la plus achalandée)
+92,STM,92,Jean-Talon Ouest,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+93,STM,93,Jean-Talon,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+94,STM,94,D'Iberville,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+95,STM,95,Bélanger,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+97,STM,97,Avenue-du-Mont-Royal,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente pointe,Fréquence aux 2 à 12 minutes de 6h30 à 9h30 et de 15h à 18h du lundi au vendredi (dans la direction la plus achalandée)
+99,STM,99,Villeray,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+100,STM,100,Crémazie,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+101,STM,101,Saint-Patrick,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+102,STM,102,Somerled,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+103,STM,103,Monkland,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente pointe,Fréquence aux 2 à 12 minutes de 6h30 à 9h30 et de 15h à 18h du lundi au vendredi (dans la direction la plus achalandée)
+104,STM,104,Cavendish,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+105,STM,105,Sherbrooke,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente,Fréquence aux 2 à 12 minutes entre 6h et 20h du lundi au vendredi (dans les 2 directions)
+106,STM,106,Newman,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente pointe,Fréquence aux 2 à 12 minutes de 6h30 à 9h30 et de 15h à 18h du lundi au vendredi (dans la direction la plus achalandée)
+107,STM,107,Verdun,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente pointe,Fréquence aux 2 à 12 minutes de 6h30 à 9h30 et de 15h à 18h du lundi au vendredi (dans la direction la plus achalandée)
+108,STM,108,Bannantyne,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+110,STM,110,Centrale,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+112,STM,112,Airlie,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente pointe,Fréquence aux 2 à 12 minutes de 6h30 à 9h30 et de 15h à 18h du lundi au vendredi (dans la direction la plus achalandée)
+113,STM,113,Lapierre,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+114,STM,114,Angrignon,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+117,STM,117,O'Brien,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+119,STM,119,Rockland,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+120,STM,120,Royalmount,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+121,STM,121,Sauvé / Côte-Vertu,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente,Fréquence aux 2 à 12 minutes entre 6h et 20h du lundi au vendredi (dans les 2 directions)
+123,STM,123,Dollard / Shevchenko,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+124,STM,124,Victoria,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+125,STM,125,Ontario,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+127,STM,127,Alexis-Nihon,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+128,STM,128,Saint-Laurent,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+129,STM,129,Côte-Sainte-Catherine,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+131,STM,131,De l'Assomption,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+136,STM,136,Viau,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente pointe,Fréquence aux 2 à 12 minutes de 6h30 à 9h30 et de 15h à 18h du lundi au vendredi (dans la direction la plus achalandée)
+138,STM,138,Notre-Dame-de-Grâce,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+139,STM,139,Pie-IX,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+140,STM,140,Fleury,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+141,STM,141,Jean-Talon Est,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente,Fréquence aux 2 à 12 minutes entre 6h et 20h du lundi au vendredi (dans les 2 directions)
+144,STM,144,Des Pins,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+150,STM,150,René-Lévesque,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+155,STM,155,Wilderton,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+160,STM,160,Barclay,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente pointe,Fréquence aux 2 à 12 minutes de 6h30 à 9h30 et de 15h à 18h du lundi au vendredi (dans la direction la plus achalandée)
+161,STM,161,Van Horne,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente,Fréquence aux 2 à 12 minutes entre 6h et 20h du lundi au vendredi (dans les 2 directions)
+162,STM,162,Westminster,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+164,STM,164,Dudemaine,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+165,STM,165,Côte-des-Neiges,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente,Fréquence aux 2 à 12 minutes entre 6h et 20h du lundi au vendredi (dans les 2 directions)
+166,STM,166,Queen-Mary,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+168,STM,168,Cité-du-Havre,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+170,STM,170,Keller,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+171,STM,171,Henri-Bourassa,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+172,STM,172,Du Golf,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+174,STM,174,Côte-Vertu,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+175,STM,175,Griffith,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+176,STM,176,Berlioz,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+177,STM,177,Thimens,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente pointe,Fréquence aux 2 à 12 minutes de 6h30 à 9h30 et de 15h à 18h du lundi au vendredi (dans la direction la plus achalandée)
+179,STM,179,De l'Acadie,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+180,STM,180,De Salaberry,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+183,STM,183,Gouin-Est,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+185,STM,185,Sherbrooke,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+186,STM,186,Sherbrooke-Est,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+187,STM,187,René-Lévesque,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente pointe,Fréquence aux 2 à 12 minutes de 6h30 à 9h30 et de 15h à 18h du lundi au vendredi (dans la direction la plus achalandée)
+188,STM,188,Couture,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+189,STM,189,Notre-Dame,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+190,STM,190,Norman,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+192,STM,192,Robert,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+193,STM,193,Jarry,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente pointe,Fréquence aux 2 à 12 minutes de 6h30 à 9h30 et de 15h à 18h du lundi au vendredi (dans la direction la plus achalandée)
+195,STM,195,Dorval / Angrignon,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+196,STM,196,Parc-Industriel-Lachine,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente pointe,Fréquence aux 2 à 12 minutes de 6h30 à 9h30 et de 15h à 18h du lundi au vendredi (dans la direction la plus achalandée)
+197,STM,197,Rosemont,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente pointe,Fréquence aux 2 à 12 minutes de 6h30 à 9h30 et de 15h à 18h du lundi au vendredi (dans la direction la plus achalandée)
+198,STM,198,Broadway,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+200,STM,200,Sainte-Anne-de-Bellevue,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+201,STM,201,Saint-Charles,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+202,STM,202,Dawson,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+203,STM,203,Carson,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+204,STM,204,Cardinal,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+205,STM,205,Gouin,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+206,STM,206,Roger-Pilon,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+207,STM,207,Jacques-Bizard,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+208,STM,208,Brunswick,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+209,STM,209,Des Sources / YUL Aéroport,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+210,STM,210,John-Abbott,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+211,STM,211,Bord-du-Lac,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente pointe,Fréquence aux 2 à 12 minutes de 6h30 à 9h30 et de 15h à 18h du lundi au vendredi (dans la direction la plus achalandée)
+212,STM,212,Sainte-Anne,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+214,STM,214,Stuart-Graham / YUL Aéroport,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+215,STM,215,Henri-Bourassa / Brunswick,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+216,STM,216,Transcanadienne,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+218,STM,218,Antoine-Faucon,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+220,STM,220,Kieran,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+221,STM,221,Saint-Jean,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+222,STM,222,Senneville,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+223,STM,223,Parc-industriel Baie-d'Urfé,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+225,STM,225,Hymus,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+227,STM,227,Île-Bizard,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+229,STM,229,Transcanadienne / Brunswick,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+230,STM,230,Saint-Louis,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+350,STM,350,Verdun / LaSalle,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Nuit,Lignes de nuit seulement
+353,STM,353,Lacordaire / Maurice-Duplessis,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Nuit,Lignes de nuit seulement
+354,STM,354,Sainte-Anne-de-Bellevue / Centre-ville,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Nuit,Lignes de nuit seulement
+355,STM,355,Pie-IX,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Nuit,Lignes de nuit seulement
+356,STM,356,Lachine / YUL Aéroport / Des Sources,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Nuit,Lignes de nuit seulement
+357,STM,357,Saint-Michel,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Nuit,Lignes de nuit seulement
+358,STM,358,René-Lévesque,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Nuit,Lignes de nuit seulement
+359,STM,359,Papineau,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Nuit,Lignes de nuit seulement
+360,STM,360,Av. des Pins,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Nuit,Lignes de nuit seulement
+361,STM,361,Saint-Denis,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Nuit,Lignes de nuit seulement
+362,STM,362,Hochelaga / Notre-Dame,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Nuit,Lignes de nuit seulement
+363,STM,363,Saint-Laurent,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Nuit,Lignes de nuit seulement
+364,STM,364,Sherbrooke / Joseph-Renaud,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Nuit,Lignes de nuit seulement
+365,STM,365,Du Parc,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Nuit,Lignes de nuit seulement
+368,STM,368,Avenue-du-Mont-Royal,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Nuit,Lignes de nuit seulement
+369,STM,369,Côte-des-Neiges,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Nuit,Lignes de nuit seulement
+370,STM,370,Rosemont,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Nuit,Lignes de nuit seulement
+371,STM,371,Décarie,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Nuit,Lignes de nuit seulement
+372,STM,372,Jean-Talon,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Nuit,Lignes de nuit seulement
+376,STM,376,Pierrefonds / Centre-ville,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Nuit,Lignes de nuit seulement
+378,STM,378,Sauvé / YUL Aéroport,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Nuit,Lignes de nuit seulement
+380,STM,380,Henri-Bourassa,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Nuit,Lignes de nuit seulement
+382,STM,382,Pierrefonds / Saint-Charles,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Nuit,Lignes de nuit seulement
+410,STM,410,Express Notre-Dame,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+411,STM,411,Express Lionel-Groulx,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+420,STM,420,Express Notre-Dame-de-Grâce,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+428,STM,428,Express Parcs industriels de l'Est,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+430,STM,430,Express Pointe-aux-Trembles,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+432,STM,432,Express Lacordaire,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+439,STM,439,Express Pie-IX,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente,Fréquence aux 2 à 12 minutes entre 6h et 20h du lundi au vendredi (dans les 2 directions)
+440,STM,440,Express Charleroi,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+444,STM,444,Express Cégep Marie-Victorin,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+445,STM,445,Express Papineau,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+448,STM,448,Express Maurice-Duplessis,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+449,STM,449,Express Rivière-des-Prairies,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+460,STM,460,Express Métropolitaine,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+467,STM,467,Express Saint-Michel,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+468,STM,468,Express Pierrefonds / Gouin,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+469,STM,469,Express Henri-Bourassa,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+470,STM,470,Express Pierrefonds,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente pointe,Fréquence aux 2 à 12 minutes de 6h30 à 9h30 et de 15h à 18h du lundi au vendredi (dans la direction la plus achalandée)
+475,STM,475,Express Dollard-des-Ormeaux,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+480,STM,480,Express du Parc,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+486,STM,486,Express Sherbrooke,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+487,STM,487,Express Bout-de-l'Île,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+491,STM,491,Express Provost,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+496,STM,496,Express Victoria,3,https://www.stm.info/fr/infos/reseaux/bus,781B7D,FFFFFF,Fréquente pointe,Fréquence aux 2 à 12 minutes de 6h30 à 9h30 et de 15h à 18h du lundi au vendredi (dans la direction la plus achalandée)
+711,STM,711,Parc-du-Mont-Royal / Oratoire,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+747,STM,747,YUL Aéroport Montréal-Trudeau,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+767,STM,767,La Ronde / Station Jean-Drapeau,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+769,STM,769,La Ronde / Station Papineau,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+777,STM,777,Jean-Drapeau / Casino / Bonaventure,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+811,STM,811,Navette Services santé,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+814,STM,814,Jean-Talon Est / Bélanger,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+815,STM,815,REM des Sources / YUL Aéroport,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+822,STM,822,Navette de Longue-Pointe,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement
+872,STM,872,Île-des-Soeurs,3,https://www.stm.info/fr/infos/reseaux/bus,009EE0,FFFFFF,Jour,Lignes de jour seulement

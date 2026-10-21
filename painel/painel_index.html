@@ -1,0 +1,1420 @@
+<style>
+.mtl{--l-verde:#00843D;--l-laranja:#D9531A;--l-amarela:#A88C00;--l-azul:#0072BC;display:grid;gap:var(--cds-gap-xl);font-family:var(--font-anthropic-sans);color:var(--color-fg);max-width:1240px;margin-inline:auto}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .mtl{--l-verde:#1E9B55;--l-laranja:#E06A1F;--l-amarela:#C9A900;--l-azul:#4B8BD9}}
+:root[data-theme="dark"] .mtl{--l-verde:#1E9B55;--l-laranja:#E06A1F;--l-amarela:#C9A900;--l-azul:#4B8BD9}
+.mtl-head{display:grid;gap:var(--cds-gap-sm)}
+.mtl-head h1{font-family:var(--font-anthropic-serif);font-weight:400;font-size:calc(var(--cds-font-size-title) * 1.3);line-height:1.15;margin:0;text-wrap:balance}
+.mtl-lead{margin:0;max-width:74ch;font-size:var(--cds-font-size-body);line-height:1.6}
+.mtl-sub{margin:0;color:var(--color-fg-muted);font-size:var(--cds-font-size-caption)}
+.mtl-nav,.mtl-sel{display:flex;flex-wrap:wrap;gap:var(--cds-gap-xs);align-items:center}
+.mtl-nav button,.mtl-sel button{font:inherit;font-size:var(--cds-font-size-caption);padding:var(--cds-pad-xs) var(--cds-pad-sm);border:1px solid var(--color-border-line);border-radius:999px;background:var(--color-panel);color:var(--color-fg);cursor:pointer}
+.mtl-nav button:hover,.mtl-sel button:hover{border-color:var(--color-fg-muted)}
+.mtl-nav button:focus-visible,.mtl-sel button:focus-visible{outline:2px solid var(--color-fg);outline-offset:2px}
+.mtl-sel .lab{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin-inline-end:var(--cds-gap-xs)}
+.mtl-sel button[aria-pressed="true"]{border-color:var(--cor);box-shadow:inset 0 0 0 1px var(--cor);font-weight:var(--cds-font-weight-medium)}
+.mtl-sel i,.mtl-dot{display:inline-block;width:.6rem;height:.6rem;border-radius:50%;background:var(--cor);margin-inline-end:.4rem}
+.mtl-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,11rem),1fr));gap:var(--cds-gap-md)}
+.mtl-kpi{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-md) var(--cds-pad-lg);display:grid;gap:var(--cds-gap-xs);align-content:start}
+.mtl-kpi .k,.mtl-tile .k{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);line-height:1.35}
+.mtl-kpi .v{font-family:var(--font-anthropic-serif);font-weight:400;font-size:var(--cds-font-size-title);font-variant-numeric:tabular-nums;line-height:1.1}
+.mtl-kpi .n{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);line-height:1.4}
+.mtl-sec{display:grid;gap:var(--cds-gap-md);scroll-margin-top:var(--cds-gap-xl)}
+.mtl-sec>h2{font-family:var(--font-anthropic-serif);font-weight:400;font-size:var(--cds-font-size-title);margin:0;text-wrap:balance}
+.mtl-sec>p{margin:0;max-width:76ch;line-height:1.6}
+.mtl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,24rem),1fr));gap:var(--cds-gap-md)}
+.mtl-card{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-lg);display:grid;gap:var(--cds-gap-sm);align-content:start;min-width:0}
+.mtl-card.wide{grid-column:1/-1}
+.mtl-card h3{margin:0;font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);text-wrap:balance}
+.mtl-card .nota{margin:0;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);line-height:1.5;max-width:80ch}
+.mtl-chart{position:relative;min-width:0}
+.mtl-chart svg{display:block}
+.mtl-tip{position:absolute;z-index:3;pointer-events:none;background:var(--cds-surface-popover);border:1px solid var(--cds-border);border-radius:var(--cds-radius);box-shadow:var(--cds-shadow-popover);padding:var(--cds-pad-xs) var(--cds-pad-sm);font-size:var(--cds-font-size-caption);display:grid;gap:2px;min-width:10rem;max-width:18rem}
+.mtl-tip-t{color:var(--cds-text-secondary)}
+.mtl-tip-r{display:flex;align-items:center;gap:var(--cds-gap-xs)}
+.mtl .mtl-tip-r b{margin-inline-start:auto;font-weight:var(--cds-font-weight-medium);font-variant-numeric:tabular-nums;padding-inline-start:var(--cds-gap-sm)}
+.mtl-sw{width:.6rem;height:.6rem;border-radius:2px;flex:none}
+.mtl-legend{display:flex;flex-wrap:wrap;gap:var(--cds-gap-sm) var(--cds-gap-md);font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.mtl-legend span{display:inline-flex;align-items:center;gap:.4rem}
+.mtl-legend i{display:inline-block;width:.9rem;height:.3rem;border-radius:2px}
+.mtl-tbl{overflow:auto;max-height:30rem}
+.mtl-tbl table{border-collapse:collapse;width:100%;font-size:var(--cds-font-size-caption);font-variant-numeric:tabular-nums}
+.mtl-tbl th{position:sticky;top:0;z-index:1;background:var(--color-panel);text-align:right;font-weight:var(--cds-font-weight-medium);color:var(--color-fg-muted);padding:var(--cds-pad-xs) var(--cds-pad-sm);border-bottom:1px solid var(--color-border-line);vertical-align:bottom}
+.mtl-tbl td{text-align:right;padding:var(--cds-pad-xs) var(--cds-pad-sm);border-bottom:1px solid var(--color-border-line);white-space:nowrap}
+.mtl-tbl th:first-child,.mtl-tbl td:first-child,.mtl-tbl .txt{text-align:left}
+.mtl-tbl td.txt{white-space:normal;min-width:12rem}
+.mtl-tbl tr.melhor td{font-weight:var(--cds-font-weight-medium)}
+.mtl-mini{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));gap:var(--cds-gap-md)}
+.mtl-mini h4{margin:0 0 var(--cds-gap-xs);font-size:var(--cds-font-size-caption);font-weight:var(--cds-font-weight-medium);color:var(--color-fg)}
+.mtl-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,8rem),1fr));gap:var(--cds-gap-sm)}
+.mtl-tile{border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-sm) var(--cds-pad-md);display:grid;gap:2px;align-content:start}
+.mtl-tile .v{font-family:var(--font-anthropic-serif);font-size:var(--cds-font-size-heading);font-variant-numeric:tabular-nums}
+.mtl-metodo{display:grid;gap:var(--cds-gap-xs);max-width:80ch;line-height:1.6;margin:0}
+.mtl-metodo dt{font-weight:var(--cds-font-weight-medium)}
+.mtl-metodo dd{margin:0 0 var(--cds-gap-sm)}
+.mtl-incell{display:inline-block;height:.5rem;border-radius:2px;vertical-align:middle;margin-inline-end:.4rem;background:var(--cds-chart-muted)}
+.mtl-fail{display:flex;align-items:center;justify-content:center;gap:.4rem;min-height:8rem;color:var(--color-fg-muted);font-size:var(--cds-font-size-caption)}
+.mtl-fail::before{content:"";width:.375rem;height:.375rem;border-radius:50%;background:var(--color-bad)}
+.mtl [data-dash-source-state=empty]{color:transparent}
+.mtl [data-dash-source-state=refreshing]{opacity:.5;transition:opacity var(--cds-dur-slow)}
+</style>
+
+<div class="mtl">
+  <header class="mtl-head" id="resumo">
+    <h1>Confiabilidade do metrô de Montreal</h1>
+    <p class="mtl-lead">Entre janeiro de 2019 e junho de 2026 a rede registrou <b data-source="linhas" data-field="falhas" data-where="linha=rede" data-fmt="int" class="dash-skeleton">—</b> falhas técnicas, uma a cada <b data-source="linhas" data-field="mtbf_op_h" data-where="linha=rede" data-fmt="h" class="dash-skeleton">—</b> de operação. Sozinhas, a linha Verde e a Laranja ficam paradas <b data-source="corredor" data-field="min_ano_analitico" data-where="cenario=so_verde" data-fmt="int" class="dash-skeleton">—</b> e <b data-source="corredor" data-field="min_ano_analitico" data-where="cenario=so_laranja" data-fmt="int" class="dash-skeleton">—</b> minutos por ano, contando os <b data-source="causa_comum" data-field="min_fora_ano" data-where="par=verde-laranja" data-fmt="d1" class="dash-skeleton">—</b> minutos anuais em que um mesmo evento para as duas. Usadas em paralelo entre Lionel-Groulx e Berri-UQAM, o corredor cairia para <b data-source="corredor" data-field="min_ano_analitico" data-where="cenario=paralelo_indep" data-fmt="d1" class="dash-skeleton">—</b> minutos por ano se as falhas fossem independentes. As falhas de causa comum o mantêm em <b data-source="corredor" data-field="min_ano_analitico" data-where="cenario=paralelo_cc" data-fmt="int" class="dash-skeleton">—</b>.</p>
+    <p class="mtl-sub">Falha técnica é o incidente atribuído a material rodante ou a equipamentos fixos (via, sinalização, energia, portas de plataforma). Tempos em horas de operação, com janela de 20 h por dia. Fonte: dados abertos da STM, com clima do serviço meteorológico do Canadá.</p>
+    <nav class="mtl-nav" aria-label="Seções">
+      <button type="button" data-alvo="linhas">Por linha</button>
+      <button type="button" data-alvo="detalhe">Uma linha de perto</button>
+      <button type="button" data-alvo="frota">Frota</button>
+      <button type="button" data-alvo="padroes">Quando e onde</button>
+      <button type="button" data-alvo="tolerancia">Tolerância a falhas</button>
+      <button type="button" data-alvo="metodo">Método e limites</button>
+    </nav>
+  </header>
+
+  <div class="mtl-kpis" id="kpis">
+    <div class="mtl-kpi"><span class="k">Falhas técnicas, 2019 a jun/2026</span><span class="v dash-skeleton" data-source="linhas" data-field="falhas" data-where="linha=rede" data-fmt="int">—</span><span class="n"><span data-source="linhas" data-field="falhas_mr" data-where="linha=rede" data-fmt="int">—</span> de material rodante, <span data-source="linhas" data-field="falhas_ef" data-where="linha=rede" data-fmt="int">—</span> de equipamentos fixos</span></div>
+    <div class="mtl-kpi"><span class="k">Tempo médio entre falhas na rede</span><span class="v dash-skeleton" data-source="linhas" data-field="mtbf_op_h" data-where="linha=rede" data-fmt="h">—</span><span class="n">Mediana de <span data-source="linhas" data-field="mediana_tbf_op_h" data-where="linha=rede" data-fmt="h">—</span>: as falhas chegam agrupadas</span></div>
+    <div class="mtl-kpi"><span class="k">Tempo médio até o serviço voltar</span><span class="v dash-skeleton" data-source="linhas" data-field="mttr_min" data-where="linha=rede" data-fmt="min">—</span><span class="n"><span data-source="linhas" data-field="pct_sem_interrupcao" data-where="linha=rede" data-fmt="p1">—</span> das falhas sem interrupção registrada</span></div>
+    <div class="mtl-kpi"><span class="k">Disponibilidade média das linhas</span><span class="v dash-skeleton" data-source="linhas" data-field="disponibilidade" data-where="linha=rede" data-fmt="p2">—</span><span class="n"><span data-source="linhas" data-field="min_fora_ano" data-where="linha=rede" data-fmt="int">—</span> min parados por ano, somando as 4 linhas</span></div>
+    <div class="mtl-kpi"><span class="k">Dias de operação sem nenhuma falha técnica</span><span class="v dash-skeleton" data-source="linhas" data-field="p_dia_sem_falha" data-where="linha=rede" data-fmt="p1">—</span><span class="n">Na rede inteira, de 2019 a jun/2026</span></div>
+    <div class="mtl-kpi"><span class="k">Km-carro por falha de material rodante, MR-73</span><span class="v dash-skeleton" data-source="frota_anual" data-field="km_por_falha" data-where="ano=2019–2023&amp;frota=MR-73" data-fmt="int">—</span><span class="n">MPM-10 (Azur): <span data-source="frota_anual" data-field="km_por_falha" data-where="ano=2019–2023&amp;frota=MPM-10" data-fmt="int">—</span> km-carro, de 2019 a set/2023</span></div>
+  </div>
+
+  <section class="mtl-sec" id="linhas">
+    <h2>Confiabilidade por linha</h2>
+    <p>O tempo médio entre falhas (MTBF) é o tempo de operação dividido pelo número de falhas técnicas. O tempo até o serviço voltar (MTTR) mede a interrupção que cada falha causou, não o conserto do equipamento. A disponibilidade é a fração do tempo de operação sem interrupção.</p>
+    <div class="mtl-grid">
+      <div class="mtl-card wide" id="card-tabela-linhas">
+        <h3>Indicadores por linha</h3>
+        <p class="nota">Falhas e tempos de jan/2019 a jun/2026. Taxa por km-carro de jan/2019 a set/2023, período coberto pela quilometragem real. Os minutos parados por ano não incluem os eventos que param duas linhas ao mesmo tempo, tratados na seção de tolerância a falhas.</p>
+        <div class="mtl-tbl">
+          <table id="t-linhas" data-source="linhas" data-row-key="linha">
+            <thead><tr>
+              <th data-field="nome">Linha</th>
+              <th data-field="falhas">Falhas</th>
+              <th data-field="falhas_mr">Material rodante</th>
+              <th data-field="falhas_ef">Equip. fixos</th>
+              <th data-field="mtbf_op_h">MTBF (h)</th>
+              <th data-field="mediana_tbf_op_h">Mediana entre falhas (h)</th>
+              <th data-field="mttr_min">MTTR (min)</th>
+              <th data-field="disponibilidade">Disponibilidade</th>
+              <th data-field="min_fora_ano">Min parados por ano</th>
+              <th data-field="p_dia_sem_falha">Dias sem falha</th>
+              <th data-field="falhas_mr_por_mkm">Falhas MR por milhão de km-carro</th>
+              <th data-field="evacuacoes">Evacuações</th>
+            </tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="mtl-card" id="card-mtbf">
+        <h3>Tempo médio entre falhas</h3>
+        <p class="nota">Horas de operação entre duas falhas técnicas na mesma linha. Passe o mouse para ver a parte de cada causa.</p>
+        <div class="mtl-chart dash-skeleton" id="c-mtbf" data-source="linhas" style="min-height:170px"></div>
+      </div>
+      <div class="mtl-card" id="card-diasem">
+        <h3>Dias de operação sem falha técnica, por ano</h3>
+        <p class="nota">Fração dos dias em que a linha não teve nenhuma falha técnica. Ponto vazado em 2026: ano incompleto (até junho).</p>
+        <div class="mtl-chart dash-skeleton" id="c-diasem" data-source="anual" style="min-height:330px"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mtl-sec" id="detalhe">
+    <h2>Uma linha de perto</h2>
+    <div class="mtl-sel" data-sel>
+      <span class="lab">Linha</span>
+      <button type="button" data-linha="verde" style="--cor:var(--l-verde)"><i></i>Verde</button>
+      <button type="button" data-linha="laranja" style="--cor:var(--l-laranja)"><i></i>Laranja</button>
+      <button type="button" data-linha="amarela" style="--cor:var(--l-amarela)"><i></i>Amarela</button>
+      <button type="button" data-linha="azul" style="--cor:var(--l-azul)"><i></i>Azul</button>
+    </div>
+    <div class="mtl-grid">
+      <div class="mtl-card" id="card-hist">
+        <h3>Distribuição do tempo entre falhas</h3>
+        <p class="nota">Eixo em escala logarítmica. Muitos intervalos curtos e uma cauda longa: depois de uma falha, outra costuma vir logo.</p>
+        <div class="mtl-chart dash-skeleton" id="c-hist" data-source="tbf_hist" style="min-height:230px"></div>
+      </div>
+      <div class="mtl-card" id="card-sobrev">
+        <h3>Confiabilidade R(t): chance de passar t horas sem falha</h3>
+        <p class="nota">Curva observada contra três modelos ajustados por máxima verossimilhança.</p>
+        <div class="mtl-legend" id="lg-sobrev"></div>
+        <div class="mtl-chart dash-skeleton" id="c-sobrev" data-source="tbf_curvas" style="min-height:250px"></div>
+        <div class="mtl-tiles">
+          <div class="mtl-tile"><span class="k">R(1 h), Weibull</span><span class="v" data-source="linhas" data-field="r_1h" data-where-linha data-fmt="p1">—</span></div>
+          <div class="mtl-tile"><span class="k">R(8 h), Weibull</span><span class="v" data-source="linhas" data-field="r_8h" data-where-linha data-fmt="p1">—</span></div>
+          <div class="mtl-tile"><span class="k">R(20 h): um dia inteiro</span><span class="v" data-source="linhas" data-field="r_20h" data-where-linha data-fmt="p1">—</span></div>
+          <div class="mtl-tile"><span class="k">Forma β da Weibull</span><span class="v" data-source="linhas" data-field="weibull_beta" data-where-linha data-fmt="d2">—</span></div>
+          <div class="mtl-tile"><span class="k">Escala η (h)</span><span class="v" data-source="linhas" data-field="weibull_eta_h" data-where-linha data-fmt="d1">—</span></div>
+        </div>
+      </div>
+      <div class="mtl-card wide" id="card-ajustes">
+        <h3>Qual distribuição descreve melhor o tempo entre falhas</h3>
+        <p class="nota">Menor AIC indica o melhor ajuste; KS é a maior distância entre a curva observada e a do modelo. A Weibull vence nas quatro linhas, sempre com β abaixo de 1: a taxa de falha cai com o tempo desde a última falha, sinal de falhas em cascata e de reincidência logo após um reparo.</p>
+        <div class="mtl-tbl">
+          <table id="t-ajustes" data-source="ajustes" data-row-key="linha,modelo">
+            <thead><tr>
+              <th data-field="modelo">Modelo</th>
+              <th data-field="p1">Parâmetro 1</th>
+              <th data-field="p2">Parâmetro 2</th>
+              <th data-field="loglik">Log-verossimilhança</th>
+              <th data-field="aic">AIC</th>
+              <th data-field="delta_aic">Δ AIC</th>
+              <th data-field="ks">KS</th>
+            </tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <p class="nota">Exponencial: parâmetro 1 = λ (falhas por hora). Weibull: β (forma) e η (escala, h). Lognormal: μ e σ do logaritmo do tempo em horas.</p>
+      </div>
+      <div class="mtl-card" id="card-ttr">
+        <h3>Tempo até o serviço voltar</h3>
+        <p class="nota">Parcela das falhas de cada causa por duração da interrupção. Zero minuto: a falha foi registrada, mas o serviço não chegou a parar.</p>
+        <div class="mtl-legend" id="lg-ttr"></div>
+        <div class="mtl-chart dash-skeleton" id="c-ttr" data-source="ttr_faixas" style="min-height:240px"></div>
+      </div>
+      <div class="mtl-card" id="card-anual">
+        <h3>Falhas técnicas por ano</h3>
+        <p class="nota">2026 vai até junho.</p>
+        <div class="mtl-legend" id="lg-anual"></div>
+        <div class="mtl-chart dash-skeleton" id="c-anual" data-source="anual" style="min-height:230px"></div>
+      </div>
+      <div class="mtl-card wide" id="card-serie">
+        <h3>A linha como sistema em série</h3>
+        <p class="nota">Para a linha operar, trens e equipamentos fixos precisam funcionar juntos. Em série, as taxas de falha se somam: λ da linha = λ do material rodante + λ dos equipamentos fixos.</p>
+        <div class="mtl-chart dash-skeleton" id="d-serie" data-source="linhas" style="min-height:190px"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mtl-sec" id="frota">
+    <h2>Frota: MR-73 contra MPM-10</h2>
+    <p>A rede opera duas gerações de trem: o MR-73 e o MPM-10 (Azur). A quilometragem real de cada composição permite medir a confiabilidade por distância percorrida, o indicador que operadores usam (MKBF, km entre falhas).</p>
+    <div class="mtl-grid">
+      <div class="mtl-card" id="card-frota">
+        <h3>Km-carro por falha de material rodante</h3>
+        <p class="nota">Quanto maior, mais confiável. 2023 vai até setembro.</p>
+        <div class="mtl-chart dash-skeleton" id="c-frota" data-source="frota_anual" style="min-height:240px"></div>
+      </div>
+      <div class="mtl-card" id="card-pareto">
+        <h3>Concentração das falhas por veículo</h3>
+        <p class="nota">Veículos com pelo menos uma falha, do mais ao menos falho. A diagonal é a distribuição uniforme; quanto mais a curva sobe antes, mais as falhas se concentram em poucos veículos.</p>
+        <div class="mtl-chart dash-skeleton" id="c-pareto" data-source="pareto" style="min-height:250px"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mtl-sec" id="padroes">
+    <h2>Quando e onde as falhas acontecem</h2>
+    <div class="mtl-grid">
+      <div class="mtl-card wide" id="card-hora">
+        <h3>Falhas por hora do dia</h3>
+        <p class="nota">Picos na abertura e nos horários de ponta, quando mais trens estão em serviço. Horas depois da meia-noite pertencem ao dia de operação anterior.</p>
+        <div class="mtl-legend" id="lg-hora"></div>
+        <div class="mtl-chart dash-skeleton" id="c-hora" data-source="perfil" style="min-height:220px"></div>
+      </div>
+      <div class="mtl-card" id="card-mes">
+        <h3>Taxa de falha do material rodante por mês</h3>
+        <p class="nota">Falhas por milhão de km-carro, jan/2019 a set/2023. A taxa sobe no fim do inverno e cai no outono.</p>
+        <div class="mtl-chart dash-skeleton" id="c-mes" data-source="perfil" style="min-height:220px"></div>
+      </div>
+      <div class="mtl-card" id="card-clima">
+        <h3>Taxa de falha do material rodante e clima</h3>
+        <p class="nota">Falhas por milhão de km-carro conforme a temperatura máxima do dia e a neve no solo. A neve só é medida no inverno.</p>
+        <div class="mtl-mini">
+          <div><h4>Temperatura máxima</h4><div class="mtl-chart dash-skeleton" id="c-temp" data-source="perfil" style="min-height:200px"></div></div>
+          <div><h4>Neve no solo</h4><div class="mtl-chart dash-skeleton" id="c-neve" data-source="perfil" style="min-height:200px"></div></div>
+        </div>
+      </div>
+      <div class="mtl-card" id="card-corr">
+        <h3>Correlação diária com as falhas</h3>
+        <p class="nota">Coeficiente de Pearson entre a contagem diária de falhas na rede e cada variável. Valores perto de zero indicam relação fraca; correlação não prova causa.</p>
+        <div class="mtl-tbl">
+          <table id="t-corr" data-source="correlacoes" data-row-key="alvo,variavel">
+            <thead><tr>
+              <th data-field="alvo_nome">Falhas</th>
+              <th data-field="variavel_nome" class="txt">Variável</th>
+              <th data-field="r">r</th>
+              <th data-field="n">Dias</th>
+            </tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="mtl-card" id="card-locais">
+        <h3>Locais com mais falhas técnicas</h3>
+        <p class="nota">Os terminais lideram: é onde os trens entram e saem de serviço e onde falhas de partida aparecem. Códigos como 4S50 são trechos entre estações.</p>
+        <div class="mtl-tbl">
+          <table id="t-locais" data-source="locais" data-row-key="local">
+            <thead><tr>
+              <th data-field="local">Local</th>
+              <th data-field="linha">Linha</th>
+              <th data-field="falhas">Falhas</th>
+              <th data-field="falhas_mr">Mat. rodante</th>
+              <th data-field="falhas_ef">Equip. fixos</th>
+              <th data-field="min_fora">Min parados</th>
+              <th data-field="mttr_min">MTTR (min)</th>
+            </tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="mtl-card wide" id="card-mapa">
+        <h3>Falhas técnicas por estação</h3>
+        <p class="nota">Posição real das estações (GTFS da STM). O tamanho do círculo é proporcional ao número de falhas registradas na estação; anel escuro marca estação de integração entre linhas.</p>
+        <div class="mtl-legend" id="lg-mapa"></div>
+        <div class="mtl-chart dash-skeleton" id="c-mapa" data-source="estacoes" style="min-height:360px"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mtl-sec" id="tolerancia">
+    <h2>Tolerância a falhas</h2>
+    <p>Três formas de redundância aparecem nesta rede. Linhas paralelas oferecem um caminho alternativo para a mesma viagem. Trens de reserva substituem um trem retirado de serviço. Equipamentos e alimentação duplicados protegem cada trecho. A redundância só funciona se as falhas forem independentes: o que derruba duas linhas ao mesmo tempo (energia, controle central) limita o ganho.</p>
+    <div class="mtl-grid">
+      <div class="mtl-card wide" id="card-paralelo">
+        <h3>Corredor Lionel-Groulx ↔ Berri-UQAM: Verde e Laranja em paralelo</h3>
+        <p class="nota">As duas linhas ligam as mesmas estações de integração pelo centro. O corredor só fica fora quando as duas param ao mesmo tempo, ou quando um evento de causa comum para as duas (modelo de fator β).</p>
+        <div class="mtl-chart dash-skeleton" id="d-paralelo" data-source="linhas causa_comum corredor" style="min-height:250px"></div>
+      </div>
+      <div class="mtl-card" id="card-cenarios">
+        <h3>Minutos parados por ano em cada arranjo</h3>
+        <p class="nota">Cálculo analítico (círculo) contra simulação Monte Carlo (losango). Escala logarítmica.</p>
+        <div class="mtl-legend" id="lg-cenarios"></div>
+        <div class="mtl-chart dash-skeleton" id="c-cenarios" data-source="corredor" style="min-height:280px"></div>
+      </div>
+      <div class="mtl-card" id="card-cc">
+        <h3>Eventos de causa comum entre linhas</h3>
+        <p class="nota">Incidentes registrados em mais de uma linha ao mesmo tempo. β é a parcela das falhas de uma linha que também atinge a outra.</p>
+        <div class="mtl-tbl">
+          <table id="t-cc" data-source="causa_comum" data-row-key="par">
+            <thead><tr>
+              <th data-field="par_nome">Par de linhas</th>
+              <th data-field="eventos_tecnicos">Eventos técnicos</th>
+              <th data-field="eventos_todas_causas">Todas as causas</th>
+              <th data-field="beta_a">β da 1ª</th>
+              <th data-field="beta_b">β da 2ª</th>
+              <th data-field="duracao_media_min">Duração média (min)</th>
+              <th data-field="min_fora_ano">Min por ano</th>
+            </tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="mtl-card wide" id="card-tcen">
+        <h3>Resultados por arranjo</h3>
+        <div class="mtl-tbl">
+          <table id="t-cenarios" data-source="corredor" data-row-key="cenario">
+            <thead><tr>
+              <th data-field="nome" class="txt">Arranjo</th>
+              <th data-field="disp_analitica">Disponibilidade</th>
+              <th data-field="min_ano_analitico">Min por ano, analítico</th>
+              <th data-field="sim_min_ano">Min por ano, simulado</th>
+              <th data-field="sim_p95_min_semana">Pior 5% das semanas (min)</th>
+              <th data-field="sim_p_semana_sem_parada">Semanas sem parada</th>
+            </tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <p class="nota">Simulação: <span data-source="corredor" data-field="rodadas" data-where="cenario=so_laranja" data-fmt="int">—</span> semanas de 140 h de operação, sorteando tempos entre falhas e durações da própria base, com início estacionário. A diferença entre analítico e simulado no paralelo independente vem do agrupamento das falhas (β &lt; 1), que a fórmula ignora.</p>
+      </div>
+      <div class="mtl-card wide" id="card-amostra">
+        <h3>Uma semana simulada</h3>
+        <p class="nota">Semana de exemplo, escolhida por conter um evento de causa comum. Cada barra é uma interrupção; traço fino é falha sem interrupção. A faixa de baixo mostra quando o corredor inteiro ficou sem serviço.</p>
+        <div class="mtl-chart dash-skeleton" id="c-amostra" data-source="sim_amostra" style="min-height:210px"></div>
+      </div>
+      <div class="mtl-card wide" id="card-simhist">
+        <h3>Minutos parados por semana, em 4 arranjos</h3>
+        <p class="nota">Parcela das semanas simuladas em cada faixa de minutos parados, sem contar as semanas sem nenhuma parada (indicadas no título). Mesma escala nos quatro painéis.</p>
+        <div class="mtl-chart dash-skeleton" id="c-simhist" data-source="sim_hist corredor" style="min-height:220px"></div>
+      </div>
+      <div class="mtl-card wide" id="card-kdn">
+        <h3>Frota reserva: quantos trens extras garantem a oferta</h3>
+        <div class="mtl-sel" data-sel>
+          <span class="lab">Linha</span>
+          <button type="button" data-linha="verde" style="--cor:var(--l-verde)"><i></i>Verde</button>
+          <button type="button" data-linha="laranja" style="--cor:var(--l-laranja)"><i></i>Laranja</button>
+          <button type="button" data-linha="amarela" style="--cor:var(--l-amarela)"><i></i>Amarela</button>
+          <button type="button" data-linha="azul" style="--cor:var(--l-azul)"><i></i>Azul</button>
+        </div>
+        <p class="nota">Sistema k-de-n: a linha precisa de <b data-source="linhas" data-field="trens_dia_util" data-where-linha data-fmt="int">—</b> trens num dia útil (mediana de composições em serviço). Cada trem sofre falha de material rodante a <b data-source="linhas" data-field="lambda_trem_dia" data-where-linha data-fmt="d4">—</b> por dia. Modelo de Markov de nascimento e morte, com reserva fria e reparo em paralelo. O tempo de reparo na oficina não está na base: cada curva é uma hipótese.</p>
+        <div class="mtl-legend" id="lg-kdn"></div>
+        <div class="mtl-chart dash-skeleton" id="c-kdn" data-source="kdn" style="min-height:260px"></div>
+      </div>
+      <div class="mtl-card wide" id="card-markov">
+        <h3>Modelo de Markov de dois estados por linha</h3>
+        <p class="nota">Cada linha alterna entre operando e parada, com taxa de falha λ e taxa de restabelecimento μ = 1/MTTR. A disponibilidade em regime é μ / (λ + μ), comparada à observada.</p>
+        <div class="mtl-tbl">
+          <table id="t-markov" data-source="linhas" data-row-key="linha">
+            <thead><tr>
+              <th data-field="nome">Linha</th>
+              <th data-field="lambda_h">λ (falhas por hora)</th>
+              <th data-field="mu_h">μ (restabelecimentos por hora)</th>
+              <th data-field="a_markov">Disponibilidade, Markov</th>
+              <th data-field="disponibilidade">Disponibilidade observada</th>
+              <th data-field="r_emp_8h">8 h sem falha, observado</th>
+              <th data-field="r_8h">8 h sem falha, Weibull</th>
+            </tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mtl-sec" id="metodo">
+    <h2>Método e limites</h2>
+    <dl class="mtl-metodo">
+      <dt>Falha técnica</dt>
+      <dd>Incidente com causa primária "Matériel roulant" (material rodante) ou "Équipements fixes" (equipamentos fixos), registrado numa única linha. Causas de passageiros, de operação e "outras" ficam fora. Também ficam fora <b data-source="linhas" data-field="tecnicos_sem_linha" data-where="linha=rede" data-fmt="int">—</b> incidentes técnicos sem linha atribuída ("Non affecté") e <b data-source="linhas" data-field="tecnicos_multilinha" data-where="linha=rede" data-fmt="int">—</b> registrados em mais de uma linha; estes entram como causa comum.</dd>
+      <dt>Tempo de operação</dt>
+      <dd>Janela de 20 h por dia de serviço, das 05:00 à 01:00, inferida do horário dos incidentes. A STM anota horas depois da meia-noite como 24:xx e 25:xx, contadas no dia de operação anterior. Incidentes antes das 05:00 contam como no início da janela.</dd>
+      <dt>Tempo até o serviço voltar</dt>
+      <dd>Hora de retomada menos hora do incidente. Mede a interrupção vista pelo passageiro, não o tempo de conserto do equipamento. Bate com a faixa oficial da STM em <b data-source="linhas" data-field="concordancia_faixa" data-where="linha=rede" data-fmt="p1">—</b> dos eventos técnicos.</dd>
+      <dt>Exposição</dt>
+      <dd>Quilometragem real por composição e por dia, de jan/2019 a set/2023, somada por linha e por frota. Taxas por km usam só esse período.</dd>
+      <dt>Ajustes</dt>
+      <dd>Exponencial, Weibull e lognormal por máxima verossimilhança sobre os intervalos entre falhas consecutivas da mesma linha. Intervalos de zero minuto viraram 1 minuto.</dd>
+      <dt>Redundância do corredor</dt>
+      <dd>Indisponibilidade em série: soma das indisponibilidades. Em paralelo, falhas independentes: produto. Com causa comum: produto mais a indisponibilidade dos eventos que param as duas linhas. A simulação sorteia tempos entre falhas e durações observados, com início estacionário, e não assume distribuição.</dd>
+      <dt>Frota reserva</dt>
+      <dd>Taxa de falha por trem a partir das falhas de material rodante e das composições em serviço por dia. Supõe que toda falha retira o trem de serviço e que o tempo de reparo é exponencial, com os valores do gráfico. É uma cota superior da necessidade de reserva por falha: não inclui manutenção preventiva.</dd>
+      <dt>Fontes</dt>
+      <dd>STM, dados abertos (CC BY 4.0): incidentes do metrô, quilometragem real, GTFS. Environment and Climate Change Canada: clima diário da estação MONTREAL INTL A. Cálculos em pipeline/analise_confiabilidade.py.</dd>
+    </dl>
+  </section>
+</div>
+
+<script>
+(() => {
+  const loc = d3.formatLocale({decimal: ',', thousands: '.', grouping: [3], currency: ['', '']});
+  const F = {
+    int: loc.format(',.0f'),
+    d1: loc.format(',.1f'),
+    d2: loc.format(',.2f'),
+    d3: loc.format(',.3f'),
+    d4: loc.format(',.4f'),
+    p1: loc.format('.1%'),
+    p2: loc.format('.2%'),
+    p3: loc.format('.3%'),
+    h: (v) => loc.format(',.1f')(v) + ' h',
+    min: (v) => loc.format(',.1f')(v) + ' min',
+  };
+  const LIN = ['verde', 'laranja', 'amarela', 'azul'];
+  const NOME = {verde: 'Verde', laranja: 'Laranja', amarela: 'Amarela', azul: 'Azul', rede: 'Rede'};
+  const COR = {verde: 'var(--l-verde)', laranja: 'var(--l-laranja)', amarela: 'var(--l-amarela)', azul: 'var(--l-azul)'};
+  const CAUSA = {MR: 'Material rodante', EF: 'Equipamentos fixos'};
+  const MODELO = {exponencial: 'Exponencial', weibull: 'Weibull', lognormal: 'Lognormal'};
+  const root = document.querySelector('.mtl');
+  const cores = () => dash.colors;
+  const linhaSel = () => {
+    const l = dash.params().linha;
+    return LIN.includes(l) ? l : 'laranja';
+  };
+
+  // ---------- utilidades
+  const pegar = (...ids) => {
+    const out = {ok: true};
+    for (const id of ids) {
+      const d = dash.data(id);
+      if (d.status !== 'ok') return {ok: false, status: d.status};
+      out[id] = d.data;
+    }
+    return out;
+  };
+  const semDados = (box, status) => {
+    box.replaceChildren();
+    if (status === 'error' || status === 'connect' || status === 'declined' || status === 'missing') {
+      box.classList.remove('dash-skeleton');
+      const p = document.createElement('div');
+      p.className = 'mtl-fail';
+      p.textContent = 'Não carregou';
+      box.appendChild(p);
+    } else {
+      box.classList.add('dash-skeleton');
+    }
+  };
+  const novoSvg = (box, H) => {
+    box.replaceChildren();
+    box.classList.remove('dash-skeleton');
+    const W = Math.max(260, Math.floor(box.clientWidth || 600));
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img');
+    return {svg, W, H};
+  };
+  const medir = (svg, textos) => {
+    const g = svg.append('g').attr('opacity', 0);
+    let w = 0;
+    textos.forEach((s) => {
+      const t = g.append('text').style('font-size', 'var(--cds-font-size-caption)').text(s);
+      w = Math.max(w, t.node().getComputedTextLength());
+    });
+    g.remove();
+    return w;
+  };
+  const eixo = (g) => {
+    g.attr('font-size', null).attr('font-family', null);
+    g.selectAll('text').attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)');
+    g.selectAll('.domain').attr('stroke', 'var(--cds-chart-axis)');
+    g.selectAll('.tick line').attr('stroke', 'var(--cds-chart-axis)');
+    return g;
+  };
+  const texto = (g, x, y, s, o = {}) => g.append('text')
+    .attr('x', x).attr('y', y)
+    .attr('fill', o.fill || 'var(--color-fg-muted)')
+    .attr('text-anchor', o.anchor || 'start')
+    .attr('dominant-baseline', o.base || 'middle')
+    .style('font-size', o.size || 'var(--cds-font-size-caption)')
+    .style('font-weight', o.weight || null)
+    .text(s);
+  const gradeH = (g, y, ticks, x0, x1) => ticks.forEach((t) => g.append('line')
+    .attr('x1', x0).attr('x2', x1).attr('y1', y(t)).attr('y2', y(t)).attr('stroke', 'var(--cds-chart-grid)'));
+  const dica = (box) => {
+    let t = box.querySelector(':scope > .mtl-tip');
+    if (!t) {
+      t = document.createElement('div');
+      t.className = 'mtl-tip';
+      t.hidden = true;
+      box.appendChild(t);
+    }
+    return {
+      show(ev, linhas, titulo) {
+        t.replaceChildren();
+        if (titulo) {
+          const h = document.createElement('div');
+          h.className = 'mtl-tip-t';
+          h.textContent = titulo;
+          t.appendChild(h);
+        }
+        linhas.forEach(([cor, nome, val]) => {
+          const r = document.createElement('div');
+          r.className = 'mtl-tip-r';
+          if (cor) {
+            const s = document.createElement('span');
+            s.className = 'mtl-sw';
+            s.style.background = cor;
+            r.appendChild(s);
+          }
+          const n = document.createElement('span');
+          n.textContent = nome;
+          const v = document.createElement('b');
+          v.textContent = val;
+          r.append(n, v);
+          t.appendChild(r);
+        });
+        t.hidden = false;
+        const box2 = box.getBoundingClientRect();
+        const tw = t.offsetWidth;
+        const th = t.offsetHeight;
+        let x = ev.clientX - box2.left + 14;
+        let y = ev.clientY - box2.top + 14;
+        if (x + tw > box2.width) x = Math.max(0, ev.clientX - box2.left - tw - 14);
+        if (y + th > box2.height) y = Math.max(0, ev.clientY - box2.top - th - 14);
+        t.style.left = x + 'px';
+        t.style.top = y + 'px';
+      },
+      hide() {
+        t.hidden = true;
+      },
+    };
+  };
+  const legenda = (id, itens) => {
+    const lg = root.querySelector('#' + id);
+    if (!lg) return;
+    lg.replaceChildren();
+    itens.forEach(([cor, nome, tipo]) => {
+      const s = document.createElement('span');
+      const i = document.createElement('i');
+      i.style.background = cor;
+      if (tipo === 'ponto') {
+        i.style.width = '.6rem';
+        i.style.height = '.6rem';
+        i.style.borderRadius = '50%';
+      }
+      s.append(i, document.createTextNode(nome));
+      lg.appendChild(s);
+    });
+  };
+  const afastar = (itens, minGap, lo, hi) => {
+    itens.sort((a, b) => a.y - b.y);
+    for (let i = 1; i < itens.length; i++) if (itens[i].y - itens[i - 1].y < minGap) itens[i].y = itens[i - 1].y + minGap;
+    const excesso = itens.length ? itens[itens.length - 1].y - hi : 0;
+    if (excesso > 0) itens.forEach((it) => { it.y -= excesso; });
+    itens.forEach((it) => { it.y = Math.max(lo, it.y); });
+    return itens;
+  };
+  const corReal = (token) => {
+    const s = document.createElement('span');
+    s.style.color = token;
+    root.appendChild(s);
+    const c = getComputedStyle(s).color;
+    s.remove();
+    return c;
+  };
+  const relogio = (tOp) => {
+    const dia = Math.floor(tOp / 20) + 1;
+    const h = 5 + (tOp % 20);
+    const hh = Math.floor(h) % 24;
+    const mm = Math.round((h - Math.floor(h)) * 60) % 60;
+    return `dia ${dia}, ${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')}`;
+  };
+
+  // ---------- marcas de texto
+  const preencher = (l) => {
+    root.querySelectorAll('[data-where-linha]').forEach((el) => el.setAttribute('data-where', 'linha=' + l));
+    root.querySelectorAll('[data-fmt]').forEach((el) => {
+      const d = dash.data(el.dataset.source);
+      if (d.status !== 'ok') {
+        el.textContent = '—';
+        if (d.status !== 'loading') el.classList.remove('dash-skeleton');
+        return;
+      }
+      const where = el.getAttribute('data-where');
+      let row;
+      if (where) {
+        const conds = where.split('&').map((p) => p.split('=').map(decodeURIComponent));
+        row = d.data.find((r) => conds.every(([k, v]) => String(r[k]) === v));
+      } else {
+        row = d.data[0];
+      }
+      const v = row ? row[el.dataset.field] : null;
+      el.textContent = v == null ? '—' : F[el.dataset.fmt](v);
+      el.classList.remove('dash-skeleton');
+    });
+  };
+
+  // ---------- tabelas
+  const tabela = (id, rows, cols, chave, classe) => {
+    const tb = root.querySelector('#' + id + ' tbody');
+    tb.replaceChildren();
+    rows.forEach((r) => {
+      const tr = tb.insertRow();
+      tr.dataset.key = chave(r);
+      if (classe) tr.className = classe(r) || '';
+      cols.forEach((c) => {
+        const td = tr.insertCell();
+        if (c.cls) td.className = c.cls;
+        if (c.render) c.render(td, r);
+        else td.textContent = r[c.f] == null ? '—' : (c.fmt ? c.fmt(r[c.f]) : String(r[c.f]));
+      });
+    });
+  };
+  const comPonto = (cor, nome) => (td) => {
+    const i = document.createElement('span');
+    i.className = 'mtl-dot';
+    i.style.setProperty('--cor', cor);
+    td.append(i, document.createTextNode(nome));
+  };
+  const enc = (s) => String(s).replace(/%/g, '%25').replace(/&/g, '%26').replace(/=/g, '%3D').replace(/,/g, '%2C');
+
+  // ---------- gráficos
+  function grafMtbf(box, linhas) {
+    const rows = LIN.map((l) => linhas.find((r) => r.linha === l)).filter(Boolean);
+    const barH = 26;
+    const gap = 14;
+    const top = 6;
+    const bottom = 26;
+    const H = top + rows.length * (barH + gap) - gap + bottom;
+    const {svg, W} = novoSvg(box, H);
+    const labW = medir(svg, rows.map((r) => NOME[r.linha])) + 12;
+    const valW = medir(svg, rows.map((r) => F.h(r.mtbf_op_h))) + 12;
+    const x = d3.scaleLinear([0, d3.max(rows, (r) => r.mtbf_op_h) * 1.05], [labW, W - valW]);
+    const g = svg.append('g');
+    const tip = dica(box);
+    x.ticks(4).forEach((t) => g.append('line').attr('x1', x(t)).attr('x2', x(t)).attr('y1', top).attr('y2', H - bottom).attr('stroke', 'var(--cds-chart-grid)'));
+    eixo(svg.append('g').attr('transform', `translate(0,${H - bottom})`).call(d3.axisBottom(x).ticks(4).tickSize(0).tickPadding(8).tickFormat((v) => F.int(v) + ' h')));
+    rows.forEach((r, i) => {
+      const y = top + i * (barH + gap);
+      texto(g, labW - 8, y + barH / 2, NOME[r.linha], {anchor: 'end', fill: 'var(--color-fg)'});
+      g.append('rect').attr('x', x(0)).attr('y', y).attr('height', barH).attr('rx', 4)
+        .attr('width', Math.max(2, x(r.mtbf_op_h) - x(0))).attr('fill', COR[r.linha])
+        .style('cursor', 'default')
+        .on('mousemove', (ev) => tip.show(ev, [
+          [COR[r.linha], 'Entre falhas técnicas', F.h(r.mtbf_op_h)],
+          [null, 'Só material rodante', F.h(r.mtbf_mr_op_h)],
+          [null, 'Só equipamentos fixos', F.h(r.mtbf_ef_op_h)],
+          [null, 'Falhas técnicas', F.int(r.falhas)],
+        ], 'Linha ' + NOME[r.linha]))
+        .on('mouseleave', () => tip.hide());
+      texto(g, x(r.mtbf_op_h) + 6, y + barH / 2, F.h(r.mtbf_op_h), {fill: 'var(--color-fg)'});
+    });
+  }
+
+  function grafDiasSem(box, anual) {
+    box.replaceChildren();
+    box.classList.remove('dash-skeleton');
+    const wrap = document.createElement('div');
+    wrap.className = 'mtl-mini';
+    box.appendChild(wrap);
+    const areas = LIN.map((l) => {
+      const cel = document.createElement('div');
+      const h4 = document.createElement('h4');
+      h4.textContent = 'Linha ' + NOME[l];
+      const area = document.createElement('div');
+      area.className = 'mtl-chart';
+      cel.append(h4, area);
+      wrap.appendChild(cel);
+      return area;
+    });
+    LIN.forEach((l, i) => {
+      const area = areas[i];
+      const rows = anual.filter((r) => r.linha === l).sort((a, b) => a.ano - b.ano);
+      const H = 120;
+      const {svg, W} = novoSvg(area, H);
+      const yl = medir(svg, ['100%']) + 8;
+      const valW = medir(svg, ['00,0%']) + 10;
+      const x = d3.scaleLinear([2019, 2026], [yl + 6, W - valW]);
+      const y = d3.scaleLinear([0, 1], [H - 22, 8]);
+      const g = svg.append('g');
+      gradeH(g, y, [0, 0.5, 1], yl, W - valW);
+      eixo(svg.append('g').attr('transform', `translate(${yl},0)`).call(d3.axisLeft(y).tickValues([0, 0.5, 1]).tickSize(0).tickPadding(6).tickFormat(loc.format('.0%')))).select('.domain').remove();
+      eixo(svg.append('g').attr('transform', `translate(0,${H - 22})`).call(d3.axisBottom(x).tickValues([2019, 2022, 2026]).tickSize(0).tickPadding(6).tickFormat(d3.format('d')))).select('.domain').remove();
+      g.append('path').datum(rows).attr('fill', 'none').attr('stroke', COR[l]).attr('stroke-width', 2).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round')
+        .attr('d', d3.line().x((r) => x(r.ano)).y((r) => y(r.p_dia_sem_falha)));
+      const tip = dica(area);
+      rows.forEach((r) => {
+        g.append('circle').attr('cx', x(r.ano)).attr('cy', y(r.p_dia_sem_falha)).attr('r', 4)
+          .attr('fill', r.parcial ? 'var(--color-panel)' : COR[l]).attr('stroke', COR[l]).attr('stroke-width', 2)
+          .on('mousemove', (ev) => tip.show(ev, [
+            [COR[l], 'Dias sem falha técnica', F.p1(r.p_dia_sem_falha)],
+            [null, 'Falhas técnicas', F.int(r.falhas)],
+            [null, 'Tempo médio entre falhas', r.mtbf_op_h == null ? '—' : F.h(r.mtbf_op_h)],
+          ], `${NOME[l]}, ${r.ano}${r.parcial ? ' (até junho)' : ''}`))
+          .on('mouseleave', () => tip.hide());
+      });
+      const ult = rows[rows.length - 1];
+      if (ult) texto(g, x(ult.ano) + 8, y(ult.p_dia_sem_falha), F.p1(ult.p_dia_sem_falha), {fill: 'var(--color-fg)'});
+    });
+  }
+
+  function grafAnual(box, anual, l) {
+    const rows = anual.filter((r) => r.linha === l).sort((a, b) => a.ano - b.ano);
+    const H = 230;
+    const {svg, W} = novoSvg(box, H);
+    const max = d3.max(rows, (r) => r.falhas_mr + r.falhas_ef) || 1;
+    const y = d3.scaleLinear([0, max * 1.12], [H - 26, 10]).nice();
+    const yl = medir(svg, y.ticks(4).map(F.int)) + 10;
+    const x = d3.scaleBand(rows.map((r) => r.ano), [yl, W - 4]).padding(0.32);
+    const g = svg.append('g');
+    gradeH(g, y, y.ticks(4), yl, W - 4);
+    eixo(svg.append('g').attr('transform', `translate(${yl},0)`).call(d3.axisLeft(y).ticks(4).tickSize(0).tickPadding(6).tickFormat(F.int))).select('.domain').remove();
+    eixo(svg.append('g').attr('transform', `translate(0,${H - 26})`).call(d3.axisBottom(x).tickSize(0).tickPadding(8).tickFormat((a) => (a === 2026 ? '2026*' : String(a)))));
+    const c = cores();
+    const tip = dica(box);
+    const bw = Math.min(32, x.bandwidth());
+    rows.forEach((r) => {
+      const x0 = x(r.ano) + (x.bandwidth() - bw) / 2;
+      const yMr = y(r.falhas_mr);
+      const yTot = y(r.falhas_mr + r.falhas_ef);
+      const op = r.parcial ? 0.55 : 1;
+      g.append('rect').attr('x', x0).attr('width', bw).attr('y', yMr).attr('height', Math.max(0, y(0) - yMr)).attr('rx', 2).attr('fill', c[0]).attr('opacity', op);
+      g.append('rect').attr('x', x0).attr('width', bw).attr('y', yTot).attr('height', Math.max(0, yMr - yTot - 2)).attr('rx', 2).attr('fill', c[1]).attr('opacity', op);
+      g.append('rect').attr('x', x(r.ano)).attr('width', x.bandwidth()).attr('y', 0).attr('height', H - 26).attr('fill', 'transparent')
+        .on('mousemove', (ev) => tip.show(ev, [
+          [c[0], CAUSA.MR, F.int(r.falhas_mr)],
+          [c[1], CAUSA.EF, F.int(r.falhas_ef)],
+          [null, 'Minutos parados', F.int(r.min_fora)],
+          [null, 'Falhas MR por milhão de km-carro', r.falhas_mr_por_mkm == null ? 'sem km' : F.d2(r.falhas_mr_por_mkm)],
+        ], `${NOME[l]}, ${r.ano}${r.parcial ? ' (até junho)' : ''}`))
+        .on('mouseleave', () => tip.hide());
+    });
+  }
+
+  function grafHist(box, hist, l, cor) {
+    const rows = hist.filter((r) => r.linha === l);
+    const H = 230;
+    const {svg, W} = novoSvg(box, H);
+    const y = d3.scaleLinear([0, (d3.max(rows, (r) => r.pct) || 0.1) * 1.15], [H - 26, 8]).nice();
+    const yl = medir(svg, y.ticks(4).map(loc.format('.0%'))) + 10;
+    const x = d3.scaleLog([0.05, 500], [yl, W - 8]);
+    const g = svg.append('g');
+    gradeH(g, y, y.ticks(4), yl, W - 8);
+    eixo(svg.append('g').attr('transform', `translate(${yl},0)`).call(d3.axisLeft(y).ticks(4).tickSize(0).tickPadding(6).tickFormat(loc.format('.0%')))).select('.domain').remove();
+    eixo(svg.append('g').attr('transform', `translate(0,${H - 26})`).call(d3.axisBottom(x).tickValues([0.1, 1, 10, 100]).tickSize(0).tickPadding(8).tickFormat((v) => (v < 1 ? F.d1(v) : F.int(v)) + ' h')));
+    const tip = dica(box);
+    rows.forEach((r) => {
+      const x0 = x(Math.max(r.de_h, 0.05));
+      const x1 = x(r.ate_h);
+      g.append('rect').attr('x', x0 + 1).attr('width', Math.max(1, x1 - x0 - 2)).attr('y', y(r.pct)).attr('height', Math.max(0, y(0) - y(r.pct))).attr('rx', 2).attr('fill', cor)
+        .on('mousemove', (ev) => tip.show(ev, [
+          [cor, 'Intervalos', F.int(r.n)],
+          [null, 'Parcela', F.p1(r.pct)],
+        ], r.de_h === 0 ? `Menos de ${F.d1(r.ate_h)} h` : `${F.d1(r.de_h)} a ${F.d1(r.ate_h)} h`))
+        .on('mouseleave', () => tip.hide());
+    });
+  }
+
+  function grafSobrev(box, curvas, l) {
+    const rows = curvas.filter((r) => r.linha === l).sort((a, b) => a.t_h - b.t_h);
+    const c = cores();
+    const S = [
+      {k: 'empirica', nome: 'Observado', cor: 'var(--color-fg)', w: 2.5},
+      {k: 'weibull', nome: 'Weibull', cor: c[4], w: 2},
+      {k: 'lognormal', nome: 'Lognormal', cor: c[5], w: 2},
+      {k: 'exponencial', nome: 'Exponencial', cor: c[6], w: 2},
+    ];
+    legenda('lg-sobrev', S.map((s) => [s.cor, s.nome]));
+    const H = 250;
+    const {svg, W} = novoSvg(box, H);
+    const yl = medir(svg, ['100%']) + 10;
+    const lw = medir(svg, S.map((s) => s.nome)) + 14;
+    const x = d3.scaleLog([0.05, 400], [yl, W - lw]);
+    const y = d3.scaleLinear([0, 1], [H - 26, 14]);
+    const g = svg.append('g');
+    gradeH(g, y, [0, 0.25, 0.5, 0.75, 1], yl, W - lw);
+    eixo(svg.append('g').attr('transform', `translate(${yl},0)`).call(d3.axisLeft(y).tickValues([0, 0.25, 0.5, 0.75, 1]).tickSize(0).tickPadding(6).tickFormat(loc.format('.0%')))).select('.domain').remove();
+    eixo(svg.append('g').attr('transform', `translate(0,${H - 26})`).call(d3.axisBottom(x).tickValues([0.1, 1, 10, 100]).tickSize(0).tickPadding(8).tickFormat((v) => (v < 1 ? F.d1(v) : F.int(v)) + ' h')));
+    [1, 8, 20].forEach((t) => {
+      g.append('line').attr('x1', x(t)).attr('x2', x(t)).attr('y1', 10).attr('y2', H - 26).attr('stroke', 'var(--cds-chart-reference)').attr('stroke-dasharray', '3 3');
+      texto(g, x(t) + 3, 8, F.int(t) + ' h', {base: 'hanging'});
+    });
+    S.slice().reverse().forEach((s) => {
+      g.append('path').datum(rows).attr('fill', 'none').attr('stroke', s.cor).attr('stroke-width', s.w).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round')
+        .attr('d', d3.line().x((r) => x(r.t_h)).y((r) => y(r[s.k])));
+    });
+    const tAlvo = 30;
+    const iAlvo = d3.bisector((r) => r.t_h).left(rows, tAlvo);
+    const ref = rows[Math.min(iAlvo, rows.length - 1)];
+    const rot = afastar(S.map((s) => ({s, y: y(ref[s.k])})), 13, 12, H - 30);
+    rot.forEach((it) => texto(g, W - lw + 6, it.y, it.s.nome, {fill: 'var(--color-fg)'}));
+    rot.forEach((it) => g.append('line').attr('x1', x(ref.t_h)).attr('x2', W - lw + 3).attr('y1', y(ref[it.s.k])).attr('y2', it.y).attr('stroke', it.s.cor).attr('stroke-width', 1).attr('opacity', 0.6));
+    const regra = g.append('line').attr('y1', 14).attr('y2', H - 26).attr('stroke', 'var(--cds-chart-axis)').attr('opacity', 0);
+    const pts = S.map((s) => g.append('circle').attr('r', 4).attr('fill', s.cor).attr('stroke', 'var(--color-panel)').attr('stroke-width', 2).attr('opacity', 0));
+    const tip = dica(box);
+    g.append('rect').attr('x', yl).attr('y', 10).attr('width', W - lw - yl).attr('height', H - 36).attr('fill', 'transparent')
+      .on('mousemove', (ev) => {
+        const [mx] = d3.pointer(ev);
+        const t = x.invert(mx);
+        const i = d3.bisector((r) => r.t_h).center(rows, t);
+        const r = rows[i];
+        regra.attr('x1', x(r.t_h)).attr('x2', x(r.t_h)).attr('opacity', 1);
+        S.forEach((s, j) => pts[j].attr('cx', x(r.t_h)).attr('cy', y(r[s.k])).attr('opacity', 1));
+        tip.show(ev, S.map((s) => [s.cor, s.nome, F.p1(r[s.k])]), `${r.t_h < 1 ? F.d2(r.t_h) : F.d1(r.t_h)} h sem falha`);
+      })
+      .on('mouseleave', () => {
+        regra.attr('opacity', 0);
+        pts.forEach((p) => p.attr('opacity', 0));
+        tip.hide();
+      });
+  }
+
+  function grafTtr(box, ttr, l) {
+    const rows = ttr.filter((r) => r.linha === l);
+    const faixas = [...new Set(rows.sort((a, b) => a.ordem - b.ordem).map((r) => r.faixa))];
+    const c = cores();
+    legenda('lg-ttr', [[c[0], CAUSA.MR], [c[1], CAUSA.EF]]);
+    const H = 240;
+    const {svg, W} = novoSvg(box, H);
+    const y = d3.scaleLinear([0, (d3.max(rows, (r) => r.pct) || 0.1) * 1.12], [H - 30, 8]).nice();
+    const yl = medir(svg, y.ticks(4).map(loc.format('.0%'))) + 10;
+    const x = d3.scaleBand(faixas, [yl, W - 4]).padding(0.22);
+    const xi = d3.scaleBand(['MR', 'EF'], [0, x.bandwidth()]).padding(0.08);
+    const curto = medir(svg, faixas) > x.bandwidth() * faixas.length * 0.9;
+    const rotulo = (f) => (curto ? f.replace(' ou mais', '+').replace(' min', '') : f);
+    const g = svg.append('g');
+    gradeH(g, y, y.ticks(4), yl, W - 4);
+    eixo(svg.append('g').attr('transform', `translate(${yl},0)`).call(d3.axisLeft(y).ticks(4).tickSize(0).tickPadding(6).tickFormat(loc.format('.0%')))).select('.domain').remove();
+    eixo(svg.append('g').attr('transform', `translate(0,${H - 30})`).call(d3.axisBottom(x).tickSize(0).tickPadding(8).tickFormat(rotulo)));
+    const tip = dica(box);
+    rows.forEach((r) => {
+      const cor = r.causa === 'MR' ? c[0] : c[1];
+      const bw = Math.min(28, xi.bandwidth());
+      const x0 = x(r.faixa) + xi(r.causa) + (xi.bandwidth() - bw) / 2;
+      g.append('rect').attr('x', x0).attr('width', bw).attr('y', y(r.pct)).attr('height', Math.max(0, y(0) - y(r.pct))).attr('rx', 3).attr('fill', cor)
+        .on('mousemove', (ev) => tip.show(ev, [[cor, CAUSA[r.causa], F.p1(r.pct)], [null, 'Falhas', F.int(r.n)]], r.faixa))
+        .on('mouseleave', () => tip.hide());
+    });
+  }
+
+  function grafSerie(box, linhas, l) {
+    const r = linhas.find((x) => x.linha === l);
+    if (!r) return;
+    const c = cores();
+    const H = 190;
+    const {svg, W} = novoSvg(box, H);
+    const g = svg.append('g');
+    const n = 3;
+    const gapX = 34;
+    const bw = Math.min(230, (W - 20 - gapX * (n - 1)) / n);
+    const tot = bw * n + gapX * (n - 1);
+    const x0 = (W - tot) / 2;
+    const yb = 30;
+    const bh = 92;
+    const blocos = [
+      {t: CAUSA.MR, cor: c[0], l1: 'MTBF ' + F.h(r.mtbf_mr_op_h), l2: 'λ = ' + F.d4(1 / r.mtbf_mr_op_h) + ' por h', l3: F.int(r.falhas_mr) + ' falhas'},
+      {t: CAUSA.EF, cor: c[1], l1: 'MTBF ' + F.h(r.mtbf_ef_op_h), l2: 'λ = ' + F.d4(1 / r.mtbf_ef_op_h) + ' por h', l3: F.int(r.falhas_ef) + ' falhas'},
+      {t: 'Linha ' + NOME[l], cor: COR[l], l1: 'MTBF ' + F.h(r.mtbf_op_h), l2: 'λ = ' + F.d4(1 / r.mtbf_op_h) + ' por h', l3: 'Disponibilidade ' + F.p2(r.disponibilidade), res: true},
+    ];
+    g.append('line').attr('x1', 4).attr('x2', x0).attr('y1', yb + bh / 2).attr('y2', yb + bh / 2).attr('stroke', 'var(--cds-chart-axis)').attr('stroke-width', 2);
+    blocos.forEach((b, i) => {
+      const bx = x0 + i * (bw + gapX);
+      if (i > 0) {
+        const ax = bx - gapX;
+        g.append('line').attr('x1', ax).attr('x2', bx).attr('y1', yb + bh / 2).attr('y2', yb + bh / 2).attr('stroke', 'var(--cds-chart-axis)').attr('stroke-width', 2);
+        texto(g, ax + gapX / 2, yb + bh / 2 - 9, i === 2 ? '=' : '+', {anchor: 'middle', fill: 'var(--color-fg)', size: 'var(--cds-font-size-heading)'});
+      }
+      g.append('rect').attr('x', bx).attr('y', yb).attr('width', bw).attr('height', bh).attr('rx', 6)
+        .attr('fill', 'var(--color-panel)').attr('stroke', b.cor).attr('stroke-width', b.res ? 3 : 2);
+      g.append('rect').attr('x', bx).attr('y', yb).attr('width', 6).attr('height', bh).attr('rx', 3).attr('fill', b.cor);
+      texto(g, bx + 16, yb + 18, b.t, {fill: 'var(--color-fg)', weight: 'var(--cds-font-weight-medium)'});
+      texto(g, bx + 16, yb + 40, b.l1, {fill: 'var(--color-fg)'});
+      texto(g, bx + 16, yb + 58, b.l2);
+      texto(g, bx + 16, yb + 76, b.l3);
+    });
+    texto(g, W / 2, H - 22, `Probabilidade de um dia inteiro (20 h) sem falha: ${F.p1(r.r_20h)} pela Weibull, ${F.p1(r.r_emp_20h)} observado.`, {anchor: 'middle'});
+  }
+
+  function grafFrota(box, frota) {
+    const rows = frota.filter((r) => typeof r.ano === 'number');
+    const c = cores();
+    const S = [{f: 'MR-73', cor: c[2]}, {f: 'MPM-10', cor: c[3]}];
+    const H = 240;
+    const {svg, W} = novoSvg(box, H);
+    const y = d3.scaleLinear([0, d3.max(rows, (r) => r.km_por_falha) * 1.12], [H - 26, 10]).nice();
+    const fy = (v) => F.int(v / 1000) + ' mil';
+    const yl = medir(svg, y.ticks(4).map(fy)) + 10;
+    const lw = medir(svg, S.map((s) => s.f + ' 000 mil')) + 12;
+    const x = d3.scaleLinear([2019, 2023], [yl + 10, W - lw]);
+    const g = svg.append('g');
+    gradeH(g, y, y.ticks(4), yl, W - lw);
+    eixo(svg.append('g').attr('transform', `translate(${yl},0)`).call(d3.axisLeft(y).ticks(4).tickSize(0).tickPadding(6).tickFormat(fy))).select('.domain').remove();
+    eixo(svg.append('g').attr('transform', `translate(0,${H - 26})`).call(d3.axisBottom(x).ticks(5).tickSize(0).tickPadding(8).tickFormat((a) => (a === 2023 ? '2023*' : String(a))))).select('.domain').remove();
+    const tip = dica(box);
+    const fim = [];
+    S.forEach((s) => {
+      const pts = rows.filter((r) => r.frota === s.f).sort((a, b) => a.ano - b.ano);
+      g.append('path').datum(pts).attr('fill', 'none').attr('stroke', s.cor).attr('stroke-width', 2).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round')
+        .attr('d', d3.line().x((r) => x(r.ano)).y((r) => y(r.km_por_falha)));
+      pts.forEach((r) => g.append('circle').attr('cx', x(r.ano)).attr('cy', y(r.km_por_falha)).attr('r', 4)
+        .attr('fill', r.parcial ? 'var(--color-panel)' : s.cor).attr('stroke', s.cor).attr('stroke-width', 2)
+        .on('mousemove', (ev) => tip.show(ev, [
+          [s.cor, 'Km-carro por falha', F.int(r.km_por_falha)],
+          [null, 'Falhas', F.int(r.falhas)],
+          [null, 'Km-carro (milhões)', F.d1(r.km_carro_milhoes)],
+          [null, 'Falhas por milhão de km', F.d2(r.falhas_por_mkm)],
+        ], `${s.f}, ${r.ano}${r.parcial ? ' (até setembro)' : ''}`))
+        .on('mouseleave', () => tip.hide()));
+      const u = pts[pts.length - 1];
+      if (u) fim.push({s, v: u.km_por_falha, y: y(u.km_por_falha)});
+    });
+    afastar(fim, 14, 10, H - 30).forEach((it) => texto(g, W - lw + 8, it.y, `${it.s.f} ${fy(it.v)}`, {fill: 'var(--color-fg)'}));
+  }
+
+  function grafPareto(box, pareto) {
+    const c = cores();
+    const S = [{f: 'MR-73', cor: c[2]}, {f: 'MPM-10', cor: c[3]}];
+    const H = 250;
+    const {svg, W} = novoSvg(box, H);
+    const yl = medir(svg, ['100%']) + 10;
+    const lw = medir(svg, S.map((s) => s.f)) + 14;
+    const x = d3.scaleLinear([0, 1], [yl, W - lw]);
+    const y = d3.scaleLinear([0, 1], [H - 34, 8]);
+    const g = svg.append('g');
+    const tk = [0, 0.25, 0.5, 0.75, 1];
+    gradeH(g, y, tk, yl, W - lw);
+    eixo(svg.append('g').attr('transform', `translate(${yl},0)`).call(d3.axisLeft(y).tickValues(tk).tickSize(0).tickPadding(6).tickFormat(loc.format('.0%')))).select('.domain').remove();
+    eixo(svg.append('g').attr('transform', `translate(0,${H - 34})`).call(d3.axisBottom(x).tickValues(tk).tickSize(0).tickPadding(8).tickFormat(loc.format('.0%')))).select('.domain').remove();
+    texto(g, (yl + W - lw) / 2, H - 6, 'Parcela dos veículos, do mais falho ao menos falho', {anchor: 'middle'});
+    g.append('line').attr('x1', x(0)).attr('y1', y(0)).attr('x2', x(1)).attr('y2', y(1)).attr('stroke', 'var(--cds-chart-reference)').attr('stroke-dasharray', '4 4');
+    const series = S.map((s) => ({...s, pts: pareto.filter((r) => r.frota === s.f).sort((a, b) => a.pct_veiculos - b.pct_veiculos)}));
+    series.forEach((s) => g.append('path').datum(s.pts).attr('fill', 'none').attr('stroke', s.cor).attr('stroke-width', 2).attr('stroke-linejoin', 'round')
+      .attr('d', d3.line().x((r) => x(r.pct_veiculos)).y((r) => y(r.pct_falhas))));
+    const em = 0.2;
+    const rot = afastar(series.map((s) => {
+      const r = s.pts.find((p) => Math.abs(p.pct_veiculos - em) < 1e-9);
+      return {s, r, y: y(r.pct_falhas)};
+    }), 14, 10, H - 40);
+    rot.forEach((it) => {
+      g.append('circle').attr('cx', x(em)).attr('cy', y(it.r.pct_falhas)).attr('r', 4).attr('fill', it.s.cor).attr('stroke', 'var(--color-panel)').attr('stroke-width', 2);
+    });
+    series.forEach((s) => {
+      const u = s.pts[s.pts.length - 1];
+      s.yEnd = y(u.pct_falhas);
+    });
+    afastar(series.map((s) => ({s, y: s.yEnd})), 14, 10, H - 40).forEach((it) => texto(g, W - lw + 8, it.y, it.s.f, {fill: 'var(--color-fg)'}));
+    const regra = g.append('line').attr('y1', 8).attr('y2', H - 34).attr('stroke', 'var(--cds-chart-axis)').attr('opacity', 0);
+    const tip = dica(box);
+    g.append('rect').attr('x', yl).attr('y', 8).attr('width', W - lw - yl).attr('height', H - 42).attr('fill', 'transparent')
+      .on('mousemove', (ev) => {
+        const [mx] = d3.pointer(ev);
+        const p = Math.round(Math.max(0, Math.min(1, x.invert(mx))) * 50) / 50;
+        regra.attr('x1', x(p)).attr('x2', x(p)).attr('opacity', 1);
+        tip.show(ev, series.map((s) => {
+          const r = s.pts.find((q) => Math.abs(q.pct_veiculos - p) < 1e-9) || s.pts[0];
+          return [s.cor, `${s.f} (${F.int(r.veiculos)} veículos)`, F.p1(r.pct_falhas) + ' das falhas'];
+        }), `${F.p1(p)} dos veículos mais falhos`);
+      })
+      .on('mouseleave', () => {
+        regra.attr('opacity', 0);
+        tip.hide();
+      });
+  }
+
+  function grafHora(box, perfil) {
+    const rows = perfil.filter((r) => r.dimensao === 'hora').sort((a, b) => a.ordem - b.ordem);
+    const c = cores();
+    legenda('lg-hora', [[c[0], CAUSA.MR], [c[1], CAUSA.EF]]);
+    const H = 220;
+    const {svg, W} = novoSvg(box, H);
+    const y = d3.scaleLinear([0, d3.max(rows, (r) => r.falhas_mr + r.falhas_ef) * 1.1], [H - 26, 8]).nice();
+    const yl = medir(svg, y.ticks(4).map(F.int)) + 10;
+    const x = d3.scaleBand(rows.map((r) => r.categoria), [yl, W - 4]).padding(0.2);
+    const passo = x.bandwidth() < 22 ? 3 : 1;
+    const g = svg.append('g');
+    gradeH(g, y, y.ticks(4), yl, W - 4);
+    eixo(svg.append('g').attr('transform', `translate(${yl},0)`).call(d3.axisLeft(y).ticks(4).tickSize(0).tickPadding(6).tickFormat(F.int))).select('.domain').remove();
+    eixo(svg.append('g').attr('transform', `translate(0,${H - 26})`).call(d3.axisBottom(x).tickValues(rows.map((r) => r.categoria).filter((_, i) => i % passo === 0)).tickSize(0).tickPadding(8)));
+    const tip = dica(box);
+    const bw = Math.min(28, x.bandwidth());
+    rows.forEach((r) => {
+      const x0 = x(r.categoria) + (x.bandwidth() - bw) / 2;
+      g.append('rect').attr('x', x0).attr('width', bw).attr('y', y(r.falhas_mr)).attr('height', Math.max(0, y(0) - y(r.falhas_mr))).attr('rx', 2).attr('fill', c[0]);
+      g.append('rect').attr('x', x0).attr('width', bw).attr('y', y(r.falhas_mr + r.falhas_ef)).attr('height', Math.max(0, y(r.falhas_mr) - y(r.falhas_mr + r.falhas_ef) - 2)).attr('rx', 2).attr('fill', c[1]);
+      g.append('rect').attr('x', x(r.categoria)).attr('width', x.bandwidth()).attr('y', 0).attr('height', H - 26).attr('fill', 'transparent')
+        .on('mousemove', (ev) => tip.show(ev, [[c[0], CAUSA.MR, F.int(r.falhas_mr)], [c[1], CAUSA.EF, F.int(r.falhas_ef)]], 'Das ' + r.categoria.replace('h', ':00')))
+        .on('mouseleave', () => tip.hide());
+    });
+  }
+
+  function grafTaxa(box, perfil, dim, H) {
+    const rows = perfil.filter((r) => r.dimensao === dim).sort((a, b) => a.ordem - b.ordem);
+    const c = cores();
+    const {svg, W} = novoSvg(box, H);
+    const y = d3.scaleLinear([0, d3.max(rows, (r) => r.falhas_mr_por_mkm) * 1.15], [H - 34, 18]).nice();
+    const yl = medir(svg, y.ticks(4).map(F.int)) + 10;
+    const x = d3.scaleBand(rows.map((r) => r.categoria), [yl, W - 4]).padding(0.25);
+    const largo = medir(svg, rows.map((r) => r.categoria)) > x.bandwidth();
+    const g = svg.append('g');
+    gradeH(g, y, y.ticks(4), yl, W - 4);
+    eixo(svg.append('g').attr('transform', `translate(${yl},0)`).call(d3.axisLeft(y).ticks(4).tickSize(0).tickPadding(6).tickFormat(F.int))).select('.domain').remove();
+    const ax = eixo(svg.append('g').attr('transform', `translate(0,${H - 34})`).call(d3.axisBottom(x).tickSize(0).tickPadding(8)));
+    if (largo) {
+      ax.selectAll('.tick text').each(function quebra(d) {
+        const t = d3.select(this);
+        const partes = String(d).replace(' a ', ' a ').split(' ');
+        if (partes.length < 2) return;
+        const meio = Math.ceil(partes.length / 2);
+        t.text(null);
+        t.append('tspan').attr('x', 0).attr('dy', 0).text(partes.slice(0, meio).join(' '));
+        t.append('tspan').attr('x', 0).attr('dy', '1.1em').text(partes.slice(meio).join(' '));
+      });
+    }
+    const tip = dica(box);
+    const bw = Math.min(32, x.bandwidth());
+    rows.forEach((r) => {
+      const x0 = x(r.categoria) + (x.bandwidth() - bw) / 2;
+      g.append('rect').attr('x', x0).attr('width', bw).attr('y', y(r.falhas_mr_por_mkm)).attr('height', Math.max(0, y(0) - y(r.falhas_mr_por_mkm))).attr('rx', 4).attr('fill', c[0])
+        .on('mousemove', (ev) => tip.show(ev, [
+          [c[0], 'Falhas MR por milhão de km', F.d2(r.falhas_mr_por_mkm)],
+          [null, 'Falhas de material rodante', F.int(r.falhas_mr)],
+          [null, 'Km-carro (milhões)', F.d1(r.km_carro_milhoes)],
+          [null, 'Dias', F.int(r.dias)],
+        ], r.categoria))
+        .on('mouseleave', () => tip.hide());
+      if (bw >= 22) texto(g, x0 + bw / 2, y(r.falhas_mr_por_mkm) - 8, F.d1(r.falhas_mr_por_mkm), {anchor: 'middle', fill: 'var(--color-fg)'});
+    });
+  }
+
+  function grafMapa(box, est) {
+    const W0 = Math.max(260, box.clientWidth || 600);
+    const H = Math.round(Math.max(340, Math.min(560, W0 * 0.72)));
+    const {svg, W} = novoSvg(box, H);
+    legenda('lg-mapa', LIN.map((l) => [COR[l], 'Linha ' + NOME[l]]));
+    const k = Math.cos(45.52 * Math.PI / 180);
+    const xs = est.map((e) => e.lon * k);
+    const ys = est.map((e) => e.lat);
+    const [xmin, xmax] = d3.extent(xs);
+    const [ymin, ymax] = d3.extent(ys);
+    const pad = 28;
+    const s = Math.min((W - 2 * pad) / (xmax - xmin), (H - 2 * pad) / (ymax - ymin));
+    const ox = (W - s * (xmax - xmin)) / 2;
+    const oy = (H - s * (ymax - ymin)) / 2;
+    const px = (e) => ox + (e.lon * k - xmin) * s;
+    const py = (e) => H - oy - (e.lat - ymin) * s;
+    const g = svg.append('g');
+    LIN.forEach((l) => {
+      const pts = est.filter((e) => e.linha === l).sort((a, b) => a.ordem - b.ordem);
+      g.append('path').datum(pts).attr('fill', 'none').attr('stroke', COR[l]).attr('stroke-width', 4).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round').attr('opacity', 0.9)
+        .attr('d', d3.line().x(px).y(py));
+    });
+    const porNome = new Map();
+    est.forEach((e) => {
+      const atual = porNome.get(e.estacao);
+      if (!atual) porNome.set(e.estacao, {...e, linhas: [e.linha]});
+      else atual.linhas.push(e.linha);
+    });
+    const unicas = [...porNome.values()].sort((a, b) => b.falhas - a.falhas);
+    const r = d3.scaleSqrt([0, d3.max(unicas, (e) => e.falhas) || 1], [2.5, 15]);
+    const tip = dica(box);
+    unicas.slice().reverse().forEach((e) => {
+      g.append('circle').attr('cx', px(e)).attr('cy', py(e)).attr('r', r(e.falhas))
+        .attr('fill', COR[e.linhas[0]]).attr('fill-opacity', 0.78)
+        .attr('stroke', e.transferencia ? 'var(--color-fg)' : 'var(--color-panel)').attr('stroke-width', e.transferencia ? 2 : 1.5)
+        .on('mousemove', (ev) => tip.show(ev, [
+          [null, 'Falhas técnicas na estação', F.int(e.falhas)],
+          [null, 'Das quais material rodante', F.int(e.falhas_mr)],
+          [null, 'Linhas', e.linhas.map((l) => NOME[l]).join(', ')],
+        ], e.estacao))
+        .on('mouseleave', () => tip.hide());
+    });
+    unicas.slice(0, 6).forEach((e) => {
+      const lado = px(e) > W * 0.6 ? 'end' : 'start';
+      const dx = lado === 'end' ? -(r(e.falhas) + 4) : r(e.falhas) + 4;
+      g.append('text').attr('x', px(e) + dx).attr('y', py(e)).attr('text-anchor', lado).attr('dominant-baseline', 'middle')
+        .style('font-size', 'var(--cds-font-size-caption)').attr('fill', 'var(--color-fg)')
+        .attr('stroke', 'var(--color-panel)').attr('stroke-width', 3).attr('paint-order', 'stroke')
+        .text(`${e.estacao} ${F.int(e.falhas)}`);
+    });
+  }
+
+  function grafParalelo(box, linhas, cc, corredor) {
+    const v = linhas.find((r) => r.linha === 'verde');
+    const o = linhas.find((r) => r.linha === 'laranja');
+    const par = cc.find((r) => r.par === 'verde-laranja');
+    const pi = corredor.find((r) => r.cenario === 'paralelo_indep');
+    const pc = corredor.find((r) => r.cenario === 'paralelo_cc');
+    if (!v || !o || !par || !pi || !pc) return;
+    const c = cores();
+    const H = 250;
+    const {svg, W} = novoSvg(box, H);
+    const g = svg.append('g');
+    const estreito = W < 560;
+    const bw = estreito ? Math.min(150, W * 0.36) : 200;
+    const ccw = estreito ? Math.min(130, W * 0.3) : 190;
+    const xIn = 8;
+    const xSplit = estreito ? 22 : 40;
+    const xb = xSplit + 14;
+    const xMerge = xb + bw + 14;
+    const xcc = xMerge + (estreito ? 16 : 40);
+    const xOut = Math.min(W - 8, xcc + ccw + (estreito ? 14 : 40));
+    const yTop = 28;
+    const yBot = 132;
+    const bh = 70;
+    const yMid = (yTop + bh / 2 + yBot + bh / 2) / 2;
+    const linha = (x1, y1, x2, y2) => g.append('line').attr('x1', x1).attr('y1', y1).attr('x2', x2).attr('y2', y2).attr('stroke', 'var(--cds-chart-axis)').attr('stroke-width', 2);
+    linha(xIn, yMid, xSplit, yMid);
+    linha(xSplit, yTop + bh / 2, xSplit, yBot + bh / 2);
+    linha(xSplit, yTop + bh / 2, xb, yTop + bh / 2);
+    linha(xSplit, yBot + bh / 2, xb, yBot + bh / 2);
+    linha(xb + bw, yTop + bh / 2, xMerge, yTop + bh / 2);
+    linha(xb + bw, yBot + bh / 2, xMerge, yBot + bh / 2);
+    linha(xMerge, yTop + bh / 2, xMerge, yBot + bh / 2);
+    linha(xMerge, yMid, xcc, yMid);
+    linha(xcc + ccw, yMid, xOut, yMid);
+    const bloco = (x, y, w, cor, t, l1, l2) => {
+      g.append('rect').attr('x', x).attr('y', y).attr('width', w).attr('height', bh).attr('rx', 6).attr('fill', 'var(--color-panel)').attr('stroke', cor).attr('stroke-width', 2);
+      g.append('rect').attr('x', x).attr('y', y).attr('width', 6).attr('height', bh).attr('rx', 3).attr('fill', cor);
+      texto(g, x + 14, y + 17, t, {fill: 'var(--color-fg)', weight: 'var(--cds-font-weight-medium)'});
+      texto(g, x + 14, y + 38, l1, {fill: 'var(--color-fg)'});
+      texto(g, x + 14, y + 56, l2);
+    };
+    bloco(xb, yTop, bw, COR.verde, 'Linha Verde', 'A = ' + F.p3(v.disponibilidade), F.int(v.min_fora_ano) + ' min/ano');
+    bloco(xb, yBot, bw, COR.laranja, 'Linha Laranja', 'A = ' + F.p3(o.disponibilidade), F.int(o.min_fora_ano) + ' min/ano');
+    bloco(xcc, yMid - bh / 2, ccw, c[5], 'Causa comum', 'β ≈ ' + F.p1(par.beta_a), F.d1(par.min_fora_ano) + ' min/ano');
+    texto(g, xb, 12, 'Paralelo: falha só se as duas pararem', {base: 'middle'});
+    texto(g, xcc, yMid - bh / 2 - 14, 'Série: para as duas', {base: 'middle'});
+    const yR = H - 26;
+    texto(g, 8, yR, `Corredor, falhas independentes: A = ${F.p3(pi.disp_analitica)} (${F.d1(pi.min_ano_analitico)} min/ano).`, {fill: 'var(--color-fg)'});
+    texto(g, 8, yR + 18, `Com causa comum: A = ${F.p3(pc.disp_analitica)} (${F.int(pc.min_ano_analitico)} min/ano).`, {fill: 'var(--color-fg)'});
+  }
+
+  function grafCenarios(box, corredor) {
+    const rows = corredor.slice().sort((a, b) => a.ordem - b.ordem);
+    const c = cores();
+    legenda('lg-cenarios', [['var(--color-fg)', 'Analítico', 'ponto'], [c[4], 'Simulado', 'ponto']]);
+    const linhaH = 52;
+    const H = rows.length * linhaH + 30;
+    const {svg, W} = novoSvg(box, H);
+    const x = d3.scaleLog([1, 10000], [12, W - 70]);
+    const g = svg.append('g');
+    [1, 10, 100, 1000, 10000].forEach((t) => g.append('line').attr('x1', x(t)).attr('x2', x(t)).attr('y1', 0).attr('y2', H - 26).attr('stroke', 'var(--cds-chart-grid)'));
+    eixo(svg.append('g').attr('transform', `translate(0,${H - 26})`).call(d3.axisBottom(x).tickValues([1, 10, 100, 1000, 10000]).tickSize(0).tickPadding(8).tickFormat((v) => F.int(v)))).select('.domain').remove();
+    texto(g, W - 4, H - 18, 'min/ano', {anchor: 'end'});
+    const tip = dica(box);
+    rows.forEach((r, i) => {
+      const y0 = i * linhaH;
+      texto(g, 12, y0 + 12, r.nome, {fill: 'var(--color-fg)'});
+      const yD = y0 + 32;
+      const va = Math.max(1, r.min_ano_analitico);
+      g.append('line').attr('x1', x(1)).attr('x2', x(10000)).attr('y1', yD).attr('y2', yD).attr('stroke', 'var(--cds-chart-grid)');
+      if (r.sim_min_ano != null) {
+        const vs = Math.max(1, r.sim_min_ano);
+        g.append('path').attr('transform', `translate(${x(vs)},${yD})`).attr('d', d3.symbol(d3.symbolDiamond, 90)()).attr('fill', c[4]).attr('stroke', 'var(--color-panel)').attr('stroke-width', 1.5);
+      }
+      g.append('circle').attr('cx', x(va)).attr('cy', yD).attr('r', 5.5).attr('fill', 'var(--color-fg)').attr('stroke', 'var(--color-panel)').attr('stroke-width', 1.5);
+      texto(g, x(Math.max(va, r.sim_min_ano || 0)) + 10, yD, F.d1(r.min_ano_analitico) + ' min', {fill: 'var(--color-fg)'});
+      g.append('rect').attr('x', 0).attr('y', y0).attr('width', W).attr('height', linhaH).attr('fill', 'transparent')
+        .on('mousemove', (ev) => tip.show(ev, [
+          ['var(--color-fg)', 'Analítico', F.d1(r.min_ano_analitico) + ' min/ano'],
+          [c[4], 'Simulado', r.sim_min_ano == null ? 'não simulado' : F.d1(r.sim_min_ano) + ' min/ano'],
+          [null, 'Disponibilidade', F.p3(r.disp_analitica)],
+        ], r.nome))
+        .on('mouseleave', () => tip.hide());
+    });
+  }
+
+  function grafAmostra(box, am) {
+    const c = cores();
+    const faixas = [
+      {k: 'verde', nome: 'Linha Verde', cor: COR.verde},
+      {k: 'laranja', nome: 'Linha Laranja', cor: COR.laranja},
+      {k: 'causa_comum', nome: 'Causa comum', cor: c[5]},
+      {k: 'corredor', nome: 'Corredor sem serviço', cor: 'var(--cds-chart-status-critical)'},
+    ];
+    const laneH = 34;
+    const top = 22;
+    const H = top + faixas.length * laneH + 28;
+    const {svg, W} = novoSvg(box, H);
+    const lw = medir(svg, faixas.map((f) => f.nome)) + 14;
+    const x = d3.scaleLinear([0, 140], [lw, W - 8]);
+    const g = svg.append('g');
+    for (let d = 0; d < 7; d++) {
+      g.append('rect').attr('x', x(d * 20)).attr('width', x(20) - x(0)).attr('y', top - 4).attr('height', faixas.length * laneH).attr('fill', d % 2 ? 'var(--cds-chart-grid)' : 'transparent').attr('opacity', 0.5);
+      texto(g, x(d * 20 + 10), 8, 'dia ' + (d + 1), {anchor: 'middle'});
+    }
+    eixo(svg.append('g').attr('transform', `translate(0,${top - 4 + faixas.length * laneH})`).call(d3.axisBottom(x).tickValues([0, 20, 40, 60, 80, 100, 120, 140]).tickSize(0).tickPadding(8).tickFormat((v) => F.int(v) + ' h'))).select('.domain').remove();
+    const tip = dica(box);
+    faixas.forEach((f, i) => {
+      const y = top + i * laneH;
+      texto(g, lw - 8, y + 11, f.nome, {anchor: 'end', fill: 'var(--color-fg)'});
+      g.append('line').attr('x1', x(0)).attr('x2', x(140)).attr('y1', y + 11).attr('y2', y + 11).attr('stroke', 'var(--cds-chart-grid)');
+      am.filter((r) => r.faixa === f.k).forEach((r) => {
+        const zero = r.dur_min === 0;
+        const w = zero ? 1.5 : Math.max(3, x(r.fim_h) - x(r.inicio_h));
+        g.append('rect').attr('x', x(r.inicio_h) - (zero ? 0.75 : 0)).attr('y', y + (zero ? 4 : 2)).attr('width', w).attr('height', zero ? 14 : 18).attr('rx', zero ? 0 : 2)
+          .attr('fill', f.cor).attr('opacity', zero ? 0.5 : 1);
+        g.append('rect').attr('x', x(r.inicio_h) - 5).attr('y', y).attr('width', Math.max(10, w + 10)).attr('height', 22).attr('fill', 'transparent')
+          .on('mousemove', (ev) => tip.show(ev, [[f.cor, zero ? 'Falha sem interrupção' : 'Interrupção', F.int(r.dur_min) + ' min']], `${f.nome}, ${relogio(r.inicio_h)}`))
+          .on('mouseleave', () => tip.hide());
+      });
+    });
+  }
+
+  function grafSimHist(box, hist, corredor) {
+    box.replaceChildren();
+    box.classList.remove('dash-skeleton');
+    const cen = corredor.filter((r) => r.sim_min_ano != null).sort((a, b) => a.ordem - b.ordem);
+    const wrap = document.createElement('div');
+    wrap.className = 'mtl-mini';
+    box.appendChild(wrap);
+    const maxY = d3.max(hist.filter((r) => r.ordem > 0), (r) => r.pct) || 0.01;
+    cen.forEach((ce) => {
+      const cel = document.createElement('div');
+      const h4 = document.createElement('h4');
+      h4.textContent = `${ce.nome}: ${F.p1(ce.sim_p_semana_sem_parada)} das semanas sem parada`;
+      const area = document.createElement('div');
+      area.className = 'mtl-chart';
+      cel.append(h4, area);
+      wrap.appendChild(cel);
+      const rows = hist.filter((r) => r.cenario === ce.cenario && r.ordem > 0).sort((a, b) => a.ordem - b.ordem);
+      const H = 160;
+      const {svg, W} = novoSvg(area, H);
+      const y = d3.scaleLinear([0, maxY * 1.1], [H - 40, 6]).nice();
+      const yl = medir(svg, y.ticks(3).map(loc.format('.0%'))) + 8;
+      const x = d3.scaleBand(rows.map((r) => r.faixa_min), [yl, W - 2]).padding(0.18);
+      const gg = svg.append('g');
+      gradeH(gg, y, y.ticks(3), yl, W - 2);
+      eixo(svg.append('g').attr('transform', `translate(${yl},0)`).call(d3.axisLeft(y).ticks(3).tickSize(0).tickPadding(4).tickFormat(loc.format('.0%')))).select('.domain').remove();
+      const ax = eixo(svg.append('g').attr('transform', `translate(0,${H - 40})`).call(d3.axisBottom(x).tickSize(0).tickPadding(6)));
+      ax.selectAll('.tick text').attr('transform', 'rotate(-40)').attr('text-anchor', 'end').attr('dx', '-0.2em').attr('dy', '0.6em');
+      const tip = dica(area);
+      rows.forEach((r) => {
+        gg.append('rect').attr('x', x(r.faixa_min)).attr('width', x.bandwidth()).attr('y', y(r.pct)).attr('height', Math.max(0, y(0) - y(r.pct))).attr('rx', 2).attr('fill', 'var(--cds-chart-muted)')
+          .on('mousemove', (ev) => tip.show(ev, [[null, 'Semanas', F.p2(r.pct)], [null, 'Contagem', F.int(r.n)]], `${r.faixa_min} min parados`))
+          .on('mouseleave', () => tip.hide());
+      });
+    });
+  }
+
+  function grafKdn(box, kdn, l) {
+    const rows = kdn.filter((r) => r.linha === l);
+    const reps = [...new Set(rows.map((r) => r.reparo_dias))].sort((a, b) => a - b);
+    const base = corReal('var(--color-panel)');
+    const alvo = corReal(cores()[0]);
+    const rampa = d3.interpolateRgb(base, alvo);
+    const corDe = (i) => rampa(0.35 + 0.65 * (i / Math.max(1, reps.length - 1)));
+    const nome = (rp) => 'Reparo de ' + (rp < 1 ? F.d1(rp) : F.int(rp)) + (rp === 1 ? ' dia' : ' dias');
+    legenda('lg-kdn', reps.map((rp, i) => [corDe(i), nome(rp)]));
+    const H = 260;
+    const {svg, W} = novoSvg(box, H);
+    const yl = medir(svg, ['100%']) + 10;
+    const x = d3.scaleLinear([0, 8], [yl + 8, W - 12]);
+    const y = d3.scaleLinear([0, 1], [H - 40, 8]);
+    const g = svg.append('g');
+    const tk = [0, 0.25, 0.5, 0.75, 1];
+    gradeH(g, y, tk, yl, W - 12);
+    eixo(svg.append('g').attr('transform', `translate(${yl},0)`).call(d3.axisLeft(y).tickValues(tk).tickSize(0).tickPadding(6).tickFormat(loc.format('.0%')))).select('.domain').remove();
+    eixo(svg.append('g').attr('transform', `translate(0,${H - 40})`).call(d3.axisBottom(x).ticks(8).tickSize(0).tickPadding(8).tickFormat(d3.format('d')))).select('.domain').remove();
+    texto(g, (yl + W) / 2, H - 8, 'Trens de reserva', {anchor: 'middle'});
+    reps.forEach((rp, i) => {
+      const pts = rows.filter((r) => r.reparo_dias === rp).sort((a, b) => a.reservas - b.reservas);
+      g.append('path').datum(pts).attr('fill', 'none').attr('stroke', corDe(i)).attr('stroke-width', 2).attr('stroke-linejoin', 'round')
+        .attr('d', d3.line().x((r) => x(r.reservas)).y((r) => y(r.disponibilidade)));
+      pts.forEach((r) => g.append('circle').attr('cx', x(r.reservas)).attr('cy', y(r.disponibilidade)).attr('r', 3.5).attr('fill', corDe(i)).attr('stroke', 'var(--color-panel)').attr('stroke-width', 1.5));
+    });
+    const regra = g.append('line').attr('y1', 8).attr('y2', H - 40).attr('stroke', 'var(--cds-chart-axis)').attr('opacity', 0);
+    const tip = dica(box);
+    g.append('rect').attr('x', yl).attr('y', 0).attr('width', W - yl).attr('height', H - 40).attr('fill', 'transparent')
+      .on('mousemove', (ev) => {
+        const [mx] = d3.pointer(ev);
+        const s = Math.max(0, Math.min(8, Math.round(x.invert(mx))));
+        regra.attr('x1', x(s)).attr('x2', x(s)).attr('opacity', 1);
+        tip.show(ev, reps.map((rp, i) => {
+          const r = rows.find((q) => q.reparo_dias === rp && q.reservas === s);
+          return [corDe(i), nome(rp), r ? F.p2(r.disponibilidade) : '—'];
+        }), `${s} ${s === 1 ? 'trem' : 'trens'} de reserva: chance de ter a frota completa`);
+      })
+      .on('mouseleave', () => {
+        regra.attr('opacity', 0);
+        tip.hide();
+      });
+  }
+
+  // ---------- seleção de linha e navegação
+  root.querySelectorAll('[data-sel] button').forEach((b) => b.addEventListener('click', () => dash.setParams({linha: b.dataset.linha})));
+  root.querySelectorAll('.mtl-nav button').forEach((b) => b.addEventListener('click', () => {
+    const alvo = root.querySelector('#' + b.dataset.alvo);
+    if (alvo) {
+      alvo.scrollIntoView({behavior: 'smooth', block: 'start'});
+      dash.setLink(alvo.id);
+    }
+  }));
+
+  let linkFeito = false;
+  dash.onData(() => {
+    const l = linhaSel();
+    root.querySelectorAll('[data-sel] button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.linha === l)));
+    preencher(l);
+    const erros = [];
+    const desenha = (sel, ids, fn) => {
+      const box = root.querySelector(sel);
+      const d = pegar(...ids);
+      if (!d.ok) {
+        semDados(box, d.status);
+        return;
+      }
+      try {
+        fn(box, d);
+      } catch (e) {
+        erros.push(e);
+      }
+    };
+    const preencheTabela = (ids, fn) => {
+      const d = pegar(...ids);
+      if (!d.ok) return;
+      try {
+        fn(d);
+      } catch (e) {
+        erros.push(e);
+      }
+    };
+
+    preencheTabela(['linhas'], (d) => tabela('t-linhas', [...LIN, 'rede'].map((k) => d.linhas.find((r) => r.linha === k)).filter(Boolean), [
+      {f: 'nome', render: (td, r) => (r.linha === 'rede' ? td.append('Rede (4 linhas)') : comPonto(COR[r.linha], r.nome.replace(/ \(\d\)/, ''))(td))},
+      {f: 'falhas', fmt: F.int},
+      {f: 'falhas_mr', fmt: F.int},
+      {f: 'falhas_ef', fmt: F.int},
+      {f: 'mtbf_op_h', fmt: F.d1},
+      {f: 'mediana_tbf_op_h', fmt: F.d1},
+      {f: 'mttr_min', fmt: F.d2},
+      {f: 'disponibilidade', fmt: F.p2},
+      {f: 'min_fora_ano', fmt: F.int},
+      {f: 'p_dia_sem_falha', fmt: F.p1},
+      {f: 'falhas_mr_por_mkm', fmt: F.d2},
+      {f: 'evacuacoes', fmt: F.int},
+    ], (r) => r.linha));
+
+    preencheTabela(['ajustes'], (d) => tabela('t-ajustes', d.ajustes.filter((r) => r.linha === l).sort((a, b) => a.aic - b.aic), [
+      {f: 'modelo', render: (td, r) => td.append(MODELO[r.modelo] + (r.melhor ? ' (melhor)' : ''))},
+      {f: 'p1', fmt: F.d4},
+      {f: 'p2', fmt: F.d4},
+      {f: 'loglik', fmt: F.d1},
+      {f: 'aic', fmt: F.d1},
+      {f: 'delta_aic', fmt: F.d1},
+      {f: 'ks', fmt: F.d3},
+    ], (r) => `${enc(r.linha)},${enc(r.modelo)}`, (r) => (r.melhor ? 'melhor' : '')));
+
+    preencheTabela(['correlacoes'], (d) => tabela('t-corr', d.correlacoes.slice().sort((a, b) => (a.alvo === b.alvo ? Math.abs(b.r) - Math.abs(a.r) : a.alvo < b.alvo ? 1 : -1)), [
+      {f: 'alvo_nome', render: (td, r) => td.append(r.alvo === 'falhas_mr' ? 'Mat. rodante' : 'Equip. fixos')},
+      {f: 'variavel_nome', cls: 'txt'},
+      {f: 'r', render: (td, r) => {
+        const s = document.createElement('span');
+        s.className = 'mtl-incell';
+        s.style.width = Math.round(Math.abs(r.r) * 60) + 'px';
+        td.append(s, document.createTextNode(F.d2(r.r)));
+      }},
+      {f: 'n', fmt: F.int},
+    ], (r) => `${enc(r.alvo)},${enc(r.variavel)}`));
+
+    preencheTabela(['locais'], (d) => tabela('t-locais', d.locais, [
+      {f: 'local', render: (td, r) => td.append(r.local.replace(/^STAT(ION|\.)\s*/, 'Estação ').replace(/\b([A-ZÀ-Ü])([A-ZÀ-Ü'-]+)/g, (m, a, b) => a + b.toLowerCase()))},
+      {f: 'linha', render: (td, r) => comPonto(COR[r.linha], NOME[r.linha])(td)},
+      {f: 'falhas', fmt: F.int},
+      {f: 'falhas_mr', fmt: F.int},
+      {f: 'falhas_ef', fmt: F.int},
+      {f: 'min_fora', fmt: F.int},
+      {f: 'mttr_min', fmt: F.d1},
+    ], (r) => r.local));
+
+    preencheTabela(['causa_comum'], (d) => tabela('t-cc', d.causa_comum, [
+      {f: 'par_nome', render: (td, r) => td.append(r.par_nome.replace(/ \(\d\)/g, ''))},
+      {f: 'eventos_tecnicos', fmt: F.int},
+      {f: 'eventos_todas_causas', fmt: F.int},
+      {f: 'beta_a', fmt: F.p2},
+      {f: 'beta_b', fmt: F.p2},
+      {f: 'duracao_media_min', fmt: F.d1},
+      {f: 'min_fora_ano', fmt: F.d1},
+    ], (r) => r.par));
+
+    preencheTabela(['corredor'], (d) => tabela('t-cenarios', d.corredor.slice().sort((a, b) => a.ordem - b.ordem), [
+      {f: 'nome', cls: 'txt'},
+      {f: 'disp_analitica', fmt: F.p3},
+      {f: 'min_ano_analitico', fmt: F.d1},
+      {f: 'sim_min_ano', fmt: F.d1},
+      {f: 'sim_p95_min_semana', fmt: F.int},
+      {f: 'sim_p_semana_sem_parada', fmt: F.p1},
+    ], (r) => r.cenario));
+
+    preencheTabela(['linhas'], (d) => tabela('t-markov', LIN.map((k) => d.linhas.find((r) => r.linha === k)).filter(Boolean), [
+      {f: 'nome', render: (td, r) => comPonto(COR[r.linha], r.nome.replace(/ \(\d\)/, ''))(td)},
+      {f: 'lambda_h', fmt: F.d4},
+      {f: 'mu_h', fmt: F.d2},
+      {f: 'a_markov', fmt: F.p3},
+      {f: 'disponibilidade', fmt: F.p3},
+      {f: 'r_emp_8h', fmt: F.p1},
+      {f: 'r_8h', fmt: F.p1},
+    ], (r) => r.linha));
+
+    desenha('#c-mtbf', ['linhas'], (box, d) => grafMtbf(box, d.linhas));
+    desenha('#c-diasem', ['anual'], (box, d) => grafDiasSem(box, d.anual));
+    desenha('#c-hist', ['tbf_hist'], (box, d) => grafHist(box, d.tbf_hist, l, COR[l]));
+    desenha('#c-sobrev', ['tbf_curvas'], (box, d) => grafSobrev(box, d.tbf_curvas, l));
+    desenha('#c-ttr', ['ttr_faixas'], (box, d) => grafTtr(box, d.ttr_faixas, l));
+    desenha('#c-anual', ['anual'], (box, d) => {
+      legenda('lg-anual', [[cores()[0], CAUSA.MR], [cores()[1], CAUSA.EF]]);
+      grafAnual(box, d.anual, l);
+    });
+    desenha('#d-serie', ['linhas'], (box, d) => grafSerie(box, d.linhas, l));
+    desenha('#c-frota', ['frota_anual'], (box, d) => grafFrota(box, d.frota_anual));
+    desenha('#c-pareto', ['pareto'], (box, d) => grafPareto(box, d.pareto));
+    desenha('#c-hora', ['perfil'], (box, d) => grafHora(box, d.perfil));
+    desenha('#c-mes', ['perfil'], (box, d) => grafTaxa(box, d.perfil, 'mes', 220));
+    desenha('#c-temp', ['perfil'], (box, d) => grafTaxa(box, d.perfil, 'temperatura', 210));
+    desenha('#c-neve', ['perfil'], (box, d) => grafTaxa(box, d.perfil, 'neve_solo', 210));
+    desenha('#c-mapa', ['estacoes'], (box, d) => grafMapa(box, d.estacoes));
+    desenha('#d-paralelo', ['linhas', 'causa_comum', 'corredor'], (box, d) => grafParalelo(box, d.linhas, d.causa_comum, d.corredor));
+    desenha('#c-cenarios', ['corredor'], (box, d) => grafCenarios(box, d.corredor));
+    desenha('#c-amostra', ['sim_amostra'], (box, d) => grafAmostra(box, d.sim_amostra));
+    desenha('#c-simhist', ['sim_hist', 'corredor'], (box, d) => grafSimHist(box, d.sim_hist, d.corredor));
+    desenha('#c-kdn', ['kdn'], (box, d) => grafKdn(box, d.kdn, l));
+
+    if (!linkFeito && dash.data('linhas').status === 'ok') {
+      linkFeito = true;
+      const alvo = location.hash ? root.querySelector('#' + CSS.escape(location.hash.slice(1))) : null;
+      if (alvo) alvo.scrollIntoView();
+    }
+    if (erros.length) throw erros[0];
+  });
+})();
+</script>
