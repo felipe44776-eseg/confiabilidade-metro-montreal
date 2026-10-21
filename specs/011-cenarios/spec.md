@@ -20,6 +20,7 @@ A equipe consegue mudar clima, eventos, frota e políticas, rodar o cenário e c
 - Dado um cenário de clima (por exemplo, dia de chuva congelante), quando escolhido, então muda a taxa de falha pelos multiplicadores da spec 005, e não por um número escolhido à mão.
 - Dado o cenário padrão, quando a página abre, então já mostra um resultado pronto, sem exigir configuração.
 - *Acrescentado em 2026-10-21, a pedido da equipe (decisão D50):* dado um cenário, quando aplicado, então a página mostra o que está valendo (destacando o que difere do padrão), as falhas esperadas por dia no cenário e no padrão e, nos dias tocados no mapa, a contagem de falhas sorteadas para comparar com o esperado.
+- *Acrescentado em 2026-10-21, a pedido da equipe (decisão D51):* dado o painel do cenário, quando a página abre ou o cenário muda, então cada variável mostra o seu peso no modelo de taxa (o multiplicador, com intervalo de 95%, para material rodante e equipamentos fixos) e o painel traz uma nota do método que calculou esses pesos, com os números tirados dos arquivos gerados.
 
 ## Resultado (2026-10-21)
 
@@ -34,6 +35,7 @@ Página `/simulador/` (abas dia, muitos dias, comparação, expansão e parâmet
 | Clima muda a taxa só pelos multiplicadores da spec 005 | **Atende** (teste do mapeamento) |
 | Resultado pronto ao abrir | **Atende**: 1.000 dias no cenário padrão, rodados ao abrir |
 | Mostrar o cenário que está valendo e o efeito nas falhas esperadas (acrescentado em 2026-10-21, D50) | **Atende**: faixa "Cenário aplicado" acima do mapa. A média de 2.000 dias sorteados fica a menos de 5% do esperado (`app/tests/simulador/efeito.test.ts`). No site publicado, chuva congelante com mais de 10 cm de neve no solo levou o esperado de 3,35 para 3,52 falhas por dia (×1,05) e marcou os dois itens como diferentes do padrão (`fontes/verificacao/navegador_2026-10-21.json`) |
+| Peso de cada variável e nota do método no painel (acrescentado em 2026-10-21, D51) | **Atende** nos testes (`app/tests/simulador/pesos.test.ts`: cada texto traz o multiplicador e o intervalo do `parametros.json`, e a nota cita as contagens, o AIC, o α e o bootstrap do resumo do ajuste). Conferência no site publicado: a registrar |
 | Mudança registrada em 2026-10-21 | Depois da revisão crítica, a greve passou a atuar só pela oferta (viagens fora das faixas com serviço): o simulador aplicava o multiplicador de dia de greve (1,17 e 1,11), cujo intervalo de 95% contém 1 (spec 005). Decisão D42 em `docs/decisoes/registro_de_decisoes.md`; teste em `pipeline/tests/test_modelos.py` |
 
 ## Fora de escopo

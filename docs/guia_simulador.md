@@ -21,6 +21,12 @@ Ele recria um dia de operação do metrô de Montreal, trem a trem, com o horár
 
 **Avisos** aparecem quando o cenário sai do que foi observado nos dados (por exemplo, neve no solo em julho) ou quando uma hipótese sai da faixa. O simulador continua rodando, mas o número passa a ser extrapolação.
 
+### Peso de cada variável
+
+No topo do painel, o bloco **Peso de cada variável** diz como ler os pesos, e **Como o peso foi calculado** abre o método. Embaixo de cada campo aparece o peso do valor escolhido: o multiplicador da taxa de falha por trem em circulação, para material rodante (MR) e equipamentos fixos (EF), com o intervalo de 95%. 1 é a condição de referência do modelo, que é o cenário padrão; ×1,30 quer dizer 30% mais falhas por trem-hora, com o resto igual. Nas caixas desmarcadas aparece o peso de marcar.
+
+Os pesos vêm de uma regressão binomial negativa ajustada às horas de serviço de cada linha de 2019 a junho de 2026 (`pipeline/modelo_taxa.py`, spec 005), com o log dos trens-hora como deslocamento e todas as variáveis no mesmo modelo. Por isso cada peso vale com as outras variáveis fixas, e variáveis que andam juntas nos dados (inverno, frio e neve no solo) repartem o efeito entre si. Quando o intervalo contém 1, os dados não distinguem o efeito de nenhum efeito; o simulador usa o valor estimado mesmo assim, e os **Avisos** apontam os intervalos largos. A faixa do dia (abertura, picos, noite) também tem peso, que muda hora a hora; a tabela dela está no fim da nota. O efeito do cenário inteiro nas falhas por dia aparece em **Cenário aplicado**, acima do mapa.
+
 ## Como saber que o cenário está valendo
 
 A faixa **Cenário aplicado**, acima do mapa, mostra:

@@ -6,7 +6,8 @@ e do Edge ou do Chrome instalados. Mede, em tamanho de celular (390x844) e de no
 WebGL, quadros por segundo com a animação parada e tocando a 300×, 1 h/s, 10 h/s e 1 dia/s (com a ocupação da thread
 da página em cada uma), o resultado do Monte Carlo de abertura,
 os erros no console e, a 1 dia/s, os eventos vermelhos, os dias emendados e o placar (decisão D49); depois muda o clima
-e confere que a faixa "Cenário aplicado" mudou (decisão D50). Grava capturas e resultado.json na pasta de saída.
+e confere que a faixa "Cenário aplicado" e o peso da neve no solo mudaram (decisões D50 e D51), abre a nota do método
+e captura o painel do cenário. Grava capturas e resultado.json na pasta de saída.
 Rode um tamanho por vez (SO=...): reaproveitar a aba entre tamanhos perde o contexto WebGL por software.
 A aba é trazida para a frente (Page.bringToFront): sem isso, o navegador sem janela deixa a página oculta, o
 requestAnimationFrame não roda e o contador de fps da página fica parado no último valor (revisão crítica de
@@ -87,12 +88,23 @@ try:
         placar: document.getElementById('aplicado-placar')?.textContent, marcas_na_barra: document.querySelectorAll('#t-marcas i').length}); }, 6000); })"""
 
     CENARIO = """(async () => { const antes = document.getElementById('aplicado-efeito').textContent;
+      const pesoNeveAntes = document.getElementById('p-neve').textContent;
       for (const [id, v] of [['c-cond', 'chuva_congelante'], ['c-neve', 'acima_10']]) {
         const s = document.getElementById(id); s.value = v; s.dispatchEvent(new Event('change', {bubbles: true})); }
       await new Promise(q => setTimeout(q, 1500));
       return {antes: antes.slice(0, 100), depois: document.getElementById('aplicado-efeito').textContent.slice(0, 100),
               mudados: [...document.querySelectorAll('#aplicado-itens li.mudou')].map(li => li.textContent),
-              quando: document.getElementById('aplicado-quando').textContent}; })()"""
+              quando: document.getElementById('aplicado-quando').textContent,
+              peso_neve_antes: pesoNeveAntes, peso_neve_depois: document.getElementById('p-neve').textContent}; })()"""
+
+    # nota do método e peso de cada variável no painel do cenário (decisão D51)
+    PESOS = """(() => { const corpo = document.getElementById('m-corpo');
+      const a = document.querySelector('.painel').getBoundingClientRect();
+      return {resumo: document.getElementById('m-resumo').textContent.slice(0, 160),
+              passos: corpo.querySelectorAll('ol li').length, faixas_na_tabela: corpo.querySelectorAll('tbody tr').length,
+              resumo_do_ajuste_carregou: corpo.textContent.includes('semente'),
+              pesos: Object.fromEntries([...document.querySelectorAll('.painel .peso')].map(p => [p.id, p.textContent])),
+              painel: {x: a.left + scrollX, y: a.top + scrollY, w: a.width, h: a.height}}; })()"""
 
     cmd("Runtime.enable")
     cmd("Log.enable")
@@ -138,6 +150,20 @@ try:
         open(os.path.join(SAIDA, f"site_{nome}_1dia.png"), "wb").write(base64.b64decode(shot["data"]))
         # cenário: chuva congelante e muita neve no solo mudam o esperado e marcam os itens (decisão D50)
         medidas["cenario_aplicado"] = avalia(CENARIO)
+        pesos = avalia(PESOS)
+        r = pesos.pop("painel")
+        shot = cmd("Page.captureScreenshot", format="png", captureBeyondViewport=True,
+                   clip={"x": r["x"], "y": r["y"], "width": r["w"], "height": min(r["h"], 1600), "scale": 1})
+        open(os.path.join(SAIDA, f"site_{nome}_painel.png"), "wb").write(base64.b64decode(shot["data"]))
+        # a nota do método aberta
+        r = avalia("""(() => { document.getElementById('m-detalhes').open = true;
+          const a = document.querySelector('.metodo-peso').getBoundingClientRect();
+          return {x: a.left + scrollX, y: a.top + scrollY, w: a.width, h: a.height}; })()""")
+        espera(0.5)
+        shot = cmd("Page.captureScreenshot", format="png", captureBeyondViewport=True,
+                   clip={"x": r["x"], "y": r["y"], "width": r["w"], "height": min(r["h"], 2400), "scale": 1})
+        open(os.path.join(SAIDA, f"site_{nome}_nota_metodo.png"), "wb").write(base64.b64decode(shot["data"]))
+        medidas["peso_das_variaveis"] = pesos
         erros = [e for e in eventos if e.get("method") == "Runtime.exceptionThrown"
                  or (e.get("method") == "Runtime.consoleAPICalled" and e["params"].get("type") == "error")
                  or (e.get("method") == "Log.entryAdded" and e["params"]["entry"].get("level") == "error")]

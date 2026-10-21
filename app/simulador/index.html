@@ -26,26 +26,43 @@
   <div class="corpo">
     <aside class="painel" aria-label="Cenário">
       <h2>Cenário</h2>
+      <section class="metodo-peso" aria-labelledby="t-metodo">
+        <h3 id="t-metodo">Peso de cada variável</h3>
+        <p class="nota" id="m-resumo"></p>
+        <details id="m-detalhes">
+          <summary>Como o peso foi calculado</summary>
+          <div id="m-corpo"></div>
+        </details>
+      </section>
       <form id="form-cenario" class="form" autocomplete="off">
         <fieldset>
           <legend>Dia</legend>
-          <label>Tipo de dia <select id="c-tipo"></select></label>
-          <label>Mês <select id="c-mes"></select></label>
-          <p class="nota" id="c-estacao"></p>
+          <label>Tipo de dia <select id="c-tipo" aria-describedby="p-tipo"></select></label>
+          <p class="peso" id="p-tipo"></p>
+          <label>Mês <select id="c-mes" aria-describedby="c-estacao"></select></label>
+          <p class="peso" id="c-estacao"></p>
         </fieldset>
         <fieldset>
           <legend>Clima</legend>
-          <label>Temperatura <select id="c-temp"></select></label>
-          <label>Precipitação <select id="c-precip"></select></label>
-          <label>Condição <select id="c-cond"></select></label>
-          <label>Neve no solo <select id="c-neve"></select></label>
+          <label>Temperatura <select id="c-temp" aria-describedby="p-temp"></select></label>
+          <p class="peso" id="p-temp"></p>
+          <label>Precipitação <select id="c-precip" aria-describedby="p-precip"></select></label>
+          <p class="peso" id="p-precip"></p>
+          <label>Condição <select id="c-cond" aria-describedby="p-cond"></select></label>
+          <p class="peso" id="p-cond"></p>
+          <label>Neve no solo <select id="c-neve" aria-describedby="p-neve"></select></label>
+          <p class="peso" id="p-neve"></p>
         </fieldset>
         <fieldset>
           <legend>Eventos</legend>
-          <label class="caixa"><input type="checkbox" id="c-jogo"> Jogo do Canadiens às 19h</label>
-          <label class="caixa"><input type="checkbox" id="c-gp"> Fim de semana do GP do Canadá</label>
-          <label class="caixa"><input type="checkbox" id="c-feriado"> Feriado</label>
-          <label>Greve <select id="c-greve"></select></label>
+          <label class="caixa"><input type="checkbox" id="c-jogo" aria-describedby="p-jogo"> Jogo do Canadiens às 19h</label>
+          <p class="peso" id="p-jogo"></p>
+          <label class="caixa"><input type="checkbox" id="c-gp" aria-describedby="p-gp"> Fim de semana do GP do Canadá</label>
+          <p class="peso" id="p-gp"></p>
+          <label class="caixa"><input type="checkbox" id="c-feriado" aria-describedby="p-feriado"> Feriado</label>
+          <p class="peso" id="p-feriado"></p>
+          <label>Greve <select id="c-greve" aria-describedby="p-greve"></select></label>
+          <p class="peso" id="p-greve"></p>
         </fieldset>
         <fieldset>
           <legend>Políticas de tolerância a falhas</legend>

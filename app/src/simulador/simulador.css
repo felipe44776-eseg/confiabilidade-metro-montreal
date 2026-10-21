@@ -74,6 +74,17 @@ select, input[type="number"] { font: inherit; font-size: 14px; padding: 4px 6px;
 input[type="checkbox"] { accent-color: var(--destaque); margin-top: 3px; }
 .lista-caixas { display: grid; gap: 4px; }
 .hipoteses summary { cursor: pointer; font-size: 13.5px; font-weight: 600; }
+.peso { margin: -2px 0 2px; font-size: 12px; line-height: 1.4; color: var(--tinta-2); font-variant-numeric: tabular-nums; }
+label.caixa + .peso { margin-left: 22px; }
+.metodo-peso { border: 1px solid var(--linha-divisoria); border-left: 3px solid var(--destaque); border-radius: 8px; padding: 8px 10px; }
+.metodo-peso h3 { margin: 0; font-size: 13.5px; }
+.metodo-peso summary { cursor: pointer; margin-top: 6px; font-size: 13px; font-weight: 600; color: var(--destaque); }
+.metodo-peso ol { margin: 6px 0 8px; padding-left: 1.2em; display: grid; gap: 5px; font-size: 12.5px; line-height: 1.45; color: var(--tinta-2); }
+.metodo-peso .tbl { margin: 0; }
+.metodo-peso table { font-size: 12px; }
+.metodo-peso th, .metodo-peso td { padding: 4px 4px; }
+.metodo-peso td.n, .metodo-peso th.n { white-space: nowrap; }
+.metodo-peso .horas { font-size: 11.5px; color: var(--tinta-3); white-space: nowrap; }
 .hip { display: grid; gap: 2px; padding: 6px 0; border-bottom: 1px solid var(--grade); }
 .hip .cab { display: flex; justify-content: space-between; gap: 6px; font-size: 13px; }
 .hip input[type="range"] { width: 100%; }

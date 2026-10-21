@@ -27,10 +27,12 @@ import { blocosAtivos, blocosDoDia, cruzadas, falhasAte, FPS_PARADO, fracaoNaBar
 import type { CandidatasJson } from './candidatas';
 import { candidatasDoJson } from './candidatas';
 import type { EstadoCenario, Greve } from './cenario';
-import { aplicaGreve, chaveCenario, chaveRede, copia, desserializa, estacaoDoMes, itensDoCenario, JANELAS_GREVE, MESES, NIVEIS, ORDEM_POLITICAS, PADRAO, paraCenarioMotor, ROTULOS, serializa } from './cenario';
+import { aplicaGreve, chaveCenario, chaveRede, copia, desserializa, itensDoCenario, JANELAS_GREVE, MESES, NIVEIS, ORDEM_POLITICAS, PADRAO, paraCenarioMotor, ROTULOS, serializa } from './cenario';
 import type { Esperado } from './efeito';
 import { esperadoPorDia } from './efeito';
 import { avisosDeExtrapolacao } from './extrapolacao';
+import type { CampoPeso, Resumos, ResumoTaxa } from './pesos';
+import { notaDoMetodo, pesosDoCenario } from './pesos';
 import type { VistaMapa } from './mapa_sim';
 import { corDaCandidata, MapaSimulador, VistaSemMapa } from './mapa_sim';
 import { PoolAB } from './pool_ab';
@@ -120,6 +122,8 @@ let estado: EstadoCenario = copia(PADRAO);
 let mapa: VistaMapa = new VistaSemMapa();
 const redes = new Map<Greve, { json: RedeJson; rede: Rede }>();
 let candidatas: Candidata[] = [];
+/** Resumos do ajuste da taxa (dados/modelos/taxa_<causa>.json), para a nota do método; null até carregarem. */
+let resumos: Resumos = null;
 
 function redeDo(greve: Greve): { json: RedeJson; rede: Rede } {
   let r = redes.get(greve);
@@ -154,7 +158,7 @@ function montaFormulario(): void {
   $<HTMLInputElement>('c-feriado').checked = estado.feriado;
   $<HTMLInputElement>('c-semente').value = String(estado.semente);
   $<HTMLInputElement>('t-dia').value = String(estado.dia);
-  $('c-estacao').textContent = `Estação do ano no modelo: ${{ inverno: 'inverno', primavera: 'primavera', verao: 'verão', outono: 'outono' }[estacaoDoMes(estado.mes)]}.`;
+  mostraPesos();
   const pol = $('c-politicas');
   pol.replaceChildren();
   for (const k of ORDEM_POLITICAS) {
@@ -210,6 +214,45 @@ function montaHipoteses(): void {
   }
 }
 
+// ---------- peso de cada variável (spec 011, decisão D51) ----------
+const ID_PESO: Record<CampoPeso, string> = {
+  tipo: 'p-tipo', mes: 'c-estacao', temp: 'p-temp', precip: 'p-precip', cond: 'p-cond',
+  neve: 'p-neve', jogo: 'p-jogo', gp: 'p-gp', feriado: 'p-feriado', greve: 'p-greve',
+};
+
+function mostraPesos(): void {
+  const t = pesosDoCenario(dados.parametros, estado, resumos);
+  for (const [campo, id] of Object.entries(ID_PESO)) $(id).textContent = t[campo as CampoPeso];
+}
+
+function montaNotaMetodo(): void {
+  const n = notaDoMetodo(dados.parametros, resumos);
+  $('m-resumo').textContent = n.resumo;
+  const ol = el('ol');
+  for (const p of n.passos) ol.append(el('li', p));
+  const fonte = el('p', undefined, 'nota');
+  const rel = el('a', 'relatório do modelo');
+  rel.href = FONTE_PARAMETRO['pipeline/modelo_taxa.py'];
+  const cod = el('a', 'código');
+  cod.href = `${REPO}/blob/main/pipeline/modelo_taxa.py`;
+  const dec = el('a', 'decisões D19, D20 e D42');
+  dec.href = `${BASE}decisoes/`;
+  fonte.append('Todos os coeficientes, resíduos e testes: ', rel, ' e ', cod, '; por que assim: ', dec, '. A aba "Parâmetros" mostra os pesos do cenário escolhido e a taxa-base de cada linha.');
+  $('m-corpo').replaceChildren(
+    ol,
+    tabela(
+      ['Faixa do dia', 'MR', 'EF'],
+      n.faixas.map((f) => {
+        const c = el('span');
+        c.append(f.faixa, el('br'), el('span', f.horas, 'horas'));
+        return [c, f.mr, f.ef];
+      }),
+      [1, 2],
+    ),
+    fonte,
+  );
+}
+
 function leFormulario(): void {
   estado.tipoDia = $<HTMLSelectElement>('c-tipo').value as TipoDia;
   estado.mes = Number($<HTMLSelectElement>('c-mes').value);
@@ -231,7 +274,7 @@ function leFormulario(): void {
 let esperaDia: ReturnType<typeof setTimeout> | undefined;
 function mudou(): void {
   history.replaceState(null, '', `#${serializa(estado)}`);
-  $('c-estacao').textContent = `Estação do ano no modelo: ${{ inverno: 'inverno', primavera: 'primavera', verao: 'verão', outono: 'outono' }[estacaoDoMes(estado.mes)]}.`;
+  mostraPesos();
   mostraAvisos();
   marcaDesatualizado();
   mostraParametros();
@@ -1049,6 +1092,14 @@ async function inicia(): Promise<void> {
     carrega<Local[]>('geo/locais.json'),
   ]);
   dados = { redeJson, parametros, candidatasJson, linhasGeo, estacoesGeo, locais };
+  // o resumo do ajuste só enriquece a nota do método (contagens, AIC, semente); sem ele a nota usa o parametros.json
+  Promise.all([carrega<ResumoTaxa>('modelos/taxa_MR.json'), carrega<ResumoTaxa>('modelos/taxa_EF.json')])
+    .then(([MR, EF]) => {
+      resumos = { MR, EF };
+      montaNotaMetodo();
+      mostraPesos();
+    })
+    .catch(() => undefined);
   if (location.hash.length > 1) estado = desserializa(location.hash);
   const rede = redeDo('nao').rede;
   candidatas = candidatasDoJson(candidatasJson, rede);
@@ -1062,6 +1113,7 @@ async function inicia(): Promise<void> {
   }
 
   montaFormulario();
+  montaNotaMetodo();
   opcoes(
     $('t-vel'),
     VELOCIDADES.map((v) => [String(v.valor), v.rotulo]),

@@ -8,5 +8,6 @@
 - [x] Cada parâmetro com IC 95% ou status e link para a fonte; hipóteses em controles deslizantes com a faixa.
 - [x] Resultado pronto ao abrir (1.000 dias no cenário padrão).
 - [x] Teste de ponta a ponta no Chrome sem janela (2026-10-21): 1.000 dias em 3,8 s com 12 workers; comparação de 500 dias pareados em 2,1 s; avisos de extrapolação para chuva congelante em outubro; nenhum erro no console.
+- [x] Peso de cada variável e nota do método no painel do cenário (2026-10-21, decisão D51): `app/src/simulador/pesos.ts`; testes em `app/tests/simulador/pesos.test.ts`; conferência no navegador em `publicacao/testa_navegador.py`.
 - [ ] Cenários prontos (inverno típico, greve de 2025, dia de jogo, chuva congelante de abril de 2023): hoje montados à mão pelo formulário e guardados no link.
 - [ ] Sortear um dia real do histórico como cenário (pergunta em aberto).
