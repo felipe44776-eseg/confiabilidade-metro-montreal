@@ -21,15 +21,28 @@ Ele recria um dia de operação do metrô de Montreal, trem a trem, com o horár
 
 **Avisos** aparecem quando o cenário sai do que foi observado nos dados (por exemplo, neve no solo em julho) ou quando uma hipótese sai da faixa. O simulador continua rodando, mas o número passa a ser extrapolação.
 
+## Como saber que o cenário está valendo
+
+A faixa **Cenário aplicado**, acima do mapa, mostra:
+
+- cada item do cenário, com o que difere do padrão em destaque;
+- as **falhas esperadas por dia** nesse cenário e no cenário padrão, a razão entre elas e o valor por linha. É a taxa do modelo somada ao longo do dia, a mesma que o sorteio usa;
+- a hora em que o cenário foi aplicado. A faixa pisca a cada mudança, e o dia no mapa é sorteado de novo com o cenário novo;
+- com a animação emendando os dias, quantos dias completos já passaram e a média de falhas sorteadas neles, para comparar com o esperado. Com poucos dias a média varia bastante, porque as falhas vêm agrupadas; com dezenas de dias ela se aproxima do esperado.
+
+Alguns fatores aumentam a taxa e outros a diminuem (veja a aba **Parâmetros**), e combinados podem quase se cancelar: a faixa mostra o efeito líquido. As políticas, exceto o tratamento da causa comum, não mudam quantas falhas ocorrem; mudam quanto elas param a linha, o que aparece em **Muitos dias** e **Comparar cenários**.
+
 ## As abas
 
 ### Dia no mapa
 
-Um dia simulado, com os trens andando sobre o traçado real. Use ▶ para tocar ou pausar, **Velocidade** para acelerar (1× a 300×) e a barra para avançar ou voltar no dia. Trecho bloqueado fica em vermelho tracejado até a retomada; o marcador mostra onde a falha ocorreu. **Dia mostrado** troca o dia sorteado e **Falhas do dia** lista as falhas com hora, linha, tipo e duração. Com **Locais históricos de falha** ligado, os pontos podem ser clicados: mostram o código da STM, o número de falhas, o tipo e se a posição é verificada, deduzida ou aproximada. No canto do mapa há um contador de quadros por segundo.
+Um dia simulado, com os trens andando sobre o traçado real. Use ▶ para tocar ou pausar, **Velocidade** para acelerar e a barra para avançar ou voltar no dia. As velocidades vão de 1× (tempo real) a **1 h/s**, **10 h/s** e **1 dia/s**. Como a rede tem poucas falhas por dia, use 1 h/s ou mais rápido para vê-las. Com **Ao fim do dia, seguir para o próximo dia sorteado** ligado (o padrão), a animação não para: emenda os dias do mesmo cenário (a noite sem serviço é pulada), e o **Dia mostrado** avança sozinho.
+
+**Evento vermelho:** quando a animação passa por uma falha, o local pisca em vermelho por 2,6 segundos de relógio, em qualquer velocidade, e a falha entra na lista no canto do mapa (dia, hora, linha, tipo e quanto parou). O círculo vermelho grande fica enquanto a linha está parada; depois, um ponto vermelho menor marca a falha até o fim do dia. Na barra de tempo, cada risco vermelho é uma falha do dia (o risco mais alto parou a linha), e na tabela **Falhas do dia** as que ainda não aconteceram ficam em cinza. Clicar numa falha da tabela leva a 1 minuto antes dela e pisca o local. Trecho bloqueado fica em vermelho tracejado até a retomada; o marcador mostra onde a falha ocorreu. **Dia mostrado** troca o dia sorteado e **Falhas do dia** lista as falhas com hora, linha, tipo e duração. Com **Locais históricos de falha** ligado, os pontos podem ser clicados: mostram o código da STM, o número de falhas, o tipo e se a posição é verificada, deduzida ou aproximada. No canto do mapa há um contador de quadros por segundo.
 
 ### Muitos dias
 
-**Rodar** simula os dias pedidos em paralelo (um processo por núcleo do computador, até 16) e mostra, por linha: minutos parados, disponibilidade, trens-hora perdidos, viagens afetadas e chance de frota completa, cada um com o intervalo de 95%; falhas por dia (soma das três causas, só a média); e, para a rede, a disponibilidade por par origem-destino. O resultado traz o número de dias e a semente. **Estimar o ano** roda dia útil, sábado e domingo e soma pelo calendário (251, 52 e 62 dias). Ao abrir a página, o cenário do link (ou o padrão) já roda com o número de dias escolhido: 1.000 no padrão.
+**Rodar** simula os dias pedidos em paralelo (um processo por núcleo do computador, até 16) e mostra o cenário da rodada e, por linha: minutos parados, disponibilidade, trens-hora perdidos, viagens afetadas e chance de frota completa, cada um com o intervalo de 95%; falhas por dia (soma das três causas, só a média), ao lado do **esperado pelo modelo**; e, para a rede, a disponibilidade por par origem-destino. O resultado traz o número de dias e a semente. **Estimar o ano** roda dia útil, sábado e domingo e soma pelo calendário (251, 52 e 62 dias). Ao abrir a página, o cenário do link (ou o padrão) já roda com o número de dias escolhido: 1.000 no padrão.
 
 ### Comparar cenários
 
@@ -59,4 +72,4 @@ Todos os números do modelo: valor, intervalo de 95%, status (ajustado, deduzido
 
 ## Para conferir no seu computador
 
-O desempenho foi medido sem placa de vídeo, com WebGL por software e a animação tocando a 300× no pico da manhã: 34 quadros por segundo em tela de notebook e 60 em tela de celular (spec 010). Com a animação parada, o contador mostra o ritmo da página (60), não o da animação. Falta a equipe conferir num notebook comum, no celular e no Firefox e no Safari. Se algo não abrir, anote o navegador e o que apareceu no console (F12).
+O desempenho foi medido sem placa de vídeo, com WebGL por software, e os números de cada medição estão na spec 010. A 1 dia/s a página faz mais trabalho (dias novos, eventos vermelhos), e os quadros por segundo caem um pouco em relação a 300×. Com a animação parada, o contador mostra o ritmo da página (60), não o da animação. Falta a equipe conferir num notebook comum, no celular e no Firefox e no Safari. Se algo não abrir, anote o navegador e o que apareceu no console (F12).

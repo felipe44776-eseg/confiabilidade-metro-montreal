@@ -142,6 +142,42 @@ tr.destaque td { background: var(--grade); }
 .pop dt { color: #55544f; }
 .pop dd { margin: 0; }
 .pop .metodo { margin: 6px 0 0; color: #55544f; font-size: 12px; }
+/* cenário aplicado (decisão D50) */
+.aplicado { margin: 12px 0 0; padding: 10px 12px; background: var(--painel); border: 1px solid var(--linha-divisoria); border-radius: 10px; }
+.aplicado.piscou { animation: aplicado-piscou 1.8s ease-out; }
+@keyframes aplicado-piscou { from { background: var(--atencao-fundo); border-color: var(--atencao); } to { background: var(--painel); border-color: var(--linha-divisoria); } }
+.aplicado-cab { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+.aplicado-cab h2 { margin: 0; }
+.aplicado .quando { font-size: 12.5px; color: var(--tinta-2); }
+.aplicado .itens { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px; }
+.aplicado .itens li { font-size: 12.5px; padding: 1px 8px; border: 1px solid var(--linha-divisoria); border-radius: 999px; color: var(--tinta); }
+.aplicado .itens li .rot { color: var(--tinta-2); }
+.aplicado .itens li.mudou { border-color: var(--destaque); background: color-mix(in srgb, var(--destaque) 12%, transparent); font-weight: 600; }
+.aplicado .efeito { margin: 8px 0 0; font-size: 13.5px; line-height: 1.5; }
+.aplicado .efeito .ponto { vertical-align: baseline; }
+
+/* evento vermelho: pulso no local da falha (o mapa de fundo é sempre claro) */
+.pulso-falha { width: 18px; height: 18px; pointer-events: none; }
+.pulso-falha .nucleo, .pulso-falha .onda { position: absolute; inset: 0; border-radius: 50%; }
+.pulso-falha .nucleo { background: #c0262d; box-shadow: 0 0 0 2px #ffffff, 0 0 10px 2px rgba(192, 38, 45, 0.55); animation: pulso-some 2.6s ease-in forwards; }
+.pulso-falha .onda { border: 3px solid #c0262d; animation: pulso-onda 1.3s ease-out 2; }
+@keyframes pulso-onda { from { transform: scale(1); opacity: 0.95; } to { transform: scale(4.2); opacity: 0; } }
+@keyframes pulso-some { 0%, 75% { opacity: 1; } 100% { opacity: 0; } }
+.eventos { position: absolute; left: 8px; top: 34px; margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; max-width: min(26rem, calc(100% - 64px)); pointer-events: none; }
+.eventos li { background: rgba(255, 255, 255, 0.92); color: #1d1d1b; border-left: 4px solid #c0262d; border-radius: 4px; padding: 3px 8px; font-size: 12.5px; line-height: 1.35; font-variant-numeric: tabular-nums; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12); }
+.eventos li.novo { animation: evento-novo 1.6s ease-out; }
+.eventos li .ponto { width: 8px; height: 8px; }
+@keyframes evento-novo { from { background: #fbd5d3; } to { background: rgba(255, 255, 255, 0.92); } }
+
+/* marcas das falhas na barra de tempo (o polegar do controle ocupa ~8 px de cada lado) */
+.barra-caixa { position: relative; min-width: 0; }
+.barra-caixa input[type="range"] { width: 100%; display: block; margin: 0; }
+.marcas { position: absolute; left: 8px; right: 8px; top: -9px; height: 8px; pointer-events: none; }
+.marcas i { position: absolute; bottom: 0; width: 2px; height: 5px; margin-left: -1px; background: var(--alerta); opacity: 0.35; border-radius: 1px; }
+.marcas i.para { width: 3px; height: 8px; margin-left: -1.5px; }
+.marcas i.passou { opacity: 1; }
+tr.futura td { color: var(--tinta-3); }
+
 @media (max-width: 860px) {
   .corpo { grid-template-columns: minmax(0, 1fr); }
   .painel { border-right: 0; border-bottom: 1px solid var(--linha-divisoria); }
@@ -149,4 +185,9 @@ tr.destaque td { background: var(--grade); }
   .tempo { grid-template-columns: auto minmax(0, 1fr) auto; }
   .tempo .vel { grid-column: 1 / -1; order: 3; }
 }
-@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; }
+  /* sem movimento: o evento vermelho fica parado, com o anel aberto, e some no fim */
+  .pulso-falha .onda { animation: none; transform: scale(2.2); opacity: 0.7; }
+  .eventos li.novo, .aplicado.piscou { animation: none; }
+}

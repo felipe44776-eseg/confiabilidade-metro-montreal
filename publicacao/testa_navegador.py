@@ -3,8 +3,9 @@
 Uso: python testa_navegador.py <pasta_saida>   (variáveis: URL, SO=celular|notebook, ESPERA=segundos)
 Precisa do pacote `websocket-client` (pip install websocket-client, num ambiente à parte: não é dependência do projeto)
 e do Edge ou do Chrome instalados. Mede, em tamanho de celular (390x844) e de notebook (1366x768): rolagem lateral,
-WebGL, quadros por segundo com a animação parada e tocando a 300×, o resultado do Monte Carlo de abertura e os erros
-no console; grava capturas e resultado.json na pasta de saída.
+WebGL, quadros por segundo com a animação parada, tocando a 300× e a 1 dia/s, o resultado do Monte Carlo de abertura,
+os erros no console e, a 1 dia/s, os eventos vermelhos, os dias emendados e o placar (decisão D49); depois muda o clima
+e confere que a faixa "Cenário aplicado" mudou (decisão D50). Grava capturas e resultado.json na pasta de saída.
 Rode um tamanho por vez (SO=...): reaproveitar a aba entre tamanhos perde o contexto WebGL por software.
 A aba é trazida para a frente (Page.bringToFront): sem isso, o navegador sem janela deixa a página oculta, o
 requestAnimationFrame não roda e o contador de fps da página fica parado no último valor (revisão crítica de
@@ -75,6 +76,23 @@ try:
                   relogio: document.getElementById('t-relogio')?.textContent, visibilidade: document.visibilityState}); }
         requestAnimationFrame(f); })])"""
 
+    # Durante 6 s: pulsos vermelhos criados no mapa, dias avançados, lista de eventos, placar e marcas na barra
+    EVENTOS = """new Promise(r => { let n = 0;
+      const ob = new MutationObserver(ms => { for (const m of ms) for (const x of m.addedNodes) if (x.classList && x.classList.contains('pulso-falha')) n++; });
+      ob.observe(document.body, {childList: true, subtree: true});
+      const d0 = Number(document.getElementById('t-dia').value);
+      setTimeout(() => { ob.disconnect(); r({pulsos_em_6_s: n, dias_avancados: Number(document.getElementById('t-dia').value) - d0,
+        eventos_na_lista: document.querySelectorAll('#eventos li').length, primeiro_evento: document.querySelector('#eventos li')?.textContent,
+        placar: document.getElementById('aplicado-placar')?.textContent, marcas_na_barra: document.querySelectorAll('#t-marcas i').length}); }, 6000); })"""
+
+    CENARIO = """(async () => { const antes = document.getElementById('aplicado-efeito').textContent;
+      for (const [id, v] of [['c-cond', 'chuva_congelante'], ['c-neve', 'acima_10']]) {
+        const s = document.getElementById(id); s.value = v; s.dispatchEvent(new Event('change', {bubbles: true})); }
+      await new Promise(q => setTimeout(q, 1500));
+      return {antes: antes.slice(0, 100), depois: document.getElementById('aplicado-efeito').textContent.slice(0, 100),
+              mudados: [...document.querySelectorAll('#aplicado-itens li.mudou')].map(li => li.textContent),
+              quando: document.getElementById('aplicado-quando').textContent}; })()"""
+
     cmd("Runtime.enable")
     cmd("Log.enable")
     cmd("Page.enable")
@@ -101,6 +119,14 @@ try:
         avalia("""(() => { const v = document.getElementById('t-vel'); v.value = '300'; v.dispatchEvent(new Event('change'));
                           const b = document.getElementById('b-play'); if (b.textContent.trim() === '▶') b.click(); return 1; })()""")
         medidas["fps_tocando_300x"] = avalia(QUADROS)
+        # 1 dia/s: dias emendados, eventos vermelhos e placar (decisão D49)
+        avalia("(() => { const v = document.getElementById('t-vel'); v.value = '86400'; v.dispatchEvent(new Event('change')); return 1; })()")
+        medidas["a_1_dia_por_s"] = avalia(EVENTOS)
+        shot = cmd("Page.captureScreenshot", format="png")
+        open(os.path.join(SAIDA, f"site_{nome}_1dia.png"), "wb").write(base64.b64decode(shot["data"]))
+        medidas["fps_tocando_1_dia_por_s"] = avalia(QUADROS)
+        # cenário: chuva congelante e muita neve no solo mudam o esperado e marcam os itens (decisão D50)
+        medidas["cenario_aplicado"] = avalia(CENARIO)
         erros = [e for e in eventos if e.get("method") == "Runtime.exceptionThrown"
                  or (e.get("method") == "Runtime.consoleAPICalled" and e["params"].get("type") == "error")
                  or (e.get("method") == "Log.entryAdded" and e["params"]["entry"].get("level") == "error")]

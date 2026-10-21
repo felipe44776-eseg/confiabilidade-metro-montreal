@@ -18,6 +18,10 @@ const ATRIBUICAO =
 const ATRASO_DESTAQUE_S = 180;
 /** Cor ilustrativa da Linha Rosa (proposta; não é cor oficial). */
 const COR_ROSA = '#d6338a';
+/** Duração do pulso vermelho de uma falha, em milissegundos de relógio: não depende da velocidade (decisão D49). */
+export const PULSO_MS = 2600;
+/** Pulsos ao mesmo tempo no mapa; a 1 dia/s ocorrem cerca de 3 falhas por segundo. */
+const MAX_PULSOS = 16;
 
 export interface DadosMapa {
   linhasGeo: GeoJSON.FeatureCollection;
@@ -47,7 +51,9 @@ export interface VistaMapa {
   readonly pronto: Promise<void>;
   atualizaTrens(pos: readonly PosicaoTrem[]): void;
   atualizaBloqueios(ativos: readonly Bloco[]): void;
-  atualizaFalhas(ocorrencias: readonly Ocorrencia[], rotulo: (o: Ocorrencia) => string): void;
+  atualizaFalhas(falhas: readonly { o: Ocorrencia; parando: boolean }[], rotulo: (o: Ocorrencia) => string): void;
+  /** Evento vermelho no local da falha, por PULSO_MS de relógio. */
+  pulsa(o: Ocorrencia): void;
   mostraLocais(ver: boolean): void;
   mostraCandidatas(cands: readonly Candidata[] | null, destaque?: string): void;
   resize(): void;
@@ -58,6 +64,7 @@ export class VistaSemMapa implements VistaMapa {
   atualizaTrens(): void {}
   atualizaBloqueios(): void {}
   atualizaFalhas(): void {}
+  pulsa(): void {}
   mostraLocais(): void {}
   mostraCandidatas(): void {}
   resize(): void {}
@@ -69,6 +76,7 @@ export class MapaSimulador implements VistaMapa {
   private readonly tracados: Record<string, Tracado> = {};
   private chaveBloqueios = '';
   private chaveFalhas = '';
+  private pulsos: maplibregl.Marker[] = [];
 
   constructor(
     container: string,
@@ -116,7 +124,19 @@ export class MapaSimulador implements VistaMapa {
     m.addSource('locais', { type: 'geojson', data: pontos });
     m.addLayer({ id: 'locais', type: 'circle', source: 'locais', layout: { visibility: 'none', 'circle-sort-key': ['-', 0, ['get', 'n']] }, paint: { 'circle-radius': ['get', 'r'], 'circle-color': '#6250d6', 'circle-opacity': 0.35, 'circle-stroke-color': '#ffffff', 'circle-stroke-width': 1 } });
     m.addSource('falhas', { type: 'geojson', data: VAZIO });
-    m.addLayer({ id: 'falhas', type: 'circle', source: 'falhas', paint: { 'circle-radius': 8, 'circle-color': '#c0262d', 'circle-opacity': 0.9, 'circle-stroke-color': '#ffffff', 'circle-stroke-width': 2 } });
+    // falha parando a linha: círculo vermelho grande; já resolvida ou sem interrupção: ponto vermelho menor até o fim do dia
+    m.addLayer({
+      id: 'falhas',
+      type: 'circle',
+      source: 'falhas',
+      paint: {
+        'circle-radius': ['case', ['get', 'parando'], 9, 5],
+        'circle-color': '#c0262d',
+        'circle-opacity': ['case', ['get', 'parando'], 0.95, 0.6],
+        'circle-stroke-color': '#ffffff',
+        'circle-stroke-width': ['case', ['get', 'parando'], 2, 1],
+      },
+    });
     m.addSource('trens', { type: 'geojson', data: VAZIO });
     const cores: (string | string[])[] = [];
     for (const id of rede.ids) cores.push(id, rede.linhas[id].cor ?? '#555555');
@@ -178,21 +198,42 @@ export class MapaSimulador implements VistaMapa {
     src.setData({ type: 'FeatureCollection', features: feats });
   }
 
-  /** Marcadores das falhas recentes (no meio do trecho onde ocorreram). */
-  atualizaFalhas(ocorrencias: readonly Ocorrencia[], rotulo: (o: Ocorrencia) => string): void {
+  /** Onde a falha aparece: meio do trecho onde ocorreu; causa comum (linha inteira), meio da linha. */
+  private pontoDaFalha(o: Ocorrencia): Coord | null {
+    const est = this.dados.rede.linhas[o.linha]?.estacoes;
+    if (!est) return null;
+    const km = o.trecho === null ? est[Math.floor(est.length / 2)].km : (est[o.trecho].km + est[o.trecho + 1].km) / 2;
+    return this.ponto(o.linha, km);
+  }
+
+  /** Falhas do dia já ocorridas; só redesenha quando o conjunto ou o estado muda. */
+  atualizaFalhas(falhas: readonly { o: Ocorrencia; parando: boolean }[], rotulo: (o: Ocorrencia) => string): void {
     const src = this.fonte('falhas');
     if (!src) return;
-    const chave = ocorrencias.map((o) => `${o.linha}:${o.t}`).join('|');
+    const chave = falhas.map(({ o, parando }) => `${o.linha}:${o.t}:${parando ? 1 : 0}`).join('|');
     if (chave === this.chaveFalhas) return;
     this.chaveFalhas = chave;
     const feats: GeoJSON.Feature[] = [];
-    for (const o of ocorrencias) {
-      const est = this.dados.rede.linhas[o.linha]?.estacoes;
-      if (!est) continue;
-      const km = o.trecho === null ? est[Math.floor(est.length / 2)].km : (est[o.trecho].km + est[o.trecho + 1].km) / 2;
-      feats.push({ type: 'Feature', properties: { texto: rotulo(o) }, geometry: { type: 'Point', coordinates: this.ponto(o.linha, km) } });
+    // as que estão parando a linha por último, para ficarem por cima
+    for (const { o, parando } of [...falhas].sort((a, b) => Number(a.parando) - Number(b.parando))) {
+      const p = this.pontoDaFalha(o);
+      if (p) feats.push({ type: 'Feature', properties: { texto: rotulo(o), parando }, geometry: { type: 'Point', coordinates: p } });
     }
     src.setData({ type: 'FeatureCollection', features: feats });
+  }
+
+  pulsa(o: Ocorrencia): void {
+    const p = this.pontoDaFalha(o);
+    if (!p || !this.fonte('falhas')) return;
+    const caixa = el('div', undefined, 'pulso-falha');
+    caixa.append(el('span', undefined, 'onda'), el('span', undefined, 'nucleo'));
+    const marca = new maplibregl.Marker({ element: caixa }).setLngLat(p).addTo(this.mapa);
+    this.pulsos.push(marca);
+    if (this.pulsos.length > MAX_PULSOS) this.pulsos.shift()!.remove();
+    setTimeout(() => {
+      marca.remove();
+      this.pulsos = this.pulsos.filter((x) => x !== marca);
+    }, PULSO_MS);
   }
 
   mostraLocais(ver: boolean): void {

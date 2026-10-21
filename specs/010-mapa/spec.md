@@ -20,6 +20,8 @@ A pessoa consegue ver a simulação acontecendo no espaço real: trens andando n
 - Dado o mapa, quando aberto, então a atribuição ao OpenStreetMap (ODbL), à STM (CC BY 4.0) e ao fornecedor do mapa de fundo fica visível.
 - Dado o controle de tempo, quando a pessoa pausa, acelera ou volta, então o mapa e os indicadores ficam sincronizados.
 - Dada uma tela de celular, quando a página abre, então o mapa e os controles cabem sem rolagem lateral.
+- *Acrescentado em 2026-10-21, a pedido da equipe (decisão D49):* dado o controle de velocidade, quando a pessoa escolhe 1 h/s, 10 h/s ou 1 dia/s, então a animação emenda os dias sorteados sem parar e conta os dias completos e as falhas sorteadas neles.
+- *Acrescentado em 2026-10-21 (D49):* dada uma falha, quando a animação passa pelo instante dela, em qualquer velocidade, então aparece um evento vermelho no local por pelo menos 2 segundos de relógio e um item na lista de eventos sobre o mapa; a barra de tempo marca em vermelho as falhas do dia.
 
 ## Resultado (2026-10-21)
 

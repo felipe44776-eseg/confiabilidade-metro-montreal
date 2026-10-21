@@ -74,26 +74,41 @@
     </aside>
 
     <main class="principal">
+      <section class="aplicado" id="aplicado" aria-labelledby="t-aplicado">
+        <div class="aplicado-cab">
+          <h2 id="t-aplicado">Cenário aplicado</h2>
+          <span class="quando" id="aplicado-quando" aria-live="polite"></span>
+        </div>
+        <ul class="itens" id="aplicado-itens"></ul>
+        <p class="efeito" id="aplicado-efeito"></p>
+        <p class="nota" id="aplicado-placar"></p>
+      </section>
+
       <div class="mapa-caixa" id="mapa-caixa">
         <div class="mapa" id="mapa" aria-label="Mapa do metrô com os trens da rodada"></div>
         <div class="fps" id="fps" title="Quadros por segundo da animação; mostra &quot;parado&quot; quando ela não toca">parado</div>
+        <ol class="eventos" id="eventos" aria-label="Últimas falhas da animação" hidden></ol>
       </div>
 
       <section id="aba-dia" role="tabpanel" aria-labelledby="tab-dia" class="aba">
         <div class="tempo">
           <button type="button" id="b-play" aria-label="Tocar">▶</button>
-          <label class="vel">Velocidade <select id="t-vel"><option value="1">1×</option><option value="10">10×</option><option value="60" selected>60×</option><option value="300">300×</option></select></label>
-          <input type="range" id="t-barra" min="0" max="1" step="1" aria-label="Hora do dia simulado">
+          <label class="vel">Velocidade <select id="t-vel"></select></label>
+          <div class="barra-caixa">
+            <input type="range" id="t-barra" min="0" max="1" step="1" aria-label="Hora do dia simulado">
+            <div class="marcas" id="t-marcas" aria-hidden="true"></div>
+          </div>
           <output id="t-relogio" class="relogio">--:--</output>
         </div>
         <div class="linha-dia">
           <label>Dia mostrado <input type="number" id="t-dia" min="0" step="1"></label>
+          <label class="caixa"><input type="checkbox" id="t-emenda" checked> Ao fim do dia, seguir para o próximo dia sorteado</label>
           <label class="caixa"><input type="checkbox" id="t-locais"> Locais históricos de falha (2019 a 2026)</label>
         </div>
         <div class="indicadores" id="indicadores" aria-live="off"></div>
         <h3>Falhas do dia</h3>
         <div class="tbl"><table id="tab-falhas"><thead><tr><th>Hora</th><th>Linha</th><th>Tipo</th><th>Parada</th><th>Onde</th></tr></thead><tbody></tbody></table></div>
-        <p class="nota">É um dia sorteado do cenário, o mesmo que a rodada de mesmo número na aba "Muitos dias". Trem com contorno vermelho está atrasado mais de 3 minutos; trecho vermelho tracejado está bloqueado.</p>
+        <p class="nota">É um dia sorteado do cenário, o mesmo que a rodada de mesmo número na aba "Muitos dias". Falhas são raras (quantas por dia, no cenário escolhido, aparece em "Cenário aplicado", acima do mapa): para vê-las, toque a 1 h/s ou mais rápido. Cada falha pisca em vermelho no local por 2,6 segundos de relógio, em qualquer velocidade, e entra na lista no canto do mapa; o círculo vermelho grande fica enquanto a linha está parada, e o ponto vermelho menor marca as falhas que já passaram no dia. Na barra de tempo, cada risco vermelho é uma falha do dia (o mais alto parou a linha). Trem com contorno vermelho está atrasado mais de 3 minutos; trecho vermelho tracejado está bloqueado.</p>
       </section>
 
       <section id="aba-mc" role="tabpanel" aria-labelledby="tab-mc" class="aba" hidden>

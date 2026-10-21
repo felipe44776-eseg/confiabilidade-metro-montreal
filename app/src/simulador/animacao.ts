@@ -122,6 +122,37 @@ export function relogio(t: number): string {
   return `${String(h % 24).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
 }
 
+/**
+ * Velocidades do controle: tempo simulado por segundo de relógio. A rede teve 3,1 falhas por dia de 2019 a 2026
+ * (painel/linhas.json); a 300× elas aparecem uma a cada 1,5 minuto de relógio, por isso há 1 h/s, 10 h/s e 1 dia/s (decisão D49).
+ * Acima de 300×, a animação emenda os dias: ao fim de um, segue para o próximo dia sorteado.
+ */
+export const VELOCIDADES: readonly { valor: number; rotulo: string }[] = [
+  { valor: 1, rotulo: '1× (tempo real)' },
+  { valor: 10, rotulo: '10×' },
+  { valor: 60, rotulo: '1 min/s' },
+  { valor: 300, rotulo: '5 min/s' },
+  { valor: 3600, rotulo: '1 h/s' },
+  { valor: 36000, rotulo: '10 h/s' },
+  { valor: 86400, rotulo: '1 dia/s' },
+];
+export const VELOCIDADE_PADRAO = 3600;
+
+/** Falhas cujo instante foi cruzado ao avançar de `de` até `ate` (de < t <= ate). Em alta velocidade, um quadro cruza várias. */
+export function cruzadas(ocorrencias: readonly Ocorrencia[], de: number, ate: number): Ocorrencia[] {
+  return ate > de ? ocorrencias.filter((o) => o.t > de && o.t <= ate) : [];
+}
+
+/** Falhas já ocorridas em t; `parando` enquanto a linha está parada por ela. */
+export function falhasAte(ocorrencias: readonly Ocorrencia[], t: number): { o: Ocorrencia; parando: boolean }[] {
+  return ocorrencias.filter((o) => o.t <= t).map((o) => ({ o, parando: o.duracaoS > 0 && t < o.t + o.duracaoS }));
+}
+
+/** Posição de t na barra de tempo do dia, de 0 a 1. */
+export function fracaoNaBarra(t: number, ini: number, fim: number): number {
+  return fim > ini ? Math.min(1, Math.max(0, (t - ini) / (fim - ini))) : 0;
+}
+
 /** Texto do contador de quadros: com a animação parada, a página continua a pedir quadros e a taxa
  *  medida não diz nada sobre a animação (achado 7 da crítica de 2026-10-21, rodada 3). */
 export const FPS_PARADO = 'parado';

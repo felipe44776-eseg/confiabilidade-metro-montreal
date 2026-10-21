@@ -5,6 +5,7 @@ import type { ResultadoMC } from '../mc/pool';
 import { PoolMC } from '../mc/pool';
 import type { Agregado, Estimativa } from '../mc/rodadas';
 import { anualiza, DIAS_POR_TIPO_ANO } from '../mc/rodadas';
+import type { Contexto } from '../motor/contexto';
 import { avisosDoCenario, preparaContexto } from '../motor/contexto';
 import type { ResultadoDia } from '../motor/dia';
 import { simulaDia } from '../motor/dia';
@@ -22,11 +23,13 @@ import { graficoBarras } from '../ui/graficos';
 import { casasPara, comIC, comSinal, inteiro, num, pct, pp } from '../ui/formato';
 import { montaRodape, REPO } from '../ui/rodape';
 import type { Bloco, Ocorrencia } from './animacao';
-import { blocosAtivos, blocosDoDia, FPS_PARADO, minutosAte, ocorrenciasDoDia, posicoes, relogio, textoFps } from './animacao';
+import { blocosAtivos, blocosDoDia, cruzadas, falhasAte, FPS_PARADO, fracaoNaBarra, minutosAte, ocorrenciasDoDia, posicoes, relogio, textoFps, VELOCIDADE_PADRAO, VELOCIDADES } from './animacao';
 import type { CandidatasJson } from './candidatas';
 import { candidatasDoJson } from './candidatas';
 import type { EstadoCenario, Greve } from './cenario';
-import { aplicaGreve, chaveRede, copia, desserializa, estacaoDoMes, JANELAS_GREVE, MESES, NIVEIS, ORDEM_POLITICAS, PADRAO, paraCenarioMotor, ROTULOS, serializa } from './cenario';
+import { aplicaGreve, chaveCenario, chaveRede, copia, desserializa, estacaoDoMes, itensDoCenario, JANELAS_GREVE, MESES, NIVEIS, ORDEM_POLITICAS, PADRAO, paraCenarioMotor, ROTULOS, serializa } from './cenario';
+import type { Esperado } from './efeito';
+import { esperadoPorDia } from './efeito';
 import { avisosDeExtrapolacao } from './extrapolacao';
 import type { VistaMapa } from './mapa_sim';
 import { corDaCandidata, MapaSimulador, VistaSemMapa } from './mapa_sim';
@@ -42,8 +45,8 @@ const FONTE_PARAMETRO: Record<string, string> = {
   'pipeline/analise_confiabilidade.py': `${REPO}/blob/main/fontes/FONTES.md`,
 };
 const OPCOES_RODADAS = [200, 500, 1000, 2000, 5000, 10000];
-/** Quanto tempo (s simulados) a falha fica marcada no mapa depois de ocorrer, mesmo sem interrupção. */
-const MARCA_FALHA_S = 300;
+/** Itens na lista de eventos sobre o mapa. */
+const EVENTOS_NA_LISTA = 4;
 
 // ---------- utilidades de DOM ----------
 const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
@@ -233,7 +236,78 @@ function mudou(): void {
   marcaDesatualizado();
   mostraParametros();
   clearTimeout(esperaDia);
-  esperaDia = setTimeout(simulaDiaMostrado, 120);
+  esperaDia = setTimeout(() => {
+    simulaDiaMostrado();
+    aplicado();
+  }, 120);
+}
+
+// ---------- cenário aplicado (spec 011, decisão D50) ----------
+/** Contexto do cenário atual, guardado: emendar os dias só sorteia o dia novo (3 ms), sem refazer o cenário (22 ms). */
+let ctxCenario: { chave: string; ctx: Contexto; esperado: Esperado } | null = null;
+let esperadoNoPadrao: Esperado | null = null;
+/** Dias completos tocados no mapa desde a última mudança de cenário, e as falhas sorteadas neles. */
+let placar = { dias: 0, falhas: 0 };
+
+function contextoDoCenario(): { ctx: Contexto; esperado: Esperado } {
+  const chave = chaveCenario({ ...estado, semente: 0, rodadas: 0 });
+  if (ctxCenario?.chave !== chave) {
+    const ctx = preparaContexto(redeDo(estado.greve).rede, dados.parametros, paraCenarioMotor(estado));
+    ctxCenario = { chave, ctx, esperado: esperadoPorDia(ctx, estado.politicas) };
+  }
+  return ctxCenario;
+}
+
+function esperadoPadrao(): Esperado {
+  esperadoNoPadrao ??= esperadoPorDia(preparaContexto(redeDo(PADRAO.greve).rede, dados.parametros, paraCenarioMotor(PADRAO)), PADRAO.politicas);
+  return esperadoNoPadrao;
+}
+
+/** Chamada quando o cenário muda: zera o placar, mostra a hora e pisca a faixa. */
+function aplicado(abertura = false): void {
+  placar = { dias: 0, falhas: 0 };
+  const hora = new Date().toLocaleTimeString('pt-BR');
+  $('aplicado-quando').textContent = abertura ? `aplicado às ${hora}` : `aplicado às ${hora}; o dia no mapa foi sorteado de novo com este cenário`;
+  if (!abertura) {
+    const caixa = $('aplicado');
+    caixa.classList.remove('piscou');
+    void caixa.offsetWidth; // reinicia a animação
+    caixa.classList.add('piscou');
+  }
+  mostraAplicado();
+}
+
+function mostraAplicado(): void {
+  if (!ctxCenario) return;
+  const ul = $('aplicado-itens');
+  ul.replaceChildren(
+    ...itensDoCenario(estado, NOMES_POLITICAS).map((it) => {
+      const li = el('li', undefined, it.mudou ? 'mudou' : '');
+      li.append(el('span', `${it.rotulo}: `, 'rot'), it.texto);
+      if (it.mudou) li.title = 'Diferente do cenário padrão';
+      return li;
+    }),
+  );
+  const esp = ctxCenario.esperado;
+  const pad = esperadoPadrao();
+  const razao = pad.total > 0 ? esp.total / pad.total : 1;
+  const ef = $('aplicado-efeito');
+  ef.replaceChildren(
+    'Falhas esperadas por dia neste cenário: ',
+    el('strong', num(esp.total, 2)),
+    ` (cenário padrão: ${num(pad.total, 2)}; `,
+    el('strong', `×${num(razao, 2)}`),
+    '). Por linha: ',
+  );
+  redeBase().ids.forEach((l, i) => {
+    const p = el('span', undefined, 'ponto');
+    p.style.background = corLinha(l);
+    ef.append(i ? ' · ' : '', p, ` ${nomeLinha(l)} ${num(esp.porLinha[l].total, 2)}`);
+  });
+  ef.append('. O clima e os eventos multiplicam a taxa por trem-hora; o tipo de dia e a greve mudam quantos trens circulam. Das políticas, só o tratamento da causa comum muda quantas falhas ocorrem; as outras mudam quanto a falha para a linha.');
+  $('aplicado-placar').textContent = placar.dias
+    ? `No mapa: ${inteiro(placar.dias)} dia(s) completo(s) deste cenário, ${inteiro(placar.falhas)} falhas sorteadas, ${num(placar.falhas / placar.dias, 2)} por dia (esperado: ${num(esp.total, 2)}). Com mais dias, a média se aproxima do esperado.`
+    : 'Toque o dia no mapa a 1 h/s ou mais rápido: a cada dia completo, a contagem de falhas sorteadas aparece aqui, para comparar com o esperado.';
 }
 
 function mostraAvisos(): void {
@@ -260,10 +334,11 @@ let dia: DiaMostrado | null = null;
 let tSim = 0;
 let tocando = false;
 
-function simulaDiaMostrado(): void {
+/** Sorteia o dia `estado.dia` do cenário. `doInicio`: a animação recomeça na abertura do serviço (dia emendado). */
+function simulaDiaMostrado(doInicio = false): void {
   try {
-    const { rede } = redeDo(estado.greve);
-    const ctx = preparaContexto(rede, dados.parametros, paraCenarioMotor(estado));
+    const { ctx } = contextoDoCenario();
+    const rede = ctx.rede;
     const r = simulaDia(ctx, estado.politicas, sementeDaRodada(estado.semente, estado.dia), { registrar: true, trajetorias: true });
     const [ini, fim] = ctx.horario.janelaRede;
     dia = { r, rede, blocos: blocosDoDia(r), ocorrencias: ocorrenciasDoDia(r), ini, fim, inicioServico: ctx.horario.inicioServico };
@@ -271,7 +346,8 @@ function simulaDiaMostrado(): void {
     barra.min = String(Math.floor(ini));
     barra.max = String(Math.ceil(fim));
     barra.step = '30';
-    if (!(tSim >= ini && tSim <= fim)) tSim = Math.min(Math.max(7.5 * 3600, ini), fim);
+    if (doInicio) tSim = ini;
+    else if (!(tSim >= ini && tSim <= fim)) tSim = Math.min(Math.max(7.5 * 3600, ini), fim);
     mostraFalhasDoDia();
     desenhaInstante();
   } catch (e) {
@@ -279,13 +355,54 @@ function simulaDiaMostrado(): void {
   }
 }
 
+/** Fim do dia com a animação tocando: conta o dia no placar e emenda o próximo dia sorteado. */
+function emendaDia(): void {
+  if (!dia) return;
+  placar = { dias: placar.dias + 1, falhas: placar.falhas + dia.ocorrencias.length };
+  estado.dia += 1;
+  $<HTMLInputElement>('t-dia').value = String(estado.dia);
+  history.replaceState(null, '', `#${serializa(estado)}`);
+  simulaDiaMostrado(true);
+  mostraAplicado();
+}
+
+const tipoDaFalha = (o: Ocorrencia) => ({ FALHA_TREM: 'material rodante', FALHA_EF: 'equipamento fixo', CAUSA_COMUM: 'causa comum' })[o.tipo as 'FALHA_TREM'] ?? o.tipo;
+
+/** Evento vermelho: pulso no local e item na lista sobre o mapa. */
+function anunciaFalha(o: Ocorrencia): void {
+  mapa.pulsa(o);
+  const lista = $('eventos');
+  const li = el('li', undefined, 'novo');
+  const p = el('span', undefined, 'ponto');
+  p.style.background = corLinha(o.linha);
+  li.append(p, ` Dia ${estado.dia} · ${relogio(o.t)} · ${nomeLinha(o.linha)} · ${tipoDaFalha(o)} · ${o.duracaoS > 0 ? `${num(o.duracaoS / 60, 0)} min parada` : 'sem interrupção'}`);
+  lista.prepend(li);
+  while (lista.children.length > EVENTOS_NA_LISTA) lista.lastElementChild!.remove();
+  lista.hidden = false;
+}
+
+/** Riscos vermelhos na barra de tempo, um por falha do dia. */
+function marcaBarra(): void {
+  if (!dia) return;
+  const caixa = $('t-marcas');
+  caixa.replaceChildren(
+    ...dia.ocorrencias.map((o) => {
+      const i = el('i', undefined, o.duracaoS > 0 ? 'para' : '');
+      i.style.left = `${(fracaoNaBarra(o.t, dia!.ini, dia!.fim) * 100).toFixed(2)}%`;
+      i.title = rotuloOcorrencia(o);
+      return i;
+    }),
+  );
+  ocorridasMarcadas = -1;
+}
+
 function rotuloOcorrencia(o: Ocorrencia): string {
-  const tipo = { FALHA_TREM: 'material rodante', FALHA_EF: 'equipamento fixo', CAUSA_COMUM: 'causa comum' }[o.tipo as 'FALHA_TREM'] ?? o.tipo;
-  return `${relogio(o.t)} · ${nomeLinha(o.linha)} · ${tipo} · ${o.duracaoS > 0 ? `${num(o.duracaoS / 60, 0)} min parada` : 'sem interrupção'} · ${o.detalhe}`;
+  return `${relogio(o.t)} · ${nomeLinha(o.linha)} · ${tipoDaFalha(o)} · ${o.duracaoS > 0 ? `${num(o.duracaoS / 60, 0)} min parada` : 'sem interrupção'} · ${o.detalhe}`;
 }
 
 function mostraFalhasDoDia(): void {
   if (!dia) return;
+  marcaBarra();
   const corpo = $<HTMLTableElement>('tab-falhas').tBodies[0];
   corpo.replaceChildren();
   if (!dia.ocorrencias.length) {
@@ -303,15 +420,29 @@ function mostraFalhasDoDia(): void {
     const pt = el('span', undefined, 'ponto');
     pt.style.background = corLinha(o.linha);
     cl.append(pt, ` ${nomeLinha(o.linha)}`);
-    r.insertCell().textContent = { FALHA_TREM: 'material rodante', FALHA_EF: 'equipamento fixo', CAUSA_COMUM: 'causa comum' }[o.tipo as 'FALHA_TREM'] ?? o.tipo;
+    r.insertCell().textContent = tipoDaFalha(o);
     r.insertCell().textContent = o.duracaoS > 0 ? `${num(o.duracaoS / 60, 1)} min` : 'sem interrupção';
     r.insertCell().textContent = o.detalhe;
     r.style.cursor = 'pointer';
+    r.title = 'Ir para esta falha no mapa';
     r.addEventListener('click', () => {
       tSim = Math.max(dia!.ini, o.t - 60);
       desenhaInstante();
+      mapa.pulsa(o);
     });
   }
+}
+
+/** Quantas falhas do dia já estavam marcadas como ocorridas na barra e na tabela (só remarca quando muda). */
+let ocorridasMarcadas = -1;
+function marcaOcorridas(n: number): void {
+  if (n === ocorridasMarcadas) return;
+  ocorridasMarcadas = n;
+  $('t-marcas')
+    .querySelectorAll('i')
+    .forEach((i, k) => i.classList.toggle('passou', k < n));
+  const linhas = $<HTMLTableElement>('tab-falhas').tBodies[0].rows;
+  if (dia?.ocorrencias.length) for (let k = 0; k < linhas.length; k++) linhas[k].classList.toggle('futura', k >= n);
 }
 
 function desenhaInstante(): void {
@@ -320,8 +451,9 @@ function desenhaInstante(): void {
   mapa.atualizaTrens(pos);
   const ativos = blocosAtivos(dia.blocos, tSim);
   mapa.atualizaBloqueios(ativos);
-  const recentes = dia.ocorrencias.filter((o) => o.t <= tSim && tSim < o.t + Math.max(o.duracaoS, MARCA_FALHA_S));
-  mapa.atualizaFalhas(recentes, rotuloOcorrencia);
+  const ocorridas = falhasAte(dia.ocorrencias, tSim);
+  mapa.atualizaFalhas(ocorridas, rotuloOcorrencia);
+  marcaOcorridas(ocorridas.length);
   $<HTMLInputElement>('t-barra').value = String(tSim);
   $('t-relogio').textContent = relogio(tSim);
   const min = minutosAte(dia.rede, dia.inicioServico, dia.blocos, tSim);
@@ -329,7 +461,7 @@ function desenhaInstante(): void {
   const cartoes: [string, string, string?][] = [
     ['Trens em viagem', inteiro(pos.length)],
     ['Bloqueios ativos', inteiro(ativos.length)],
-    ['Falhas até agora', inteiro(dia.ocorrencias.filter((o) => o.t <= tSim).length)],
+    ['Falhas até agora', inteiro(ocorridas.length)],
     ...dia.rede.ids.map((l) => [`${nomeLinha(l)}: min parados`, num(min[l], 1), corLinha(l)] as [string, string, string]),
   ];
   if (caixa.children.length !== cartoes.length) {
@@ -378,12 +510,15 @@ function laco(agora: number): void {
   }
   if (tocando && dia) {
     const dt = ultimoQuadro ? Math.min(0.25, (agora - ultimoQuadro) / 1000) : 0;
-    tSim += dt * Number($<HTMLSelectElement>('t-vel').value);
-    if (tSim >= dia.fim) {
-      tSim = dia.fim;
-      paraDeTocar();
-    }
+    const antes = tSim;
+    tSim = Math.min(dia.fim, tSim + dt * Number($<HTMLSelectElement>('t-vel').value));
+    // em alta velocidade um quadro cruza várias falhas: todas viram evento vermelho
+    for (const o of cruzadas(dia.ocorrencias, antes, tSim)) anunciaFalha(o);
     desenhaInstante();
+    if (tSim >= dia.fim) {
+      if ($<HTMLInputElement>('t-emenda').checked) emendaDia();
+      else paraDeTocar();
+    }
   }
   ultimoQuadro = agora;
   requestAnimationFrame(laco);
@@ -420,7 +555,7 @@ async function rodaMC(): Promise<void> {
   const canc = $<HTMLButtonElement>('b-mc-cancela');
   b.disabled = true;
   canc.disabled = false;
-  const chave = serializa(estado);
+  const chave = chaveCenario(estado);
   try {
     const r = await pool.executa(pedidoMC(estado), progresso('p-mc', 's-mc'));
     resultadoMC = { estado: chave, r };
@@ -450,9 +585,11 @@ function mostraResultadoMC(r: Agregado): void {
   const m = r.porMetrica;
   const pctF = (x: number, c: number) => pct(x, Math.min(c, 4));
   caixa.append(el('h3', `Por dia de operação (${ROTULOS[estado.tipoDia]}), média e intervalo de 95%`));
+  caixa.append(el('p', `Cenário desta rodada: ${resumoCenario(estado)}`, 'nota'));
+  const esperado = contextoDoCenario().esperado;
   caixa.append(
     tabela(
-      ['Linha', 'Falhas por dia', 'Minutos parados', 'Disponibilidade', 'Trens-hora perdidos', 'Viagens afetadas', 'Frota completa'],
+      ['Linha', 'Falhas por dia', 'Esperado pelo modelo', 'Minutos parados', 'Disponibilidade', 'Trens-hora perdidos', 'Viagens afetadas', 'Frota completa'],
       ids.map((l) => {
         const nome = el('span');
         const p = el('span', undefined, 'ponto');
@@ -462,6 +599,7 @@ function mostraResultadoMC(r: Agregado): void {
         return [
           nome,
           num(falhas, 2),
+          num(esperado.porLinha[l].total, 2),
           estimativaTexto(m[`${l}.minutosInterrupcao`], num),
           estimativaTexto(m[`${l}.disponibilidade`], pctF, 1, 100),
           estimativaTexto(m[`${l}.trensHoraPerdidos`], num),
@@ -469,9 +607,10 @@ function mostraResultadoMC(r: Agregado): void {
           estimativaTexto(m[`${l}.frotaCompleta`], pctF, 0, 100),
         ];
       }),
-      [1, 2, 3, 4, 5, 6],
+      [1, 2, 3, 4, 5, 6, 7],
     ),
   );
+  caixa.append(el('p', '"Esperado pelo modelo" é a taxa do cenário somada no dia, a mesma que o sorteio usa; a média dos dias simulados fica perto dela, e a diferença é a variação do sorteio.', 'nota'));
   caixa.append(
     el(
       'p',
@@ -535,7 +674,8 @@ async function estimaAno(): Promise<void> {
 }
 
 function marcaDesatualizado(): void {
-  if (resultadoMC && resultadoMC.estado !== serializa(estado)) $('s-mc').textContent = 'O cenário mudou: os resultados abaixo são do cenário anterior. Rode de novo.';
+  // trocar o dia mostrado não muda o cenário (chaveCenario ignora o dia)
+  if (resultadoMC && resultadoMC.estado !== chaveCenario(estado)) $('s-mc').textContent = 'O cenário mudou: os resultados abaixo são do cenário anterior. Rode de novo.';
 }
 
 // ---------- comparação A/B ----------
@@ -922,6 +1062,11 @@ async function inicia(): Promise<void> {
   }
 
   montaFormulario();
+  opcoes(
+    $('t-vel'),
+    VELOCIDADES.map((v) => [String(v.valor), v.rotulo]),
+    String(VELOCIDADE_PADRAO),
+  );
   montaCandidatas();
   mostraAvisos();
   mostraParametros();
@@ -933,9 +1078,11 @@ async function inicia(): Promise<void> {
     leFormulario();
     mudou();
   });
+  // trocar o dia mostrado sorteia outro dia do mesmo cenário: não é mudança de cenário
   $('t-dia').addEventListener('change', () => {
     leFormulario();
-    mudou();
+    history.replaceState(null, '', `#${serializa(estado)}`);
+    simulaDiaMostrado();
   });
   $('b-padrao').addEventListener('click', () => {
     estado = copia(PADRAO);
@@ -984,6 +1131,7 @@ async function inicia(): Promise<void> {
   $('b-busca').addEventListener('click', busca);
 
   simulaDiaMostrado();
+  aplicado(true);
   requestAnimationFrame(laco);
   // o mapa pode demorar (ou não carregar o fundo): quando abrir, desenha o instante atual
   void mapa.pronto.then(() => {

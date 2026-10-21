@@ -19,6 +19,7 @@ A equipe consegue mudar clima, eventos, frota e políticas, rodar o cenário e c
 - Dados dois cenários, quando comparados, então a página mostra a diferença de cada métrica com intervalo de 95%.
 - Dado um cenário de clima (por exemplo, dia de chuva congelante), quando escolhido, então muda a taxa de falha pelos multiplicadores da spec 005, e não por um número escolhido à mão.
 - Dado o cenário padrão, quando a página abre, então já mostra um resultado pronto, sem exigir configuração.
+- *Acrescentado em 2026-10-21, a pedido da equipe (decisão D50):* dado um cenário, quando aplicado, então a página mostra o que está valendo (destacando o que difere do padrão), as falhas esperadas por dia no cenário e no padrão e, nos dias tocados no mapa, a contagem de falhas sorteadas para comparar com o esperado.
 
 ## Resultado (2026-10-21)
 

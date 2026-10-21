@@ -205,6 +205,35 @@ export function desserializa(texto: string): EstadoCenario {
   return e;
 }
 
+/** Chave do cenário sem o dia mostrado: trocar de dia não muda o cenário nem o resultado do Monte Carlo. */
+export function chaveCenario(e: EstadoCenario): string {
+  return serializa({ ...e, dia: 0 });
+}
+
+const NOMES_ESTACAO: Record<string, string> = { inverno: 'inverno', primavera: 'primavera', verao: 'verão', outono: 'outono' };
+
+/**
+ * O que está valendo no cenário, item a item, com `mudou` quando difere do padrão (spec 011, decisão D50).
+ * `politicas` recebe os nomes legíveis das políticas ligadas.
+ */
+export function itensDoCenario(e: EstadoCenario, nomesPoliticas: Record<NomePolitica, string>): { rotulo: string; texto: string; mudou: boolean }[] {
+  const eventos = [e.jogo && 'jogo do Canadiens', e.gp && 'GP do Canadá', e.feriado && 'feriado'].filter(Boolean) as string[];
+  const pol = ORDEM_POLITICAS.filter((k) => e.politicas[k]).map((k) => nomesPoliticas[k].toLowerCase());
+  const hs = Object.entries(e.hipoteses).sort(([a], [b]) => a.localeCompare(b));
+  return [
+    { rotulo: 'Dia', texto: ROTULOS[e.tipoDia], mudou: e.tipoDia !== PADRAO.tipoDia },
+    { rotulo: 'Mês', texto: `${MESES[e.mes - 1]} (${NOMES_ESTACAO[estacaoDoMes(e.mes)]})`, mudou: e.mes !== PADRAO.mes },
+    { rotulo: 'Temperatura', texto: ROTULOS[e.temp], mudou: e.temp !== PADRAO.temp },
+    { rotulo: 'Precipitação', texto: ROTULOS[e.precip], mudou: e.precip !== PADRAO.precip },
+    { rotulo: 'Condição', texto: ROTULOS[e.cond], mudou: e.cond !== PADRAO.cond },
+    { rotulo: 'Neve no solo', texto: ROTULOS[e.neveSolo], mudou: e.neveSolo !== PADRAO.neveSolo },
+    { rotulo: 'Eventos', texto: eventos.length ? eventos.join(', ') : 'nenhum', mudou: eventos.length > 0 },
+    { rotulo: 'Greve', texto: e.greve === 'nao' ? 'não' : JANELAS_GREVE[e.greve].rotulo, mudou: e.greve !== 'nao' },
+    { rotulo: 'Políticas', texto: pol.length ? pol.join(', ') : 'nenhuma', mudou: pol.length > 0 },
+    { rotulo: 'Hipóteses', texto: hs.length ? hs.map(([k, v]) => `${k.replaceAll('_', ' ')} = ${v}`).join(', ') : 'valores do parametros.json', mudou: hs.length > 0 },
+  ];
+}
+
 export function politicasIguais(a: Politicas, b: Politicas): boolean {
   return ORDEM_POLITICAS.every((k) => a[k] === b[k]);
 }

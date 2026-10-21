@@ -5,7 +5,8 @@ import { describe, expect, it } from 'vitest';
 import { preparaContexto } from '../../src/motor/contexto';
 import { simulaDia, trensEmViagem } from '../../src/motor/dia';
 import { NENHUMA_POLITICA } from '../../src/motor/politicas';
-import { blocosAtivos, blocosDoDia, FPS_PARADO, minutosAte, ocorrenciasDoDia, posicoes, relogio, textoFps } from '../../src/simulador/animacao';
+import type { Ocorrencia } from '../../src/simulador/animacao';
+import { blocosAtivos, blocosDoDia, cruzadas, falhasAte, FPS_PARADO, fracaoNaBarra, minutosAte, ocorrenciasDoDia, posicoes, relogio, textoFps, VELOCIDADE_PADRAO, VELOCIDADES } from '../../src/simulador/animacao';
 import type { Coord } from '../../src/simulador/tracado';
 import { montaTracado, pontoNoKm } from '../../src/simulador/tracado';
 import { carregaFixture, carregaRede } from '../motor/apoio';
@@ -84,5 +85,42 @@ describe('contador de quadros', () => {
     expect(textoFps(false, 60, 1000)).toBe(FPS_PARADO);
     expect(textoFps(true, 33, 1000)).toBe('33 fps');
     expect(textoFps(true, 0, 0)).toBe('— fps');
+  });
+});
+
+describe('velocidades e eventos vermelhos (decisão D49)', () => {
+  const oc = (t: number, duracaoS: number): Ocorrencia => ({ t, linha: 'laranja', trecho: 3, tipo: 'FALHA_EF', duracaoS, detalhe: 'equipamento fixo' });
+
+  it('oferece 1 h/s, 10 h/s e 1 dia/s, e o padrão é 1 h/s', () => {
+    const valores = VELOCIDADES.map((v) => v.valor);
+    for (const v of [300, 3600, 36_000, 86_400]) expect(valores).toContain(v);
+    expect(VELOCIDADE_PADRAO).toBe(3600);
+    expect([...valores].sort((a, b) => a - b)).toEqual(valores);
+  });
+
+  it('um quadro em alta velocidade cruza várias falhas, e nenhuma é contada duas vezes', () => {
+    const lista = [oc(8 * 3600, 600), oc(8 * 3600 + 120, 0), oc(9 * 3600, 300)];
+    // 1 dia/s a 60 quadros por segundo: 1.440 s simulados por quadro
+    const q1 = cruzadas(lista, 8 * 3600 - 1440, 8 * 3600);
+    const q2 = cruzadas(lista, 8 * 3600, 8 * 3600 + 1440);
+    const q3 = cruzadas(lista, 8 * 3600 + 1440, 8 * 3600 + 2880);
+    expect([q1.length, q2.length, q3.length]).toEqual([1, 1, 0]);
+    expect(cruzadas(lista, 7 * 3600, 10 * 3600)).toHaveLength(3);
+    expect(cruzadas(lista, 9 * 3600, 9 * 3600)).toHaveLength(0); // parada: nada novo
+    expect(cruzadas(lista, 10 * 3600, 7 * 3600)).toHaveLength(0); // voltar na barra não dispara evento
+  });
+
+  it('falha parando a linha até a retomada; depois, e sem interrupção, só passou', () => {
+    const lista = [oc(8 * 3600, 600), oc(8 * 3600 + 120, 0)];
+    expect(falhasAte(lista, 8 * 3600 - 1)).toHaveLength(0);
+    expect(falhasAte(lista, 8 * 3600 + 300).map((x) => x.parando)).toEqual([true, false]);
+    expect(falhasAte(lista, 8 * 3600 + 600).map((x) => x.parando)).toEqual([false, false]);
+  });
+
+  it('posição na barra de tempo vai de 0 a 1', () => {
+    expect(fracaoNaBarra(5 * 3600, 5 * 3600, 25 * 3600)).toBe(0);
+    expect(fracaoNaBarra(15 * 3600, 5 * 3600, 25 * 3600)).toBe(0.5);
+    expect(fracaoNaBarra(26 * 3600, 5 * 3600, 25 * 3600)).toBe(1);
+    expect(fracaoNaBarra(1, 2, 2)).toBe(0);
   });
 });

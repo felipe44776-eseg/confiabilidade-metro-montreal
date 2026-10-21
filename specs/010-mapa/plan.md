@@ -23,7 +23,7 @@ flowchart LR
 | Trecho bloqueado | Eventos FIM_INTERRUPCAO do registro (início = fim − tempo parado de fato); pedaço do traçado entre as duas estações; causa comum = a linha inteira |
 | Falha no mapa | Marcador no meio do trecho onde ocorreu, por 5 min simulados ou até a retomada |
 | Indicadores | Trens em viagem, bloqueios ativos, falhas até agora e minutos parados por linha (união dos bloqueios, a mesma regra do motor) |
-| Tempo | `requestAnimationFrame`; t simulado += Δt real × velocidade (1×, 10×, 60×, 300×); barra para voltar e avançar; clicar numa falha da lista leva para 1 min antes dela |
+| Tempo | `requestAnimationFrame`; t simulado += Δt real × velocidade (1×, 10×, 1 min/s, 5 min/s, 1 h/s, 10 h/s, 1 dia/s; até 2026-10-21 o máximo era 300×); ao fim do dia, emenda o próximo dia sorteado (D49); barra para voltar e avançar; clicar numa falha da lista leva para 1 min antes dela |
 | Desenho | Só o GeoJSON dos trens muda a cada quadro; bloqueios e falhas só quando o conjunto ativo muda |
 
 ## Desempenho (critério de 30 quadros por segundo)
