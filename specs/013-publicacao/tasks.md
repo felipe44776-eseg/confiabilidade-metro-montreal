@@ -9,5 +9,6 @@
 - [x] Versões congeladas: o deploy desempacota o zip do site de cada Release `v*` em `/versoes/<etiqueta>/`.
 - [x] Execução do `reproduz.yml` no GitHub Actions: a 1ª (39542896386) acusou só metadados; a 2ª (39546898051) passou.
 - [x] Nova execução no commit ba19e74 (39556506384), depois das revisões críticas: 48 idênticos, 5 na tolerância, 0 fora.
+- [x] Execução no commit a7f0594 (39609801611), com o comparador que acusa arquivo a mais: 48 idênticos, 5 na tolerância, 0 fora, faltando ou sobrando.
 - [x] `v1.0.0` congelada em 2026-10-21 (etiqueta no commit 6196ad2, Release com o zip do site, `/versoes/v1.0.0/`).
 - [ ] Congelar a versão de entrega no fim do semestre (v1.x).
