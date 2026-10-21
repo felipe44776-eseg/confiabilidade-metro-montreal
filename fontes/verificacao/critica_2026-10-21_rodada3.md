@@ -189,3 +189,25 @@ Regerado:
 Testes depois da parte B: `pytest pipeline/tests` 56 passaram; `verifica_fontes.py` sem argumentos, 0 problema. Não rodados: `npx tsc`, `npm test` e `npm run build` (nenhum arquivo de `app/` mudou) e o teste do navegador.
 
 Situação dos achados 5, 8, 9 e 10: corrigidos. A tabela de achados acima fica como estava na rodada, para registro.
+
+## Aplicação das propostas, parte C (navegador no site publicado)
+
+Site publicado no commit `a7f0594`. `publicacao/testa_navegador.py`, Edge sem janela, `ESPERA=50`, um tamanho por vez, saída em pasta temporária fora do repositório, `msedge.exe` encerrado depois de cada rodada.
+
+**Defeito novo (média, corrigido).** `publicacao/testa_navegador.py`: só `Page.bringToFront` não basta. Na 1ª rodada no celular, a página estava `visible` na leitura das medidas e voltou a `hidden` segundos depois. As duas medidas de quadros saíram `null`, com motivo "requestAnimationFrame parado". Correção: flags `--disable-backgrounding-occluded-windows`, `--disable-renderer-backgrounding` e `--disable-background-timer-throttling` na abertura do navegador e `Emulation.setFocusEmulationEnabled` depois do `bringToFront`. Muda só a ferramenta de teste; nada do site nem do modelo.
+
+| Medida | Celular 390×844, antes da correção | Celular, depois | Notebook 1366×768, depois |
+|---|---|---|---|
+| `scrollWidth` / `clientWidth` | 390 / 390 | 390 / 390 | 1351 / 1351 |
+| Elementos além da largura | 0 | 0 | 0 |
+| Canvas do mapa / WebGL2 | sim / sim | sim / sim | sim / sim |
+| Monte Carlo de abertura | 1.000 dias em 1,5 s, 12 workers, semente 20261021 | 1.000 dias em 2,2 s, 12 workers, semente 20261021 | 1.000 dias em 1,7 s, 12 workers, semente 20261021 |
+| Parado: quadros/s (rAF), contador, relógio | null (página `hidden`) | 61, "parado", 07:30 | 60, "parado", 07:30 |
+| Tocando a 300×: quadros/s, contador, relógio | null (página `hidden`) | 60, "60 fps", 07:45 | 33, "34 fps", 07:44 |
+| Erros no console | 0 | 0 | 0 |
+
+Capturas olhadas com a ferramenta Read. Celular: cabeçalho, abas em duas linhas e painel do cenário, sem corte nem rolagem lateral (o mapa fica abaixo da dobra). Notebook: mapa desenhado com as quatro linhas e os trens, botão de pausa (animação tocando), 300×, relógio 07:45, contador "34 fps". A atribuição do mapa ocupa duas linhas no notebook e cobre a borda de baixo do mapa; não esconde estação. Baixa, sem correção.
+
+Conferido: rolagem lateral zero nos dois tamanhos; mapa com WebGL; nenhum erro no console; contador "parado" com a animação parada e um número de quadros a 300×; Monte Carlo de abertura terminado. No notebook, a 300×, o fps cai para cerca de 33 (WebGL por software, SwiftShader). Não é medida de máquina real.
+
+Testes depois da parte C: só `publicacao/testa_navegador.py` mudou, e ele não é coberto por `pytest pipeline/tests` nem pelo `app/`. Rodado de novo nos dois tamanhos, com o resultado da tabela.

@@ -292,3 +292,10 @@ Formato de cada item: **Decisão** · **Por quê** · **Alternativas** · **Cons
 - **Decisão:** o contador de quadros do simulador mostra "parado" quando a animação não toca e só mede enquanto ela toca. O comparador da reprodução (`pipeline/compara_derivados.py`) acusa também o arquivo que sobra na pasta refeita (gerado e não publicado), além do que falta. O relatório das políticas usa `MAX_RODADAS` e `PRECISAO_ALVO` em vez dos literais `50_000` e `5`. A página do simulador diz "no painel do cenário" em vez de "à esquerda". Na spec 013, o critério da versão final passa a dizer que o mecanismo atende e que a versão de entrega está pendente.
 - **Por quê (depois de ver):** achados 7, 13, 14, 15 e 16 da rodada 3. Parado, o contador mostrava 60 fps, que não era a taxa da animação. Uma pasta refeita com um arquivo a mais dava saída 0. Antes de mudar o comparador, os 53 arquivos de `dados/derivados/` no disco, no git e no manifesto conferem, e os scripts só gravam saídas com nome fixo. Nenhum critério de spec nem número de modelo mudou. A redação do critério da spec 013 não muda: muda a linha do resultado.
 - **Registro:** `fontes/verificacao/critica_2026-10-21_rodada3.md`, seção "Aplicação das propostas, parte A".
+
+### D48 — Teste de navegador mantém a aba em primeiro plano
+
+- **Decisão:** `publicacao/testa_navegador.py` abre o Edge ou o Chrome com opções que impedem pôr a aba em segundo plano e simula o foco na página logo depois de trazê-la para a frente.
+- **Por quê (depois de ver):** na parte C da rodada 3, a medida de quadros por segundo no celular saiu vazia: a aba voltava a ficar oculta segundos depois e a animação parava. Só a ferramenta de teste mudou; site e modelo, não.
+- **Resultado:** no site publicado (commit a7f0594), rolagem lateral zero, WebGL, Monte Carlo de abertura em cerca de 2 s, contador "parado" com a animação parada, 60 quadros por segundo no celular e 33 a 34 no notebook tocando a 300× (WebGL por software), nenhum erro no console.
+- **Registro:** `fontes/verificacao/critica_2026-10-21_rodada3.md` (parte C).

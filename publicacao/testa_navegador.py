@@ -27,7 +27,8 @@ SAIDA = sys.argv[1]
 PORTA = 9333
 perfil = os.path.join(SAIDA, "perfil_edge")
 proc = subprocess.Popen([EDGE, "--headless=new", f"--remote-debugging-port={PORTA}", f"--user-data-dir={perfil}",
-                         "--no-first-run", "--enable-unsafe-swiftshader", "--use-gl=angle", "--use-angle=swiftshader", "--ignore-gpu-blocklist", "about:blank"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                         "--no-first-run", "--disable-backgrounding-occluded-windows", "--disable-renderer-backgrounding",
+                         "--disable-background-timer-throttling", "--enable-unsafe-swiftshader", "--use-gl=angle", "--use-angle=swiftshader", "--ignore-gpu-blocklist", "about:blank"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 try:
     pagina = None
     for _ in range(60):
@@ -85,6 +86,7 @@ try:
         cmd("Page.navigate", url=URL)
         espera(int(os.environ.get('ESPERA', '45')))  # dados, mapa e o Monte Carlo de abertura (1.000 dias em workers)
         cmd("Page.bringToFront")  # depois de carregar: sem isto a página fica oculta e o requestAnimationFrame não roda
+        cmd("Emulation.setFocusEmulationEnabled", enabled=True)  # rodada 3, parte C: só bringToFront volta a 'hidden' em segundos
         medidas = avalia("""(() => {
           const d = document.documentElement;
           const txt = document.body.innerText;
