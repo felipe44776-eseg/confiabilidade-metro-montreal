@@ -1,6 +1,6 @@
 # 007 — Motor de simulação por eventos discretos
 
-**Status:** especificada
+**Status:** implementada
 **Fase:** F3 (semanas 4 a 7)
 **Depende de:** 002, 004
 
@@ -21,6 +21,22 @@ Um modelo da rede, trem a trem, reproduz a operação real sem falhas e permite 
 - Dada uma falha de equipamento fixo, quando injetada, então bloqueia o trecho ou a estação num ou nos dois sentidos, conforme o parâmetro.
 - Dado um evento de causa comum, quando injetado, então para a Verde e a Laranja ao mesmo tempo.
 - Dado o registro de uma rodada, quando lido, então tem para cada evento: hora, linha, trem, trecho, tipo e origem do sorteio.
+
+## Resultado (2026-10-21)
+
+Código em `app/src/motor/`; testes em `app/tests/motor/` (`horario`, `falhas`, `prng`, `reais`).
+
+| Critério | Resultado |
+|---|---|
+| Sem falhas: intervalos a até 30 s e ponta a ponta a até 1 min do horário | **Atende**: o motor reproduz o horário do GTFS exatamente nos três tipos de dia |
+| Trens em viagem às 08:00: 26, 32, 2 e 9 (±1) | **Atende**: 26, 31, 2 e 9 |
+| Mesma semente, mesmo registro (hash) | **Atende** (teste) |
+| Falha de trem bloqueia o sentido e os trens de trás esperam | **Atende** (teste com falha injetada) |
+| Falha de equipamento fixo em 1 ou 2 sentidos, conforme o parâmetro | **Atende** (teste) |
+| Causa comum para Verde e Laranja juntas | **Atende**; com os dados reais, a causa comum é sorteada por grupo de linhas (2 a 4), sem contar um evento duas vezes |
+| Registro com hora, linha, trem, trecho, tipo e origem do sorteio | **Atende** |
+
+Desvios registrados no `plan.md`: o bloco inclui a plataforma de chegada; a escala da renovação Weibull é normalizada para média 1; desde 2026-10-21 a duração positiva é sorteada da amostra observada.
 
 ## Fora de escopo
 - Física da tração, frenagem e consumo de energia.

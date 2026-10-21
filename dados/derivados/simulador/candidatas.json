@@ -1,0 +1,779 @@
+{
+ "fonte": "dados/manuais/candidatas_expansao.csv (pesquisa de 2026-10-21; LEIAME e dados/brutos/expansao/manifesto.json)",
+ "aviso": "Traçados aproximados: distâncias em linha reta entre estações. Só a Azul está em obras; as demais são hipótese de traçado.",
+ "candidatas": [
+  {
+   "id": "azul_anjou",
+   "tipo": "em obras",
+   "proponente": "STM (Projet ligne bleue, com MTMD, ARTM, Ville de Montréal e SQI)",
+   "ano": 2025,
+   "estacoes": [
+    {
+     "id": "azul_anjou:1",
+     "nome": "Vertières",
+     "lat": 45.566707,
+     "lon": -73.589551,
+     "fonte_coord": "osm:way/1318477080 (ponto)",
+     "status": "em obras (OSM)",
+     "funde_com": null
+    },
+    {
+     "id": "azul_anjou:2",
+     "nome": "Mary-Two-Axe-Earley",
+     "lat": 45.574359,
+     "lon": -73.584359,
+     "fonte_coord": "osm:way/1272359314 (ponto)",
+     "status": "em obras (OSM)",
+     "funde_com": null
+    },
+    {
+     "id": "azul_anjou:3",
+     "nome": "Césira-Parisotto",
+     "lat": 45.583371,
+     "lon": -73.581539,
+     "fonte_coord": "osm:way/1152539302 (ponto)",
+     "status": "em obras (OSM)",
+     "funde_com": null
+    },
+    {
+     "id": "azul_anjou:4",
+     "nome": "Madeleine-Parent",
+     "lat": 45.592565,
+     "lon": -73.574019,
+     "fonte_coord": "osm:way/1312128641 (ponto)",
+     "status": "em obras (OSM)",
+     "funde_com": null
+    },
+    {
+     "id": "azul_anjou:5",
+     "nome": "Anjou",
+     "lat": 45.601003,
+     "lon": -73.560066,
+     "fonte_coord": "osm:way/1311144318 (ponto)",
+     "status": "em obras (OSM)",
+     "funde_com": null
+    }
+   ],
+   "trechos": [
+    {
+     "de": "azul_anjou:1",
+     "para": "STATION_M556",
+     "linha_existente": "azul",
+     "km_reta": 1.135
+    },
+    {
+     "de": "azul_anjou:1",
+     "para": "azul_anjou:2",
+     "km_reta": 0.942
+    },
+    {
+     "de": "azul_anjou:2",
+     "para": "azul_anjou:3",
+     "km_reta": 1.026
+    },
+    {
+     "de": "azul_anjou:3",
+     "para": "azul_anjou:4",
+     "km_reta": 1.178
+    },
+    {
+     "de": "azul_anjou:4",
+     "para": "azul_anjou:5",
+     "km_reta": 1.435
+    }
+   ],
+   "km_reta_total": 5.72,
+   "fontes": [
+    "https://montreal.ca/communiques-de-presse/les-femmes-et-les-communautes-seront-honorees-sur-le-futur-troncon-de-la-ligne-bleue",
+    "https://www.frequencynews.ca/news/montreal-announces-five-new-blue-line-stations/",
+    "https://www.openstreetmap.org/way/492375119"
+   ],
+   "status": [
+    "em obras (OSM)"
+   ]
+  },
+  {
+   "id": "rosa_2017",
+   "tipo": "proposta política",
+   "proponente": "Projet Montréal (Sylvain Ouellet 2011, Valérie Plante 2017)",
+   "ano": 2017,
+   "estacoes": [
+    {
+     "id": "rosa_2017:1",
+     "nome": "Léger / Langelier",
+     "lat": 45.623278,
+     "lon": -73.622455,
+     "fonte_coord": "wikidata:Q52158790",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "rosa_2017:2",
+     "nome": "Rolland",
+     "lat": 45.616075,
+     "lon": -73.620213,
+     "fonte_coord": "wikidata:Q52158787",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "rosa_2017:3",
+     "nome": "Place Bourassa",
+     "lat": 45.606107,
+     "lon": -73.616598,
+     "fonte_coord": "wikidata:Q52158784",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "rosa_2017:4",
+     "nome": "Gare Saint-Léonard–Montréal-Nord",
+     "lat": 45.60033,
+     "lon": -73.615778,
+     "fonte_coord": "wikidata:Q52158783",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "rosa_2017:5",
+     "nome": "Viau / Lavoisier",
+     "lat": 45.586979,
+     "lon": -73.610905,
+     "fonte_coord": "wikidata:Q52158781",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "rosa_2017:6",
+     "nome": "Jarry / Pie-IX",
+     "lat": 45.572892,
+     "lon": -73.601722,
+     "fonte_coord": "wikidata:Q52158780",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "rosa_2017:7",
+     "nome": "Vertières",
+     "lat": 45.566715,
+     "lon": -73.591336,
+     "fonte_coord": "wikidata:Q52158779",
+     "status": "hipótese de traçado",
+     "funde_com": null,
+     "depende_de_candidata": "Vertières"
+    },
+    {
+     "id": "rosa_2017:8",
+     "nome": "Collège de Rosemont",
+     "lat": 45.558564,
+     "lon": -73.583306,
+     "fonte_coord": "wikidata:Q52158778",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "rosa_2017:9",
+     "nome": "Rosemont / Saint-Michel",
+     "lat": 45.553432,
+     "lon": -73.58041,
+     "fonte_coord": "wikidata:Q52158776",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "rosa_2017:10",
+     "nome": "Masson",
+     "lat": 45.55083,
+     "lon": -73.573142,
+     "fonte_coord": "wikidata:Q52158775",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "rosa_2017:11",
+     "nome": "D'Iberville / Saint-Joseph",
+     "lat": 45.541176,
+     "lon": -73.573898,
+     "fonte_coord": "wikidata:Q52158772",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "rosa_2017:12",
+     "nome": "Mont-Royal / Papineau–De Lorimier",
+     "lat": 45.532777,
+     "lon": -73.57461,
+     "fonte_coord": "wikidata:Q52158770",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "rosa_2017:13",
+     "nome": "Mont-Royal",
+     "lat": 45.524522,
+     "lon": -73.581652,
+     "fonte_coord": "wikidata:Q52158767",
+     "status": "hipótese de traçado",
+     "funde_com": {
+      "linha": "laranja",
+      "id": "STATION_M264",
+      "nome": "Mont-Royal",
+      "lat": 45.524716,
+      "lon": -73.582234
+     }
+    },
+    {
+     "id": "rosa_2017:14",
+     "nome": "Saint-Laurent / Rachel",
+     "lat": 45.517979,
+     "lon": -73.581473,
+     "fonte_coord": "wikidata:Q52158766",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "rosa_2017:15",
+     "nome": "Des Pins / Du Parc",
+     "lat": 45.511575,
+     "lon": -73.578213,
+     "fonte_coord": "wikidata:Q52158764",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "rosa_2017:16",
+     "nome": "Place-des-Arts",
+     "lat": 45.508206,
+     "lon": -73.56803,
+     "fonte_coord": "wikidata:Q52158758",
+     "status": "hipótese de traçado",
+     "funde_com": {
+      "linha": "verde",
+      "id": "STATION_M142",
+      "nome": "Place Des Arts",
+      "lat": 45.508173,
+      "lon": -73.568313
+     }
+    },
+    {
+     "id": "rosa_2017:17",
+     "nome": "Complexe Guy-Favreau",
+     "lat": 45.506592,
+     "lon": -73.562759,
+     "fonte_coord": "wikidata:Q52158693",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "rosa_2017:18",
+     "nome": "Gare Centrale",
+     "lat": 45.499986,
+     "lon": -73.566653,
+     "fonte_coord": "wikidata:Q52158692",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "rosa_2017:19",
+     "nome": "Cité du commerce électronique",
+     "lat": 45.4959,
+     "lon": -73.5722,
+     "fonte_coord": "wikidata:Q52158690",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "rosa_2017:20",
+     "nome": "Centre canadien d'architecture",
+     "lat": 45.491066,
+     "lon": -73.578958,
+     "fonte_coord": "wikidata:Q52158687",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "rosa_2017:21",
+     "nome": "Greene",
+     "lat": 45.481428,
+     "lon": -73.579751,
+     "fonte_coord": "wikidata:Q52158681",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "rosa_2017:22",
+     "nome": "Vendôme",
+     "lat": 45.473566,
+     "lon": -73.603609,
+     "fonte_coord": "wikidata:Q52158671",
+     "status": "hipótese de traçado",
+     "funde_com": {
+      "linha": "laranja",
+      "id": "STATION_M242",
+      "nome": "Vendôme",
+      "lat": 45.473861,
+      "lon": -73.603865
+     }
+    },
+    {
+     "id": "rosa_2017:23",
+     "nome": "Regent",
+     "lat": 45.467777,
+     "lon": -73.614199,
+     "fonte_coord": "wikidata:Q52158670",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "rosa_2017:24",
+     "nome": "Cavendish",
+     "lat": 45.466747,
+     "lon": -73.635229,
+     "fonte_coord": "wikidata:Q52158667",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "rosa_2017:25",
+     "nome": "Gare Montréal-Ouest",
+     "lat": 45.453517,
+     "lon": -73.641637,
+     "fonte_coord": "wikidata:Q52158665",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "rosa_2017:26",
+     "nome": "Ville Saint-Pierre",
+     "lat": 45.445773,
+     "lon": -73.646166,
+     "fonte_coord": "wikidata:Q52158662",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "rosa_2017:27",
+     "nome": "Victoria / George-V",
+     "lat": 45.439141,
+     "lon": -73.663603,
+     "fonte_coord": "wikidata:Q52158661",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "rosa_2017:28",
+     "nome": "Victoria / Parc LaSalle",
+     "lat": 45.437289,
+     "lon": -73.672651,
+     "fonte_coord": "wikidata:Q52158657",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "rosa_2017:29",
+     "nome": "Victoria / 32e Avenue",
+     "lat": 45.437325,
+     "lon": -73.692019,
+     "fonte_coord": "wikidata:Q52158653",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    }
+   ],
+   "trechos": [
+    {
+     "de": "rosa_2017:1",
+     "para": "rosa_2017:2",
+     "km_reta": 0.82
+    },
+    {
+     "de": "rosa_2017:2",
+     "para": "rosa_2017:3",
+     "km_reta": 1.144
+    },
+    {
+     "de": "rosa_2017:3",
+     "para": "rosa_2017:4",
+     "km_reta": 0.646
+    },
+    {
+     "de": "rosa_2017:4",
+     "para": "rosa_2017:5",
+     "km_reta": 1.532
+    },
+    {
+     "de": "rosa_2017:5",
+     "para": "rosa_2017:6",
+     "km_reta": 1.722
+    },
+    {
+     "de": "rosa_2017:6",
+     "para": "rosa_2017:7",
+     "km_reta": 1.061
+    },
+    {
+     "de": "rosa_2017:7",
+     "para": "rosa_2017:8",
+     "km_reta": 1.101
+    },
+    {
+     "de": "rosa_2017:8",
+     "para": "rosa_2017:9",
+     "km_reta": 0.614
+    },
+    {
+     "de": "rosa_2017:9",
+     "para": "rosa_2017:10",
+     "km_reta": 0.636
+    },
+    {
+     "de": "rosa_2017:10",
+     "para": "rosa_2017:11",
+     "km_reta": 1.075
+    },
+    {
+     "de": "rosa_2017:11",
+     "para": "rosa_2017:12",
+     "km_reta": 0.936
+    },
+    {
+     "de": "rosa_2017:12",
+     "para": "STATION_M264",
+     "km_reta": 1.069
+    },
+    {
+     "de": "STATION_M264",
+     "para": "rosa_2017:14",
+     "km_reta": 0.728
+    },
+    {
+     "de": "rosa_2017:14",
+     "para": "rosa_2017:15",
+     "km_reta": 0.756
+    },
+    {
+     "de": "rosa_2017:15",
+     "para": "STATION_M142",
+     "km_reta": 0.877
+    },
+    {
+     "de": "STATION_M142",
+     "para": "rosa_2017:17",
+     "km_reta": 0.448
+    },
+    {
+     "de": "rosa_2017:17",
+     "para": "rosa_2017:18",
+     "km_reta": 0.795
+    },
+    {
+     "de": "rosa_2017:18",
+     "para": "rosa_2017:19",
+     "km_reta": 0.627
+    },
+    {
+     "de": "rosa_2017:19",
+     "para": "rosa_2017:20",
+     "km_reta": 0.753
+    },
+    {
+     "de": "rosa_2017:20",
+     "para": "rosa_2017:21",
+     "km_reta": 1.073
+    },
+    {
+     "de": "rosa_2017:21",
+     "para": "STATION_M242",
+     "km_reta": 2.055
+    },
+    {
+     "de": "STATION_M242",
+     "para": "rosa_2017:23",
+     "km_reta": 1.047
+    },
+    {
+     "de": "rosa_2017:23",
+     "para": "rosa_2017:24",
+     "km_reta": 1.644
+    },
+    {
+     "de": "rosa_2017:24",
+     "para": "rosa_2017:25",
+     "km_reta": 1.554
+    },
+    {
+     "de": "rosa_2017:25",
+     "para": "rosa_2017:26",
+     "km_reta": 0.931
+    },
+    {
+     "de": "rosa_2017:26",
+     "para": "rosa_2017:27",
+     "km_reta": 1.547
+    },
+    {
+     "de": "rosa_2017:27",
+     "para": "rosa_2017:28",
+     "km_reta": 0.735
+    },
+    {
+     "de": "rosa_2017:28",
+     "para": "rosa_2017:29",
+     "km_reta": 1.511
+    }
+   ],
+   "km_reta_total": 29.44,
+   "fontes": [
+    "https://ici.radio-canada.ca/nouvelle/1065916/stations-ligne-rose-metro-localisation-projet-montreal-plante-ouellet"
+   ],
+   "status": [
+    "hipótese de traçado"
+   ]
+  },
+  {
+   "id": "amarela_longueuil",
+   "tipo": "proposta oficial",
+   "proponente": "Agglomération de Longueuil e RTL (estudo entregue à AMT)",
+   "ano": 2010,
+   "estacoes": [
+    {
+     "id": "amarela_longueuil:1",
+     "nome": "Joliette (Longueuil)",
+     "lat": 45.531212,
+     "lon": -73.517966,
+     "fonte_coord": "osm:node/11205318351",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "amarela_longueuil:2",
+     "nome": "Vieux-Longueuil",
+     "lat": 45.536466,
+     "lon": -73.512739,
+     "fonte_coord": "osm:node/245976249",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "amarela_longueuil:3",
+     "nome": "Chambly / Gentilly",
+     "lat": 45.535782,
+     "lon": -73.496774,
+     "fonte_coord": "osm:node/194577230",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "amarela_longueuil:4",
+     "nome": "Roland-Therrien / Gentilly",
+     "lat": 45.541319,
+     "lon": -73.491276,
+     "fonte_coord": "osm:node/597695394",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "amarela_longueuil:5",
+     "nome": "Curé-Poirier / Roland-Therrien",
+     "lat": 45.537311,
+     "lon": -73.477378,
+     "fonte_coord": "osm:node/548879142",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "amarela_longueuil:6",
+     "nome": "Jacques-Cartier / Roland-Therrien",
+     "lat": 45.532443,
+     "lon": -73.461686,
+     "fonte_coord": "osm:node/290001641",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    }
+   ],
+   "trechos": [
+    {
+     "de": "amarela_longueuil:1",
+     "para": "STATION_M454",
+     "linha_existente": "amarela",
+     "km_reta": 0.803
+    },
+    {
+     "de": "amarela_longueuil:1",
+     "para": "amarela_longueuil:2",
+     "km_reta": 0.712
+    },
+    {
+     "de": "amarela_longueuil:2",
+     "para": "amarela_longueuil:3",
+     "km_reta": 1.246
+    },
+    {
+     "de": "amarela_longueuil:3",
+     "para": "amarela_longueuil:4",
+     "km_reta": 0.75
+    },
+    {
+     "de": "amarela_longueuil:4",
+     "para": "amarela_longueuil:5",
+     "km_reta": 1.171
+    },
+    {
+     "de": "amarela_longueuil:5",
+     "para": "amarela_longueuil:6",
+     "km_reta": 1.337
+    }
+   ],
+   "km_reta_total": 6.02,
+   "fontes": [
+    "https://web.archive.org/web/20120120003003/http://www.rtl-longueuil.qc.ca/pages/pr_LIGNE_4.htm"
+   ],
+   "status": [
+    "hipótese de traçado"
+   ]
+  },
+  {
+   "id": "laranja_bois_franc",
+   "tipo": "proposta oficial",
+   "proponente": "Ville de Montréal (Plan de transport 2008, reiterado pela prefeita Plante em 2020) e AMT (2008)",
+   "ano": 2008,
+   "estacoes": [
+    {
+     "id": "laranja_bois_franc:1",
+     "nome": "Poirier",
+     "lat": 45.517502,
+     "lon": -73.699828,
+     "fonte_coord": "osm:node/1849279244",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "laranja_bois_franc:2",
+     "nome": "Bois-Franc",
+     "lat": 45.522026,
+     "lon": -73.712503,
+     "fonte_coord": "osm:node/8661983919",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    }
+   ],
+   "trechos": [
+    {
+     "de": "laranja_bois_franc:1",
+     "para": "STATION_M222",
+     "linha_existente": "laranja",
+     "km_reta": 1.378
+    },
+    {
+     "de": "laranja_bois_franc:1",
+     "para": "laranja_bois_franc:2",
+     "km_reta": 1.108
+    }
+   ],
+   "km_reta_total": 2.49,
+   "fontes": [
+    "https://web.archive.org/web/20120306064540/http://ville.montreal.qc.ca/portal/page?_pageid=4577,7769586&_dad=portal&_schema=PORTAL",
+    "https://journalmetro.com/local/saint-laurent/2427050/reactions-to-plantes-orange-line-proposal/",
+    "https://web.archive.org/web/20191010182703/https://montrealgazette.com/news/local-news/completing-montreal-metros-orange-line-loop-will-cost-an-estimated-4-3b",
+    "https://web.archive.org/web/20080421231402/http://www.radio-canada.ca/regions/Montreal/2008/04/18/002-AMT-metro-prolongement_n.shtml"
+   ],
+   "status": [
+    "hipótese de traçado"
+   ]
+  },
+  {
+   "id": "laranja_anel_artm_2019",
+   "tipo": "proposta oficial",
+   "proponente": "ARTM (relatório aprovado em 2019-06-18)",
+   "ano": 2019,
+   "estacoes": [
+    {
+     "id": "laranja_anel_artm_2019:1",
+     "nome": "Poirier",
+     "lat": 45.517502,
+     "lon": -73.699828,
+     "fonte_coord": "osm:node/1849279244",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "laranja_anel_artm_2019:2",
+     "nome": "Bois-Franc",
+     "lat": 45.522026,
+     "lon": -73.712503,
+     "fonte_coord": "osm:node/8661983919",
+     "status": "hipótese de traçado",
+     "funde_com": null
+    },
+    {
+     "id": "laranja_anel_artm_2019:3",
+     "nome": "Gouin",
+     "lat": 45.528877,
+     "lon": -73.725076,
+     "fonte_coord": "osm:way/1062684571 (ponto)",
+     "status": "hipótese de traçado (ponto derivado)",
+     "funde_com": null
+    },
+    {
+     "id": "laranja_anel_artm_2019:4",
+     "nome": "Chomedey",
+     "lat": 45.538471,
+     "lon": -73.742754,
+     "fonte_coord": "osm:node/4599007061",
+     "status": "hipótese de traçado (ponto derivado)",
+     "funde_com": null
+    },
+    {
+     "id": "laranja_anel_artm_2019:5",
+     "nome": "Notre-Dame (Laval)",
+     "lat": 45.552516,
+     "lon": -73.725378,
+     "fonte_coord": "osm:way/652937898 (ponto)",
+     "status": "hipótese de traçado (ponto derivado)",
+     "funde_com": null
+    }
+   ],
+   "trechos": [
+    {
+     "de": "laranja_anel_artm_2019:1",
+     "para": "STATION_M222",
+     "linha_existente": "laranja",
+     "km_reta": 1.378
+    },
+    {
+     "de": "laranja_anel_artm_2019:5",
+     "para": "STATION_M288",
+     "linha_existente": "laranja",
+     "km_reta": 0.697
+    },
+    {
+     "de": "laranja_anel_artm_2019:1",
+     "para": "laranja_anel_artm_2019:2",
+     "km_reta": 1.108
+    },
+    {
+     "de": "laranja_anel_artm_2019:2",
+     "para": "laranja_anel_artm_2019:3",
+     "km_reta": 1.241
+    },
+    {
+     "de": "laranja_anel_artm_2019:3",
+     "para": "laranja_anel_artm_2019:4",
+     "km_reta": 1.742
+    },
+    {
+     "de": "laranja_anel_artm_2019:4",
+     "para": "laranja_anel_artm_2019:5",
+     "km_reta": 2.066
+    }
+   ],
+   "km_reta_total": 8.23,
+   "fontes": [
+    "https://web.archive.org/web/20191010182703/https://montrealgazette.com/news/local-news/completing-montreal-metros-orange-line-loop-will-cost-an-estimated-4-3b"
+   ],
+   "status": [
+    "hipótese de traçado",
+    "hipótese de traçado (ponto derivado)"
+   ]
+  }
+ ]
+}

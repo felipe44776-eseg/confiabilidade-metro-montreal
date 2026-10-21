@@ -1,8 +1,10 @@
 // Página /mapa/: traçado real das linhas (OSM), estações (GTFS) e locais das falhas técnicas (spec 002).
 import * as maplibregl from 'maplibre-gl';
+import './ui/maplibre_worker';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import './mapa.css';
 import { type Local, type Status, ROTULO_STATUS, ROTULO_TIPO, paraGeoJSON, raio, somaPorStatus } from './locais';
+import { montaRodape } from './ui/rodape';
 
 const BASE = import.meta.env.BASE_URL;
 const ESTILO = 'https://tiles.openfreemap.org/styles/positron';
@@ -97,6 +99,7 @@ function limites(linhas: GeoJSON.FeatureCollection): maplibregl.LngLatBoundsLike
 }
 
 async function inicia(): Promise<void> {
+  montaRodape(document.getElementById('rodape')!, BASE);
   const [linhas, estacoes, locais] = await Promise.all([
     carrega<GeoJSON.FeatureCollection>('linhas.geojson'),
     carrega<GeoJSON.FeatureCollection>('estacoes.geojson'),

@@ -1,0 +1,3134 @@
+{
+ "versao": 1,
+ "codigo_commit": "fixture",
+ "ano_base": 2025,
+ "janela_operacao_h": {
+  "valor": 20,
+  "ic95": null,
+  "n": null,
+  "unidade": "h",
+  "metodo": "fixture de teste",
+  "fontes": [
+   "dados/derivados/painel"
+  ],
+  "script": "app/tests/fixtures (gerada a partir do painel)",
+  "status": "hipótese"
+ },
+ "taxas": {
+  "MR": {
+   "modelo": "Poisson",
+   "referencia": {
+    "linha": "laranja",
+    "faixa": "entrepico",
+    "tipo_dia": "util",
+    "estacao": "outono",
+    "temp": "5a15",
+    "precip": "0",
+    "cond": "seco_ou_outro",
+    "neve_solo": "0",
+    "ano": "2019"
+   },
+   "alpha": {
+    "valor": 0,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "base_por_trem_hora": {
+    "verde": {
+     "valor": 0.00210817,
+     "ic95": null,
+     "n": null,
+     "unidade": "falhas por trem-hora",
+     "metodo": "fixture de teste",
+     "fontes": [
+      "dados/derivados/painel"
+     ],
+     "script": "app/tests/fixtures (gerada a partir do painel)",
+     "status": "hipótese"
+    },
+    "laranja": {
+     "valor": 0.00100904,
+     "ic95": null,
+     "n": null,
+     "unidade": "falhas por trem-hora",
+     "metodo": "fixture de teste",
+     "fontes": [
+      "dados/derivados/painel"
+     ],
+     "script": "app/tests/fixtures (gerada a partir do painel)",
+     "status": "hipótese"
+    },
+    "amarela": {
+     "valor": 0.00671506,
+     "ic95": null,
+     "n": null,
+     "unidade": "falhas por trem-hora",
+     "metodo": "fixture de teste",
+     "fontes": [
+      "dados/derivados/painel"
+     ],
+     "script": "app/tests/fixtures (gerada a partir do painel)",
+     "status": "hipótese"
+    },
+    "azul": {
+     "valor": 0.00405518,
+     "ic95": null,
+     "n": null,
+     "unidade": "falhas por trem-hora",
+     "metodo": "fixture de teste",
+     "fontes": [
+      "dados/derivados/painel"
+     ],
+     "script": "app/tests/fixtures (gerada a partir do painel)",
+     "status": "hipótese"
+    }
+   },
+   "multiplicadores": {
+    "faixa": {
+     "abertura": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "pico_manha": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "entrepico": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "pico_tarde": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "noite": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "fim": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     }
+    },
+    "tipo_dia": {
+     "util": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "sabado": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "domingo": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     }
+    },
+    "estacao": {
+     "inverno": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "primavera": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "verao": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "outono": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     }
+    },
+    "temp": {
+     "abaixo_-15": {
+      "valor": 1.4,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "-15a-5": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "-5a5": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "5a15": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "15a25": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "25_ou_mais": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "sem_dado": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     }
+    },
+    "precip": {
+     "0": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "ate_1mm": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "acima_1mm": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "sem_dado": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     }
+    },
+    "cond": {
+     "chuva_congelante": {
+      "valor": 1.8,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "neve": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "chuva": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "seco_ou_outro": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "sem_dado": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     }
+    },
+    "neve_solo": {
+     "0": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "1a10": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "acima_10": {
+      "valor": 1.2,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "sem_dado": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     }
+    },
+    "jogo": {
+     "1": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     }
+    },
+    "gp_fds": {
+     "1": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     }
+    },
+    "feriado": {
+     "1": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     }
+    },
+    "greve": {
+     "1": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     }
+    }
+   }
+  },
+  "EF": {
+   "modelo": "Poisson",
+   "referencia": {
+    "linha": "laranja",
+    "faixa": "entrepico",
+    "tipo_dia": "util",
+    "estacao": "outono",
+    "temp": "5a15",
+    "precip": "0",
+    "cond": "seco_ou_outro",
+    "neve_solo": "0",
+    "ano": "2019"
+   },
+   "alpha": {
+    "valor": 0,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "base_por_trem_hora": {
+    "verde": {
+     "valor": 0.00185833,
+     "ic95": null,
+     "n": null,
+     "unidade": "falhas por trem-hora",
+     "metodo": "fixture de teste",
+     "fontes": [
+      "dados/derivados/painel"
+     ],
+     "script": "app/tests/fixtures (gerada a partir do painel)",
+     "status": "hipótese"
+    },
+    "laranja": {
+     "valor": 0.0023889,
+     "ic95": null,
+     "n": null,
+     "unidade": "falhas por trem-hora",
+     "metodo": "fixture de teste",
+     "fontes": [
+      "dados/derivados/painel"
+     ],
+     "script": "app/tests/fixtures (gerada a partir do painel)",
+     "status": "hipótese"
+    },
+    "amarela": {
+     "valor": 0.00743101,
+     "ic95": null,
+     "n": null,
+     "unidade": "falhas por trem-hora",
+     "metodo": "fixture de teste",
+     "fontes": [
+      "dados/derivados/painel"
+     ],
+     "script": "app/tests/fixtures (gerada a partir do painel)",
+     "status": "hipótese"
+    },
+    "azul": {
+     "valor": 0.00179478,
+     "ic95": null,
+     "n": null,
+     "unidade": "falhas por trem-hora",
+     "metodo": "fixture de teste",
+     "fontes": [
+      "dados/derivados/painel"
+     ],
+     "script": "app/tests/fixtures (gerada a partir do painel)",
+     "status": "hipótese"
+    }
+   },
+   "multiplicadores": {
+    "faixa": {
+     "abertura": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "pico_manha": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "entrepico": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "pico_tarde": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "noite": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "fim": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     }
+    },
+    "tipo_dia": {
+     "util": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "sabado": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "domingo": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     }
+    },
+    "estacao": {
+     "inverno": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "primavera": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "verao": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "outono": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     }
+    },
+    "temp": {
+     "abaixo_-15": {
+      "valor": 1.4,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "-15a-5": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "-5a5": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "5a15": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "15a25": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "25_ou_mais": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "sem_dado": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     }
+    },
+    "precip": {
+     "0": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "ate_1mm": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "acima_1mm": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "sem_dado": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     }
+    },
+    "cond": {
+     "chuva_congelante": {
+      "valor": 1.8,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "neve": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "chuva": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "seco_ou_outro": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "sem_dado": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     }
+    },
+    "neve_solo": {
+     "0": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "1a10": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "acima_10": {
+      "valor": 1.2,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     },
+     "sem_dado": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     }
+    },
+    "jogo": {
+     "1": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     }
+    },
+    "gp_fds": {
+     "1": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     }
+    },
+    "feriado": {
+     "1": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     }
+    },
+    "greve": {
+     "1": {
+      "valor": 1,
+      "ic95": null,
+      "n": null,
+      "unidade": "multiplicador da taxa",
+      "metodo": "fixture de teste",
+      "fontes": [
+       "dados/derivados/painel"
+      ],
+      "script": "app/tests/fixtures (gerada a partir do painel)",
+      "status": "hipótese"
+     }
+    }
+   }
+  }
+ },
+ "renovacao": {
+  "verde|MR": {
+   "forma": {
+    "valor": 0.85,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "escala": {
+    "valor": 1,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "processo": "renovação Weibull no tempo reescalado (fixture)"
+  },
+  "verde|EF": {
+   "forma": {
+    "valor": 0.8,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "escala": {
+    "valor": 1,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "processo": "renovação Weibull no tempo reescalado (fixture)"
+  },
+  "laranja|MR": {
+   "forma": {
+    "valor": 0.85,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "escala": {
+    "valor": 1,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "processo": "renovação Weibull no tempo reescalado (fixture)"
+  },
+  "laranja|EF": {
+   "forma": {
+    "valor": 0.8,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "escala": {
+    "valor": 1,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "processo": "renovação Weibull no tempo reescalado (fixture)"
+  },
+  "amarela|MR": {
+   "forma": {
+    "valor": 0.85,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "escala": {
+    "valor": 1,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "processo": "renovação Weibull no tempo reescalado (fixture)"
+  },
+  "amarela|EF": {
+   "forma": {
+    "valor": 0.8,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "escala": {
+    "valor": 1,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "processo": "renovação Weibull no tempo reescalado (fixture)"
+  },
+  "azul|MR": {
+   "forma": {
+    "valor": 0.85,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "escala": {
+    "valor": 1,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "processo": "renovação Weibull no tempo reescalado (fixture)"
+  },
+  "azul|EF": {
+   "forma": {
+    "valor": 0.8,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "escala": {
+    "valor": 1,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "processo": "renovação Weibull no tempo reescalado (fixture)"
+  }
+ },
+ "ttr": {
+  "verde|MR": {
+   "p_zero": {
+    "valor": 0.4006,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "mu_log": {
+    "valor": 1.56363492,
+    "ic95": null,
+    "n": null,
+    "unidade": "log(minutos)",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "sigma_log": {
+    "valor": 1,
+    "ic95": null,
+    "n": null,
+    "unidade": "log(minutos)",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   }
+  },
+  "verde|EF": {
+   "p_zero": {
+    "valor": 0.4006,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "mu_log": {
+    "valor": 1.56363492,
+    "ic95": null,
+    "n": null,
+    "unidade": "log(minutos)",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "sigma_log": {
+    "valor": 1,
+    "ic95": null,
+    "n": null,
+    "unidade": "log(minutos)",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   }
+  },
+  "laranja|MR": {
+   "p_zero": {
+    "valor": 0.5735,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "mu_log": {
+    "valor": 1.76799608,
+    "ic95": null,
+    "n": null,
+    "unidade": "log(minutos)",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "sigma_log": {
+    "valor": 1,
+    "ic95": null,
+    "n": null,
+    "unidade": "log(minutos)",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   }
+  },
+  "laranja|EF": {
+   "p_zero": {
+    "valor": 0.5735,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "mu_log": {
+    "valor": 1.76799608,
+    "ic95": null,
+    "n": null,
+    "unidade": "log(minutos)",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "sigma_log": {
+    "valor": 1,
+    "ic95": null,
+    "n": null,
+    "unidade": "log(minutos)",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   }
+  },
+  "amarela|MR": {
+   "p_zero": {
+    "valor": 0.5393,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "mu_log": {
+    "valor": 1.43815902,
+    "ic95": null,
+    "n": null,
+    "unidade": "log(minutos)",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "sigma_log": {
+    "valor": 1,
+    "ic95": null,
+    "n": null,
+    "unidade": "log(minutos)",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   }
+  },
+  "amarela|EF": {
+   "p_zero": {
+    "valor": 0.5393,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "mu_log": {
+    "valor": 1.43815902,
+    "ic95": null,
+    "n": null,
+    "unidade": "log(minutos)",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "sigma_log": {
+    "valor": 1,
+    "ic95": null,
+    "n": null,
+    "unidade": "log(minutos)",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   }
+  },
+  "azul|MR": {
+   "p_zero": {
+    "valor": 0.3156,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "mu_log": {
+    "valor": 2.15030716,
+    "ic95": null,
+    "n": null,
+    "unidade": "log(minutos)",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "sigma_log": {
+    "valor": 1,
+    "ic95": null,
+    "n": null,
+    "unidade": "log(minutos)",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   }
+  },
+  "azul|EF": {
+   "p_zero": {
+    "valor": 0.3156,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "mu_log": {
+    "valor": 2.15030716,
+    "ic95": null,
+    "n": null,
+    "unidade": "log(minutos)",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "sigma_log": {
+    "valor": 1,
+    "ic95": null,
+    "n": null,
+    "unidade": "log(minutos)",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   }
+  }
+ },
+ "causa_comum": {
+  "verde-laranja": {
+   "taxa_por_hora_op": {
+    "valor": 0.00056611,
+    "ic95": null,
+    "n": null,
+    "unidade": "eventos por hora",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "beta_a": {
+    "valor": 0.0109,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "beta_b": {
+    "valor": 0.0099,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "duracao": {
+    "p_zero": {
+     "valor": 0,
+     "ic95": null,
+     "n": null,
+     "unidade": "",
+     "metodo": "fixture de teste",
+     "fontes": [
+      "dados/derivados/painel"
+     ],
+     "script": "app/tests/fixtures (gerada a partir do painel)",
+     "status": "hipótese"
+    },
+    "mu_log": {
+     "valor": 2.69047635,
+     "ic95": null,
+     "n": null,
+     "unidade": "log(minutos)",
+     "metodo": "fixture de teste",
+     "fontes": [
+      "dados/derivados/painel"
+     ],
+     "script": "app/tests/fixtures (gerada a partir do painel)",
+     "status": "hipótese"
+    },
+    "sigma_log": {
+     "valor": 1,
+     "ic95": null,
+     "n": null,
+     "unidade": "log(minutos)",
+     "metodo": "fixture de teste",
+     "fontes": [
+      "dados/derivados/painel"
+     ],
+     "script": "app/tests/fixtures (gerada a partir do painel)",
+     "status": "hipótese"
+    }
+   }
+  },
+  "laranja-azul": {
+   "taxa_por_hora_op": {
+    "valor": 0.00038349,
+    "ic95": null,
+    "n": null,
+    "unidade": "eventos por hora",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "beta_a": {
+    "valor": 0.0068,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "beta_b": {
+    "valor": 0.0141,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "duracao": {
+    "p_zero": {
+     "valor": 0,
+     "ic95": null,
+     "n": null,
+     "unidade": "",
+     "metodo": "fixture de teste",
+     "fontes": [
+      "dados/derivados/painel"
+     ],
+     "script": "app/tests/fixtures (gerada a partir do painel)",
+     "status": "hipótese"
+    },
+    "mu_log": {
+     "valor": 2.63549422,
+     "ic95": null,
+     "n": null,
+     "unidade": "log(minutos)",
+     "metodo": "fixture de teste",
+     "fontes": [
+      "dados/derivados/painel"
+     ],
+     "script": "app/tests/fixtures (gerada a partir do painel)",
+     "status": "hipótese"
+    },
+    "sigma_log": {
+     "valor": 1,
+     "ic95": null,
+     "n": null,
+     "unidade": "log(minutos)",
+     "metodo": "fixture de teste",
+     "fontes": [
+      "dados/derivados/painel"
+     ],
+     "script": "app/tests/fixtures (gerada a partir do painel)",
+     "status": "hipótese"
+    }
+   }
+  },
+  "verde-amarela": {
+   "taxa_por_hora_op": {
+    "valor": 0.00032871,
+    "ic95": null,
+    "n": null,
+    "unidade": "eventos por hora",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "beta_a": {
+    "valor": 0.0063,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "beta_b": {
+    "valor": 0.0155,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "duracao": {
+    "p_zero": {
+     "valor": 0,
+     "ic95": null,
+     "n": null,
+     "unidade": "",
+     "metodo": "fixture de teste",
+     "fontes": [
+      "dados/derivados/painel"
+     ],
+     "script": "app/tests/fixtures (gerada a partir do painel)",
+     "status": "hipótese"
+    },
+    "mu_log": {
+     "valor": 2.73474917,
+     "ic95": null,
+     "n": null,
+     "unidade": "log(minutos)",
+     "metodo": "fixture de teste",
+     "fontes": [
+      "dados/derivados/painel"
+     ],
+     "script": "app/tests/fixtures (gerada a partir do painel)",
+     "status": "hipótese"
+    },
+    "sigma_log": {
+     "valor": 1,
+     "ic95": null,
+     "n": null,
+     "unidade": "log(minutos)",
+     "metodo": "fixture de teste",
+     "fontes": [
+      "dados/derivados/painel"
+     ],
+     "script": "app/tests/fixtures (gerada a partir do painel)",
+     "status": "hipótese"
+    }
+   }
+  },
+  "laranja-amarela": {
+   "taxa_por_hora_op": {
+    "valor": 0.00038349,
+    "ic95": null,
+    "n": null,
+    "unidade": "eventos por hora",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "beta_a": {
+    "valor": 0.0068,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "beta_b": {
+    "valor": 0.018,
+    "ic95": null,
+    "n": null,
+    "unidade": "",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "duracao": {
+    "p_zero": {
+     "valor": 0,
+     "ic95": null,
+     "n": null,
+     "unidade": "",
+     "metodo": "fixture de teste",
+     "fontes": [
+      "dados/derivados/painel"
+     ],
+     "script": "app/tests/fixtures (gerada a partir do painel)",
+     "status": "hipótese"
+    },
+    "mu_log": {
+     "valor": 2.60009229,
+     "ic95": null,
+     "n": null,
+     "unidade": "log(minutos)",
+     "metodo": "fixture de teste",
+     "fontes": [
+      "dados/derivados/painel"
+     ],
+     "script": "app/tests/fixtures (gerada a partir do painel)",
+     "status": "hipótese"
+    },
+    "sigma_log": {
+     "valor": 1,
+     "ic95": null,
+     "n": null,
+     "unidade": "log(minutos)",
+     "metodo": "fixture de teste",
+     "fontes": [
+      "dados/derivados/painel"
+     ],
+     "script": "app/tests/fixtures (gerada a partir do painel)",
+     "status": "hipótese"
+    }
+   }
+  }
+ },
+ "locais_ef": {
+  "verde": [
+   {
+    "km": 22.105,
+    "peso": 420,
+    "codigo": "STATION HONORE-BEAUGRAND",
+    "status": "verificado"
+   },
+   {
+    "km": 0.031,
+    "peso": 398,
+    "codigo": "STATION ANGRIGNON",
+    "status": "verificado"
+   },
+   {
+    "km": 11.993,
+    "peso": 136,
+    "codigo": "STATION BERRI-UQAM",
+    "status": "verificado"
+   },
+   {
+    "km": 22.105,
+    "peso": 84,
+    "codigo": "GARAGE HONORE-BEAUGRAND",
+    "status": "aproximado"
+   },
+   {
+    "km": 6.801,
+    "peso": 79,
+    "codigo": "STATION LIONEL-GROULX",
+    "status": "verificado"
+   },
+   {
+    "km": 17.835,
+    "peso": 74,
+    "codigo": "STATION VIAU",
+    "status": "verificado"
+   },
+   {
+    "km": 22.105,
+    "peso": 68,
+    "codigo": "ARRIERE-GARE HONORE-BEAUGRAND",
+    "status": "aproximado"
+   },
+   {
+    "km": 0.031,
+    "peso": 65,
+    "codigo": "GARAGE ANGRIGNON",
+    "status": "aproximado"
+   },
+   {
+    "km": 8.572,
+    "peso": 61,
+    "codigo": "STATION ATWATER",
+    "status": "verificado"
+   },
+   {
+    "km": 10.481,
+    "peso": 60,
+    "codigo": "STATION MCGILL",
+    "status": "verificado"
+   },
+   {
+    "km": 21.275,
+    "peso": 56,
+    "codigo": "STATION RADISSON",
+    "status": "verificado"
+   },
+   {
+    "km": 0.031,
+    "peso": 54,
+    "codigo": "ARRIERE-GARE ANGRIGNON",
+    "status": "aproximado"
+   },
+   {
+    "km": 16.943,
+    "peso": 52,
+    "codigo": "STATION PIE-IX",
+    "status": "verificado"
+   },
+   {
+    "km": 9.376,
+    "peso": 50,
+    "codigo": "STATION GUY-CONCORDIA",
+    "status": "verificado"
+   },
+   {
+    "km": 11.008,
+    "peso": 49,
+    "codigo": "STATION PLACE-DES-ARTS",
+    "status": "verificado"
+   },
+   {
+    "km": 16.148,
+    "peso": 49,
+    "codigo": "STATION JOLIETTE",
+    "status": "verificado"
+   },
+   {
+    "km": 13.161,
+    "peso": 44,
+    "codigo": "STATION PAPINEAU",
+    "status": "verificado"
+   },
+   {
+    "km": 13.762,
+    "peso": 43,
+    "codigo": "INTER.PAPINEAU/FRONTENAC",
+    "status": "verificado"
+   },
+   {
+    "km": 20.474,
+    "peso": 43,
+    "codigo": "STATION LANGELIER",
+    "status": "verificado"
+   },
+   {
+    "km": 11.371,
+    "peso": 43,
+    "codigo": "STATION ST-LAURENT",
+    "status": "verificado"
+   },
+   {
+    "km": 3.779,
+    "peso": 39,
+    "codigo": "STATION DE L'EGLISE",
+    "status": "verificado"
+   },
+   {
+    "km": 2.165,
+    "peso": 39,
+    "codigo": "STATION JOLICOEUR",
+    "status": "verificado"
+   },
+   {
+    "km": 19.759,
+    "peso": 39,
+    "codigo": "STATION CADILLAC",
+    "status": "verificado"
+   },
+   {
+    "km": 12.554,
+    "peso": 37,
+    "codigo": "STATION BEAUDRY",
+    "status": "verificado"
+   },
+   {
+    "km": 1.018,
+    "peso": 36,
+    "codigo": "STATION MONK",
+    "status": "verificado"
+   },
+   {
+    "km": 12.274,
+    "peso": 34,
+    "codigo": "INTER.BERRI-UQAM/BEAUDRY",
+    "status": "verificado"
+   },
+   {
+    "km": 5.712,
+    "peso": 34,
+    "codigo": "STATION CHARLEVOIX",
+    "status": "verificado"
+   },
+   {
+    "km": 4.754,
+    "peso": 34,
+    "codigo": "STATION LASALLE",
+    "status": "verificado"
+   },
+   {
+    "km": 14.363,
+    "peso": 32,
+    "codigo": "STATION FRONTENAC",
+    "status": "verificado"
+   },
+   {
+    "km": 3.202,
+    "peso": 31,
+    "codigo": "STATION VERDUN",
+    "status": "verificado"
+   },
+   {
+    "km": 17.389,
+    "peso": 30,
+    "codigo": "INTER.PIE-IX/VIAU",
+    "status": "verificado"
+   },
+   {
+    "km": 15.539,
+    "peso": 29,
+    "codigo": "STATION PREFONTAINE",
+    "status": "verificado"
+   },
+   {
+    "km": 10.055,
+    "peso": 28,
+    "codigo": "STATION PEEL",
+    "status": "verificado"
+   },
+   {
+    "km": 6.256,
+    "peso": 23,
+    "codigo": "INTER.CHARLEVOIX/LIONEL-GROULX",
+    "status": "verificado"
+   },
+   {
+    "km": 18.813,
+    "peso": 21,
+    "codigo": "STATION L'ASSOMPTION",
+    "status": "verificado"
+   },
+   {
+    "km": 1.591,
+    "peso": 17,
+    "codigo": "INTER.MONK/JOLICOEUR",
+    "status": "verificado"
+   },
+   {
+    "km": 7.686,
+    "peso": 16,
+    "codigo": "INTER.LIONEL-GROULX/ATWATER",
+    "status": "verificado"
+   },
+   {
+    "km": 8.974,
+    "peso": 14,
+    "codigo": "INTER.ATWATER/GUY-CONCORDIA",
+    "status": "verificado"
+   },
+   {
+    "km": 19.286,
+    "peso": 14,
+    "codigo": "INTER.L'ASSOMPTION/CADILLAC",
+    "status": "verificado"
+   },
+   {
+    "km": 0.524,
+    "peso": 14,
+    "codigo": "INTER.ANGRIGNON/MONK",
+    "status": "verificado"
+   },
+   {
+    "km": 18.324,
+    "peso": 13,
+    "codigo": "INTER.VIAU/L'ASSOMPTION",
+    "status": "verificado"
+   },
+   {
+    "km": 14.951,
+    "peso": 12,
+    "codigo": "INTER.FRONTENAC/PREFONTAINE",
+    "status": "verificado"
+   },
+   {
+    "km": 2.683,
+    "peso": 11,
+    "codigo": "INTER.JOLICOEUR/VERDUN",
+    "status": "verificado"
+   },
+   {
+    "km": 11.682,
+    "peso": 10,
+    "codigo": "INTER.ST-LAURENT/BERRI-UQAM",
+    "status": "verificado"
+   },
+   {
+    "km": 12.857,
+    "peso": 10,
+    "codigo": "INTER.BEAUDRY/PAPINEAU",
+    "status": "verificado"
+   },
+   {
+    "km": 5.233,
+    "peso": 8,
+    "codigo": "INTER.LASALLE/CHARLEVOIX",
+    "status": "verificado"
+   },
+   {
+    "km": 3.49,
+    "peso": 8,
+    "codigo": "INTER.VERDUN/DE L'EGLISE",
+    "status": "verificado"
+   },
+   {
+    "km": 4.266,
+    "peso": 8,
+    "codigo": "INTER.DE L'EGLISE/LASALLE",
+    "status": "verificado"
+   },
+   {
+    "km": 21.275,
+    "peso": 7,
+    "codigo": "INTER.RADISSON/H.BEAUGRAND",
+    "status": "aproximado"
+   },
+   {
+    "km": 11.371,
+    "peso": 7,
+    "codigo": "INTER.PL.DES-ARTS/ST-LAURENT",
+    "status": "aproximado"
+   },
+   {
+    "km": 16.546,
+    "peso": 7,
+    "codigo": "INTER.JOLIETTE/PIE-IX",
+    "status": "verificado"
+   },
+   {
+    "km": 20.117,
+    "peso": 6,
+    "codigo": "INTER.CADILLAC/LANGELIER",
+    "status": "verificado"
+   },
+   {
+    "km": 9.715,
+    "peso": 6,
+    "codigo": "INTER.GUY-CONCORDIA/PEEL",
+    "status": "verificado"
+   },
+   {
+    "km": 10.744,
+    "peso": 6,
+    "codigo": "INTER.MCGILL/PLACE-DES-ARTS",
+    "status": "verificado"
+   },
+   {
+    "km": 15.843,
+    "peso": 2,
+    "codigo": "INTER.PREFONTAINE/JOLIETTE",
+    "status": "verificado"
+   },
+   {
+    "km": 10.268,
+    "peso": 2,
+    "codigo": "INTER.PEEL/MCGILL",
+    "status": "verificado"
+   },
+   {
+    "km": 20.874,
+    "peso": 2,
+    "codigo": "INTER.LANGELIER/RADISSON",
+    "status": "verificado"
+   }
+  ],
+  "laranja": [
+   {
+    "km": 29.363,
+    "peso": 719,
+    "codigo": "STATION MONTMORENCY",
+    "status": "verificado"
+   },
+   {
+    "km": 0.021,
+    "peso": 445,
+    "codigo": "STATION COTE-VERTU",
+    "status": "verificado"
+   },
+   {
+    "km": 24.917,
+    "peso": 174,
+    "codigo": "STATION HENRI-BOURASSA",
+    "status": "verificado"
+   },
+   {
+    "km": 24.917,
+    "peso": 75,
+    "codigo": "GARAGE HENRI-BOURASSA",
+    "status": "aproximado"
+   },
+   {
+    "km": 15.321,
+    "peso": 69,
+    "codigo": "2S60",
+    "status": "deduzido"
+   },
+   {
+    "km": 0.021,
+    "peso": 69,
+    "codigo": "ARRIERE-GARE COTE-VERTU",
+    "status": "aproximado"
+   },
+   {
+    "km": 6.066,
+    "peso": 62,
+    "codigo": "STATION SNOWDON",
+    "status": "verificado"
+   },
+   {
+    "km": 23.118,
+    "peso": 61,
+    "codigo": "INTER.CREMAZIE/SAUVE",
+    "status": "verificado"
+   },
+   {
+    "km": 1.009,
+    "peso": 56,
+    "codigo": "STATION DU COLLEGE",
+    "status": "verificado"
+   },
+   {
+    "km": 26.157,
+    "peso": 53,
+    "codigo": "STATION CARTIER",
+    "status": "verificado"
+   },
+   {
+    "km": 8.499,
+    "peso": 43,
+    "codigo": "STATION VENDOME",
+    "status": "verificado"
+   },
+   {
+    "km": 2.293,
+    "peso": 39,
+    "codigo": "STATION DE LA SAVANE",
+    "status": "verificado"
+   },
+   {
+    "km": 28.325,
+    "peso": 39,
+    "codigo": "STATION DE LA CONCORDE",
+    "status": "verificado"
+   },
+   {
+    "km": 23.835,
+    "peso": 38,
+    "codigo": "STATION SAUVE",
+    "status": "verificado"
+   },
+   {
+    "km": 7.073,
+    "peso": 37,
+    "codigo": "STATION VILLA-MARIA",
+    "status": "verificado"
+   },
+   {
+    "km": 4.545,
+    "peso": 35,
+    "codigo": "STATION PLAMONDON",
+    "status": "verificado"
+   },
+   {
+    "km": 0.515,
+    "peso": 33,
+    "codigo": "INTER.COTE-VERTU/DU COLLEGE",
+    "status": "verificado"
+   },
+   {
+    "km": 20.304,
+    "peso": 33,
+    "codigo": "STATION JEAN-TALON",
+    "status": "verificado"
+   },
+   {
+    "km": 16.069,
+    "peso": 31,
+    "codigo": "STATION SHERBROOKE",
+    "status": "verificado"
+   },
+   {
+    "km": 0.021,
+    "peso": 31,
+    "codigo": "GARAGE COTE-VERTU",
+    "status": "aproximado"
+   },
+   {
+    "km": 13.492,
+    "peso": 31,
+    "codigo": "STATION SQUARE-VICTORIA-OACI",
+    "status": "verificado"
+   },
+   {
+    "km": 29.363,
+    "peso": 28,
+    "codigo": "ARRIERE-GARE MONTMORENCY",
+    "status": "aproximado"
+   },
+   {
+    "km": 10.932,
+    "peso": 28,
+    "codigo": "2S46",
+    "status": "deduzido"
+   },
+   {
+    "km": 5.009,
+    "peso": 26,
+    "codigo": "STATION COTE STE-CATHERINE",
+    "status": "verificado"
+   },
+   {
+    "km": 25.537,
+    "peso": 26,
+    "codigo": "INTER.HENRI-BOURASSA/CARTIER",
+    "status": "verificado"
+   },
+   {
+    "km": 29.363,
+    "peso": 25,
+    "codigo": "INTER.CONCORDE/MONTMORENCY",
+    "status": "aproximado"
+   },
+   {
+    "km": 24.376,
+    "peso": 24,
+    "codigo": "INTER.SAUVE/HENRI-BOURASSA",
+    "status": "verificado"
+   },
+   {
+    "km": 14.54,
+    "peso": 24,
+    "codigo": "STATION CHAMP-DE-MARS",
+    "status": "verificado"
+   },
+   {
+    "km": 11.713,
+    "peso": 24,
+    "codigo": "STATION GEORGES-VANIER",
+    "status": "verificado"
+   },
+   {
+    "km": 22.401,
+    "peso": 22,
+    "codigo": "STATION CREMAZIE",
+    "status": "verificado"
+   },
+   {
+    "km": 1.651,
+    "peso": 22,
+    "codigo": "INTER.DU COLLEGE/DE LA SAVANE",
+    "status": "verificado"
+   },
+   {
+    "km": 15.695,
+    "peso": 22,
+    "codigo": "INTER.BERRI-UQAM/SHERBROOKE",
+    "status": "verificado"
+   },
+   {
+    "km": 3.885,
+    "peso": 21,
+    "codigo": "INTER.NAMUR/PLAMONDON",
+    "status": "verificado"
+   },
+   {
+    "km": 9.306,
+    "peso": 21,
+    "codigo": "INTER.VENDOME/PLACE ST-HENRI",
+    "status": "verificado"
+   },
+   {
+    "km": 12.488,
+    "peso": 20,
+    "codigo": "STATION LUCIEN-L'ALLIER",
+    "status": "verificado"
+   },
+   {
+    "km": 17.832,
+    "peso": 20,
+    "codigo": "STATION LAURIER",
+    "status": "verificado"
+   },
+   {
+    "km": 12.969,
+    "peso": 19,
+    "codigo": "STATION BONAVENTURE",
+    "status": "verificado"
+   },
+   {
+    "km": 19.138,
+    "peso": 18,
+    "codigo": "INTER.ROSEMONT/BEAUBIEN",
+    "status": "verificado"
+   },
+   {
+    "km": 21.559,
+    "peso": 17,
+    "codigo": "STATION JARRY",
+    "status": "verificado"
+   },
+   {
+    "km": 15.321,
+    "peso": 17,
+    "codigo": "INTER.CH.-DE-MARS/BERRI-UQAM",
+    "status": "aproximado"
+   },
+   {
+    "km": 18.817,
+    "peso": 16,
+    "codigo": "STATION ROSEMONT",
+    "status": "verificado"
+   },
+   {
+    "km": 3.224,
+    "peso": 16,
+    "codigo": "STATION NAMUR",
+    "status": "verificado"
+   },
+   {
+    "km": 29.363,
+    "peso": 16,
+    "codigo": "GARAGE MONTMORENCY",
+    "status": "aproximado"
+   },
+   {
+    "km": 14.06,
+    "peso": 15,
+    "codigo": "STATION PLACE-D'ARMES",
+    "status": "verificado"
+   },
+   {
+    "km": 6.066,
+    "peso": 15,
+    "codigo": "INTER.C.STE-CATHERINE/-SNOWDON",
+    "status": "aproximado"
+   },
+   {
+    "km": 10.932,
+    "peso": 14,
+    "codigo": "INTER.LIONEL-GROULX/G.-VANIER",
+    "status": "aproximado"
+   },
+   {
+    "km": 26.157,
+    "peso": 14,
+    "codigo": "INTER.CARTIER/2R83",
+    "status": "aproximado"
+   },
+   {
+    "km": 21.98,
+    "peso": 14,
+    "codigo": "INTER.JARRY/CREMAZIE",
+    "status": "verificado"
+   },
+   {
+    "km": 17.365,
+    "peso": 13,
+    "codigo": "STATION MONT-ROYAL",
+    "status": "verificado"
+   },
+   {
+    "km": 7.786,
+    "peso": 11,
+    "codigo": "INTER.VILLA-MARIA/VENDOME",
+    "status": "verificado"
+   },
+   {
+    "km": 19.881,
+    "peso": 11,
+    "codigo": "INTER.BEAUBIEN/JEAN-TALON",
+    "status": "verificado"
+   },
+   {
+    "km": 19.459,
+    "peso": 11,
+    "codigo": "STATION BEAUBIEN",
+    "status": "verificado"
+   },
+   {
+    "km": 18.325,
+    "peso": 11,
+    "codigo": "INTER.LAURIER/ROSEMONT",
+    "status": "verificado"
+   },
+   {
+    "km": 6.569,
+    "peso": 11,
+    "codigo": "INTER.SNOWDON/VILLA-MARIA",
+    "status": "verificado"
+   },
+   {
+    "km": 10.114,
+    "peso": 10,
+    "codigo": "STATION PLACE SAINT-HENRI",
+    "status": "verificado"
+   },
+   {
+    "km": 29.363,
+    "peso": 10,
+    "codigo": "POSTE DISTRICT MONTMORENCY",
+    "status": "aproximado"
+   },
+   {
+    "km": 12.969,
+    "peso": 8,
+    "codigo": "INTER.L.-L'ALLIER/BONAVENTURE",
+    "status": "aproximado"
+   },
+   {
+    "km": 16.717,
+    "peso": 8,
+    "codigo": "INTER.SHERBROOKE/MONT-ROYAL",
+    "status": "verificado"
+   },
+   {
+    "km": 20.931,
+    "peso": 8,
+    "codigo": "INTER.JEAN-TALON/JARRY",
+    "status": "verificado"
+   },
+   {
+    "km": 4.777,
+    "peso": 7,
+    "codigo": "INTER.PLAMONDON/COTE STE-CATH.",
+    "status": "verificado"
+   },
+   {
+    "km": 17.599,
+    "peso": 7,
+    "codigo": "INTER.MONT-ROYAL/LAURIER",
+    "status": "verificado"
+   },
+   {
+    "km": 2.759,
+    "peso": 7,
+    "codigo": "INTER.DE LA SAVANE/NAMUR",
+    "status": "verificado"
+   },
+   {
+    "km": 12.488,
+    "peso": 6,
+    "codigo": "INTER.G.VANIER/LUCIEN L'ALLIER",
+    "status": "aproximado"
+   },
+   {
+    "km": 12.969,
+    "peso": 5,
+    "codigo": "INTER.BONAVENTURE/SQ.-VICTORIA",
+    "status": "aproximado"
+   },
+   {
+    "km": 28.325,
+    "peso": 4,
+    "codigo": "INTER.DE LA CONCORDE/2R83",
+    "status": "aproximado"
+   }
+  ],
+  "amarela": [
+   {
+    "km": 4.207,
+    "peso": 561,
+    "codigo": "4S50",
+    "status": "deduzido"
+   },
+   {
+    "km": 0.042,
+    "peso": 386,
+    "codigo": "STAT. LONGUEUIL-UNIVERSITE-DE-SHERBROOKE",
+    "status": "verificado"
+   },
+   {
+    "km": 1.72,
+    "peso": 78,
+    "codigo": "STATION JEAN DRAPEAU",
+    "status": "verificado"
+   },
+   {
+    "km": 4.207,
+    "peso": 36,
+    "codigo": "INTER.BERRI-UQAM/ILE-STE-HELENE",
+    "status": "aproximado"
+   },
+   {
+    "km": 0.881,
+    "peso": 27,
+    "codigo": "INTER.J-DRAPEAU/LONGUEUIL-UDE SHERBROOKE",
+    "status": "verificado"
+   },
+   {
+    "km": 4.207,
+    "peso": 15,
+    "codigo": "ARRIERE-GARE BERRI-UQAM",
+    "status": "aproximado"
+   },
+   {
+    "km": 0.042,
+    "peso": 11,
+    "codigo": "ARRIERE-GARE LONGUEUIL-U DE SHERBROOKE",
+    "status": "aproximado"
+   }
+  ],
+  "azul": [
+   {
+    "km": 0,
+    "peso": 361,
+    "codigo": "5S32",
+    "status": "deduzido"
+   },
+   {
+    "km": 9.714,
+    "peso": 340,
+    "codigo": "STATION ST-MICHEL",
+    "status": "verificado"
+   },
+   {
+    "km": 4.153,
+    "peso": 71,
+    "codigo": "STATION OUTREMONT",
+    "status": "verificado"
+   },
+   {
+    "km": 7.131,
+    "peso": 58,
+    "codigo": "5S48",
+    "status": "deduzido"
+   },
+   {
+    "km": 2.971,
+    "peso": 54,
+    "codigo": "STATION EDOUARD MONTPETIT",
+    "status": "verificado"
+   },
+   {
+    "km": 5.799,
+    "peso": 53,
+    "codigo": "STATION PARC",
+    "status": "verificado"
+   },
+   {
+    "km": 8.988,
+    "peso": 52,
+    "codigo": "STATION D'IBERVILLE",
+    "status": "verificado"
+   },
+   {
+    "km": 1.245,
+    "peso": 52,
+    "codigo": "STATION COTE-DES-NEIGES",
+    "status": "verificado"
+   },
+   {
+    "km": 0,
+    "peso": 51,
+    "codigo": "ARRIERE-GARE SNOWDON",
+    "status": "aproximado"
+   },
+   {
+    "km": 2.105,
+    "peso": 47,
+    "codigo": "STATION UNIVERSITE DE MONTREAL",
+    "status": "verificado"
+   },
+   {
+    "km": 4.879,
+    "peso": 45,
+    "codigo": "STATION ACADIE",
+    "status": "verificado"
+   },
+   {
+    "km": 6.147,
+    "peso": 44,
+    "codigo": "INTER.PARC/DE CASTELNAU",
+    "status": "verificado"
+   },
+   {
+    "km": 6.495,
+    "peso": 43,
+    "codigo": "STATION DE CASTELNAU",
+    "status": "verificado"
+   },
+   {
+    "km": 8.245,
+    "peso": 43,
+    "codigo": "STATION FABRE",
+    "status": "verificado"
+   },
+   {
+    "km": 9.714,
+    "peso": 28,
+    "codigo": "INTER.ST-MICHEL/PIE-IX PL5",
+    "status": "aproximado"
+   },
+   {
+    "km": 9.351,
+    "peso": 19,
+    "codigo": "INTER.D'IBERVILLE/ST-MICHEL",
+    "status": "verificado"
+   },
+   {
+    "km": 0.623,
+    "peso": 14,
+    "codigo": "INTER.SNOWDON/COTE-DES-NEIGES",
+    "status": "verificado"
+   },
+   {
+    "km": 7.688,
+    "peso": 11,
+    "codigo": "INTER.JEAN-TALON/FABRE",
+    "status": "verificado"
+   },
+   {
+    "km": 5.339,
+    "peso": 10,
+    "codigo": "INTER.ACADIE/PARC",
+    "status": "verificado"
+   },
+   {
+    "km": 4.153,
+    "peso": 9,
+    "codigo": "INTER.ED.MONTPETIT/OUTREMONT",
+    "status": "aproximado"
+   },
+   {
+    "km": 4.516,
+    "peso": 8,
+    "codigo": "INTER.OUTREMONT/ACADIE",
+    "status": "verificado"
+   },
+   {
+    "km": 8.616,
+    "peso": 5,
+    "codigo": "INTER.FABRE/D'IBERVILLE",
+    "status": "verificado"
+   },
+   {
+    "km": 6.813,
+    "peso": 3,
+    "codigo": "INTER.DE CASTELNAU/JEAN-TALON",
+    "status": "verificado"
+   }
+  ]
+ },
+ "locais_ef_sem_posicao": {
+  "verde": 212,
+  "laranja": 223,
+  "amarela": 32,
+  "azul": 49
+ },
+ "frota": {
+  "verde": {
+   "trens_necessarios": {
+    "valor": 51,
+    "ic95": null,
+    "n": null,
+    "unidade": "trens",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "lambda_trem_dia": {
+    "valor": 0.01427,
+    "ic95": null,
+    "n": null,
+    "unidade": "falhas por trem-dia",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   }
+  },
+  "laranja": {
+   "trens_necessarios": {
+    "valor": 48,
+    "ic95": null,
+    "n": null,
+    "unidade": "trens",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "lambda_trem_dia": {
+    "valor": 0.00835,
+    "ic95": null,
+    "n": null,
+    "unidade": "falhas por trem-dia",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   }
+  },
+  "amarela": {
+   "trens_necessarios": {
+    "valor": 5,
+    "ic95": null,
+    "n": null,
+    "unidade": "trens",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "lambda_trem_dia": {
+    "valor": 0.04177,
+    "ic95": null,
+    "n": null,
+    "unidade": "falhas por trem-dia",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   }
+  },
+  "azul": {
+   "trens_necessarios": {
+    "valor": 17,
+    "ic95": null,
+    "n": null,
+    "unidade": "trens",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   },
+   "lambda_trem_dia": {
+    "valor": 0.02419,
+    "ic95": null,
+    "n": null,
+    "unidade": "falhas por trem-dia",
+    "metodo": "fixture de teste",
+    "fontes": [
+     "dados/derivados/painel"
+    ],
+    "script": "app/tests/fixtures (gerada a partir do painel)",
+    "status": "hipótese"
+   }
+  }
+ },
+ "hipoteses": {
+  "reparo_oficina_dias": {
+   "valor": 1,
+   "ic95": null,
+   "n": null,
+   "unidade": "dias",
+   "metodo": "fixture de teste",
+   "fontes": [
+    "dados/derivados/painel"
+   ],
+   "script": "app/tests/fixtures (gerada a partir do painel)",
+   "status": "hipótese",
+   "faixa": [
+    0.5,
+    4
+   ]
+  },
+  "p_retirada": {
+   "valor": 1,
+   "ic95": null,
+   "n": null,
+   "unidade": "",
+   "metodo": "fixture de teste",
+   "fontes": [
+    "dados/derivados/painel"
+   ],
+   "script": "app/tests/fixtures (gerada a partir do painel)",
+   "status": "hipótese",
+   "faixa": [
+    0,
+    1
+   ]
+  },
+  "reservas_por_linha": {
+   "valor": 2,
+   "ic95": null,
+   "n": null,
+   "unidade": "trens",
+   "metodo": "fixture de teste",
+   "fontes": [
+    "dados/derivados/painel"
+   ],
+   "script": "app/tests/fixtures (gerada a partir do painel)",
+   "status": "hipótese",
+   "faixa": [
+    0,
+    8
+   ]
+  },
+  "intervalo_minimo_s": {
+   "valor": 90,
+   "ic95": null,
+   "n": null,
+   "unidade": "s",
+   "metodo": "fixture de teste",
+   "fontes": [
+    "dados/derivados/painel"
+   ],
+   "script": "app/tests/fixtures (gerada a partir do painel)",
+   "status": "hipótese",
+   "faixa": [
+    60,
+    180
+   ]
+  },
+  "sentidos_bloqueio_ef": {
+   "valor": 2,
+   "ic95": null,
+   "n": null,
+   "unidade": "sentidos",
+   "metodo": "fixture de teste",
+   "fontes": [
+    "dados/derivados/painel"
+   ],
+   "script": "app/tests/fixtures (gerada a partir do painel)",
+   "status": "hipótese",
+   "faixa": [
+    1,
+    2
+   ]
+  },
+  "fator_velocidade_degradada": {
+   "valor": 1.25,
+   "ic95": null,
+   "n": null,
+   "unidade": "",
+   "metodo": "fixture de teste",
+   "fontes": [
+    "dados/derivados/painel"
+   ],
+   "script": "app/tests/fixtures (gerada a partir do painel)",
+   "status": "hipótese",
+   "faixa": [
+    1,
+    2
+   ]
+  },
+  "duracao_degradada_min": {
+   "valor": 30,
+   "ic95": null,
+   "n": null,
+   "unidade": "min",
+   "metodo": "fixture de teste",
+   "fontes": [
+    "dados/derivados/painel"
+   ],
+   "script": "app/tests/fixtures (gerada a partir do painel)",
+   "status": "hipótese",
+   "faixa": [
+    0,
+    120
+   ]
+  },
+  "tempo_transferencia_min": {
+   "valor": 4,
+   "ic95": null,
+   "n": null,
+   "unidade": "min",
+   "metodo": "fixture de teste",
+   "fontes": [
+    "dados/derivados/painel"
+   ],
+   "script": "app/tests/fixtures (gerada a partir do painel)",
+   "status": "hipótese",
+   "faixa": [
+    2,
+    8
+   ]
+  },
+  "reducao_causa_comum": {
+   "valor": 0,
+   "ic95": null,
+   "n": null,
+   "unidade": "",
+   "metodo": "fixture de teste",
+   "fontes": [
+    "dados/derivados/painel"
+   ],
+   "script": "app/tests/fixtures (gerada a partir do painel)",
+   "status": "hipótese",
+   "faixa": [
+    0,
+    1
+   ]
+  },
+  "velocidade_comercial_candidata_kmh": {
+   "valor": 36,
+   "ic95": null,
+   "n": null,
+   "unidade": "km/h",
+   "metodo": "fixture de teste",
+   "fontes": [
+    "dados/derivados/painel"
+   ],
+   "script": "app/tests/fixtures (gerada a partir do painel)",
+   "status": "hipótese",
+   "faixa": [
+    30,
+    45
+   ]
+  }
+ },
+ "_nota": "Fixture de teste do motor: valores plausíveis tirados do painel (dados/derivados/painel), não ajustados. Trem-horas por dia usados na taxa-base: {\"verde\":260.2,\"laranja\":331.9,\"amarela\":29.6,\"azul\":91.8}"
+}

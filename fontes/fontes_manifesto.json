@@ -1,6 +1,10 @@
 {
- "gerado_em": "2026-10-21T01:25:00+00:00",
+ "gerado_em": "2026-10-21T04:08:59+00:00",
  "release": "dados-2026-10-20",
+ "releases": [
+  "dados-2026-10-20",
+  "dados-2026-10-21"
+ ],
  "fontes": [
   {
    "id": "stm_incidentes",
@@ -833,6 +837,319 @@
    "sha256": "5e8fad3b26abc1e8231bd8924cd45ec83cb818f837ee66d4ed9aa33bd28c8f38"
   },
   {
+   "id": "eccc_horario_10761",
+   "papel": "simulador",
+   "arquivo": "dados/brutos/eccc_horario/eccc_horario_10761.zip",
+   "distribuicao": "release",
+   "release_tag": "dados-2026-10-21",
+   "url": "https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=10761&Year=2019&Month=1&Day=1&timeframe=1&submit=Download+Data",
+   "online_amostra": [
+    [
+     "https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=10761&Year=2019&Month=1&Day=1&timeframe=1&submit=Download+Data",
+     "10761/2019-01.csv"
+    ],
+    [
+     "https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=10761&Year=2025&Month=12&Day=1&timeframe=1&submit=Download+Data",
+     "10761/2025-12.csv"
+    ]
+   ],
+   "catalogo": [
+    "https://climate.weather.gc.ca/historical_data/search_historic_data_e.html"
+   ],
+   "editor": "Environment and Climate Change Canada, estacao MCTAVISH (Climate ID 7024745)",
+   "licenca": "Licenca de Governo Aberto do Canada",
+   "formato": "zip",
+   "uso": "Clima horario 2019-01 a 2026-06, 90 meses (pipeline/clima_eventos.py, spec 003)",
+   "release": "https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/releases/download/dados-2026-10-21/eccc_horario_10761.zip",
+   "bytes": 1151412,
+   "sha256": "fc951ce9d2d895fcd97006f1720154033c0464c4a0f8a7f870bb86c2466f5854"
+  },
+  {
+   "id": "eccc_horario_30165",
+   "papel": "simulador",
+   "arquivo": "dados/brutos/eccc_horario/eccc_horario_30165.zip",
+   "distribuicao": "release",
+   "release_tag": "dados-2026-10-21",
+   "url": "https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=30165&Year=2019&Month=1&Day=1&timeframe=1&submit=Download+Data",
+   "online_amostra": [
+    [
+     "https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=30165&Year=2019&Month=1&Day=1&timeframe=1&submit=Download+Data",
+     "30165/2019-01.csv"
+    ],
+    [
+     "https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=30165&Year=2025&Month=12&Day=1&timeframe=1&submit=Download+Data",
+     "30165/2025-12.csv"
+    ]
+   ],
+   "catalogo": [
+    "https://climate.weather.gc.ca/historical_data/search_historic_data_e.html"
+   ],
+   "editor": "Environment and Climate Change Canada, estacao MONTREAL/PIERRE ELLIOTT TRUDEAU INTL (Climate ID 7025250)",
+   "licenca": "Licenca de Governo Aberto do Canada",
+   "formato": "zip",
+   "uso": "Clima horario 2019-01 a 2026-06, 90 meses (pipeline/clima_eventos.py, spec 003)",
+   "release": "https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/releases/download/dados-2026-10-21/eccc_horario_30165.zip",
+   "bytes": 1202307,
+   "sha256": "00620be3f361099a1eef5f2d961ca04dfd53316356c830ad59a431ce8dffabd4"
+  },
+  {
+   "id": "eccc_horario_51157",
+   "papel": "simulador",
+   "arquivo": "dados/brutos/eccc_horario/eccc_horario_51157.zip",
+   "distribuicao": "release",
+   "release_tag": "dados-2026-10-21",
+   "url": "https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=51157&Year=2019&Month=1&Day=1&timeframe=1&submit=Download+Data",
+   "online_amostra": [
+    [
+     "https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=51157&Year=2019&Month=1&Day=1&timeframe=1&submit=Download+Data",
+     "51157/2019-01.csv"
+    ],
+    [
+     "https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=51157&Year=2025&Month=12&Day=1&timeframe=1&submit=Download+Data",
+     "51157/2025-12.csv"
+    ]
+   ],
+   "catalogo": [
+    "https://climate.weather.gc.ca/historical_data/search_historic_data_e.html"
+   ],
+   "editor": "Environment and Climate Change Canada, estacao MONTREAL INTL A (Climate ID 7025251)",
+   "licenca": "Licenca de Governo Aberto do Canada",
+   "formato": "zip",
+   "uso": "Clima horario 2019-01 a 2026-06, 90 meses (pipeline/clima_eventos.py, spec 003)",
+   "release": "https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/releases/download/dados-2026-10-21/eccc_horario_51157.zip",
+   "bytes": 1294909,
+   "sha256": "87977d0f6cabdefd260cc70ba4c046b88122bdc38c8a37a631688f951fe15f3e"
+  },
+  {
+   "id": "osm_expansao",
+   "papel": "simulador",
+   "arquivo": "dados/brutos/osm/overpass_expansao.json",
+   "distribuicao": "release",
+   "release_tag": "dados-2026-10-21",
+   "url": "https://overpass-api.de/api/interpreter",
+   "post": {
+    "data": "[out:json][timeout:120];(way[\"railway\"=\"construction\"][\"construction\"=\"subway\"](45.40,-73.90,45.70,-73.40);way[\"railway\"=\"proposed\"][\"proposed\"=\"subway\"](45.40,-73.90,45.70,-73.40);node[\"railway\"=\"construction\"](45.40,-73.90,45.70,-73.40);node[\"construction:railway\"=\"station\"](45.40,-73.90,45.70,-73.40);node[\"railway\"=\"station\"][\"construction\"=\"yes\"](45.40,-73.90,45.70,-73.40);node[\"public_transport\"=\"station\"][\"subway\"=\"yes\"][\"construction\"](45.40,-73.90,45.70,-73.40););out body geom;"
+   },
+   "catalogo": [
+    "https://www.openstreetmap.org/way/492375119 (Ligne Bleue, prolongement)"
+   ],
+   "editor": "Colaboradores do OpenStreetMap",
+   "licenca": "ODbL 1.0",
+   "formato": "json",
+   "muda_com_tempo": true,
+   "uso": "Trechos de metro em obras ou propostos: candidatas da spec 014",
+   "release": "https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/releases/download/dados-2026-10-21/overpass_expansao.json",
+   "bytes": 16487,
+   "sha256": "3f895b2ab8ccd3172cf558c79872b86e471af2bec1410a970e263e117d01131c"
+  },
+  {
+   "id": "nhl_20182019",
+   "papel": "simulador",
+   "arquivo": "dados/brutos/eventos/nhl_MTL_20182019.json",
+   "distribuicao": "origem",
+   "url": "https://api-web.nhle.com/v1/club-schedule-season/MTL/20182019",
+   "catalogo": [
+    "https://www.nhl.com/canadiens/schedule"
+   ],
+   "editor": "National Hockey League (API publica nao documentada)",
+   "licenca": "Termos da NHL; redistribuicao nao verificada",
+   "formato": "json",
+   "muda_com_tempo": false,
+   "uso": "Jogos do Canadiens em casa (clima_eventos.py)",
+   "bytes": 152393,
+   "sha256": "1aaba8709ba124a82d2bb1e06bd5fbe7f7734040f34271e4a6c569df725cbcf1"
+  },
+  {
+   "id": "nhl_20192020",
+   "papel": "simulador",
+   "arquivo": "dados/brutos/eventos/nhl_MTL_20192020.json",
+   "distribuicao": "origem",
+   "url": "https://api-web.nhle.com/v1/club-schedule-season/MTL/20192020",
+   "catalogo": [
+    "https://www.nhl.com/canadiens/schedule"
+   ],
+   "editor": "National Hockey League (API publica nao documentada)",
+   "licenca": "Termos da NHL; redistribuicao nao verificada",
+   "formato": "json",
+   "muda_com_tempo": false,
+   "uso": "Jogos do Canadiens em casa (clima_eventos.py)",
+   "bytes": 160673,
+   "sha256": "f4884a569c094deed40c9efea190987c592a09a5552465a9f94a10924619a60b"
+  },
+  {
+   "id": "nhl_20202021",
+   "papel": "simulador",
+   "arquivo": "dados/brutos/eventos/nhl_MTL_20202021.json",
+   "distribuicao": "origem",
+   "url": "https://api-web.nhle.com/v1/club-schedule-season/MTL/20202021",
+   "catalogo": [
+    "https://www.nhl.com/canadiens/schedule"
+   ],
+   "editor": "National Hockey League (API publica nao documentada)",
+   "licenca": "Termos da NHL; redistribuicao nao verificada",
+   "formato": "json",
+   "muda_com_tempo": false,
+   "uso": "Jogos do Canadiens em casa (clima_eventos.py)",
+   "bytes": 142936,
+   "sha256": "1aa300b03bc95ea84f61a0c2ca377a135ff9e904161e61221d0d68f1cc310e80"
+  },
+  {
+   "id": "nhl_20212022",
+   "papel": "simulador",
+   "arquivo": "dados/brutos/eventos/nhl_MTL_20212022.json",
+   "distribuicao": "origem",
+   "url": "https://api-web.nhle.com/v1/club-schedule-season/MTL/20212022",
+   "catalogo": [
+    "https://www.nhl.com/canadiens/schedule"
+   ],
+   "editor": "National Hockey League (API publica nao documentada)",
+   "licenca": "Termos da NHL; redistribuicao nao verificada",
+   "formato": "json",
+   "muda_com_tempo": false,
+   "uso": "Jogos do Canadiens em casa (clima_eventos.py)",
+   "bytes": 153403,
+   "sha256": "72c3033ba970d0fa9cb6104b0013b0cfd89a8774a0183cf0a0bc6f92fac07dad"
+  },
+  {
+   "id": "nhl_20222023",
+   "papel": "simulador",
+   "arquivo": "dados/brutos/eventos/nhl_MTL_20222023.json",
+   "distribuicao": "origem",
+   "url": "https://api-web.nhle.com/v1/club-schedule-season/MTL/20222023",
+   "catalogo": [
+    "https://www.nhl.com/canadiens/schedule"
+   ],
+   "editor": "National Hockey League (API publica nao documentada)",
+   "licenca": "Termos da NHL; redistribuicao nao verificada",
+   "formato": "json",
+   "muda_com_tempo": false,
+   "uso": "Jogos do Canadiens em casa (clima_eventos.py)",
+   "bytes": 155282,
+   "sha256": "78c4aff449631da5b42c49b48f6622f6695c27e4cb7e31a0ebabd8d05323e280"
+  },
+  {
+   "id": "nhl_20232024",
+   "papel": "simulador",
+   "arquivo": "dados/brutos/eventos/nhl_MTL_20232024.json",
+   "distribuicao": "origem",
+   "url": "https://api-web.nhle.com/v1/club-schedule-season/MTL/20232024",
+   "catalogo": [
+    "https://www.nhl.com/canadiens/schedule"
+   ],
+   "editor": "National Hockey League (API publica nao documentada)",
+   "licenca": "Termos da NHL; redistribuicao nao verificada",
+   "formato": "json",
+   "muda_com_tempo": false,
+   "uso": "Jogos do Canadiens em casa (clima_eventos.py)",
+   "bytes": 164027,
+   "sha256": "b933bf5ae930f8bcbcf987727ea6b8ea46ed1a07a8cfa36a08b6179e5c896d8c"
+  },
+  {
+   "id": "nhl_20242025",
+   "papel": "simulador",
+   "arquivo": "dados/brutos/eventos/nhl_MTL_20242025.json",
+   "distribuicao": "origem",
+   "url": "https://api-web.nhle.com/v1/club-schedule-season/MTL/20242025",
+   "catalogo": [
+    "https://www.nhl.com/canadiens/schedule"
+   ],
+   "editor": "National Hockey League (API publica nao documentada)",
+   "licenca": "Termos da NHL; redistribuicao nao verificada",
+   "formato": "json",
+   "muda_com_tempo": false,
+   "uso": "Jogos do Canadiens em casa (clima_eventos.py)",
+   "bytes": 183224,
+   "sha256": "be205359f3752814c8457679d351e37def722bb9d05ed25f723138ace9fb0e4b"
+  },
+  {
+   "id": "nhl_20252026",
+   "papel": "simulador",
+   "arquivo": "dados/brutos/eventos/nhl_MTL_20252026.json",
+   "distribuicao": "origem",
+   "url": "https://api-web.nhle.com/v1/club-schedule-season/MTL/20252026",
+   "catalogo": [
+    "https://www.nhl.com/canadiens/schedule"
+   ],
+   "editor": "National Hockey League (API publica nao documentada)",
+   "licenca": "Termos da NHL; redistribuicao nao verificada",
+   "formato": "json",
+   "muda_com_tempo": true,
+   "uso": "Jogos do Canadiens em casa (clima_eventos.py)",
+   "bytes": 218526,
+   "sha256": "0b75403336de32da2044dbdeea53f5817591eaeeb77be58dae0014c3bb7a9f71"
+  },
+  {
+   "id": "f1_villeneuve",
+   "papel": "simulador",
+   "arquivo": "dados/brutos/eventos/f1_villeneuve.json",
+   "distribuicao": "origem",
+   "url": "https://api.jolpi.ca/ergast/f1/circuits/villeneuve/races.json?limit=100",
+   "catalogo": [
+    "https://github.com/jolpica/jolpica-f1"
+   ],
+   "editor": "Jolpica (base comunitaria sucessora da Ergast)",
+   "licenca": "nao verificada",
+   "formato": "json",
+   "muda_com_tempo": true,
+   "uso": "Datas do GP do Canada (clima_eventos.py)",
+   "bytes": 20467,
+   "sha256": "89ebe47cf33352de096e1db748fa706b47379457c7c68140bebaadb70effff7e"
+  },
+  {
+   "id": "greves_stm",
+   "papel": "simulador",
+   "arquivo": "dados/manuais/greves_stm.csv",
+   "distribuicao": "repositorio",
+   "manual": true,
+   "url": "dados/manuais/LEIAME.md (uma URL de imprensa por linha)",
+   "catalogo": [],
+   "editor": "Tabela manual do projeto a partir da imprensa",
+   "licenca": "fatos publicos; tabela do projeto",
+   "formato": "csv;",
+   "uso": "Faixas com servico nos dias de greve de 2025 (exposicao.py, clima_eventos.py)",
+   "bytes": 6520,
+   "sha256": "c16d709eeefdf1ae93df043ebd590b0cc874984a8c192b206d72b67423e8a36b",
+   "linhas": 25,
+   "colunas": [
+    "data_servico",
+    "janelas_com_servico",
+    "status",
+    "fonte",
+    "observacao"
+   ]
+  },
+  {
+   "id": "candidatas_expansao",
+   "papel": "simulador",
+   "arquivo": "dados/manuais/candidatas_expansao.csv",
+   "distribuicao": "repositorio",
+   "manual": true,
+   "url": "dados/manuais/candidatas_expansao_LEIAME.md (URLs por linha; respostas em dados/brutos/expansao/manifesto.json)",
+   "catalogo": [],
+   "editor": "Tabela do projeto: coordenadas do OSM (ODbL) e do Wikidata (CC0), traçados de documentos públicos",
+   "licenca": "ODbL 1.0 (coordenadas do OSM)",
+   "formato": "csv;",
+   "uso": "Linhas candidatas da spec 014",
+   "bytes": 24973,
+   "sha256": "afa9bbcb710d04a1974b4af2da0dc7e9cd4af6eb2c9b4ebaedbbacb4c383a006",
+   "linhas": 47,
+   "colunas": [
+    "candidata",
+    "tipo",
+    "proponente",
+    "ano",
+    "ordem",
+    "estacao",
+    "lat",
+    "lon",
+    "liga_a_existente",
+    "fonte_coord",
+    "fonte_url",
+    "status",
+    "observacao"
+   ]
+  },
+  {
    "id": "d3",
    "papel": "painel",
    "arquivo": "painel/vendor/d3.v7.9.0.min.js",
@@ -1147,6 +1464,286 @@
    "script": "pipeline/geo_base.py",
    "bytes": 54420,
    "sha256": "5ff53fee6483706b2700614292cdd39c1e0b0777fa74a38d0fe9ea03e70b04eb"
+  },
+  {
+   "arquivo": "dados/derivados/eventos/eventos_tecnicos.csv",
+   "de": [
+    "stm_incidentes"
+   ],
+   "script": "pipeline/normaliza.py",
+   "bytes": 1628673,
+   "sha256": "c08c417235ac7099576629fa54250a542b591efa821b8de3740d9aa558408294"
+  },
+  {
+   "arquivo": "dados/derivados/eventos/eventos_causa_comum.csv",
+   "de": [
+    "stm_incidentes"
+   ],
+   "script": "pipeline/normaliza.py",
+   "bytes": 8688,
+   "sha256": "074b84586c545a86d07b20e6b0576a1192687f5b31ce6fc432d339cfbdf7a033"
+  },
+  {
+   "arquivo": "dados/derivados/eventos/eventos_sem_linha.csv",
+   "de": [
+    "stm_incidentes"
+   ],
+   "script": "pipeline/normaliza.py",
+   "bytes": 8824,
+   "sha256": "f9c3f6e2c8b386541fd78f69ab7c77d5ad269d49491d08b2e09d49becb06bd50"
+  },
+  {
+   "arquivo": "dados/derivados/eventos/excecoes.csv",
+   "de": [
+    "stm_incidentes"
+   ],
+   "script": "pipeline/normaliza.py",
+   "bytes": 24876,
+   "sha256": "0be2cd161f6847c21cf9beabefa43397fbf647851c097fb358fcc484c68db9ca"
+  },
+  {
+   "arquivo": "dados/derivados/eventos/resumo_normalizacao.json",
+   "de": [
+    "stm_incidentes"
+   ],
+   "script": "pipeline/normaliza.py",
+   "bytes": 406,
+   "sha256": "c952f33a483fc8733bdba71c47fa5c50b03d24a3875cd44bac5b801a3635327e"
+  },
+  {
+   "arquivo": "dados/derivados/exposicao/perfil_horario.csv",
+   "de": [
+    "gtfs_stm",
+    "stm_km_reel",
+    "nager_*",
+    "greves_stm"
+   ],
+   "script": "pipeline/exposicao.py",
+   "bytes": 14611,
+   "sha256": "eea3b0093d05cfeb0a6fe0fb46c270d279e538e19875b578eb8d43339afa771a"
+  },
+  {
+   "arquivo": "dados/derivados/exposicao/exposicao_diaria.csv",
+   "de": [
+    "gtfs_stm",
+    "stm_km_reel",
+    "nager_*",
+    "greves_stm"
+   ],
+   "script": "pipeline/exposicao.py",
+   "bytes": 961775,
+   "sha256": "8ee97d83b82ea5df12cbf6e161df6060a8dddab3bd96460f13f5f6e04d850401"
+  },
+  {
+   "arquivo": "dados/derivados/exposicao/calibracao_mensal.csv",
+   "de": [
+    "gtfs_stm",
+    "stm_km_reel",
+    "nager_*",
+    "greves_stm"
+   ],
+   "script": "pipeline/exposicao.py",
+   "bytes": 8739,
+   "sha256": "49fe5d7cd8a1564f4c5560128b348fdfcae748e3e40308f9a0ef00d19cb0995b"
+  },
+  {
+   "arquivo": "dados/derivados/exposicao/frota_mensal.csv",
+   "de": [
+    "gtfs_stm",
+    "stm_km_reel",
+    "nager_*",
+    "greves_stm"
+   ],
+   "script": "pipeline/exposicao.py",
+   "bytes": 76256,
+   "sha256": "793d128582ae41894a55bb251cc63e4f3e2faf7583751a6dd33edadd410b79c4"
+  },
+  {
+   "arquivo": "dados/derivados/exposicao/resumo_exposicao.json",
+   "de": [
+    "gtfs_stm",
+    "stm_km_reel",
+    "nager_*",
+    "greves_stm"
+   ],
+   "script": "pipeline/exposicao.py",
+   "bytes": 1053,
+   "sha256": "d3fb961fe5cad8096e629ee6db466e170821f13155d50bd7cfde8071428d753c"
+  },
+  {
+   "arquivo": "dados/derivados/clima/painel_horario.csv",
+   "de": [
+    "eccc_horario_*",
+    "eccc_*",
+    "nhl_*",
+    "f1_villeneuve",
+    "nager_*",
+    "greves_stm"
+   ],
+   "script": "pipeline/clima_eventos.py",
+   "bytes": 6572220,
+   "sha256": "2887921f577110fd72e6403768a9c4fdc43a7a8be3672fc0f6764ccf6c39aae8"
+  },
+  {
+   "arquivo": "dados/derivados/clima/eventos_externos.csv",
+   "de": [
+    "eccc_horario_*",
+    "eccc_*",
+    "nhl_*",
+    "f1_villeneuve",
+    "nager_*",
+    "greves_stm"
+   ],
+   "script": "pipeline/clima_eventos.py",
+   "bytes": 80734,
+   "sha256": "c0e36d45e8833baacab047598af5a18486090635f0b4aa7c9cacf93ad7ff60cd"
+  },
+  {
+   "arquivo": "dados/derivados/clima/resumo_clima.json",
+   "de": [
+    "eccc_horario_*",
+    "eccc_*",
+    "nhl_*",
+    "f1_villeneuve",
+    "nager_*",
+    "greves_stm"
+   ],
+   "script": "pipeline/clima_eventos.py",
+   "bytes": 1277,
+   "sha256": "d803db7963d8d1a861381f5791f64992f4df71db00c8b6b7708d734910c22506"
+  },
+  {
+   "arquivo": "dados/derivados/modelos/taxa_MR.json",
+   "de": [
+    "stm_incidentes",
+    "gtfs_stm",
+    "stm_km_reel",
+    "eccc_horario_*",
+    "nhl_*",
+    "f1_villeneuve",
+    "greves_stm"
+   ],
+   "script": "pipeline/modelo_taxa.py",
+   "bytes": 10545,
+   "sha256": "a1d10bd23c47008680088808b8b87949899f00a96b7c76def48a22ab7f43db0b"
+  },
+  {
+   "arquivo": "dados/derivados/modelos/taxa_EF.json",
+   "de": [
+    "stm_incidentes",
+    "gtfs_stm",
+    "stm_km_reel",
+    "eccc_horario_*",
+    "nhl_*",
+    "f1_villeneuve",
+    "greves_stm"
+   ],
+   "script": "pipeline/modelo_taxa.py",
+   "bytes": 10537,
+   "sha256": "5bf69987d2e9fc8b748300540b68bee1a262343290e6b18b032a4866d646b50f"
+  },
+  {
+   "arquivo": "dados/derivados/modelos/painel_modelo.csv.gz",
+   "de": [
+    "stm_incidentes",
+    "gtfs_stm",
+    "stm_km_reel",
+    "eccc_horario_*",
+    "nhl_*",
+    "f1_villeneuve",
+    "greves_stm"
+   ],
+   "script": "pipeline/modelo_taxa.py",
+   "bytes": 3987710,
+   "sha256": "a7361f12cdaf9a3a2af95f1c47eb3242a9ade117ad96dd1863f4e59c2da258f7"
+  },
+  {
+   "arquivo": "dados/derivados/modelos/distribuicoes.json",
+   "de": [
+    "stm_incidentes"
+   ],
+   "script": "pipeline/distribuicoes.py",
+   "bytes": 38967,
+   "sha256": "c249a305ceab0cc11289712b62f44452499df26e15d24aa17cbd74189c8a3d28"
+  },
+  {
+   "arquivo": "dados/derivados/simulador/rede.json",
+   "de": [
+    "gtfs_stm",
+    "osm_metro"
+   ],
+   "script": "pipeline/horario_simulador.py",
+   "bytes": 1144383,
+   "sha256": "d9111c37837e867526fc965a38567a6554decf99473c3a872dcf5bb148d7e250"
+  },
+  {
+   "arquivo": "dados/derivados/simulador/parametros.json",
+   "de": [
+    "stm_incidentes",
+    "stm_km_reel",
+    "gtfs_stm",
+    "eccc_horario_*"
+   ],
+   "script": "pipeline/parametros.py",
+   "bytes": 134616,
+   "sha256": "3224045ad396c42d38ec5fae6c220ca0674bf856dcfb0d36be67cddb911140ed"
+  },
+  {
+   "arquivo": "dados/derivados/simulador/candidatas.json",
+   "de": [
+    "candidatas_expansao",
+    "gtfs_stm",
+    "osm_metro"
+   ],
+   "script": "pipeline/candidatas.py",
+   "bytes": 18952,
+   "sha256": "771c507d30fa2f2e56d3e6663d94275b954ed90417854ac62bfd8ea5e32a5776"
+  },
+  {
+   "arquivo": "dados/derivados/modelos/comparacao_mr_ef.json",
+   "de": [
+    "stm_incidentes",
+    "eccc_horario_*"
+   ],
+   "script": "pipeline/modelo_taxa.py",
+   "bytes": 2431,
+   "sha256": "cfa595612262d7e1a4f9c12719a5d19545fda7c85c06f2f9674812720540171f"
+  },
+  {
+   "arquivo": "dados/derivados/modelos/backtest.json",
+   "de": [
+    "stm_incidentes",
+    "gtfs_stm",
+    "stm_km_reel",
+    "eccc_horario_*"
+   ],
+   "script": "pipeline/backtest.py",
+   "bytes": 71659,
+   "sha256": "02e65f400158f0e03f30a554210e9448f8e9bbab58fd312229416f905501afb5"
+  },
+  {
+   "arquivo": "dados/derivados/simulador/politicas.json",
+   "de": [
+    "stm_incidentes",
+    "gtfs_stm",
+    "stm_km_reel",
+    "eccc_horario_*"
+   ],
+   "script": "app/relatorios/politicas.relatorio.ts",
+   "bytes": 48471,
+   "sha256": "d62a3ba2a1901302b2118cf5e313f3f7e95781a5f5e5885c3d3a7329b266d18a"
+  },
+  {
+   "arquivo": "dados/derivados/simulador/expansao.json",
+   "de": [
+    "stm_incidentes",
+    "gtfs_stm",
+    "candidatas_expansao",
+    "osm_metro"
+   ],
+   "script": "app/relatorios/expansao.relatorio.ts",
+   "bytes": 60609,
+   "sha256": "f7abd325db56ff967386217248b70053f8f4b6d4a4146ef87a05ba84008950f6"
   }
  ]
 }

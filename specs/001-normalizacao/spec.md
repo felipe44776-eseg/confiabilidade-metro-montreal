@@ -1,6 +1,6 @@
 # 001 — Normalização dos incidentes
 
-**Status:** especificada
+**Status:** implementada com exceções
 **Fase:** F1 (semanas 2 e 3)
 **Depende de:** 000
 
@@ -22,6 +22,20 @@ Conseguimos transformar cada incidente técnico num evento com início e fim abs
 - Dados os 45 eventos multilinha, quando normalizados, então cada um gera um evento de causa comum com a lista de linhas atingidas, e a soma bate com o painel (31 eventos técnicos Verde e Laranja).
 - Dados os 44 eventos sem linha, quando normalizados, então ficam registrados como "sem linha" e fora das métricas por linha, sem serem descartados em silêncio.
 - Dado o mesmo arquivo de entrada, quando a normalização roda duas vezes, então a saída é idêntica byte a byte.
+
+## Resultado (2026-10-21)
+
+Script `pipeline/normaliza.py`; testes em `pipeline/tests/test_normaliza.py`; saídas em `dados/derivados/eventos/`.
+
+| Critério | Resultado |
+|---|---|
+| 100% dos 8.530 com início e fim ou na lista de exceções | **Atende**: 8.530 com início e fim; 100 também listados em `excecoes.csv` |
+| 24:xx e 25:xx no dia seguinte, com virada de mês e ano | **Atende** (teste) |
+| Retomada menor que o início vai para o dia seguinte, duração entre 0 e 1.440 | **Atende** (teste); máxima de 1.170 min |
+| ≥ 99% na faixa oficial ou na vizinha | **Exceção**: 98,83% (8.430 de 8.530). Os 100 restantes estão em `excecoes.csv` com o motivo; o critério não foi afrouxado |
+| 45 multilinha como causa comum, 31 Verde e Laranja | **Atende** |
+| 44 sem linha registrados, fora das métricas por linha | **Atende** |
+| Saída idêntica ao repetir | **Atende** (teste) |
 
 ## Fora de escopo
 - Corrigir ou reinterpretar a causa atribuída pela STM.

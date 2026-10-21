@@ -2,19 +2,22 @@
 
 Projeto da disciplina Sistemas Tolerantes a Falhas (Engenharia de Produção, ESEG, 2026). Mede a confiabilidade das quatro linhas do metrô de Montreal com dados públicos reais e está construindo um simulador espacial de tolerância a falhas.
 
+**Equipe** (Engenharia de Produção): Ana Paula Duanetti, Felipe Marins, Lorena Feitosa de Freitas e Sophia Braz.
+
 | Página | Endereço |
 |---|---|
 | Painel de confiabilidade | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/ |
 | Mapa das linhas e dos locais de falha | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/mapa/ |
 | Fontes e verificação automática | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/fontes/ |
 | Especificações (SDD) | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/specs/ |
+| Simulador | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/simulador/ |
 
 ## Por que confiar nos números
 
 Cada número publicado pode ser refeito por qualquer pessoa, sem confiar em quem o calculou:
 
 - [`fontes/FONTES.md`](fontes/FONTES.md) lista cada fonte com link, licença e SHA-256, as APIs acessadas e de onde sai cada número.
-- A Release [`dados-2026-10-20`](https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/releases/tag/dados-2026-10-20) guarda a cópia exata dos dados brutos.
+- As Releases [`dados-2026-10-20`](https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/releases/tag/dados-2026-10-20) e [`dados-2026-10-21`](https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/releases/tag/dados-2026-10-21) guardam a cópia exata dos dados brutos.
 - `pipeline/verifica_fontes.py` confere os hashes e recalcula os números com código próprio, independente do pipeline.
 - Cada publicação do site roda essa verificação, e um erro impede a publicação.
 - Uma auditoria independente refez os números e não encontrou divergência.
@@ -27,30 +30,35 @@ python -I pipeline/verifica_fontes.py --baixa-release --recalcula
 
 | Pasta | Conteúdo |
 |---|---|
-| `specs/` | Especificações SDD: ciclo, princípios e uma pasta por parte do projeto |
-| `fontes/` | Documentação das fontes, manifesto de hashes e relatórios de verificação |
-| `pipeline/` | Python: verificação, extrações, análise de confiabilidade e base geoespacial |
-| `dados/derivados/` | Tabelas e GeoJSON gerados pelo pipeline (versionados) |
-| `dados/brutos/` | Dados brutos, fora do git: baixe com `--baixa-release` |
+| `specs/` | Especificações SDD: ciclo, princípios e uma pasta por parte do projeto (000 a 014) |
+| `fontes/` | Documentação das fontes, manifesto de hashes e relatórios de verificação e validação (`fontes/verificacao/`) |
+| `pipeline/` | Python: verificação independente, normalização, geografia, exposição, clima, modelos, parâmetros e backtest; testes em `pipeline/tests/` |
+| `contratos/` | Contrato entre o pipeline e o simulador (`parametros.schema.json`) |
+| `dados/derivados/` | Tabelas, GeoJSON e parâmetros gerados pelo pipeline (versionados) |
+| `dados/manuais/` | Tabelas montadas à mão, com uma URL por linha (greves de 2025, linhas candidatas) |
+| `dados/brutos/` | Dados brutos, fora do git: baixe com `--baixa-release` e `--baixa-origem` |
 | `painel/` | Painel de confiabilidade (página única com d3) |
-| `app/` | Mapa e, nas próximas fases, o simulador (TypeScript + Vite) |
+| `app/` | Mapa e simulador em TypeScript + Vite: motor por eventos discretos (`src/motor/`), Monte Carlo em Web Workers (`src/mc/`), testes (`tests/`) e relatórios com os dados reais (`relatorios/`) |
 | `publicacao/` | Montagem do site publicado |
-| `docs/decisoes/` | Registros de decisão de arquitetura |
+| `docs/` | Decisões de arquitetura, dicionário de dados, equipe e relatório acadêmico |
 
 ## Reproduzir tudo
 
-Requisitos: Python 3.11 e Node 22.
+Requisitos: Python 3.11 e Node 22. O workflow `.github/workflows/reproduz.yml` faz o mesmo numa máquina limpa e compara o resultado com os arquivos publicados.
 
 ```bash
-python -I pipeline/verifica_fontes.py --baixa-release              # dados brutos da Release, com hashes conferidos
+python -I pipeline/verifica_fontes.py --baixa-release --baixa-origem --completo   # dados brutos com hashes conferidos
+python -m pip install -r pipeline/requirements.txt                                 # versões fixadas
 python -I pipeline/extrai_gtfs_metro.py dados/brutos/gtfs/gtfs_stm_mdb-2126_latest.zip
-python -I pipeline/analise_confiabilidade.py                      # 17 tabelas do painel
-python -I pipeline/geo_base.py                                    # traçado, estações, locais e validação
-cd app && npm ci && npm test && npm run build && cd ..
-python -I publicacao/monta_site.py                                # site completo em _site/
+python -I pipeline/extrai_mobilidade.py dados/brutos/google/google_Region_Mobility_Report_CSVs.zip
+for s in monta_painel analise_confiabilidade geo_base normaliza exposicao baixa_clima_eventos clima_eventos \
+         horario_simulador candidatas modelo_taxa diagnostico_taxa distribuicoes parametros backtest; do python -I pipeline/$s.py; done
+python -m pytest pipeline/tests -q
+cd app && npm ci && npm test && npx vitest run --config vitest.relatorios.config.ts && npm run build && cd ..
+python -I publicacao/monta_site.py                                                  # site completo em _site/
 ```
 
-A extração da mobilidade do Google (`pipeline/extrai_mobilidade.py`) precisa do arquivo baixado da origem, que não está na Release.
+Os ajustes com bootstrap (`modelo_taxa`, `distribuicoes`, `backtest`) levam de 10 a 40 minutos cada. Rode um de cada vez: juntos, passam de 4 GB de memória.
 
 ## Dados e licenças
 

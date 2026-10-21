@@ -29,8 +29,14 @@ if not os.path.exists("_site_app/mapa/index.html"):
     sys.exit("faltou o build do app: rode `npm ci && npm run build` em app/")
 shutil.copytree("_site_app", SAIDA, dirs_exist_ok=True)
 
-for sub in ("painel", "geo"):
-    shutil.copytree(f"dados/derivados/{sub}", f"{SAIDA}/dados/{sub}")
+for sub in ("painel", "geo", "simulador", "modelos"):
+    if os.path.isdir(f"dados/derivados/{sub}"):
+        shutil.copytree(f"dados/derivados/{sub}", f"{SAIDA}/dados/{sub}")
+for rel in ("modelo_taxa.md", "modelo_taxa_por_faixa.md", "modelo_taxa_por_faixa.svg", "distribuicoes.md", "backtest.md", "backtest_pit.svg",
+            "backtest_pit_C.svg", "exposicao.md", "politicas.md", "expansao.md", "validacao_geo.md"):
+    if os.path.exists(f"fontes/verificacao/{rel}"):
+        os.makedirs(f"{SAIDA}/fontes/verificacao", exist_ok=True)
+        shutil.copy(f"fontes/verificacao/{rel}", f"{SAIDA}/fontes/verificacao/{rel}")
 os.makedirs(f"{SAIDA}/fontes", exist_ok=True)
 shutil.copy("fontes/fontes_manifesto.json", f"{SAIDA}/fontes/fontes_manifesto.json")
 shutil.copy("fontes/fontes_manifesto.json", f"{SAIDA}/dados/fontes_manifesto.json")
@@ -59,11 +65,20 @@ pre{margin:0;background:var(--bg);border:1px solid var(--line);border-radius:8px
 """
 
 
+_EQ = json.load(open("docs/equipe.json", encoding="utf-8"))["integrantes"]
+EQUIPE = ", ".join(p["nome"] for p in _EQ[:-1]) + " e " + _EQ[-1]["nome"]
+_MAN = json.load(open("fontes/fontes_manifesto.json", encoding="utf-8"))
+RELEASES = _MAN.get("releases", [_MAN["release"]])
+VERSAO_DADOS = " e ".join(f'<a href="{REPO}/releases/tag/{r}">{r}</a>' for r in RELEASES)
+
+
 def pagina(titulo, descricao, corpo):
+    rodape = (f'<p class="muted" style="margin-top:32px">Sistemas Tolerantes a Falhas, Engenharia de Produção, ESEG, 2026. '
+              f'Equipe: {html.escape(EQUIPE)}. Versão dos dados: {VERSAO_DADOS}. <a href="{REPO}/blob/main/fontes/FONTES.md">Fontes</a>.</p>')
     return f"""<!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{html.escape(titulo)}</title><meta name="description" content="{html.escape(descricao)}"><style>{ESTILO}</style></head>
-<body><main>{corpo}</main></body></html>
+<body><main>{corpo}{rodape}</main></body></html>
 """
 
 
@@ -92,10 +107,13 @@ if "--relatorio" in sys.argv:
 corpo = f"""
 <a class="voltar" href="../">← Painel de confiabilidade</a>
 <h1>Fontes e verificação</h1>
-<p>Todo número publicado neste site vem dos arquivos abaixo. Cada um tem o SHA-256 registrado no manifesto e a cópia exata dos dados brutos está na Release <a href="{REPO}/releases/tag/{man['release']}">{man['release']}</a>.
+<p>Todo número publicado neste site vem dos arquivos abaixo. Cada um tem o SHA-256 registrado no manifesto e a cópia exata dos dados brutos está nas Releases {VERSAO_DADOS}.
 Para conferir sozinho: <code>python -I pipeline/verifica_fontes.py --baixa-release --recalcula</code>.</p>
 <p>Documentação completa, com APIs acessadas, auditoria independente e limites: <a href="{REPO}/blob/main/fontes/FONTES.md">FONTES.md</a>.
-Validação da base geoespacial: <a href="{REPO}/blob/main/fontes/verificacao/validacao_geo.md">validacao_geo.md</a>.
+Relatórios de validação: <a href="{REPO}/blob/main/fontes/verificacao/validacao_geo.md">base geoespacial</a>,
+<a href="{REPO}/blob/main/fontes/verificacao/exposicao.md">exposição</a>, <a href="{REPO}/blob/main/fontes/verificacao/modelo_taxa.md">modelo da taxa de falha</a>,
+<a href="{REPO}/blob/main/fontes/verificacao/distribuicoes.md">distribuições</a> e <a href="{REPO}/blob/main/fontes/verificacao/backtest.md">validação contra o histórico</a>.
+Dicionário de dados e fatores sem fonte: <a href="{REPO}/blob/main/docs/dicionario_dados.md">dicionario_dados.md</a>.
 Manifesto: <a href="fontes_manifesto.json">fontes_manifesto.json</a>.</p>
 {relatorio}
 <section class="card"><h2>Fontes primárias</h2>
@@ -130,4 +148,18 @@ Ciclo e regras: <a href="{REPO}/blob/main/specs/README.md">specs/README.md</a>. 
 os.makedirs(f"{SAIDA}/specs", exist_ok=True)
 open(f"{SAIDA}/specs/index.html", "w", encoding="utf-8").write(
     pagina("Especificações do projeto", "Especificações (SDD) do simulador de tolerância a falhas do metrô de Montreal.", corpo))
+# ------------------------------------------------------------------ /relatorio/
+corpo = f"""
+<a class="voltar" href="../">← Painel de confiabilidade</a>
+<h1>Relatório do trabalho</h1>
+<p>O relatório acadêmico (dados, métodos, resultados, validação e limitações) está em
+<a href="{REPO}/blob/main/docs/relatorio/relatorio.md">docs/relatorio/relatorio.md</a>, renderizado pelo GitHub.</p>
+<p>Relatórios de cada etapa: <a href="{REPO}/blob/main/fontes/verificacao/modelo_taxa.md">modelo da taxa</a>,
+<a href="{REPO}/blob/main/fontes/verificacao/distribuicoes.md">distribuições</a>, <a href="{REPO}/blob/main/fontes/verificacao/politicas.md">políticas</a>,
+<a href="{REPO}/blob/main/fontes/verificacao/expansao.md">expansão da rede</a> e <a href="{REPO}/blob/main/fontes/verificacao/backtest.md">validação contra o histórico</a>.</p>
+<p><a href="../simulador/">Abrir o simulador</a>.</p>
+"""
+os.makedirs(f"{SAIDA}/relatorio", exist_ok=True)
+open(f"{SAIDA}/relatorio/index.html", "w", encoding="utf-8").write(
+    pagina("Relatório do trabalho", "Relatório acadêmico do projeto de confiabilidade do metrô de Montreal.", corpo))
 print(f"{SAIDA}/ montado: painel, mapa, dados, fontes ({len(man['fontes'])} fontes), specs ({len(itens)})")

@@ -1,0 +1,2221 @@
+{
+ "semente": 20261021,
+ "amostras": 200000,
+ "codigo_parametros": "4e5a3d4+alteracoes-locais",
+ "rede_atual": {
+  "dispOD": {
+   "media": 0.9923603468595152,
+   "ic95": [
+    0.9920291163697474,
+    0.992691577349283
+   ],
+   "meiaLargura": 0.00033123048976774915,
+   "n": 200000,
+   "semente": 20261021
+  },
+  "minutosParAno": {
+   "media": 3340.5911287399135,
+   "ic95": [
+    3195.75397247917,
+    3485.428285000657
+   ],
+   "meiaLargura": 144.83715626074365,
+   "n": 200000,
+   "semente": 20261021
+  },
+  "dispLinha": {
+   "verde": {
+    "media": 0.9952399999999997,
+    "ic95": [
+     0.9949174099575597,
+     0.9955625900424396
+    ],
+    "meiaLargura": 0.00032259004243996006,
+    "n": 200000,
+    "semente": 20261021
+   },
+   "laranja": {
+    "media": 0.9953599999999999,
+    "ic95": [
+     0.995051001859271,
+     0.9956689981407288
+    ],
+    "meiaLargura": 0.00030899814072894954,
+    "n": 200000,
+    "semente": 20261021
+   },
+   "amarela": {
+    "media": 0.999025,
+    "ic95": [
+     0.9988988080242086,
+     0.9991511919757915
+    ],
+    "meiaLargura": 0.00012619197579146374,
+    "n": 200000,
+    "semente": 20261021
+   },
+   "azul": {
+    "media": 0.9954000000000002,
+    "ic95": [
+     0.9950844618234463,
+     0.995715538176554
+    ],
+    "meiaLargura": 0.00031553817655378583,
+    "n": 200000,
+    "semente": 20261021
+   }
+  },
+  "amostras": 200000,
+  "semente": 20261021
+ },
+ "validacao_contra_camada_diaria": [
+  {
+   "linha": "verde",
+   "diaria": {
+    "media": 0.9950388444049247,
+    "dp": 0.01718405051122063,
+    "ep": 0.00027170369521419013,
+    "ic95": [
+     0.9945063149478385,
+     0.995571373862011
+    ],
+    "meiaLargura": 0.0005325294570862605,
+    "n": 4000,
+    "semente": 20261021
+   },
+   "estados": {
+    "media": 0.9952399999999997,
+    "ic95": [
+     0.9949174099575597,
+     0.9955625900424396
+    ],
+    "meiaLargura": 0.00032259004243996006,
+    "n": 200000,
+    "semente": 20261021
+   },
+   "dif_pp": 0.02011555950749422
+  },
+  {
+   "linha": "laranja",
+   "diaria": {
+    "media": 0.9954520612118396,
+    "dp": 0.018379757153864338,
+    "ep": 0.0002906094772349258,
+    "ic95": [
+     0.9948824771028931,
+     0.9960216453207861
+    ],
+    "meiaLargura": 0.0005695841089464672,
+    "n": 4000,
+    "semente": 20261021
+   },
+   "estados": {
+    "media": 0.9953599999999999,
+    "ic95": [
+     0.995051001859271,
+     0.9956689981407288
+    ],
+    "meiaLargura": 0.00030899814072894954,
+    "n": 200000,
+    "semente": 20261021
+   },
+   "dif_pp": -0.009206121183968907
+  },
+  {
+   "linha": "amarela",
+   "diaria": {
+    "media": 0.9989217655724882,
+    "dp": 0.005521005816114789,
+    "ep": 0.00008729476676979744,
+    "ic95": [
+     0.9987506709735806,
+     0.9990928601713959
+    ],
+    "meiaLargura": 0.00017109459890762691,
+    "n": 4000,
+    "semente": 20261021
+   },
+   "estados": {
+    "media": 0.999025,
+    "ic95": [
+     0.9988988080242086,
+     0.9991511919757915
+    ],
+    "meiaLargura": 0.00012619197579146374,
+    "n": 200000,
+    "semente": 20261021
+   },
+   "dif_pp": 0.010323442751181133
+  },
+  {
+   "linha": "azul",
+   "diaria": {
+    "media": 0.996354810212215,
+    "dp": 0.038135757234500675,
+    "ep": 0.0006029792657813307,
+    "ic95": [
+     0.9951729925678592,
+     0.9975366278565707
+    ],
+    "meiaLargura": 0.0011818176443558132,
+    "n": 4000,
+    "semente": 20261021
+   },
+   "estados": {
+    "media": 0.9954000000000002,
+    "ic95": [
+     0.9950844618234463,
+     0.995715538176554
+    ],
+    "meiaLargura": 0.00031553817655378583,
+    "n": 200000,
+    "semente": 20261021
+   },
+   "dif_pp": -0.09548102122147739
+  }
+ ],
+ "candidatas": {
+  "sem_retorno_parcial": [
+   {
+    "id": "rosa_2017",
+    "nome": "Linha Rosa (proposta de 2017)",
+    "status": "hipótese de traçado",
+    "fonte": "https://ici.radio-canada.ca/nouvelle/1065916/stations-ligne-rose-metro-localisation-projet-montreal-plante-ouellet",
+    "km": 35.37107343140598,
+    "ganho": {
+     "media": 0.000207719188309754,
+     "ic95": [
+      0.0001968386614764061,
+      0.0002185997151431019
+     ],
+     "meiaLargura": 0.000010880526833347881,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.0002058390550267797,
+     "ic95": [
+      0.00019513904948507556,
+      0.00021653906056848382
+     ],
+     "meiaLargura": 0.000010700005541704117,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.000005872572363758689,
+    "minutos_par_ano_evitados": {
+     "media": 90.82936947220612,
+     "ic95": [
+      86.0716415037881,
+      95.58709744062415
+     ],
+     "meiaLargura": 4.757727968418028,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "amostras": 200000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: hipótese de traçado (https://ici.radio-canada.ca/nouvelle/1065916/stations-ligne-rose-metro-localisation-projet-montreal-plante-ouellet)",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "rosa: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "rosa_2017+azul_anjou",
+    "nome": "Linha Rosa (proposta de 2017) com prolongamento da Azul até Anjou",
+    "status": "hipótese de traçado",
+    "fonte": "https://ici.radio-canada.ca/nouvelle/1065916/stations-ligne-rose-metro-localisation-projet-montreal-plante-ouellet",
+    "km": 42.27398407763709,
+    "ganho": {
+     "media": 0.000028215771285344803,
+     "ic95": [
+      -0.00005917623700821215,
+      0.00011560777957890175
+     ],
+     "meiaLargura": 0.00008739200829355696,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.000019121307885192617,
+     "ic95": [
+      -0.00006891026063353102,
+      0.00010715287640391624
+     ],
+     "meiaLargura": 0.00008803156851872363,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 6.674500144941609e-7,
+    "minutos_par_ano_evitados": {
+     "media": 12.337910309942721,
+     "ic95": [
+      -25.875993156580925,
+      50.55181377646637
+     ],
+     "meiaLargura": 38.21390346652365,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "amostras": 200000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: hipótese de traçado (https://ici.radio-canada.ca/nouvelle/1065916/stations-ligne-rose-metro-localisation-projet-montreal-plante-ouellet)",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "rosa: taxas por km herdadas da média da rede",
+     "azul: taxas por km herdadas da linha azul",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "laranja_anel_artm_2019",
+    "nome": "Anel da Laranja (ARTM, 2019)",
+    "status": "hipótese de traçado",
+    "fonte": "https://web.archive.org/web/20191010182703/https://montrealgazette.com/news/local-news/completing-montreal-metros-orange-line-loop-will-cost-an-estimated-4-3b",
+    "km": 9.8788324818446,
+    "ganho": {
+     "media": 0.0000017880764923949854,
+     "ic95": [
+      0.000001669110924551686,
+      0.0000019070420602382848
+     ],
+     "meiaLargura": 1.1896556784329937e-7,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.0000016839166967708153,
+     "ic95": [
+      0.0000015674287658677343,
+      0.0000018004046276738963
+     ],
+     "meiaLargura": 1.1648793090308099e-7,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 1.810007909012656e-7,
+    "minutos_par_ano_evitados": {
+     "media": 0.7818722078295552,
+     "ic95": [
+      0.7298521339787157,
+      0.8338922816803948
+     ],
+     "meiaLargura": 0.05202007385083951,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "amostras": 200000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: hipótese de traçado (https://web.archive.org/web/20191010182703/https://montrealgazette.com/news/local-news/completing-montreal-metros-orange-line-loop-will-cost-an-estimated-4-3b)",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "laranja_anel: taxas por km herdadas da linha laranja",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "amarela_longueuil",
+    "nome": "Prolongamento da Amarela em Longueuil",
+    "status": "hipótese de traçado",
+    "fonte": "https://web.archive.org/web/20120120003003/http://www.rtl-longueuil.qc.ca/pages/pr_LIGNE_4.htm",
+    "km": 7.222186581629197,
+    "ganho": {
+     "media": -0.000054136848901260584,
+     "ic95": [
+      -0.00006174870370514402,
+      -0.00004652499409737715
+     ],
+     "meiaLargura": 0.000007611854803883436,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": -0.000054136848901260584,
+     "ic95": [
+      -0.00006174870370514402,
+      -0.00004652499409737715
+     ],
+     "meiaLargura": 0.000007611854803883436,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "ganho_por_km": -0.000007495908377521904,
+    "minutos_par_ano_evitados": {
+     "media": -23.67241991905421,
+     "ic95": [
+      -27.000855669148322,
+      -20.343984168960098
+     ],
+     "meiaLargura": 3.32843575009411,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "amostras": 200000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: hipótese de traçado (https://web.archive.org/web/20120120003003/http://www.rtl-longueuil.qc.ca/pages/pr_LIGNE_4.htm)",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "amarela: taxas por km herdadas da linha amarela",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "laranja_bois_franc",
+    "nome": "Prolongamento da Laranja até Bois-Franc",
+    "status": "hipótese de traçado",
+    "fonte": "https://web.archive.org/web/20120306064540/http://ville.montreal.qc.ca/portal/page?_pageid=4577,7769586&_dad=portal&_schema=PORTAL",
+    "km": 2.9833607966874407,
+    "ganho": {
+     "media": -0.0003465382109141202,
+     "ic95": [
+      -0.00041967939614591734,
+      -0.000273397025682323
+     ],
+     "meiaLargura": 0.00007314118523179718,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": -0.0003465382109141202,
+     "ic95": [
+      -0.00041967939614591734,
+      -0.000273397025682323
+     ],
+     "meiaLargura": 0.00007314118523179718,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "ganho_por_km": -0.0001161569902302454,
+    "minutos_par_ano_evitados": {
+     "media": -151.53076348641727,
+     "ic95": [
+      -183.51320955272524,
+      -119.54831742010931
+     ],
+     "meiaLargura": 31.982446066307958,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "amostras": 200000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: hipótese de traçado (https://web.archive.org/web/20120306064540/http://ville.montreal.qc.ca/portal/page?_pageid=4577,7769586&_dad=portal&_schema=PORTAL)",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "laranja: taxas por km herdadas da linha laranja",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "azul_anjou",
+    "nome": "Prolongamento da Azul até Anjou",
+    "status": "em obras (OSM)",
+    "fonte": "https://montreal.ca/communiques-de-presse/les-femmes-et-les-communautes-seront-honorees-sur-le-futur-troncon-de-la-ligne-bleue",
+    "km": 6.859023395671881,
+    "ganho": {
+     "media": -0.000753290857883957,
+     "ic95": [
+      -0.0008114164105623845,
+      -0.0006951653052055296
+     ],
+     "meiaLargura": 0.000058125552678427434,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": -0.000753290857883957,
+     "ic95": [
+      -0.0008114164105623845,
+      -0.0006951653052055296
+     ],
+     "meiaLargura": 0.000058125552678427434,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "ganho_por_km": -0.00010982479785085613,
+    "minutos_par_ano_evitados": {
+     "media": -329.39149342691786,
+     "ic95": [
+      -354.8080538466138,
+      -303.9749330072219
+     ],
+     "meiaLargura": 25.416560419695966,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "amostras": 200000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: em obras (OSM) (https://montreal.ca/communiques-de-presse/les-femmes-et-les-communautes-seront-honorees-sur-le-futur-troncon-de-la-ligne-bleue)",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "azul: taxas por km herdadas da linha azul",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   }
+  ],
+  "com_retorno_parcial": [
+   {
+    "id": "rosa_2017+azul_anjou",
+    "nome": "Linha Rosa (proposta de 2017) com prolongamento da Azul até Anjou",
+    "status": "hipótese de traçado",
+    "fonte": "https://ici.radio-canada.ca/nouvelle/1065916/stations-ligne-rose-metro-localisation-projet-montreal-plante-ouellet",
+    "km": 42.27398407763709,
+    "ganho": {
+     "media": 0.0005277223614753113,
+     "ic95": [
+      0.0004963896354998067,
+      0.0005590550874508158
+     ],
+     "meiaLargura": 0.000031332725975504536,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.0005186278980751613,
+     "ic95": [
+      0.00048669277491722923,
+      0.0005505630212330934
+     ],
+     "meiaLargura": 0.0000319351231579321,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.000012483383645746228,
+    "minutos_par_ano_evitados": {
+     "media": 230.75715700230936,
+     "ic95": [
+      217.05629591500048,
+      244.45801808961824
+     ],
+     "meiaLargura": 13.700861087308871,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "amostras": 200000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: hipótese de traçado (https://ici.radio-canada.ca/nouvelle/1065916/stations-ligne-rose-metro-localisation-projet-montreal-plante-ouellet)",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "rosa: taxas por km herdadas da média da rede",
+     "azul: taxas por km herdadas da linha azul",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "retorno parcial ligado (pontas de viagem do horário)"
+    ]
+   },
+   {
+    "id": "laranja_anel_artm_2019",
+    "nome": "Anel da Laranja (ARTM, 2019)",
+    "status": "hipótese de traçado",
+    "fonte": "https://web.archive.org/web/20191010182703/https://montrealgazette.com/news/local-news/completing-montreal-metros-orange-line-loop-will-cost-an-estimated-4-3b",
+    "km": 9.8788324818446,
+    "ganho": {
+     "media": 0.00018610973357435112,
+     "ic95": [
+      0.00016236645536348986,
+      0.00020985301178521237
+     ],
+     "meiaLargura": 0.00002374327821086126,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00018600557377874028,
+     "ic95": [
+      0.00016226639152530647,
+      0.00020974475603217408
+     ],
+     "meiaLargura": 0.000023739182253433815,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.00001883924379893931,
+    "minutos_par_ano_evitados": {
+     "media": 81.3802032000565,
+     "ic95": [
+      70.9979799367932,
+      91.7624264633198
+     ],
+     "meiaLargura": 10.382223263263306,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "amostras": 200000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: hipótese de traçado (https://web.archive.org/web/20191010182703/https://montrealgazette.com/news/local-news/completing-montreal-metros-orange-line-loop-will-cost-an-estimated-4-3b)",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "laranja_anel: taxas por km herdadas da linha laranja",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "retorno parcial ligado (pontas de viagem do horário)"
+    ]
+   },
+   {
+    "id": "rosa_2017",
+    "nome": "Linha Rosa (proposta de 2017)",
+    "status": "hipótese de traçado",
+    "fonte": "https://ici.radio-canada.ca/nouvelle/1065916/stations-ligne-rose-metro-localisation-projet-montreal-plante-ouellet",
+    "km": 35.37107343140598,
+    "ganho": {
+     "media": 0.00011227700389210727,
+     "ic95": [
+      0.00010453174868118215,
+      0.00012002225910303239
+     ],
+     "meiaLargura": 0.00000774525521092512,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00011039687060913294,
+     "ic95": [
+      0.00010269027394035031,
+      0.00011810346727791557
+     ],
+     "meiaLargura": 0.000007706596668782633,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.0000031742605750951426,
+    "minutos_par_ano_evitados": {
+     "media": 49.09536549190174,
+     "ic95": [
+      45.70859774582051,
+      52.482133237982964
+     ],
+     "meiaLargura": 3.3867677460812278,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "amostras": 200000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: hipótese de traçado (https://ici.radio-canada.ca/nouvelle/1065916/stations-ligne-rose-metro-localisation-projet-montreal-plante-ouellet)",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "rosa: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "retorno parcial ligado (pontas de viagem do horário)"
+    ]
+   },
+   {
+    "id": "azul_anjou",
+    "nome": "Prolongamento da Azul até Anjou",
+    "status": "em obras (OSM)",
+    "fonte": "https://montreal.ca/communiques-de-presse/les-femmes-et-les-communautes-seront-honorees-sur-le-futur-troncon-de-la-ligne-bleue",
+    "km": 6.859023395671881,
+    "ganho": {
+     "media": 0,
+     "ic95": [
+      0,
+      0
+     ],
+     "meiaLargura": 0,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0,
+     "ic95": [
+      0,
+      0
+     ],
+     "meiaLargura": 0,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0,
+    "minutos_par_ano_evitados": {
+     "media": 0,
+     "ic95": [
+      0,
+      0
+     ],
+     "meiaLargura": 0,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "amostras": 200000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: em obras (OSM) (https://montreal.ca/communiques-de-presse/les-femmes-et-les-communautes-seront-honorees-sur-le-futur-troncon-de-la-ligne-bleue)",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "azul: taxas por km herdadas da linha azul",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "retorno parcial ligado (pontas de viagem do horário)"
+    ]
+   },
+   {
+    "id": "amarela_longueuil",
+    "nome": "Prolongamento da Amarela em Longueuil",
+    "status": "hipótese de traçado",
+    "fonte": "https://web.archive.org/web/20120120003003/http://www.rtl-longueuil.qc.ca/pages/pr_LIGNE_4.htm",
+    "km": 7.222186581629197,
+    "ganho": {
+     "media": 0,
+     "ic95": [
+      0,
+      0
+     ],
+     "meiaLargura": 0,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0,
+     "ic95": [
+      0,
+      0
+     ],
+     "meiaLargura": 0,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0,
+    "minutos_par_ano_evitados": {
+     "media": 0,
+     "ic95": [
+      0,
+      0
+     ],
+     "meiaLargura": 0,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "amostras": 200000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: hipótese de traçado (https://web.archive.org/web/20120120003003/http://www.rtl-longueuil.qc.ca/pages/pr_LIGNE_4.htm)",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "amarela: taxas por km herdadas da linha amarela",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "retorno parcial ligado (pontas de viagem do horário)"
+    ]
+   },
+   {
+    "id": "laranja_bois_franc",
+    "nome": "Prolongamento da Laranja até Bois-Franc",
+    "status": "hipótese de traçado",
+    "fonte": "https://web.archive.org/web/20120306064540/http://ville.montreal.qc.ca/portal/page?_pageid=4577,7769586&_dad=portal&_schema=PORTAL",
+    "km": 2.9833607966874407,
+    "ganho": {
+     "media": 0,
+     "ic95": [
+      0,
+      0
+     ],
+     "meiaLargura": 0,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0,
+     "ic95": [
+      0,
+      0
+     ],
+     "meiaLargura": 0,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0,
+    "minutos_par_ano_evitados": {
+     "media": 0,
+     "ic95": [
+      0,
+      0
+     ],
+     "meiaLargura": 0,
+     "n": 200000,
+     "semente": 20261021
+    },
+    "amostras": 200000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: hipótese de traçado (https://web.archive.org/web/20120306064540/http://ville.montreal.qc.ca/portal/page?_pageid=4577,7769586&_dad=portal&_schema=PORTAL)",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "laranja: taxas por km herdadas da linha laranja",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "retorno parcial ligado (pontas de viagem do horário)"
+    ]
+   }
+  ]
+ },
+ "busca_exaustiva": {
+  "distancia_max_km": 3,
+  "amostras": 50000,
+  "por_ganho": [
+   {
+    "id": "livre:STATION_M134-STATION_M536",
+    "nome": "Atwater – Université De Montreal",
+    "status": "livre",
+    "km": 3.5623226721695835,
+    "ganho": {
+     "media": 0.000850201023807986,
+     "ic95": [
+      0.0007705884521077704,
+      0.0009298135955082017
+     ],
+     "meiaLargura": 0.00007961257170021562,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.000848930438206461,
+     "ic95": [
+      0.0007691801976727847,
+      0.0009286806787401374
+     ],
+     "meiaLargura": 0.00007975024053367636,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.0002386647987983028,
+    "minutos_par_ano_evitados": {
+     "media": 371.76740168051793,
+     "ic95": [
+      336.9552124531647,
+      406.5795909078712
+     ],
+     "meiaLargura": 34.81218922735328,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M134-STATION_M536: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M120-STATION_M242",
+    "nome": "Monk – Vendôme",
+    "status": "livre",
+    "km": 3.186634323971276,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.00004821598482273311,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M120-STATION_M242: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M120-STATION_M244",
+    "nome": "Monk – Place St-Henri",
+    "status": "livre",
+    "km": 3.55381782687339,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.00004323426795778559,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M120-STATION_M244: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M124-STATION_M242",
+    "nome": "Verdun – Vendôme",
+    "status": "livre",
+    "km": 3.5767315646699624,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.00004295729478775603,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M124-STATION_M242: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M128-STATION_M242",
+    "nome": "Lasalle – Vendôme",
+    "status": "livre",
+    "km": 3.543094372561636,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.00004336511987658793,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M128-STATION_M242: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M128-STATION_M244",
+    "nome": "Lasalle – Place St-Henri",
+    "status": "livre",
+    "km": 2.0873577489785147,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.00007360823139942789,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M128-STATION_M244: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M130-STATION_M242",
+    "nome": "Charlevoix – Vendôme",
+    "status": "livre",
+    "km": 3.2858807363944953,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.00004675967404976227,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M130-STATION_M242: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M130-STATION_M244",
+    "nome": "Charlevoix – Place St-Henri",
+    "status": "livre",
+    "km": 1.6022035208889107,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.00009589712555053895,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M130-STATION_M244: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M130-STATION_M248",
+    "nome": "Charlevoix – Georges-Vanier",
+    "status": "livre",
+    "km": 1.5486896709781481,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.00009921078126850075,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M130-STATION_M248: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M130-STATION_M250",
+    "nome": "Charlevoix – Lucien-L'Allier",
+    "status": "livre",
+    "km": 2.1880944991648947,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.00007021941340231879,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M130-STATION_M250: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M130-STATION_M254",
+    "nome": "Charlevoix – Square Victoria-Oaci",
+    "status": "livre",
+    "km": 3.1763060412335338,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.00004837276704625414,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M130-STATION_M254: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M134-STATION_M238",
+    "nome": "Atwater – Villa-Maria",
+    "status": "livre",
+    "km": 3.479541566406259,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.0000441571710720757,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M134-STATION_M238: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M134-STATION_M244",
+    "nome": "Atwater – Place St-Henri",
+    "status": "livre",
+    "km": 1.692497903094097,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.00009078103548566536,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M134-STATION_M244: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M134-STATION_M248",
+    "nome": "Atwater – Georges-Vanier",
+    "status": "livre",
+    "km": 0.8813454668977491,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.000174331993492882,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M134-STATION_M248: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M134-STATION_M250",
+    "nome": "Atwater – Lucien-L'Allier",
+    "status": "livre",
+    "km": 1.4999109383545834,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.00010243722361859121,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M134-STATION_M250: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   }
+  ],
+  "por_km": [
+   {
+    "id": "livre:STATION_M134-STATION_M536",
+    "nome": "Atwater – Université De Montreal",
+    "status": "livre",
+    "km": 3.5623226721695835,
+    "ganho": {
+     "media": 0.000850201023807986,
+     "ic95": [
+      0.0007705884521077704,
+      0.0009298135955082017
+     ],
+     "meiaLargura": 0.00007961257170021562,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.000848930438206461,
+     "ic95": [
+      0.0007691801976727847,
+      0.0009286806787401374
+     ],
+     "meiaLargura": 0.00007975024053367636,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.0002386647987983028,
+    "minutos_par_ano_evitados": {
+     "media": 371.76740168051793,
+     "ic95": [
+      336.9552124531647,
+      406.5795909078712
+     ],
+     "meiaLargura": 34.81218922735328,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M134-STATION_M536: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M136-STATION_M250",
+    "nome": "Guy-Concordia – Lucien-L'Allier",
+    "status": "livre",
+    "km": 0.7606149660176912,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.00020200327243708976,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M136-STATION_M250: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M144-STATION_M256",
+    "nome": "St-Laurent – Place D'Armes",
+    "status": "livre",
+    "km": 0.793046193029398,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.00019374244974719118,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M144-STATION_M256: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M138-STATION_M252",
+    "nome": "Peel – Bonaventure",
+    "status": "livre",
+    "km": 0.8040637609966779,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.0001910877217122017,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M138-STATION_M252: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M144-STATION_M258",
+    "nome": "St-Laurent – Champs De Mars",
+    "status": "livre",
+    "km": 0.8335087890057941,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.0001843372430223185,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M144-STATION_M258: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M140-STATION_M254",
+    "nome": "Mcgill – Square Victoria-Oaci",
+    "status": "livre",
+    "km": 0.8595285222540338,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.00017875696759576425,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M140-STATION_M254: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M142-STATION_M256",
+    "nome": "Place Des Arts – Place D'Armes",
+    "status": "livre",
+    "km": 0.8616421413902513,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.00017831847447977875,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M142-STATION_M256: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M138-STATION_M250",
+    "nome": "Peel – Lucien-L'Allier",
+    "status": "livre",
+    "km": 0.8747817642579812,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.00017564004929907022,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M138-STATION_M250: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M134-STATION_M248",
+    "nome": "Atwater – Georges-Vanier",
+    "status": "livre",
+    "km": 0.8813454668977491,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.000174331993492882,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M134-STATION_M248: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M140-STATION_M252",
+    "nome": "Mcgill – Bonaventure",
+    "status": "livre",
+    "km": 0.921577325617779,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.00016672145454230052,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M140-STATION_M252: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M136-STATION_M248",
+    "nome": "Guy-Concordia – Georges-Vanier",
+    "status": "livre",
+    "km": 0.9358185627930367,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.00016418429630379064,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M136-STATION_M248: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M142-STATION_M254",
+    "nome": "Place Des Arts – Square Victoria-Oaci",
+    "status": "livre",
+    "km": 0.9675463726046982,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.00015880035991099053,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M142-STATION_M254: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M144-STATION_M262",
+    "nome": "St-Laurent – Sherbrooke",
+    "status": "livre",
+    "km": 1.0782658625112687,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.00014249427487424856,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M144-STATION_M262: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M138-STATION_M254",
+    "nome": "Peel – Square Victoria-Oaci",
+    "status": "livre",
+    "km": 1.0854600500300162,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.00014154985454872397,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M138-STATION_M254: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   },
+   {
+    "id": "livre:STATION_M142-STATION_M258",
+    "nome": "Place Des Arts – Champs De Mars",
+    "status": "livre",
+    "km": 1.1355813452671477,
+    "ganho": {
+     "media": 0.00015364671220019944,
+     "ic95": [
+      0.00013813250798294495,
+      0.00016916091641745393
+     ],
+     "meiaLargura": 0.00001551420421725448,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_com_causa_comum": {
+     "media": 0.00015274299454900886,
+     "ic95": [
+      0.00013706048312255446,
+      0.00016842550597546326
+     ],
+     "meiaLargura": 0.000015682511426454402,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "ganho_por_km": 0.00013530225099290773,
+    "minutos_par_ano_evitados": {
+     "media": 67.18509784378121,
+     "ic95": [
+      60.40120176570234,
+      73.96899392186008
+     ],
+     "meiaLargura": 6.783896078078866,
+     "n": 50000,
+     "semente": 20261021
+    },
+    "amostras": 50000,
+    "semente": 20261021,
+    "hipoteses": [
+     "traçado: livre",
+     "km = linha reta × 1.2",
+     "velocidade comercial 36 km/h",
+     "livre:STATION_M142-STATION_M258: taxas por km herdadas da média da rede",
+     "pares ponderados pela oferta de hoje (util)",
+     "rota alternativa ligada",
+     "sem retorno parcial: trecho bloqueado para a linha inteira"
+    ]
+   }
+  ]
+ }
+}

@@ -25,6 +25,8 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: "3.11"
+          cache: pip
+          cache-dependency-path: pipeline/requirements.txt
 
       - uses: actions/setup-node@v7
         with:
@@ -38,6 +40,11 @@ jobs:
           mkdir -p _verificacao
           python -I pipeline/verifica_fontes.py --baixa-release --recalcula | tee _verificacao/relatorio.txt
 
+      - name: Testar o pipeline (critérios de aceite das specs, versões fixadas)
+        run: |
+          python -m pip install -r pipeline/requirements.txt
+          python -m pytest pipeline/tests -q
+
       - name: Testar e construir o app
         working-directory: app
         run: |
@@ -47,6 +54,17 @@ jobs:
 
       - name: Montar o site
         run: python -I publicacao/monta_site.py --relatorio _verificacao/relatorio.txt
+
+      - name: Incluir as versões congeladas (Releases v*, spec 013)
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for t in $(gh release list --limit 100 --json tagName --jq '.[].tagName | select(startswith("v"))'); do
+            gh release download "$t" --pattern "site-$t.zip" --dir "$RUNNER_TEMP/versoes" || { echo "sem zip do site em $t"; continue; }
+            mkdir -p "_site/versoes/$t"
+            unzip -q "$RUNNER_TEMP/versoes/site-$t.zip" -d "_site/versoes/$t"
+          done
 
       - uses: actions/configure-pages@v6
 

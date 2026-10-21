@@ -1,6 +1,6 @@
 # 004 — Exposição: trens-hora e km-carro
 
-**Status:** especificada
+**Status:** implementada com exceções
 **Fase:** F1 (semanas 2 e 3)
 **Depende de:** 000, 001, 002
 
@@ -22,6 +22,19 @@ Quanto serviço cada linha ofereceu em cada hora, para que a taxa de falha seja 
 - Dadas as horas de greve da spec 003, quando a exposição é montada, então essas horas têm a oferta reduzida, e não a oferta normal.
 - Dado o km real, quando dividido por frota, então MR-73 e MPM-10 somam o total menos os 22 registros do material tipo 63, e a diferença aparece no relatório.
 - Dada cada linha, hora e frota, quando a tabela de exposição é gravada, então cada valor tem fonte (km real ou horário) e status.
+
+## Resultado (2026-10-21)
+
+Script `pipeline/exposicao.py`; testes em `pipeline/tests/test_exposicao.py`; relatório em [`fontes/verificacao/exposicao.md`](../../fontes/verificacao/exposicao.md).
+
+| Critério | Resultado |
+|---|---|
+| Trens em viagem às 08:00: 26, 32, 2 e 9 (±1) | **Atende**: 26, 31, 2 e 9 |
+| Erro mensal até 10% de 2019-01 a 2023-09 | **Exceção**: 216 de 220 meses-linha. Fora: Verde, Azul e Laranja em 2020-04 (+17%, +16%, +16%; oferta cortada no meio do mês, início da pandemia) e Amarela em 2019-06 (−10,75%). Erro mediano de 0,44% |
+| Depois de 2023-09, status "estimado" | **Atende** (teste) |
+| Greves reduzem a oferta | **Atende**: fração da hora com serviço (spec 003) |
+| MR-73 e MPM-10 somam o total menos os 22 registros do tipo 63 | **Atende**: diferença de 15,7 km, igual ao km do tipo 63 |
+| Cada valor com fonte e status | **Atende**: `exposicao_diaria.csv` e `frota_mensal.csv` |
 
 ## Fora de escopo
 - Exposição por passageiro: não existe dado diário de passageiros.

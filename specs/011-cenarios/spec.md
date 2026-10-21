@@ -1,6 +1,6 @@
 # 011 — Cenários e parâmetros ajustáveis
 
-**Status:** especificada
+**Status:** implementada
 **Fase:** F4 (semanas 6 a 8)
 **Depende de:** 005, 006, 008, 009
 
@@ -19,6 +19,19 @@ A equipe consegue mudar clima, eventos, frota e políticas, rodar o cenário e c
 - Dados dois cenários, quando comparados, então a página mostra a diferença de cada métrica com intervalo de 95%.
 - Dado um cenário de clima (por exemplo, dia de chuva congelante), quando escolhido, então muda a taxa de falha pelos multiplicadores da spec 005, e não por um número escolhido à mão.
 - Dado o cenário padrão, quando a página abre, então já mostra um resultado pronto, sem exigir configuração.
+
+## Resultado (2026-10-21)
+
+Página `/simulador/` (abas dia, muitos dias, comparação, expansão e parâmetros); testes em `app/tests/simulador/`.
+
+| Critério | Resultado |
+|---|---|
+| O link guarda parâmetros e semente e reproduz os mesmos números | **Atende** (teste de ida e volta e de determinismo com o mesmo link) |
+| Cada parâmetro com IC 95% ou o rótulo de status, com link para a fonte | **Atende** |
+| Aviso de extrapolação | **Atende**: a partir das horas observadas em cada combinação de condições e das faixas das hipóteses |
+| Diferença entre dois cenários com IC 95% | **Atende**: comparação pareada com números aleatórios comuns |
+| Clima muda a taxa só pelos multiplicadores da spec 005 | **Atende** (teste do mapeamento) |
+| Resultado pronto ao abrir | **Atende**: 1.000 dias no cenário padrão, rodados ao abrir |
 
 ## Fora de escopo
 - Salvar cenários num servidor ou em conta de usuário: o compartilhamento é pelo link.

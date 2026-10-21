@@ -1,0 +1,991 @@
+linha;mes;frota;km_carro;parcela_km_linha;status;fonte
+verde;2019-01;MPM-10;1048986.045;0.387157;medido;km real da STM (Type matériel)
+verde;2019-01;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2019-01;MR-73;1660470.903;0.612843;medido;km real da STM (Type matériel)
+verde;2019-02;MPM-10;1096478.757;0.437208;medido;km real da STM (Type matériel)
+verde;2019-02;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2019-02;MR-73;1411432.632;0.562792;medido;km real da STM (Type matériel)
+verde;2019-03;MPM-10;1278479.691;0.460098;medido;km real da STM (Type matériel)
+verde;2019-03;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2019-03;MR-73;1500231.405;0.539902;medido;km real da STM (Type matériel)
+verde;2019-04;MPM-10;1103197.329;0.399511;medido;km real da STM (Type matériel)
+verde;2019-04;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2019-04;MR-73;1658173.401;0.600489;medido;km real da STM (Type matériel)
+verde;2019-05;MPM-10;1027564.677;0.354617;medido;km real da STM (Type matériel)
+verde;2019-05;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2019-05;MR-73;1870105.95;0.645383;medido;km real da STM (Type matériel)
+verde;2019-06;MPM-10;1094101.173;0.414888;medido;km real da STM (Type matériel)
+verde;2019-06;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2019-06;MR-73;1542997.323;0.585112;medido;km real da STM (Type matériel)
+verde;2019-07;MPM-10;1235188.179;0.463389;medido;km real da STM (Type matériel)
+verde;2019-07;MR-63;3.567;1e-06;medido;km real da STM (Type matériel)
+verde;2019-07;MR-73;1430358.969;0.536609;medido;km real da STM (Type matériel)
+verde;2019-08;MPM-10;1068052.662;0.390387;medido;km real da STM (Type matériel)
+verde;2019-08;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2019-08;MR-73;1667829.018;0.609613;medido;km real da STM (Type matériel)
+verde;2019-09;MPM-10;969293.502;0.354307;medido;km real da STM (Type matériel)
+verde;2019-09;MR-63;0.516;0.0;medido;km real da STM (Type matériel)
+verde;2019-09;MR-73;1766453.196;0.645693;medido;km real da STM (Type matériel)
+verde;2019-10;MPM-10;917158.743;0.317754;medido;km real da STM (Type matériel)
+verde;2019-10;MR-63;3.261;1e-06;medido;km real da STM (Type matériel)
+verde;2019-10;MR-73;1969215.783;0.682245;medido;km real da STM (Type matériel)
+verde;2019-11;MPM-10;915393.285;0.327051;medido;km real da STM (Type matériel)
+verde;2019-11;MR-63;0.684;0.0;medido;km real da STM (Type matériel)
+verde;2019-11;MR-73;1883534.877;0.672948;medido;km real da STM (Type matériel)
+verde;2019-12;MPM-10;1059304.383;0.380069;medido;km real da STM (Type matériel)
+verde;2019-12;MR-63;0.087;0.0;medido;km real da STM (Type matériel)
+verde;2019-12;MR-73;1727832.561;0.619931;medido;km real da STM (Type matériel)
+verde;2020-01;MPM-10;1061462.106;0.375202;medido;km real da STM (Type matériel)
+verde;2020-01;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2020-01;MR-73;1767577.68;0.624798;medido;km real da STM (Type matériel)
+verde;2020-02;MPM-10;1025110.377;0.380176;medido;km real da STM (Type matériel)
+verde;2020-02;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2020-02;MR-73;1671303.105;0.619824;medido;km real da STM (Type matériel)
+verde;2020-03;MPM-10;1192489.758;0.421235;medido;km real da STM (Type matériel)
+verde;2020-03;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2020-03;MR-73;1638446.079;0.578765;medido;km real da STM (Type matériel)
+verde;2020-04;MPM-10;1108872.54;0.532674;medido;km real da STM (Type matériel)
+verde;2020-04;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2020-04;MR-73;972837.264;0.467326;medido;km real da STM (Type matériel)
+verde;2020-05;MPM-10;1387211.454;0.496273;medido;km real da STM (Type matériel)
+verde;2020-05;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2020-05;MR-73;1408046.565;0.503727;medido;km real da STM (Type matériel)
+verde;2020-06;MPM-10;1324585.908;0.495977;medido;km real da STM (Type matériel)
+verde;2020-06;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2020-06;MR-73;1346075.451;0.504023;medido;km real da STM (Type matériel)
+verde;2020-07;MPM-10;1342763.973;0.501982;medido;km real da STM (Type matériel)
+verde;2020-07;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2020-07;MR-73;1332161.478;0.498018;medido;km real da STM (Type matériel)
+verde;2020-08;MPM-10;1180307.961;0.446605;medido;km real da STM (Type matériel)
+verde;2020-08;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2020-08;MR-73;1462536.246;0.553395;medido;km real da STM (Type matériel)
+verde;2020-09;MPM-10;1466558.226;0.568398;medido;km real da STM (Type matériel)
+verde;2020-09;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2020-09;MR-73;1113600.933;0.431602;medido;km real da STM (Type matériel)
+verde;2020-10;MPM-10;1643969.961;0.623726;medido;km real da STM (Type matériel)
+verde;2020-10;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2020-10;MR-73;991753.893;0.376274;medido;km real da STM (Type matériel)
+verde;2020-11;MPM-10;1602887.355;0.625773;medido;km real da STM (Type matériel)
+verde;2020-11;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2020-11;MR-73;958562.613;0.374227;medido;km real da STM (Type matériel)
+verde;2020-12;MPM-10;1695351.213;0.641446;medido;km real da STM (Type matériel)
+verde;2020-12;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2020-12;MR-73;947662.074;0.358554;medido;km real da STM (Type matériel)
+verde;2021-01;MPM-10;1781474.427;0.687442;medido;km real da STM (Type matériel)
+verde;2021-01;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2021-01;MR-73;809980.629;0.312558;medido;km real da STM (Type matériel)
+verde;2021-02;MPM-10;1656645.552;0.681781;medido;km real da STM (Type matériel)
+verde;2021-02;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2021-02;MR-73;773233.647;0.318219;medido;km real da STM (Type matériel)
+verde;2021-03;MPM-10;1890100.62;0.701813;medido;km real da STM (Type matériel)
+verde;2021-03;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2021-03;MR-73;803067.138;0.298187;medido;km real da STM (Type matériel)
+verde;2021-04;MPM-10;1952611.83;0.766674;medido;km real da STM (Type matériel)
+verde;2021-04;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2021-04;MR-73;594247.656;0.233326;medido;km real da STM (Type matériel)
+verde;2021-05;MPM-10;2073457.512;0.796876;medido;km real da STM (Type matériel)
+verde;2021-05;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2021-05;MR-73;528525.468;0.203124;medido;km real da STM (Type matériel)
+verde;2021-06;MPM-10;2119897.521;0.843032;medido;km real da STM (Type matériel)
+verde;2021-06;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2021-06;MR-73;394713.321;0.156968;medido;km real da STM (Type matériel)
+verde;2021-07;MPM-10;2218665.393;0.87208;medido;km real da STM (Type matériel)
+verde;2021-07;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2021-07;MR-73;325441.689;0.12792;medido;km real da STM (Type matériel)
+verde;2021-08;MPM-10;2184024.591;0.836932;medido;km real da STM (Type matériel)
+verde;2021-08;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2021-08;MR-73;425536.32;0.163068;medido;km real da STM (Type matériel)
+verde;2021-09;MPM-10;2013447.987;0.778285;medido;km real da STM (Type matériel)
+verde;2021-09;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2021-09;MR-73;573582.276;0.221715;medido;km real da STM (Type matériel)
+verde;2021-10;MPM-10;2256416.271;0.864368;medido;km real da STM (Type matériel)
+verde;2021-10;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2021-10;MR-73;354064.566;0.135632;medido;km real da STM (Type matériel)
+verde;2021-11;MPM-10;2175916.977;0.839673;medido;km real da STM (Type matériel)
+verde;2021-11;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2021-11;MR-73;415468.938;0.160327;medido;km real da STM (Type matériel)
+verde;2021-12;MPM-10;2204318.772;0.816867;medido;km real da STM (Type matériel)
+verde;2021-12;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2021-12;MR-73;494185.842;0.183133;medido;km real da STM (Type matériel)
+verde;2022-01;MPM-10;2230873.569;0.84679;medido;km real da STM (Type matériel)
+verde;2022-01;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2022-01;MR-73;403632.768;0.15321;medido;km real da STM (Type matériel)
+verde;2022-02;MPM-10;1960585.893;0.809291;medido;km real da STM (Type matériel)
+verde;2022-02;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2022-02;MR-73;462011.235;0.190709;medido;km real da STM (Type matériel)
+verde;2022-03;MPM-10;2267412.507;0.834799;medido;km real da STM (Type matériel)
+verde;2022-03;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2022-03;MR-73;448705.326;0.165201;medido;km real da STM (Type matériel)
+verde;2022-04;MPM-10;2156155.686;0.863738;medido;km real da STM (Type matériel)
+verde;2022-04;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2022-04;MR-73;340152.282;0.136262;medido;km real da STM (Type matériel)
+verde;2022-05;MPM-10;2160942.687;0.825363;medido;km real da STM (Type matériel)
+verde;2022-05;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2022-05;MR-73;457230.51;0.174637;medido;km real da STM (Type matériel)
+verde;2022-06;MPM-10;1972864.539;0.788122;medido;km real da STM (Type matériel)
+verde;2022-06;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2022-06;MR-73;530384.415;0.211878;medido;km real da STM (Type matériel)
+verde;2022-07;MPM-10;1981042.191;0.787664;medido;km real da STM (Type matériel)
+verde;2022-07;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2022-07;MR-73;534042.45;0.212336;medido;km real da STM (Type matériel)
+verde;2022-08;MPM-10;1943179.866;0.736003;medido;km real da STM (Type matériel)
+verde;2022-08;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2022-08;MR-73;696999.762;0.263997;medido;km real da STM (Type matériel)
+verde;2022-09;MPM-10;1978753.401;0.756909;medido;km real da STM (Type matériel)
+verde;2022-09;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2022-09;MR-73;635503.518;0.243091;medido;km real da STM (Type matériel)
+verde;2022-10;MPM-10;2007055.665;0.764459;medido;km real da STM (Type matériel)
+verde;2022-10;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2022-10;MR-73;618402.645;0.235541;medido;km real da STM (Type matériel)
+verde;2022-11;MPM-10;1893701.331;0.712233;medido;km real da STM (Type matériel)
+verde;2022-11;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2022-11;MR-73;765122.583;0.287767;medido;km real da STM (Type matériel)
+verde;2022-12;MPM-10;2055339.63;0.769612;medido;km real da STM (Type matériel)
+verde;2022-12;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2022-12;MR-73;615278.331;0.230388;medido;km real da STM (Type matériel)
+verde;2023-01;MPM-10;1624481.739;0.667977;medido;km real da STM (Type matériel)
+verde;2023-01;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2023-01;MR-73;807460.296;0.332023;medido;km real da STM (Type matériel)
+verde;2023-02;MPM-10;1341320.85;0.611748;medido;km real da STM (Type matériel)
+verde;2023-02;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2023-02;MR-73;851284.134;0.388252;medido;km real da STM (Type matériel)
+verde;2023-03;MPM-10;1078640.613;0.444608;medido;km real da STM (Type matériel)
+verde;2023-03;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2023-03;MR-73;1347408.369;0.555392;medido;km real da STM (Type matériel)
+verde;2023-04;MPM-10;1366174.755;0.605384;medido;km real da STM (Type matériel)
+verde;2023-04;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2023-04;MR-73;890533.764;0.394616;medido;km real da STM (Type matériel)
+verde;2023-05;MPM-10;1692417.375;0.694984;medido;km real da STM (Type matériel)
+verde;2023-05;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2023-05;MR-73;742770.24;0.305016;medido;km real da STM (Type matériel)
+verde;2023-06;MPM-10;1979553.96;0.810186;medido;km real da STM (Type matériel)
+verde;2023-06;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2023-06;MR-73;463779.312;0.189814;medido;km real da STM (Type matériel)
+verde;2023-07;MPM-10;2273743.647;0.894187;medido;km real da STM (Type matériel)
+verde;2023-07;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2023-07;MR-73;269063.055;0.105813;medido;km real da STM (Type matériel)
+verde;2023-08;MPM-10;2281803.363;0.873172;medido;km real da STM (Type matériel)
+verde;2023-08;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2023-08;MR-73;331432.74;0.126828;medido;km real da STM (Type matériel)
+verde;2023-09;MPM-10;1993388.778;0.850282;medido;km real da STM (Type matériel)
+verde;2023-09;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+verde;2023-09;MR-73;350995.455;0.149718;medido;km real da STM (Type matériel)
+verde;2023-10;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2023-10;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2023-10;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2023-11;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2023-11;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2023-11;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2023-12;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2023-12;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2023-12;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-01;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-01;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-01;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-02;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-02;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-02;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-03;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-03;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-03;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-04;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-04;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-04;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-05;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-05;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-05;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-06;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-06;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-06;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-07;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-07;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-07;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-08;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-08;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-08;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-09;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-09;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-09;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-10;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-10;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-10;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-11;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-11;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-11;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-12;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-12;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2024-12;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-01;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-01;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-01;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-02;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-02;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-02;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-03;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-03;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-03;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-04;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-04;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-04;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-05;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-05;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-05;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-06;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-06;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-06;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-07;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-07;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-07;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-08;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-08;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-08;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-09;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-09;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-09;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-10;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-10;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-10;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-11;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-11;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-11;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-12;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-12;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2025-12;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2026-01;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2026-01;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2026-01;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2026-02;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2026-02;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2026-02;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2026-03;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2026-03;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2026-03;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2026-04;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2026-04;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2026-04;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2026-05;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2026-05;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2026-05;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2026-06;MPM-10;;0.728299;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2026-06;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+verde;2026-06;MR-73;;0.271701;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2019-01;MPM-10;3702643.461;0.998999;medido;km real da STM (Type matériel)
+laranja;2019-01;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2019-01;MR-73;3708.699;0.001001;medido;km real da STM (Type matériel)
+laranja;2019-02;MPM-10;3417715.188;0.998677;medido;km real da STM (Type matériel)
+laranja;2019-02;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2019-02;MR-73;4525.944;0.001323;medido;km real da STM (Type matériel)
+laranja;2019-03;MPM-10;3768786.684;0.998501;medido;km real da STM (Type matériel)
+laranja;2019-03;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2019-03;MR-73;5656.659;0.001499;medido;km real da STM (Type matériel)
+laranja;2019-04;MPM-10;3672820.899;0.998839;medido;km real da STM (Type matériel)
+laranja;2019-04;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2019-04;MR-73;4269.795;0.001161;medido;km real da STM (Type matériel)
+laranja;2019-05;MPM-10;3876725.727;0.99887;medido;km real da STM (Type matériel)
+laranja;2019-05;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2019-05;MR-73;4386.828;0.00113;medido;km real da STM (Type matériel)
+laranja;2019-06;MPM-10;3606542.271;0.998842;medido;km real da STM (Type matériel)
+laranja;2019-06;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2019-06;MR-73;4180.344;0.001158;medido;km real da STM (Type matériel)
+laranja;2019-07;MPM-10;3742664.013;0.998447;medido;km real da STM (Type matériel)
+laranja;2019-07;MR-63;1.374;0.0;medido;km real da STM (Type matériel)
+laranja;2019-07;MR-73;5818.536;0.001552;medido;km real da STM (Type matériel)
+laranja;2019-08;MPM-10;3765430.467;0.998963;medido;km real da STM (Type matériel)
+laranja;2019-08;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2019-08;MR-73;3908.928;0.001037;medido;km real da STM (Type matériel)
+laranja;2019-09;MPM-10;3533995.332;0.998877;medido;km real da STM (Type matériel)
+laranja;2019-09;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2019-09;MR-73;3974.265;0.001123;medido;km real da STM (Type matériel)
+laranja;2019-10;MPM-10;3851673.021;0.998875;medido;km real da STM (Type matériel)
+laranja;2019-10;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2019-10;MR-73;4338.432;0.001125;medido;km real da STM (Type matériel)
+laranja;2019-11;MPM-10;3714454.125;0.998774;medido;km real da STM (Type matériel)
+laranja;2019-11;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2019-11;MR-73;4561.221;0.001226;medido;km real da STM (Type matériel)
+laranja;2019-12;MPM-10;3724113.312;0.999073;medido;km real da STM (Type matériel)
+laranja;2019-12;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2019-12;MR-73;3456.303;0.000927;medido;km real da STM (Type matériel)
+laranja;2020-01;MPM-10;3782635.974;0.998944;medido;km real da STM (Type matériel)
+laranja;2020-01;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2020-01;MR-73;3999.882;0.001056;medido;km real da STM (Type matériel)
+laranja;2020-02;MPM-10;3610507.797;0.998818;medido;km real da STM (Type matériel)
+laranja;2020-02;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2020-02;MR-73;4271.61;0.001182;medido;km real da STM (Type matériel)
+laranja;2020-03;MPM-10;3781958.31;0.998884;medido;km real da STM (Type matériel)
+laranja;2020-03;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2020-03;MR-73;4223.847;0.001116;medido;km real da STM (Type matériel)
+laranja;2020-04;MPM-10;2812806.036;0.99886;medido;km real da STM (Type matériel)
+laranja;2020-04;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2020-04;MR-73;3209.259;0.00114;medido;km real da STM (Type matériel)
+laranja;2020-05;MPM-10;3690283.608;0.998872;medido;km real da STM (Type matériel)
+laranja;2020-05;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2020-05;MR-73;4168.212;0.001128;medido;km real da STM (Type matériel)
+laranja;2020-06;MPM-10;3560928.507;0.998624;medido;km real da STM (Type matériel)
+laranja;2020-06;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2020-06;MR-73;4906.386;0.001376;medido;km real da STM (Type matériel)
+laranja;2020-07;MPM-10;3563631.648;0.998726;medido;km real da STM (Type matériel)
+laranja;2020-07;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2020-07;MR-73;4546.317;0.001274;medido;km real da STM (Type matériel)
+laranja;2020-08;MPM-10;3526354.395;0.999145;medido;km real da STM (Type matériel)
+laranja;2020-08;MR-63;0.699;0.0;medido;km real da STM (Type matériel)
+laranja;2020-08;MR-73;3017.499;0.000855;medido;km real da STM (Type matériel)
+laranja;2020-09;MPM-10;3453133.122;0.999067;medido;km real da STM (Type matériel)
+laranja;2020-09;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2020-09;MR-73;3223.425;0.000933;medido;km real da STM (Type matériel)
+laranja;2020-10;MPM-10;3534745.293;0.998923;medido;km real da STM (Type matériel)
+laranja;2020-10;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2020-10;MR-73;3812.073;0.001077;medido;km real da STM (Type matériel)
+laranja;2020-11;MPM-10;3449789.154;0.999143;medido;km real da STM (Type matériel)
+laranja;2020-11;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2020-11;MR-73;2960.166;0.000857;medido;km real da STM (Type matériel)
+laranja;2020-12;MPM-10;3553180.515;0.99883;medido;km real da STM (Type matériel)
+laranja;2020-12;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2020-12;MR-73;4163.808;0.00117;medido;km real da STM (Type matériel)
+laranja;2021-01;MPM-10;3450504.942;0.998905;medido;km real da STM (Type matériel)
+laranja;2021-01;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2021-01;MR-73;3781.764;0.001095;medido;km real da STM (Type matériel)
+laranja;2021-02;MPM-10;3257180.172;0.999199;medido;km real da STM (Type matériel)
+laranja;2021-02;MR-63;0.177;0.0;medido;km real da STM (Type matériel)
+laranja;2021-02;MR-73;2611.155;0.000801;medido;km real da STM (Type matériel)
+laranja;2021-03;MPM-10;3633822.189;0.998983;medido;km real da STM (Type matériel)
+laranja;2021-03;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2021-03;MR-73;3699.963;0.001017;medido;km real da STM (Type matériel)
+laranja;2021-04;MPM-10;3421797.354;0.999103;medido;km real da STM (Type matériel)
+laranja;2021-04;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2021-04;MR-73;3073.581;0.000897;medido;km real da STM (Type matériel)
+laranja;2021-05;MPM-10;3479420.169;0.998674;medido;km real da STM (Type matériel)
+laranja;2021-05;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2021-05;MR-73;4619.037;0.001326;medido;km real da STM (Type matériel)
+laranja;2021-06;MPM-10;3448830.744;0.998033;medido;km real da STM (Type matériel)
+laranja;2021-06;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2021-06;MR-73;6797.955;0.001967;medido;km real da STM (Type matériel)
+laranja;2021-07;MPM-10;3425248.584;0.998006;medido;km real da STM (Type matériel)
+laranja;2021-07;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2021-07;MR-73;6843.702;0.001994;medido;km real da STM (Type matériel)
+laranja;2021-08;MPM-10;3514791.483;0.998717;medido;km real da STM (Type matériel)
+laranja;2021-08;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2021-08;MR-73;4515.996;0.001283;medido;km real da STM (Type matériel)
+laranja;2021-09;MPM-10;3460362.552;0.99831;medido;km real da STM (Type matériel)
+laranja;2021-09;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2021-09;MR-73;5859.039;0.00169;medido;km real da STM (Type matériel)
+laranja;2021-10;MPM-10;3491393.526;0.997323;medido;km real da STM (Type matériel)
+laranja;2021-10;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2021-10;MR-73;9370.533;0.002677;medido;km real da STM (Type matériel)
+laranja;2021-11;MPM-10;3506412.663;0.997161;medido;km real da STM (Type matériel)
+laranja;2021-11;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2021-11;MR-73;9981.633;0.002839;medido;km real da STM (Type matériel)
+laranja;2021-12;MPM-10;3620178.135;0.997223;medido;km real da STM (Type matériel)
+laranja;2021-12;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2021-12;MR-73;10081.716;0.002777;medido;km real da STM (Type matériel)
+laranja;2022-01;MPM-10;3495902.607;0.996018;medido;km real da STM (Type matériel)
+laranja;2022-01;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2022-01;MR-73;13976.07;0.003982;medido;km real da STM (Type matériel)
+laranja;2022-02;MPM-10;3227114.511;0.996423;medido;km real da STM (Type matériel)
+laranja;2022-02;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2022-02;MR-73;11584.353;0.003577;medido;km real da STM (Type matériel)
+laranja;2022-03;MPM-10;3645599.841;0.997164;medido;km real da STM (Type matériel)
+laranja;2022-03;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2022-03;MR-73;10368.777;0.002836;medido;km real da STM (Type matériel)
+laranja;2022-04;MPM-10;3391995.015;0.996523;medido;km real da STM (Type matériel)
+laranja;2022-04;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2022-04;MR-73;11836.797;0.003477;medido;km real da STM (Type matériel)
+laranja;2022-05;MPM-10;3516313.905;0.997573;medido;km real da STM (Type matériel)
+laranja;2022-05;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2022-05;MR-73;8554.14;0.002427;medido;km real da STM (Type matériel)
+laranja;2022-06;MPM-10;3426196.068;0.998345;medido;km real da STM (Type matériel)
+laranja;2022-06;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2022-06;MR-73;5678.913;0.001655;medido;km real da STM (Type matériel)
+laranja;2022-07;MPM-10;3472413.282;0.998025;medido;km real da STM (Type matériel)
+laranja;2022-07;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2022-07;MR-73;6870.969;0.001975;medido;km real da STM (Type matériel)
+laranja;2022-08;MPM-10;3602016.288;0.99865;medido;km real da STM (Type matériel)
+laranja;2022-08;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2022-08;MR-73;4868.514;0.00135;medido;km real da STM (Type matériel)
+laranja;2022-09;MPM-10;3434172.174;0.998615;medido;km real da STM (Type matériel)
+laranja;2022-09;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2022-09;MR-73;4761.447;0.001385;medido;km real da STM (Type matériel)
+laranja;2022-10;MPM-10;3482462.061;0.997624;medido;km real da STM (Type matériel)
+laranja;2022-10;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2022-10;MR-73;8294.655;0.002376;medido;km real da STM (Type matériel)
+laranja;2022-11;MPM-10;3510467.316;0.999186;medido;km real da STM (Type matériel)
+laranja;2022-11;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2022-11;MR-73;2860.287;0.000814;medido;km real da STM (Type matériel)
+laranja;2022-12;MPM-10;3515194.854;0.998428;medido;km real da STM (Type matériel)
+laranja;2022-12;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2022-12;MR-73;5534.793;0.001572;medido;km real da STM (Type matériel)
+laranja;2023-01;MPM-10;3392275.518;0.999102;medido;km real da STM (Type matériel)
+laranja;2023-01;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2023-01;MR-73;3050.25;0.000898;medido;km real da STM (Type matériel)
+laranja;2023-02;MPM-10;3085922.88;0.999014;medido;km real da STM (Type matériel)
+laranja;2023-02;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2023-02;MR-73;3045.297;0.000986;medido;km real da STM (Type matériel)
+laranja;2023-03;MPM-10;3463333.911;0.998911;medido;km real da STM (Type matériel)
+laranja;2023-03;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2023-03;MR-73;3775.227;0.001089;medido;km real da STM (Type matériel)
+laranja;2023-04;MPM-10;3192672.897;0.999196;medido;km real da STM (Type matériel)
+laranja;2023-04;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2023-04;MR-73;2568.57;0.000804;medido;km real da STM (Type matériel)
+laranja;2023-05;MPM-10;3420688.608;0.998014;medido;km real da STM (Type matériel)
+laranja;2023-05;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2023-05;MR-73;6808.515;0.001986;medido;km real da STM (Type matériel)
+laranja;2023-06;MPM-10;3406865.04;0.997428;medido;km real da STM (Type matériel)
+laranja;2023-06;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2023-06;MR-73;8784.366;0.002572;medido;km real da STM (Type matériel)
+laranja;2023-07;MPM-10;3490237.863;0.997085;medido;km real da STM (Type matériel)
+laranja;2023-07;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2023-07;MR-73;10202.07;0.002915;medido;km real da STM (Type matériel)
+laranja;2023-08;MPM-10;3575013.786;0.998207;medido;km real da STM (Type matériel)
+laranja;2023-08;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2023-08;MR-73;6422.133;0.001793;medido;km real da STM (Type matériel)
+laranja;2023-09;MPM-10;3299202.27;0.997367;medido;km real da STM (Type matériel)
+laranja;2023-09;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+laranja;2023-09;MR-73;8711.34;0.002633;medido;km real da STM (Type matériel)
+laranja;2023-10;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2023-10;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2023-10;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2023-11;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2023-11;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2023-11;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2023-12;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2023-12;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2023-12;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-01;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-01;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-01;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-02;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-02;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-02;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-03;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-03;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-03;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-04;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-04;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-04;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-05;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-05;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-05;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-06;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-06;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-06;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-07;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-07;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-07;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-08;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-08;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-08;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-09;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-09;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-09;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-10;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-10;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-10;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-11;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-11;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-11;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-12;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-12;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2024-12;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-01;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-01;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-01;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-02;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-02;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-02;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-03;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-03;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-03;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-04;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-04;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-04;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-05;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-05;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-05;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-06;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-06;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-06;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-07;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-07;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-07;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-08;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-08;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-08;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-09;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-09;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-09;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-10;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-10;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-10;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-11;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-11;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-11;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-12;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-12;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2025-12;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2026-01;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2026-01;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2026-01;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2026-02;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2026-02;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2026-02;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2026-03;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2026-03;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2026-03;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2026-04;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2026-04;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2026-04;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2026-05;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2026-05;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2026-05;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2026-06;MPM-10;;0.998287;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2026-06;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+laranja;2026-06;MR-73;;0.001713;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2019-01;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2019-01;MR-73;401379.255;1.0;medido;km real da STM (Type matériel)
+amarela;2019-02;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2019-02;MR-73;364629.384;1.0;medido;km real da STM (Type matériel)
+amarela;2019-03;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2019-03;MR-73;395640.594;1.0;medido;km real da STM (Type matériel)
+amarela;2019-04;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2019-04;MR-73;380054.106;1.0;medido;km real da STM (Type matériel)
+amarela;2019-05;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2019-05;MR-73;407812.338;1.0;medido;km real da STM (Type matériel)
+amarela;2019-06;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2019-06;MR-73;451205.604;1.0;medido;km real da STM (Type matériel)
+amarela;2019-07;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2019-07;MR-73;483197.379;1.0;medido;km real da STM (Type matériel)
+amarela;2019-08;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2019-08;MR-73;491599.98;1.0;medido;km real da STM (Type matériel)
+amarela;2019-09;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2019-09;MR-73;429906.591;1.0;medido;km real da STM (Type matériel)
+amarela;2019-10;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2019-10;MR-73;416550.264;1.0;medido;km real da STM (Type matériel)
+amarela;2019-11;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2019-11;MR-73;402488.313;1.0;medido;km real da STM (Type matériel)
+amarela;2019-12;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2019-12;MR-73;411298.854;1.0;medido;km real da STM (Type matériel)
+amarela;2020-01;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2020-01;MR-73;416453.727;1.0;medido;km real da STM (Type matériel)
+amarela;2020-02;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2020-02;MR-73;393635.145;1.0;medido;km real da STM (Type matériel)
+amarela;2020-03;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2020-03;MR-73;411694.935;1.0;medido;km real da STM (Type matériel)
+amarela;2020-04;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2020-04;MR-73;341931.27;1.0;medido;km real da STM (Type matériel)
+amarela;2020-05;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2020-05;MR-73;406744.296;1.0;medido;km real da STM (Type matériel)
+amarela;2020-06;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2020-06;MR-73;408815.703;1.0;medido;km real da STM (Type matériel)
+amarela;2020-07;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2020-07;MR-73;426266.463;1.0;medido;km real da STM (Type matériel)
+amarela;2020-08;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2020-08;MR-73;412486.113;1.0;medido;km real da STM (Type matériel)
+amarela;2020-09;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2020-09;MR-73;376920.468;1.0;medido;km real da STM (Type matériel)
+amarela;2020-10;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2020-10;MR-73;385786.89;1.0;medido;km real da STM (Type matériel)
+amarela;2020-11;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2020-11;MR-73;376757.82;1.0;medido;km real da STM (Type matériel)
+amarela;2020-12;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2020-12;MR-73;388941.378;1.0;medido;km real da STM (Type matériel)
+amarela;2021-01;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2021-01;MR-73;379459.695;1.0;medido;km real da STM (Type matériel)
+amarela;2021-02;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2021-02;MR-73;351991.089;1.0;medido;km real da STM (Type matériel)
+amarela;2021-03;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2021-03;MR-73;392222.772;1.0;medido;km real da STM (Type matériel)
+amarela;2021-04;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2021-04;MR-73;373298.085;1.0;medido;km real da STM (Type matériel)
+amarela;2021-05;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2021-05;MR-73;383281.128;1.0;medido;km real da STM (Type matériel)
+amarela;2021-06;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2021-06;MR-73;388141.605;1.0;medido;km real da STM (Type matériel)
+amarela;2021-07;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2021-07;MR-73;409589.739;1.0;medido;km real da STM (Type matériel)
+amarela;2021-08;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2021-08;MR-73;411231.636;1.0;medido;km real da STM (Type matériel)
+amarela;2021-09;MPM-10;170.226;0.000441;medido;km real da STM (Type matériel)
+amarela;2021-09;MR-73;386198.361;0.999559;medido;km real da STM (Type matériel)
+amarela;2021-10;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2021-10;MR-73;391399.38;1.0;medido;km real da STM (Type matériel)
+amarela;2021-11;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2021-11;MR-73;379750.845;1.0;medido;km real da STM (Type matériel)
+amarela;2021-12;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2021-12;MR-73;393599.547;1.0;medido;km real da STM (Type matériel)
+amarela;2022-01;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2022-01;MR-73;387044.262;1.0;medido;km real da STM (Type matériel)
+amarela;2022-02;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2022-02;MR-73;351818.517;1.0;medido;km real da STM (Type matériel)
+amarela;2022-03;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2022-03;MR-73;394188.696;1.0;medido;km real da STM (Type matériel)
+amarela;2022-04;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2022-04;MR-73;370182.303;1.0;medido;km real da STM (Type matériel)
+amarela;2022-05;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2022-05;MR-73;388446.39;1.0;medido;km real da STM (Type matériel)
+amarela;2022-06;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2022-06;MR-73;430453.134;1.0;medido;km real da STM (Type matériel)
+amarela;2022-07;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2022-07;MR-73;436229.937;1.0;medido;km real da STM (Type matériel)
+amarela;2022-08;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2022-08;MR-73;425596.638;1.0;medido;km real da STM (Type matériel)
+amarela;2022-09;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2022-09;MR-73;386501.397;1.0;medido;km real da STM (Type matériel)
+amarela;2022-10;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2022-10;MR-73;390630.207;1.0;medido;km real da STM (Type matériel)
+amarela;2022-11;MPM-10;3.015;6e-06;medido;km real da STM (Type matériel)
+amarela;2022-11;MR-73;507091.896;0.999994;medido;km real da STM (Type matériel)
+amarela;2022-12;MPM-10;177.372;0.000351;medido;km real da STM (Type matériel)
+amarela;2022-12;MR-73;504603.441;0.999649;medido;km real da STM (Type matériel)
+amarela;2023-01;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2023-01;MR-73;510397.773;1.0;medido;km real da STM (Type matériel)
+amarela;2023-02;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2023-02;MR-73;469399.464;1.0;medido;km real da STM (Type matériel)
+amarela;2023-03;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2023-03;MR-73;522354.15;1.0;medido;km real da STM (Type matériel)
+amarela;2023-04;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2023-04;MR-73;494214.12;1.0;medido;km real da STM (Type matériel)
+amarela;2023-05;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2023-05;MR-73;534412.392;1.0;medido;km real da STM (Type matériel)
+amarela;2023-06;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2023-06;MR-73;537803.64;1.0;medido;km real da STM (Type matériel)
+amarela;2023-07;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2023-07;MR-73;544266.144;1.0;medido;km real da STM (Type matériel)
+amarela;2023-08;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2023-08;MR-73;579784.074;1.0;medido;km real da STM (Type matériel)
+amarela;2023-09;MPM-10;0.0;0.0;medido;km real da STM (Type matériel)
+amarela;2023-09;MR-73;503079.894;1.0;medido;km real da STM (Type matériel)
+amarela;2023-10;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2023-10;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2023-11;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2023-11;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2023-12;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2023-12;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2024-01;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2024-01;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2024-02;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2024-02;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2024-03;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2024-03;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2024-04;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2024-04;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2024-05;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2024-05;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2024-06;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2024-06;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2024-07;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2024-07;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2024-08;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2024-08;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2024-09;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2024-09;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2024-10;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2024-10;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2024-11;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2024-11;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2024-12;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2024-12;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2025-01;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2025-01;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2025-02;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2025-02;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2025-03;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2025-03;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2025-04;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2025-04;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2025-05;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2025-05;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2025-06;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2025-06;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2025-07;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2025-07;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2025-08;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2025-08;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2025-09;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2025-09;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2025-10;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2025-10;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2025-11;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2025-11;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2025-12;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2025-12;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2026-01;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2026-01;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2026-02;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2026-02;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2026-03;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2026-03;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2026-04;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2026-04;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2026-05;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2026-05;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2026-06;MPM-10;;3e-05;estimado;parcela de 2022-10 a 2023-09, mesma linha
+amarela;2026-06;MR-73;;0.99997;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2019-01;MPM-10;1587.375;0.002187;medido;km real da STM (Type matériel)
+azul;2019-01;MR-63;2.91;4e-06;medido;km real da STM (Type matériel)
+azul;2019-01;MR-73;724108.785;0.997809;medido;km real da STM (Type matériel)
+azul;2019-02;MPM-10;1581.237;0.002343;medido;km real da STM (Type matériel)
+azul;2019-02;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2019-02;MR-73;673229.187;0.997657;medido;km real da STM (Type matériel)
+azul;2019-03;MPM-10;2107.161;0.002863;medido;km real da STM (Type matériel)
+azul;2019-03;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2019-03;MR-73;733905.468;0.997137;medido;km real da STM (Type matériel)
+azul;2019-04;MPM-10;3012.867;0.004228;medido;km real da STM (Type matériel)
+azul;2019-04;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2019-04;MR-73;709559.634;0.995772;medido;km real da STM (Type matériel)
+azul;2019-05;MPM-10;4907.889;0.006583;medido;km real da STM (Type matériel)
+azul;2019-05;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2019-05;MR-73;740632.458;0.993417;medido;km real da STM (Type matériel)
+azul;2019-06;MPM-10;2271.087;0.003458;medido;km real da STM (Type matériel)
+azul;2019-06;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2019-06;MR-73;654473.475;0.996542;medido;km real da STM (Type matériel)
+azul;2019-07;MPM-10;3932.253;0.005937;medido;km real da STM (Type matériel)
+azul;2019-07;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2019-07;MR-73;658403.127;0.994063;medido;km real da STM (Type matériel)
+azul;2019-08;MPM-10;5050.944;0.007386;medido;km real da STM (Type matériel)
+azul;2019-08;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2019-08;MR-73;678825.327;0.992614;medido;km real da STM (Type matériel)
+azul;2019-09;MPM-10;7975.278;0.011116;medido;km real da STM (Type matériel)
+azul;2019-09;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2019-09;MR-73;709511.259;0.988884;medido;km real da STM (Type matériel)
+azul;2019-10;MPM-10;7104.987;0.009364;medido;km real da STM (Type matériel)
+azul;2019-10;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2019-10;MR-73;751681.425;0.990636;medido;km real da STM (Type matériel)
+azul;2019-11;MPM-10;3141.594;0.004335;medido;km real da STM (Type matériel)
+azul;2019-11;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2019-11;MR-73;721596.03;0.995665;medido;km real da STM (Type matériel)
+azul;2019-12;MPM-10;2130.732;0.002927;medido;km real da STM (Type matériel)
+azul;2019-12;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2019-12;MR-73;725759.856;0.997073;medido;km real da STM (Type matériel)
+azul;2020-01;MPM-10;2980.152;0.004021;medido;km real da STM (Type matériel)
+azul;2020-01;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2020-01;MR-73;738159.942;0.995979;medido;km real da STM (Type matériel)
+azul;2020-02;MPM-10;2662.362;0.003804;medido;km real da STM (Type matériel)
+azul;2020-02;MR-63;0.489;1e-06;medido;km real da STM (Type matériel)
+azul;2020-02;MR-73;697256.07;0.996195;medido;km real da STM (Type matériel)
+azul;2020-03;MPM-10;2274.696;0.003098;medido;km real da STM (Type matériel)
+azul;2020-03;MR-63;0.489;1e-06;medido;km real da STM (Type matériel)
+azul;2020-03;MR-73;731998.647;0.996901;medido;km real da STM (Type matériel)
+azul;2020-04;MPM-10;1276.452;0.00232;medido;km real da STM (Type matériel)
+azul;2020-04;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2020-04;MR-73;549026.637;0.99768;medido;km real da STM (Type matériel)
+azul;2020-05;MPM-10;702.252;0.000964;medido;km real da STM (Type matériel)
+azul;2020-05;MR-63;0.978;1e-06;medido;km real da STM (Type matériel)
+azul;2020-05;MR-73;727557.423;0.999034;medido;km real da STM (Type matériel)
+azul;2020-06;MPM-10;1755.369;0.002536;medido;km real da STM (Type matériel)
+azul;2020-06;MR-63;0.489;1e-06;medido;km real da STM (Type matériel)
+azul;2020-06;MR-73;690399.945;0.997463;medido;km real da STM (Type matériel)
+azul;2020-07;MPM-10;2800.017;0.004084;medido;km real da STM (Type matériel)
+azul;2020-07;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2020-07;MR-73;682868.793;0.995916;medido;km real da STM (Type matériel)
+azul;2020-08;MPM-10;6311.619;0.009297;medido;km real da STM (Type matériel)
+azul;2020-08;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2020-08;MR-73;672571.932;0.990703;medido;km real da STM (Type matériel)
+azul;2020-09;MPM-10;7145.037;0.010755;medido;km real da STM (Type matériel)
+azul;2020-09;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2020-09;MR-73;657212.826;0.989245;medido;km real da STM (Type matériel)
+azul;2020-10;MPM-10;5692.167;0.00837;medido;km real da STM (Type matériel)
+azul;2020-10;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2020-10;MR-73;674367.612;0.99163;medido;km real da STM (Type matériel)
+azul;2020-11;MPM-10;3981.483;0.006007;medido;km real da STM (Type matériel)
+azul;2020-11;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2020-11;MR-73;658851.87;0.993993;medido;km real da STM (Type matériel)
+azul;2020-12;MPM-10;4337.388;0.006337;medido;km real da STM (Type matériel)
+azul;2020-12;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2020-12;MR-73;680069.472;0.993663;medido;km real da STM (Type matériel)
+azul;2021-01;MPM-10;4778.622;0.007143;medido;km real da STM (Type matériel)
+azul;2021-01;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2021-01;MR-73;664196.589;0.992857;medido;km real da STM (Type matériel)
+azul;2021-02;MPM-10;4472.946;0.00718;medido;km real da STM (Type matériel)
+azul;2021-02;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2021-02;MR-73;618525.972;0.99282;medido;km real da STM (Type matériel)
+azul;2021-03;MPM-10;4562.145;0.006569;medido;km real da STM (Type matériel)
+azul;2021-03;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2021-03;MR-73;689920.935;0.993431;medido;km real da STM (Type matériel)
+azul;2021-04;MPM-10;4119.417;0.006248;medido;km real da STM (Type matériel)
+azul;2021-04;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2021-04;MR-73;655164.477;0.993752;medido;km real da STM (Type matériel)
+azul;2021-05;MPM-10;4186.764;0.006239;medido;km real da STM (Type matériel)
+azul;2021-05;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2021-05;MR-73;666836.526;0.993761;medido;km real da STM (Type matériel)
+azul;2021-06;MPM-10;4777.515;0.007461;medido;km real da STM (Type matériel)
+azul;2021-06;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2021-06;MR-73;635594.322;0.992539;medido;km real da STM (Type matériel)
+azul;2021-07;MPM-10;4976.577;0.007726;medido;km real da STM (Type matériel)
+azul;2021-07;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2021-07;MR-73;639142.413;0.992274;medido;km real da STM (Type matériel)
+azul;2021-08;MPM-10;5279.985;0.007982;medido;km real da STM (Type matériel)
+azul;2021-08;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2021-08;MR-73;656200.428;0.992018;medido;km real da STM (Type matériel)
+azul;2021-09;MPM-10;4498.605;0.006785;medido;km real da STM (Type matériel)
+azul;2021-09;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2021-09;MR-73;658528.545;0.993215;medido;km real da STM (Type matériel)
+azul;2021-10;MPM-10;3092.337;0.004615;medido;km real da STM (Type matériel)
+azul;2021-10;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2021-10;MR-73;667022.217;0.995385;medido;km real da STM (Type matériel)
+azul;2021-11;MPM-10;2495.943;0.003723;medido;km real da STM (Type matériel)
+azul;2021-11;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2021-11;MR-73;667846.821;0.996277;medido;km real da STM (Type matériel)
+azul;2021-12;MPM-10;3530.394;0.005103;medido;km real da STM (Type matériel)
+azul;2021-12;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2021-12;MR-73;688238.082;0.994897;medido;km real da STM (Type matériel)
+azul;2022-01;MPM-10;1369.971;0.002025;medido;km real da STM (Type matériel)
+azul;2022-01;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2022-01;MR-73;675127.557;0.997975;medido;km real da STM (Type matériel)
+azul;2022-02;MPM-10;1196.658;0.001921;medido;km real da STM (Type matériel)
+azul;2022-02;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2022-02;MR-73;621603.612;0.998079;medido;km real da STM (Type matériel)
+azul;2022-03;MPM-10;1314.0;0.001895;medido;km real da STM (Type matériel)
+azul;2022-03;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2022-03;MR-73;692204.901;0.998105;medido;km real da STM (Type matériel)
+azul;2022-04;MPM-10;2426.616;0.003731;medido;km real da STM (Type matériel)
+azul;2022-04;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2022-04;MR-73;648001.971;0.996269;medido;km real da STM (Type matériel)
+azul;2022-05;MPM-10;3257.361;0.004847;medido;km real da STM (Type matériel)
+azul;2022-05;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2022-05;MR-73;668846.85;0.995153;medido;km real da STM (Type matériel)
+azul;2022-06;MPM-10;3846.447;0.006145;medido;km real da STM (Type matériel)
+azul;2022-06;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2022-06;MR-73;622085.46;0.993855;medido;km real da STM (Type matériel)
+azul;2022-07;MPM-10;3746.691;0.00589;medido;km real da STM (Type matériel)
+azul;2022-07;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2022-07;MR-73;632373.912;0.99411;medido;km real da STM (Type matériel)
+azul;2022-08;MPM-10;4271.715;0.006384;medido;km real da STM (Type matériel)
+azul;2022-08;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2022-08;MR-73;664836.465;0.993616;medido;km real da STM (Type matériel)
+azul;2022-09;MPM-10;4341.141;0.006552;medido;km real da STM (Type matériel)
+azul;2022-09;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2022-09;MR-73;658222.104;0.993448;medido;km real da STM (Type matériel)
+azul;2022-10;MPM-10;4231.611;0.006305;medido;km real da STM (Type matériel)
+azul;2022-10;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2022-10;MR-73;666887.787;0.993695;medido;km real da STM (Type matériel)
+azul;2022-11;MPM-10;3227.184;0.004812;medido;km real da STM (Type matériel)
+azul;2022-11;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2022-11;MR-73;667464.732;0.995188;medido;km real da STM (Type matériel)
+azul;2022-12;MPM-10;2331.306;0.003444;medido;km real da STM (Type matériel)
+azul;2022-12;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2022-12;MR-73;674587.077;0.996556;medido;km real da STM (Type matériel)
+azul;2023-01;MPM-10;1653.966;0.002508;medido;km real da STM (Type matériel)
+azul;2023-01;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2023-01;MR-73;657882.102;0.997492;medido;km real da STM (Type matériel)
+azul;2023-02;MPM-10;3698.874;0.006106;medido;km real da STM (Type matériel)
+azul;2023-02;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2023-02;MR-73;602042.022;0.993894;medido;km real da STM (Type matériel)
+azul;2023-03;MPM-10;3380.814;0.005018;medido;km real da STM (Type matériel)
+azul;2023-03;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2023-03;MR-73;670291.872;0.994982;medido;km real da STM (Type matériel)
+azul;2023-04;MPM-10;1868.112;0.003038;medido;km real da STM (Type matériel)
+azul;2023-04;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2023-04;MR-73;613080.012;0.996962;medido;km real da STM (Type matériel)
+azul;2023-05;MPM-10;2208.186;0.003321;medido;km real da STM (Type matériel)
+azul;2023-05;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2023-05;MR-73;662794.653;0.996679;medido;km real da STM (Type matériel)
+azul;2023-06;MPM-10;2414.088;0.003764;medido;km real da STM (Type matériel)
+azul;2023-06;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2023-06;MR-73;638974.728;0.996236;medido;km real da STM (Type matériel)
+azul;2023-07;MPM-10;1699.704;0.002665;medido;km real da STM (Type matériel)
+azul;2023-07;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2023-07;MR-73;636137.295;0.997335;medido;km real da STM (Type matériel)
+azul;2023-08;MPM-10;1719.981;0.002615;medido;km real da STM (Type matériel)
+azul;2023-08;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2023-08;MR-73;655922.823;0.997385;medido;km real da STM (Type matériel)
+azul;2023-09;MPM-10;1283.148;0.002028;medido;km real da STM (Type matériel)
+azul;2023-09;MR-63;0.0;0.0;medido;km real da STM (Type matériel)
+azul;2023-09;MR-73;631480.134;0.997972;medido;km real da STM (Type matériel)
+azul;2023-10;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2023-10;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2023-10;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2023-11;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2023-11;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2023-11;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2023-12;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2023-12;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2023-12;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-01;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-01;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-01;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-02;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-02;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-02;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-03;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-03;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-03;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-04;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-04;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-04;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-05;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-05;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-05;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-06;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-06;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-06;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-07;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-07;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-07;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-08;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-08;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-08;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-09;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-09;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-09;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-10;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-10;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-10;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-11;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-11;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-11;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-12;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-12;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2024-12;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-01;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-01;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-01;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-02;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-02;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-02;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-03;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-03;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-03;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-04;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-04;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-04;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-05;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-05;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-05;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-06;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-06;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-06;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-07;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-07;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-07;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-08;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-08;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-08;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-09;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-09;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-09;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-10;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-10;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-10;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-11;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-11;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-11;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-12;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-12;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2025-12;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2026-01;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2026-01;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2026-01;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2026-02;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2026-02;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2026-02;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2026-03;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2026-03;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2026-03;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2026-04;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2026-04;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2026-04;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2026-05;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2026-05;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2026-05;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2026-06;MPM-10;;0.003806;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2026-06;MR-63;;0.0;estimado;parcela de 2022-10 a 2023-09, mesma linha
+azul;2026-06;MR-73;;0.996194;estimado;parcela de 2022-10 a 2023-09, mesma linha

@@ -1,0 +1,61 @@
+{
+ "km_carro_total_milhoes": 411.6315,
+ "km_carro_por_frota": {
+  "MPM-10": 294258032.7,
+  "MR-63": 15.7,
+  "MR-73": 117373473.9
+ },
+ "registros_por_frota": {
+  "MPM-10": 342261,
+  "MR-63": 22,
+  "MR-73": 217266
+ },
+ "total_menos_mr73_e_mpm10_km": 15.72,
+ "trens_em_viagem_08h_dia_util": {
+  "verde": 26,
+  "laranja": 31,
+  "amarela": 2,
+  "azul": 9
+ },
+ "trens_esperados_08h": {
+  "verde": 26,
+  "laranja": 32,
+  "amarela": 2,
+  "azul": 9
+ },
+ "meses_comparados": 220,
+ "meses_com_erro_acima_de_10pct": 4,
+ "pct_meses_dentro": 0.9818,
+ "erro_abs_mediano": 0.0044,
+ "piores_meses": [
+  {
+   "linha": "verde",
+   "mes": "2020-04",
+   "erro": 0.1721
+  },
+  {
+   "linha": "azul",
+   "mes": "2020-04",
+   "erro": 0.1587
+  },
+  {
+   "linha": "laranja",
+   "mes": "2020-04",
+   "erro": 0.1565
+  },
+  {
+   "linha": "amarela",
+   "mes": "2019-06",
+   "erro": -0.1075
+  }
+ ],
+ "dias_medidos": 6936,
+ "dias_estimados": 4016,
+ "dias_de_greve": 25,
+ "km_molde_dia_util_trem_km": {
+  "verde": 10507.2,
+  "laranja": 13981.0,
+  "amarela": 1307.8,
+  "azul": 3749.6
+ }
+}

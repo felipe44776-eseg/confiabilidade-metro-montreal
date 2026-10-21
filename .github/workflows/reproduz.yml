@@ -1,0 +1,73 @@
+# Refaz o pipeline inteiro numa máquina limpa e compara os derivados com os publicados (spec 013).
+# Pesado (cerca de 1 a 2 horas por causa dos bootstraps): roda todo dia 1 e quando pedido, não a cada push.
+name: Reproduzir o pipeline
+
+on:
+  schedule:
+    - cron: "41 6 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reproduzir:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: pipeline/requirements.txt
+
+      - name: Instalar as versões fixadas
+        run: python -m pip install -r pipeline/requirements.txt
+
+      - name: Guardar os derivados publicados
+        run: cp -r dados/derivados "$RUNNER_TEMP/publicados"
+
+      - name: Baixar os dados brutos (Release e origem)
+        shell: bash
+        run: |
+          python -I pipeline/verifica_fontes.py --baixa-release --baixa-origem --completo | tee "$RUNNER_TEMP/download.txt"
+
+      - name: Refazer o pipeline do zero
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf dados/derivados
+          python -I pipeline/extrai_gtfs_metro.py dados/brutos/gtfs/gtfs_stm_mdb-2126_latest.zip
+          python -I pipeline/extrai_mobilidade.py dados/brutos/google/google_Region_Mobility_Report_CSVs.zip
+          for s in monta_painel analise_confiabilidade geo_base normaliza exposicao \
+                   baixa_clima_eventos clima_eventos horario_simulador candidatas modelo_taxa diagnostico_taxa distribuicoes parametros backtest; do
+            echo "== $s"
+            python -I pipeline/$s.py
+          done
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - name: Refazer os relatórios do simulador (motor TypeScript com os parâmetros refeitos)
+        working-directory: app
+        run: |
+          npm ci
+          npx vitest run --config vitest.relatorios.config.ts
+
+      - name: Comparar com os publicados
+        shell: bash
+        run: python -I pipeline/compara_derivados.py "$RUNNER_TEMP/publicados" dados/derivados | tee "$RUNNER_TEMP/comparacao.txt"
+
+      - name: Guardar os relatórios
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: reproducao
+          path: |
+            ${{ runner.temp }}/download.txt
+            ${{ runner.temp }}/comparacao.txt

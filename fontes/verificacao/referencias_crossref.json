@@ -1,0 +1,118 @@
+{
+ "consultado_em": "2026-10-21",
+ "api": "https://api.crossref.org/works",
+ "referencias": [
+  {
+   "consulta": "The time-rescaling theorem and its application to neural spike train data analysis",
+   "autor": "Brown",
+   "ano_citado": 2002,
+   "crossref": {
+    "titulo": "The Time-Rescaling Theorem and Its Application to Neural Spike Train Data Analysis",
+    "doi": "10.1162/08997660252741149",
+    "ano": 2002,
+    "revista": "Neural Computation",
+    "volume": "14",
+    "issue": "2",
+    "paginas": "325-346"
+   }
+  },
+  {
+   "consulta": "The use of confidence or fiducial limits illustrated in the case of the binomial",
+   "autor": "Clopper",
+   "ano_citado": 1934,
+   "crossref": {
+    "titulo": "THE USE OF CONFIDENCE OR FIDUCIAL LIMITS ILLUSTRATED IN THE CASE OF THE BINOMIAL",
+    "doi": "10.1093/biomet/26.4.404",
+    "ano": 1934,
+    "revista": "Biometrika",
+    "volume": "26",
+    "issue": "4",
+    "paginas": "404-413"
+   }
+  },
+  {
+   "consulta": "Randomized quantile residuals",
+   "autor": "Dunn",
+   "ano_citado": 1996,
+   "crossref": {
+    "titulo": "Randomized Quantile Residuals",
+    "doi": "10.1080/10618600.1996.10474708",
+    "ano": 1996,
+    "revista": "Journal of Computational and Graphical Statistics",
+    "volume": "5",
+    "issue": "3",
+    "paginas": "236-244"
+   }
+  },
+  {
+   "consulta": "Fiducial limits for the Poisson distribution",
+   "autor": "Garwood",
+   "ano_citado": 1936,
+   "crossref": {
+    "titulo": "Fiducial Limits for the Poisson Distribution",
+    "doi": "10.2307/2333958",
+    "ano": 1936,
+    "revista": "Biometrika",
+    "volume": "28",
+    "issue": "3/4",
+    "paginas": "437"
+   }
+  },
+  {
+   "consulta": "Visualizing count data regressions using rootograms",
+   "autor": "Kleiber",
+   "ano_citado": 2016,
+   "crossref": {
+    "titulo": "Visualizing Count Data Regressions Using Rootograms",
+    "doi": "10.1080/00031305.2016.1173590",
+    "ano": 2016,
+    "revista": "The American Statistician",
+    "volume": "70",
+    "issue": "3",
+    "paginas": "296-303"
+   }
+  },
+  {
+   "consulta": "The jackknife and the bootstrap for general stationary observations",
+   "autor": "Künsch",
+   "ano_citado": 1989,
+   "crossref": {
+    "titulo": "The Jackknife and the Bootstrap for General Stationary Observations",
+    "doi": "10.1214/aos/1176347265",
+    "ano": 1989,
+    "revista": "The Annals of Statistics",
+    "volume": "17",
+    "issue": "3",
+    "paginas": "1217-1241"
+   }
+  },
+  {
+   "consulta": "On the Kolmogorov-Smirnov test for normality with mean and variance unknown",
+   "autor": "Lilliefors",
+   "ano_citado": 1967,
+   "crossref": {
+    "titulo": "On the Kolmogorov-Smirnov Test for Normality with Mean and Variance Unknown",
+    "doi": "10.1080/01621459.1967.10482916",
+    "ano": 1967,
+    "revista": "Journal of the American Statistical Association",
+    "volume": "62",
+    "issue": "318",
+    "paginas": "399-402"
+   }
+  },
+  {
+   "consulta": "Probabilistic forecasts, calibration and sharpness",
+   "autor": "Gneiting",
+   "ano_citado": 2007,
+   "crossref": {
+    "titulo": "Probabilistic Forecasts, Calibration and Sharpness",
+    "doi": "10.21236/ada454827",
+    "ano": 2005,
+    "revista": "",
+    "volume": null,
+    "issue": null,
+    "paginas": null
+   }
+  }
+ ]
+}

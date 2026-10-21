@@ -1,6 +1,6 @@
 # 010 — Mapa com trens animados
 
-**Status:** especificada
+**Status:** implementada com exceções
 **Fase:** F4 (semanas 6 a 8)
 **Depende de:** 002, 007
 
@@ -20,6 +20,20 @@ A pessoa consegue ver a simulação acontecendo no espaço real: trens andando n
 - Dado o mapa, quando aberto, então a atribuição ao OpenStreetMap (ODbL), à STM (CC BY 4.0) e ao fornecedor do mapa de fundo fica visível.
 - Dado o controle de tempo, quando a pessoa pausa, acelera ou volta, então o mapa e os indicadores ficam sincronizados.
 - Dada uma tela de celular, quando a página abre, então o mapa e os controles cabem sem rolagem lateral.
+
+## Resultado (2026-10-21)
+
+Página `/simulador/` (código em `app/src/simulador/`); testes em `app/tests/simulador/`; plano com as medições em `plan.md`.
+
+| Critério | Resultado |
+|---|---|
+| Trens andam sobre o traçado real, interpolados pelo horário simulado | **Atende**: as 73 estações caem a menos de 150 m da coordenada do GTFS no traçado (maior 129 m) |
+| ≥ 30 quadros por segundo no pico | **Atende no teste disponível**: 0,10 ms de cálculo por quadro (orçamento de 33 ms) e 60 fps no Chrome sem janela com WebGL por software. **Pendente**: conferir num notebook comum no endereço publicado |
+| Falha no local certo e trecho bloqueado com outra aparência até a retomada | **Atende** |
+| Incidente histórico clicável com código, falhas, tipo, status e método | **Atende** |
+| Atribuição ao OpenStreetMap, à STM e ao fornecedor do fundo | **Atende** |
+| Pausar, acelerar e voltar com mapa e indicadores sincronizados | **Atende** |
+| Celular sem rolagem lateral | **Pendente**: layout com gutter de 16 px, não conferido num aparelho |
 
 ## Fora de escopo
 - Mapa 3D, túneis em profundidade e plantas de estação.

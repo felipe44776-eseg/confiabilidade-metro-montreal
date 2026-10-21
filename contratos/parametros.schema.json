@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/contratos/parametros.schema.json",
+  "title": "Parâmetros do simulador de tolerância a falhas do metrô de Montreal",
+  "description": "Fronteira entre o pipeline Python (modelos das specs 005 e 006) e o simulador TypeScript (specs 007 a 014). Todo número é um Parametro: valor, intervalo, n, método, fontes, script e status (constituição, princípios 1, 2 e 5).",
+  "type": "object",
+  "required": ["versao", "codigo_commit", "ano_base", "taxas", "renovacao", "ttr", "causa_comum", "locais_ef", "frota", "hipoteses"],
+  "$defs": {
+    "Parametro": {
+      "type": "object",
+      "required": ["valor", "status", "metodo", "fontes", "script"],
+      "properties": {
+        "valor": {"type": "number"},
+        "ic95": {"type": ["array", "null"], "items": {"type": "number"}, "minItems": 2, "maxItems": 2},
+        "n": {"type": ["integer", "null"]},
+        "unidade": {"type": "string"},
+        "metodo": {"type": "string"},
+        "fontes": {"type": "array", "items": {"type": "string"}},
+        "script": {"type": "string"},
+        "status": {"enum": ["ajustado", "deduzido", "hipótese", "não verificado"]},
+        "faixa": {"type": "array", "items": {"type": "number"}, "description": "Faixa razoável para hipóteses ajustáveis na interface"}
+      }
+    },
+    "Linhas": {
+      "type": "object",
+      "required": ["verde", "laranja", "amarela", "azul"],
+      "additionalProperties": {"$ref": "#/$defs/Parametro"}
+    },
+    "Taxa": {
+      "type": "object",
+      "required": ["modelo", "alpha", "base_por_trem_hora", "multiplicadores"],
+      "properties": {
+        "modelo": {"type": "string"},
+        "alpha": {"$ref": "#/$defs/Parametro"},
+        "base_por_trem_hora": {"$ref": "#/$defs/Linhas", "description": "Falhas por trem-hora nas condições de referência, no ano_base"},
+        "multiplicadores": {
+          "type": "object",
+          "description": "Fator -> nível -> Parametro (multiplicador da taxa). Indicadores usam o nível \"1\".",
+          "additionalProperties": {"type": "object", "additionalProperties": {"$ref": "#/$defs/Parametro"}}
+        },
+        "referencia": {"type": "object", "additionalProperties": {"type": "string"}}
+      }
+    },
+    "Lognormal": {
+      "type": "object",
+      "required": ["p_zero", "mu_log", "sigma_log"],
+      "properties": {"p_zero": {"$ref": "#/$defs/Parametro"}, "mu_log": {"$ref": "#/$defs/Parametro"}, "sigma_log": {"$ref": "#/$defs/Parametro"},
+        "amostra_positivos": {"type": "object", "description": "Durações positivas observadas (minutos, ordenadas). Quando existe, o simulador sorteia por ela (decisão de 2026-10-21: a lognormal subestima a média por causa da cauda)",
+          "required": ["minutos", "n", "media_min"], "properties": {"minutos": {"type": "array", "items": {"type": "number"}}, "n": {"type": "integer"}, "media_min": {"type": "number"}}}}
+    }
+  },
+  "properties": {
+    "versao": {"type": "integer"},
+    "codigo_commit": {"type": "string"},
+    "ano_base": {"type": "integer"},
+    "janela_operacao_h": {"$ref": "#/$defs/Parametro"},
+    "taxas": {"type": "object", "required": ["MR", "EF"], "properties": {"MR": {"$ref": "#/$defs/Taxa"}, "EF": {"$ref": "#/$defs/Taxa"}}},
+    "renovacao": {
+      "type": "object",
+      "description": "Chave linha|causa. Weibull no tempo reescalado pela taxa (forma 1 = Poisson com taxa variável).",
+      "additionalProperties": {"type": "object", "required": ["forma", "escala"], "properties": {"forma": {"$ref": "#/$defs/Parametro"}, "escala": {"$ref": "#/$defs/Parametro"}, "processo": {"type": "string"}}}
+    },
+    "ttr": {"type": "object", "description": "Chave linha|causa. Minutos até o serviço voltar.", "additionalProperties": {"$ref": "#/$defs/Lognormal"}},
+    "causa_comum": {
+      "type": "object",
+      "description": "Fontes de causa comum do simulador. Chave: as linhas paradas juntas, em ordem alfabética, unidas por '-' (2 a 4 linhas). Cada evento histórico entra em um único grupo.",
+      "additionalProperties": {
+        "type": "object", "required": ["linhas", "taxa_por_hora_op", "duracao"],
+        "properties": {"linhas": {"type": "array", "items": {"type": "string"}, "minItems": 2}, "taxa_por_hora_op": {"$ref": "#/$defs/Parametro"}, "duracao": {"$ref": "#/$defs/Lognormal"}}
+      }
+    },
+    "causa_comum_beta": {
+      "type": "object",
+      "description": "Fator β por par de linhas (relatório; não é fonte de sorteio). Chave linhaA-linhaB; um evento de 3 ou 4 linhas conta em vários pares.",
+      "additionalProperties": {"type": "object", "properties": {"eventos": {"type": "integer"}, "beta_a": {"$ref": "#/$defs/Parametro"}, "beta_b": {"$ref": "#/$defs/Parametro"}}}
+    },
+    "locais_ef": {
+      "type": "object",
+      "description": "Por linha: onde ocorrem as falhas de equipamento fixo (km ao longo da linha e peso = número de falhas). Status da posição vem da spec 002.",
+      "additionalProperties": {"type": "array", "items": {"type": "object", "required": ["km", "peso", "codigo", "status"], "properties": {"km": {"type": "number"}, "peso": {"type": "number"}, "codigo": {"type": "string"}, "status": {"type": "string"}}}}
+    },
+    "frota": {
+      "type": "object",
+      "additionalProperties": {"type": "object", "required": ["trens_necessarios", "lambda_trem_dia"], "properties": {"trens_necessarios": {"$ref": "#/$defs/Parametro"}, "lambda_trem_dia": {"$ref": "#/$defs/Parametro"}}}
+    },
+    "hipoteses": {"type": "object", "description": "Parâmetros sem dado, ajustáveis na interface, sempre com status hipótese.", "additionalProperties": {"$ref": "#/$defs/Parametro"}}
+  }
+}

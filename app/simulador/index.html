@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Simulador do metrô de Montreal</title>
+<meta name="description" content="Simulação de tolerância a falhas do metrô de Montreal: trens no traçado real, falhas sorteadas dos modelos ajustados aos dados da STM, políticas e linhas candidatas.">
+</head>
+<body>
+<div class="sim">
+  <header class="topo">
+    <a class="voltar" href="../">← Painel de confiabilidade</a>
+    <h1>Simulador de tolerância a falhas</h1>
+    <p class="lead">Cada rodada é um dia de operação. As falhas são sorteadas dos modelos ajustados aos incidentes da STM de 2019 a junho de 2026, e os trens seguem o horário real (GTFS). Mude o cenário à esquerda; o link da página guarda tudo, inclusive a semente.</p>
+  </header>
+
+  <nav class="abas" role="tablist" aria-label="Partes do simulador">
+    <button role="tab" id="tab-dia" aria-controls="aba-dia" aria-selected="true">Dia no mapa</button>
+    <button role="tab" id="tab-mc" aria-controls="aba-mc" aria-selected="false">Muitos dias</button>
+    <button role="tab" id="tab-comparar" aria-controls="aba-comparar" aria-selected="false">Comparar cenários</button>
+    <button role="tab" id="tab-expansao" aria-controls="aba-expansao" aria-selected="false">Que linha construir</button>
+    <button role="tab" id="tab-parametros" aria-controls="aba-parametros" aria-selected="false">Parâmetros</button>
+  </nav>
+
+  <div class="corpo">
+    <aside class="painel" aria-label="Cenário">
+      <h2>Cenário</h2>
+      <form id="form-cenario" class="form" autocomplete="off">
+        <fieldset>
+          <legend>Dia</legend>
+          <label>Tipo de dia <select id="c-tipo"></select></label>
+          <label>Mês <select id="c-mes"></select></label>
+          <p class="nota" id="c-estacao"></p>
+        </fieldset>
+        <fieldset>
+          <legend>Clima</legend>
+          <label>Temperatura <select id="c-temp"></select></label>
+          <label>Precipitação <select id="c-precip"></select></label>
+          <label>Condição <select id="c-cond"></select></label>
+          <label>Neve no solo <select id="c-neve"></select></label>
+        </fieldset>
+        <fieldset>
+          <legend>Eventos</legend>
+          <label class="caixa"><input type="checkbox" id="c-jogo"> Jogo do Canadiens às 19h</label>
+          <label class="caixa"><input type="checkbox" id="c-gp"> Fim de semana do GP do Canadá</label>
+          <label class="caixa"><input type="checkbox" id="c-feriado"> Feriado</label>
+          <label>Greve <select id="c-greve"></select></label>
+        </fieldset>
+        <fieldset>
+          <legend>Políticas de tolerância a falhas</legend>
+          <div id="c-politicas" class="lista-caixas"></div>
+        </fieldset>
+        <details class="hipoteses">
+          <summary>Hipóteses (sem dado)</summary>
+          <p class="nota">Valores que os dados públicos não trazem. Cada um tem uma faixa razoável; fora dela, a página avisa.</p>
+          <div id="c-hipoteses"></div>
+        </details>
+        <fieldset>
+          <legend>Rodadas</legend>
+          <label>Semente <input type="number" id="c-semente" min="0" step="1"></label>
+          <label>Dias simulados <select id="c-rodadas"></select></label>
+        </fieldset>
+      </form>
+      <div class="acoes">
+        <button type="button" id="b-link">Copiar o link do cenário</button>
+        <button type="button" id="b-padrao" class="secundario">Voltar ao padrão</button>
+      </div>
+      <p class="nota" id="msg-link" aria-live="polite"></p>
+      <section aria-labelledby="t-avisos" class="avisos-caixa">
+        <h3 id="t-avisos">Avisos</h3>
+        <ul id="avisos" class="avisos"></ul>
+      </section>
+    </aside>
+
+    <main class="principal">
+      <div class="mapa-caixa" id="mapa-caixa">
+        <div class="mapa" id="mapa" aria-label="Mapa do metrô com os trens da rodada"></div>
+        <div class="fps" id="fps" title="Quadros por segundo da animação">— fps</div>
+      </div>
+
+      <section id="aba-dia" role="tabpanel" aria-labelledby="tab-dia" class="aba">
+        <div class="tempo">
+          <button type="button" id="b-play" aria-label="Tocar">▶</button>
+          <label class="vel">Velocidade <select id="t-vel"><option value="1">1×</option><option value="10">10×</option><option value="60" selected>60×</option><option value="300">300×</option></select></label>
+          <input type="range" id="t-barra" min="0" max="1" step="1" aria-label="Hora do dia simulado">
+          <output id="t-relogio" class="relogio">--:--</output>
+        </div>
+        <div class="linha-dia">
+          <label>Dia mostrado <input type="number" id="t-dia" min="0" step="1"></label>
+          <label class="caixa"><input type="checkbox" id="t-locais"> Locais históricos de falha (2019 a 2026)</label>
+        </div>
+        <div class="indicadores" id="indicadores" aria-live="off"></div>
+        <h3>Falhas do dia</h3>
+        <div class="tbl"><table id="tab-falhas"><thead><tr><th>Hora</th><th>Linha</th><th>Tipo</th><th>Parada</th><th>Onde</th></tr></thead><tbody></tbody></table></div>
+        <p class="nota">É um dia sorteado do cenário, o mesmo que a rodada de mesmo número na aba "Muitos dias". Trem com contorno vermelho está atrasado mais de 3 minutos; trecho vermelho tracejado está bloqueado.</p>
+      </section>
+
+      <section id="aba-mc" role="tabpanel" aria-labelledby="tab-mc" class="aba" hidden>
+        <div class="acoes">
+          <button type="button" id="b-mc">Rodar</button>
+          <button type="button" id="b-ano" class="secundario">Estimar o ano (útil, sábado e domingo)</button>
+          <button type="button" id="b-mc-cancela" class="secundario" disabled>Cancelar</button>
+          <progress id="p-mc" max="1" value="0" hidden></progress>
+          <span class="nota" id="s-mc" aria-live="polite"></span>
+        </div>
+        <div id="r-mc"></div>
+      </section>
+
+      <section id="aba-comparar" role="tabpanel" aria-labelledby="tab-comparar" class="aba" hidden>
+        <p>Fixe o cenário de agora como <strong>A</strong>, mude o que quiser à esquerda (vira o <strong>B</strong>) e compare. As duas versões rodam com as mesmas sementes, dia a dia, para a diferença não ser só sorte.</p>
+        <div class="acoes">
+          <button type="button" id="b-fixa-a">Fixar o cenário atual como A</button>
+          <button type="button" id="b-comparar" disabled>Comparar A com o cenário atual (B)</button>
+          <button type="button" id="b-cmp-cancela" class="secundario" disabled>Cancelar</button>
+          <progress id="p-cmp" max="1" value="0" hidden></progress>
+          <span class="nota" id="s-cmp" aria-live="polite"></span>
+        </div>
+        <p class="nota" id="resumo-a"></p>
+        <div id="r-cmp"></div>
+      </section>
+
+      <section id="aba-expansao" role="tabpanel" aria-labelledby="tab-expansao" class="aba" hidden>
+        <p>Que ligação nova deixaria a rede mais confiável? O ganho é a disponibilidade dos pares de estações (ponderada pela oferta de hoje) com a linha nova, menos a de hoje. Um ramal não cria caminho alternativo; um anel ou uma linha que cruza outras, sim.</p>
+        <div class="acoes">
+          <label>Amostras <select id="e-amostras"><option value="20000">20 mil (rápido)</option><option value="50000" selected>50 mil</option><option value="200000">200 mil (lento)</option></select></label>
+          <button type="button" id="b-exp">Avaliar as candidatas publicadas</button>
+          <span class="nota" id="s-exp" aria-live="polite"></span>
+        </div>
+        <div id="lista-candidatas" class="candidatas"></div>
+        <div id="r-exp"></div>
+        <h3>Ligação livre</h3>
+        <div class="acoes">
+          <label>De <select id="e-de"></select></label>
+          <label>Para <select id="e-para"></select></label>
+          <button type="button" id="b-livre" class="secundario">Avaliar esta ligação</button>
+        </div>
+        <h3>Busca em todas as ligações curtas</h3>
+        <div class="acoes">
+          <label>Distância máxima em linha reta <select id="e-dmax"><option value="1.5">1,5 km</option><option value="2" selected>2 km</option><option value="3">3 km</option></select></label>
+          <button type="button" id="b-busca" class="secundario">Buscar</button>
+          <span class="nota" id="s-busca" aria-live="polite"></span>
+        </div>
+        <div id="r-busca"></div>
+      </section>
+
+      <section id="aba-parametros" role="tabpanel" aria-labelledby="tab-parametros" class="aba" hidden>
+        <div id="r-param"></div>
+      </section>
+      <p class="erro" id="erro" hidden></p>
+    </main>
+  </div>
+  <footer id="rodape"></footer>
+</div>
+<script type="module" src="../src/simulador/main.ts"></script>
+</body>
+</html>

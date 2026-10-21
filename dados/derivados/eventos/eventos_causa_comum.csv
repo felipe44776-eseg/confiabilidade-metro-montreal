@@ -1,0 +1,46 @@
+id;linha;linhas;causa;causa_secundaria;frota;sintoma;tipo;data_servico;inicio_local;fim_local;inicio_utc;fim_utc;duracao_min;faixa_oficial;na_faixa;na_faixa_vizinha;veiculo;local_codigo;evacuacao
+T14051901;;laranja,verde;EF;Service de la voie;;Équipements fixes;T;2019-05-14;2019-05-14T10:37;2019-05-14T10:41;2019-05-14T14:37Z;2019-05-14T14:41Z;4;03 à 04 min;1;1;;LG12;
+T06061904;;azul,laranja;EF;Service aux stations;;Feu, fumée, odeur, produit, etc...;T;2019-06-06;2019-06-06T09:17;2019-06-06T09:30;2019-06-06T13:17Z;2019-06-06T13:30Z;13;10 à 14 min;1;1;;JT25;Station
+T17091904;;amarela,laranja,verde;EF;Service de la voie;;Feu, fumée, odeur, produit, etc...;T;2019-09-17;2019-09-17T09:01;2019-09-17T09:59;2019-09-17T13:01Z;2019-09-17T13:59Z;58;30 min et plus;1;1;;B214;Train et Station
+T18111901;;azul,laranja;MR;MR-73;MR-73;Feu, fumée, odeur, produit, etc...;T;2019-11-18;2019-11-18T06:20;2019-11-18T07:40;2019-11-18T11:20Z;2019-11-18T12:40Z;80;30 min et plus;1;1;79718;L52;Train et Station
+T22121911;;azul,laranja;MR;MPM-10;MPM-10;Feu, fumée, odeur, produit, etc...;T;2019-12-22;2019-12-22T19:48;2019-12-22T20:15;2019-12-23T00:48Z;2019-12-23T01:15Z;27;25 à 29 min;1;1;10405;JT25;Train et Station
+T21022007;;azul,laranja;EF;Service aux stations;;Équipements fixes;T;2020-02-21;2020-02-21T09:41;2020-02-21T09:41;2020-02-21T14:41Z;2020-02-21T14:41Z;0;02 min et moins;1;1;;SN25;
+T21012114;;amarela,laranja,verde;EF;Service aux trains;;Feu, fumée, odeur, produit, etc...;T;2021-01-21;2021-01-21T19:55;2021-01-21T22:25;2021-01-22T00:55Z;2021-01-22T03:25Z;150;30 min et plus;1;1;;L214;Train et Station
+T12032101;;amarela,laranja,verde;EF;Service de la voie;;Feu, fumée, odeur, produit, etc...;T;2021-03-12;2021-03-12T07:52;2021-03-12T08:59;2021-03-12T12:52Z;2021-03-12T13:59Z;67;30 min et plus;1;1;;B124;Train
+T10062104;;laranja,verde;EF;Service de la voie;;Clientèle;T;2021-06-10;2021-06-10T11:43;2021-06-10T12:07;2021-06-10T15:43Z;2021-06-10T16:07Z;24;20 à 24 min;1;1;;BR21;
+T04072101;;amarela,azul,laranja,verde;EF;Service TCPE;;Équipements fixes;T;2021-07-04;2021-07-04T06:07;2021-07-04T06:27;2021-07-04T10:07Z;2021-07-04T10:27Z;20;20 à 24 min;1;1;;9999;
+T18082103;;amarela,azul,laranja,verde;EF;Service TCPE;;Équipements fixes;T;2021-08-18;2021-08-18T11:03;2021-08-18T11:21;2021-08-18T15:03Z;2021-08-18T15:21Z;18;15 à 19 min;1;1;;9999;
+T01112102;;laranja,verde;EF;Service aux stations;;Équipements fixes;T;2021-11-01;2021-11-01T08:47;2021-11-01T09:41;2021-11-01T12:47Z;2021-11-01T13:41Z;54;30 min et plus;1;1;;LG21;Train
+T10012205;;azul,laranja;EF;Service aux stations;;Feu, fumée, odeur, produit, etc...;T;2022-01-10;2022-01-10T13:01;2022-01-10T13:20;2022-01-10T18:01Z;2022-01-10T18:20Z;19;15 à 19 min;1;1;;SN25;Train
+T18012215;;laranja,verde;EF;Service aux trains;;Équipements fixes;T;2022-01-19;2022-01-20T00:27;2022-01-20T00:27;2022-01-20T05:27Z;2022-01-20T05:27Z;0;02 min et moins;1;1;;LG21;
+T09032201;;amarela,azul,laranja,verde;EF;Service TCPE;;#N/A;T;2022-03-09;2022-03-09T05:00;2022-03-09T05:00;2022-03-09T10:00Z;2022-03-09T10:00Z;0;02 min et moins;1;1;;9999;
+T21102206;;amarela,laranja;EF;Service TCPE;;#N/A;T;2022-10-21;2022-10-21T12:08;2022-10-21T12:12;2022-10-21T16:08Z;2022-10-21T16:12Z;4;03 à 04 min;1;1;;L24;
+T23122207;;amarela,azul,laranja,verde;EF;Service TCPE;;Équipements fixes;T;2022-12-23;2022-12-23T08:56;2022-12-23T08:58;2022-12-23T13:56Z;2022-12-23T13:58Z;2;02 min et moins;1;1;;9999;
+T24122203;;amarela,azul,laranja,verde;EF;Service TCPE;;Équipements fixes;T;2022-12-24;2022-12-24T15:08;2022-12-24T15:11;2022-12-24T20:08Z;2022-12-24T20:11Z;3;03 à 04 min;1;1;;9999;
+T10102309;;amarela,laranja;MR;MPM-10;MPM-10;Matériel roulant;T;2023-10-10;2023-10-10T16:31;2023-10-10T16:35;2023-10-10T20:31Z;2023-10-10T20:35Z;4;03 à 04 min;1;1;10679;BR24;Train
+T17112303;;laranja,verde;EF;Service de la voie;;Équipements fixes;T;2023-11-17;2023-11-17T06:14;2023-11-17T06:17;2023-11-17T11:14Z;2023-11-17T11:17Z;3;03 à 04 min;1;1;;L12;
+T13122311;;azul,laranja;EF;Service aux trains;;Matériel roulant;T;2023-12-13;2023-12-13T21:51;2023-12-13T21:51;2023-12-14T02:51Z;2023-12-14T02:51Z;0;02 min et moins;1;1;79536;SN52;
+T10012402;;azul,verde;MR;MR-73;MR-73;Matériel roulant;T;2024-01-10;2024-01-10T06:33;2024-01-10T06:44;2024-01-10T11:33Z;2024-01-10T11:44Z;11;03 à 04 min;0;0;79544;L51;Train
+T21022405;;amarela,azul,laranja,verde;EF;Service TCPE;;Équipements fixes;T;2024-02-21;2024-02-21T11:58;2024-02-21T12:54;2024-02-21T16:58Z;2024-02-21T17:54Z;56;30 min et plus;1;1;;9999;
+T13052409;;azul,laranja;EF;Service de la voie;;Feu, fumée, odeur, produit, etc...;T;2024-05-13;2024-05-13T18:57;2024-05-13T19:48;2024-05-13T22:57Z;2024-05-13T23:48Z;51;30 min et plus;1;1;;L25;Train et Station
+T14062407;;azul,laranja;EF;Service aux stations;;Feu, fumée, odeur, produit, etc...;T;2024-06-14;2024-06-14T10:00;2024-06-14T10:23;2024-06-14T14:00Z;2024-06-14T14:23Z;23;20 à 24 min;1;1;;L25;Train et Station
+T14062410;;azul,laranja;EF;Service aux stations;;Feu, fumée, odeur, produit, etc...;T;2024-06-14;2024-06-14T13:45;2024-06-14T14:10;2024-06-14T17:45Z;2024-06-14T18:10Z;25;25 à 29 min;1;1;;L25;Train et Station
+T05072406;;laranja,verde;EF;Service aux stations;;Exploitation stations;T;2024-07-05;2024-07-05T16:28;2024-07-05T16:28;2024-07-05T20:28Z;2024-07-05T20:28Z;0;02 min et moins;1;1;;LG12;
+T06072406;;amarela,laranja,verde;EF;Service aux stations;;Exploitation stations;T;2024-07-06;2024-07-06T14:01;2024-07-06T14:01;2024-07-06T18:01Z;2024-07-06T18:01Z;0;02 min et moins;1;1;;B124;
+T03112402;;azul,laranja,verde;EF;Service TCPE;;Équipements fixes;T;2024-11-03;2024-11-03T05:30;2024-11-03T06:40;2024-11-03T10:30Z;2024-11-03T11:40Z;70;30 min et plus;1;1;;L125;
+T24022515;;amarela,laranja,verde;EF;Service aux trains;;Exploitation trains;T;2025-02-25;2025-02-26T00:58;2025-02-26T01:03;2025-02-26T05:58Z;2025-02-26T06:03Z;5;05 à 09 min;1;1;10169;B124;
+T11042507;;laranja,verde;EF;Service aux trains;;Équipements fixes;T;2025-04-11;2025-04-11T17:51;2025-04-11T17:54;2025-04-11T21:51Z;2025-04-11T21:54Z;3;03 à 04 min;1;1;10541;LG21;
+T11042508;;laranja,verde;EF;Service aux trains;;Équipements fixes;T;2025-04-11;2025-04-11T18:54;2025-04-11T19:02;2025-04-11T22:54Z;2025-04-11T23:02Z;8;05 à 09 min;1;1;;LG21;
+T06052506;;amarela,laranja,verde;EF;Service aux stations;;Exploitation stations;T;2025-05-06;2025-05-06T11:32;2025-05-06T11:32;2025-05-06T15:32Z;2025-05-06T15:32Z;0;02 min et moins;1;1;;B124;
+T10052505;;amarela,laranja,verde;MR;MPM-10;MPM-10;Exploitation trains;T;2025-05-11;2025-05-12T01:28;2025-05-12T01:32;2025-05-12T05:28Z;2025-05-12T05:32Z;4;03 à 04 min;1;1;;L124;
+T09062501;;azul,laranja;EF;Service aux trains;;Exploitation stations;T;2025-06-09;2025-06-09T02:39;2025-06-09T02:39;2025-06-09T06:39Z;2025-06-09T06:39Z;0;02 min et moins;1;1;;SN25;
+T09062504;;laranja,verde;EF;Service aux stations;;Exploitation stations;T;2025-06-09;2025-06-09T10:47;2025-06-09T10:47;2025-06-09T14:47Z;2025-06-09T14:47Z;0;02 min et moins;1;1;;LG12;
+T19062504;;laranja,verde;EF;Service de la voie;;Feu, fumée, odeur, produit, etc...;T;2025-06-19;2025-06-19T10:30;2025-06-19T11:21;2025-06-19T14:30Z;2025-06-19T15:21Z;51;30 min et plus;1;1;;L12;Train et Station
+T06072511;;laranja,verde;EF;Service de la voie;;Feu, fumée, odeur, produit, etc...;T;2025-07-06;2025-07-06T22:56;2025-07-07T00:12;2025-07-07T02:56Z;2025-07-07T04:12Z;76;30 min et plus;1;1;;L12;Train et Station
+T15082511;;amarela,azul,laranja,verde;EF;Service TCPE;;Équipements fixes;T;2025-08-15;2025-08-15T15:17;2025-08-15T15:19;2025-08-15T19:17Z;2025-08-15T19:19Z;2;02 min et moins;1;1;;9999;
+T25102512;;laranja,verde;EF;Service TCPE;;Équipements fixes;T;2025-10-26;2025-10-27T01:28;2025-10-27T01:29;2025-10-27T05:28Z;2025-10-27T05:29Z;1;02 min et moins;1;1;;LG21;
+T18012601;;amarela,azul,laranja,verde;EF;Service TCPE;;Équipements fixes;T;2026-01-18;2026-01-18T05:34;2026-01-18T05:36;2026-01-18T10:34Z;2026-01-18T10:36Z;2;02 min et moins;1;1;;9999;
+T10022605;;amarela,azul,laranja,verde;EF;Service aux stations;;#N/A;T;2026-02-10;2026-02-10T10:07;2026-02-10T10:12;2026-02-10T15:07Z;2026-02-10T15:12Z;5;05 à 09 min;1;1;;9999;
+T10022607;;amarela,azul,laranja,verde;EF;Service aux trains;;#N/A;T;2026-02-10;2026-02-10T11:09;2026-02-10T12:15;2026-02-10T16:09Z;2026-02-10T17:15Z;66;30 min et plus;1;1;;9999;Train
+T26052602;;amarela,laranja,verde;EF;Service aux stations;;Exploitation stations;T;2026-05-26;2026-05-26T08:31;2026-05-26T08:31;2026-05-26T12:31Z;2026-05-26T12:31Z;0;02 min et moins;1;1;;B124;
+T21062601;;amarela,laranja;EF;Service de la voie;;Matériel roulant;T;2026-06-21;2026-06-21T06:37;2026-06-21T06:37;2026-06-21T10:37Z;2026-06-21T10:37Z;0;02 min et moins;1;1;78104;BR42;

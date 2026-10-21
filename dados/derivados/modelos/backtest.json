@@ -1,0 +1,4606 @@
+{
+ "A": {
+  "corte": "2024-12-31",
+  "teste": [
+   "2025-01-01",
+   "2026-06-30"
+  ],
+  "pre_registrada": true,
+  "descricao": "treino até 2024-12; no teste, efeito do ano de 2024",
+  "regra_ano": "persistencia",
+  "ano_fixo": "2024",
+  "vetores_bootstrap": 100,
+  "caminhos_por_vetor": 20,
+  "caminhos": 2000,
+  "forma_renovacao_treino": {
+   "verde|MR": 0.8136,
+   "laranja|MR": 0.7371,
+   "amarela|MR": 0.6832,
+   "azul|MR": 0.7367,
+   "verde|EF": 0.7535,
+   "laranja|EF": 0.6705,
+   "amarela|EF": 0.4525,
+   "azul|EF": 0.6561
+  },
+  "cobertura_total": {
+   "dentro": 48,
+   "casos": 72,
+   "cobertura": 0.6667,
+   "ic95": [
+    0.5457,
+    0.7734
+   ]
+  },
+  "cobertura_sem_greve": {
+   "dentro": 39,
+   "casos": 56,
+   "cobertura": 0.6964,
+   "ic95": [
+    0.559,
+    0.8122
+   ]
+  },
+  "cobertura_meses_greve": {
+   "dentro": 9,
+   "casos": 16,
+   "cobertura": 0.5625,
+   "ic95": [
+    0.2988,
+    0.8025
+   ]
+  },
+  "cobertura_por_linha": {
+   "verde": {
+    "dentro": 12,
+    "casos": 18,
+    "cobertura": 0.6667,
+    "ic95": [
+     0.4099,
+     0.8666
+    ]
+   },
+   "laranja": {
+    "dentro": 8,
+    "casos": 18,
+    "cobertura": 0.4444,
+    "ic95": [
+     0.2153,
+     0.6924
+    ]
+   },
+   "amarela": {
+    "dentro": 14,
+    "casos": 18,
+    "cobertura": 0.7778,
+    "ic95": [
+     0.5236,
+     0.9359
+    ]
+   },
+   "azul": {
+    "dentro": 14,
+    "casos": 18,
+    "cobertura": 0.7778,
+    "ic95": [
+     0.5236,
+     0.9359
+    ]
+   }
+  },
+  "fora_acima": 2,
+  "fora_abaixo": 22,
+  "pit_histograma_10": [
+   34,
+   2,
+   12,
+   7,
+   4,
+   3,
+   2,
+   4,
+   2,
+   2
+  ],
+  "pit_ks_p": 2.3613096598316665e-11,
+  "ano_minutos": "2025",
+  "minutos_ano": {
+   "verde": {
+    "observado": 1450.0,
+    "mediana": 2207.0,
+    "ic95": [
+     1526.9,
+     3302.0
+    ],
+    "dentro": false
+   },
+   "laranja": {
+    "observado": 1698.0,
+    "mediana": 2355.5,
+    "ic95": [
+     1607.0,
+     3946.0
+    ],
+    "dentro": true
+   },
+   "amarela": {
+    "observado": 307.0,
+    "mediana": 767.5,
+    "ic95": [
+     427.0,
+     1275.0
+    ],
+    "dentro": false
+   },
+   "azul": {
+    "observado": 708.0,
+    "mediana": 2961.5,
+    "ic95": [
+     618.0,
+     6818.1
+    ],
+    "dentro": true
+   }
+  },
+  "casos": [
+   {
+    "linha": "verde",
+    "mes": "2025-01",
+    "observado": 31,
+    "mediana": 31.0,
+    "ip90": [
+     19.0,
+     46.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.4792,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-02",
+    "observado": 32,
+    "mediana": 34.0,
+    "ip90": [
+     21.0,
+     47.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.4354,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-03",
+    "observado": 27,
+    "mediana": 33.0,
+    "ip90": [
+     20.0,
+     46.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2385,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-04",
+    "observado": 23,
+    "mediana": 29.0,
+    "ip90": [
+     18.0,
+     42.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.1791,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-05",
+    "observado": 16,
+    "mediana": 33.0,
+    "ip90": [
+     21.0,
+     47.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0087,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-06",
+    "observado": 23,
+    "mediana": 37.0,
+    "ip90": [
+     23.0,
+     52.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.0571,
+    "greve": true
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-07",
+    "observado": 14,
+    "mediana": 45.0,
+    "ip90": [
+     30.0,
+     63.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-08",
+    "observado": 23,
+    "mediana": 43.0,
+    "ip90": [
+     28.950000000000003,
+     58.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0109,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-09",
+    "observado": 24,
+    "mediana": 46.0,
+    "ip90": [
+     29.0,
+     65.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.018,
+    "greve": true
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-10",
+    "observado": 19,
+    "mediana": 39.0,
+    "ip90": [
+     25.0,
+     54.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.006,
+    "greve": true
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-11",
+    "observado": 19,
+    "mediana": 31.0,
+    "ip90": [
+     19.0,
+     44.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.0383,
+    "greve": true
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-12",
+    "observado": 37,
+    "mediana": 33.0,
+    "ip90": [
+     21.0,
+     46.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.7109,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2026-01",
+    "observado": 38,
+    "mediana": 33.0,
+    "ip90": [
+     21.0,
+     47.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.7389,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2026-02",
+    "observado": 35,
+    "mediana": 35.0,
+    "ip90": [
+     22.0,
+     49.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.5046,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2026-03",
+    "observado": 28,
+    "mediana": 34.0,
+    "ip90": [
+     22.0,
+     47.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2033,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2026-04",
+    "observado": 26,
+    "mediana": 29.0,
+    "ip90": [
+     18.0,
+     41.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3542,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2026-05",
+    "observado": 25,
+    "mediana": 31.0,
+    "ip90": [
+     20.0,
+     45.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2097,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2026-06",
+    "observado": 21,
+    "mediana": 42.0,
+    "ip90": [
+     28.0,
+     58.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0046,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-01",
+    "observado": 41,
+    "mediana": 38.0,
+    "ip90": [
+     22.0,
+     55.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.6361,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-02",
+    "observado": 46,
+    "mediana": 43.0,
+    "ip90": [
+     26.0,
+     62.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.6245,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-03",
+    "observado": 58,
+    "mediana": 40.0,
+    "ip90": [
+     24.0,
+     56.0
+    ],
+    "dentro": false,
+    "acima": true,
+    "pit": 0.9572,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-04",
+    "observado": 17,
+    "mediana": 36.0,
+    "ip90": [
+     22.0,
+     53.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0074,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-05",
+    "observado": 30,
+    "mediana": 44.0,
+    "ip90": [
+     26.950000000000003,
+     63.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.0899,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-06",
+    "observado": 29,
+    "mediana": 49.0,
+    "ip90": [
+     31.0,
+     70.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0296,
+    "greve": true
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-07",
+    "observado": 26,
+    "mediana": 63.0,
+    "ip90": [
+     42.0,
+     87.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0007,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-08",
+    "observado": 22,
+    "mediana": 58.0,
+    "ip90": [
+     38.0,
+     81.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0001,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-09",
+    "observado": 27,
+    "mediana": 68.0,
+    "ip90": [
+     43.0,
+     100.04999999999995
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.002,
+    "greve": true
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-10",
+    "observado": 35,
+    "mediana": 56.0,
+    "ip90": [
+     35.0,
+     78.04999999999995
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.0507,
+    "greve": true
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-11",
+    "observado": 21,
+    "mediana": 43.0,
+    "ip90": [
+     26.0,
+     61.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0173,
+    "greve": true
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-12",
+    "observado": 36,
+    "mediana": 40.0,
+    "ip90": [
+     24.0,
+     57.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3377,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2026-01",
+    "observado": 52,
+    "mediana": 41.0,
+    "ip90": [
+     24.0,
+     58.049999999999955
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.8502,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2026-02",
+    "observado": 40,
+    "mediana": 44.0,
+    "ip90": [
+     27.0,
+     63.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3558,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2026-03",
+    "observado": 33,
+    "mediana": 40.0,
+    "ip90": [
+     25.0,
+     59.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.247,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2026-04",
+    "observado": 20,
+    "mediana": 37.0,
+    "ip90": [
+     22.0,
+     54.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0247,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2026-05",
+    "observado": 12,
+    "mediana": 41.0,
+    "ip90": [
+     25.0,
+     59.049999999999955
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.001,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2026-06",
+    "observado": 22,
+    "mediana": 57.0,
+    "ip90": [
+     37.0,
+     79.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0015,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-01",
+    "observado": 10,
+    "mediana": 16.0,
+    "ip90": [
+     5.0,
+     32.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2082,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-02",
+    "observado": 11,
+    "mediana": 18.0,
+    "ip90": [
+     5.0,
+     35.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2335,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-03",
+    "observado": 5,
+    "mediana": 17.0,
+    "ip90": [
+     5.0,
+     33.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.0503,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-04",
+    "observado": 1,
+    "mediana": 15.0,
+    "ip90": [
+     4.0,
+     31.049999999999955
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0082,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-05",
+    "observado": 4,
+    "mediana": 17.0,
+    "ip90": [
+     4.0,
+     36.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.0487,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-06",
+    "observado": 10,
+    "mediana": 19.0,
+    "ip90": [
+     5.0,
+     37.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.1629,
+    "greve": true
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-07",
+    "observado": 9,
+    "mediana": 24.5,
+    "ip90": [
+     7.0,
+     46.049999999999955
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.0781,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-08",
+    "observado": 3,
+    "mediana": 23.0,
+    "ip90": [
+     7.0,
+     44.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0131,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-09",
+    "observado": 10,
+    "mediana": 26.0,
+    "ip90": [
+     7.0,
+     52.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.076,
+    "greve": true
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-10",
+    "observado": 6,
+    "mediana": 21.0,
+    "ip90": [
+     5.0,
+     41.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.0604,
+    "greve": true
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-11",
+    "observado": 4,
+    "mediana": 17.0,
+    "ip90": [
+     4.0,
+     34.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.0477,
+    "greve": true
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-12",
+    "observado": 6,
+    "mediana": 17.0,
+    "ip90": [
+     5.0,
+     33.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.062,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2026-01",
+    "observado": 10,
+    "mediana": 17.0,
+    "ip90": [
+     5.0,
+     34.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2021,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2026-02",
+    "observado": 17,
+    "mediana": 19.0,
+    "ip90": [
+     6.0,
+     36.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.4143,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2026-03",
+    "observado": 3,
+    "mediana": 17.0,
+    "ip90": [
+     5.0,
+     34.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0199,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2026-04",
+    "observado": 10,
+    "mediana": 15.0,
+    "ip90": [
+     4.0,
+     31.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2475,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2026-05",
+    "observado": 2,
+    "mediana": 16.0,
+    "ip90": [
+     4.0,
+     33.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0164,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2026-06",
+    "observado": 14,
+    "mediana": 23.0,
+    "ip90": [
+     7.0,
+     43.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2009,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-01",
+    "observado": 20,
+    "mediana": 16.0,
+    "ip90": [
+     7.950000000000003,
+     26.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.7723,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-02",
+    "observado": 13,
+    "mediana": 16.0,
+    "ip90": [
+     7.0,
+     27.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2531,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-03",
+    "observado": 13,
+    "mediana": 16.0,
+    "ip90": [
+     8.0,
+     26.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2677,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-04",
+    "observado": 15,
+    "mediana": 14.0,
+    "ip90": [
+     6.0,
+     24.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.5581,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-05",
+    "observado": 13,
+    "mediana": 16.0,
+    "ip90": [
+     7.0,
+     26.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.323,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-06",
+    "observado": 13,
+    "mediana": 16.0,
+    "ip90": [
+     7.0,
+     27.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2887,
+    "greve": true
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-07",
+    "observado": 10,
+    "mediana": 21.0,
+    "ip90": [
+     10.0,
+     32.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.0541,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-08",
+    "observado": 5,
+    "mediana": 19.0,
+    "ip90": [
+     9.0,
+     31.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0088,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-09",
+    "observado": 7,
+    "mediana": 19.0,
+    "ip90": [
+     9.0,
+     33.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0231,
+    "greve": true
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-10",
+    "observado": 3,
+    "mediana": 17.0,
+    "ip90": [
+     7.0,
+     28.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0056,
+    "greve": true
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-11",
+    "observado": 18,
+    "mediana": 13.0,
+    "ip90": [
+     6.0,
+     24.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.7658,
+    "greve": true
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-12",
+    "observado": 23,
+    "mediana": 16.0,
+    "ip90": [
+     7.0,
+     26.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.8771,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2026-01",
+    "observado": 34,
+    "mediana": 16.0,
+    "ip90": [
+     7.0,
+     27.0
+    ],
+    "dentro": false,
+    "acima": true,
+    "pit": 0.9972,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2026-02",
+    "observado": 17,
+    "mediana": 17.0,
+    "ip90": [
+     8.0,
+     28.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.5022,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2026-03",
+    "observado": 15,
+    "mediana": 17.0,
+    "ip90": [
+     8.0,
+     27.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3276,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2026-04",
+    "observado": 11,
+    "mediana": 14.0,
+    "ip90": [
+     6.0,
+     24.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3181,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2026-05",
+    "observado": 13,
+    "mediana": 15.0,
+    "ip90": [
+     6.0,
+     25.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3523,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2026-06",
+    "observado": 18,
+    "mediana": 19.0,
+    "ip90": [
+     9.0,
+     30.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.4502,
+    "greve": false
+   }
+  ]
+ },
+ "B": {
+  "corte": "2023-09-30",
+  "teste": [
+   "2025-01-01",
+   "2026-06-30"
+  ],
+  "pre_registrada": true,
+  "descricao": "treino até 2023-09 (só exposição medida); no teste, efeito do ano de 2023",
+  "regra_ano": "persistencia",
+  "ano_fixo": "2023",
+  "vetores_bootstrap": 100,
+  "caminhos_por_vetor": 20,
+  "caminhos": 2000,
+  "forma_renovacao_treino": {
+   "verde|MR": 0.8084,
+   "laranja|MR": 0.7315,
+   "amarela|MR": 0.6888,
+   "azul|MR": 0.7507,
+   "verde|EF": 0.7709,
+   "laranja|EF": 0.6695,
+   "amarela|EF": 0.5207,
+   "azul|EF": 0.7236
+  },
+  "cobertura_total": {
+   "dentro": 59,
+   "casos": 72,
+   "cobertura": 0.8194,
+   "ic95": [
+    0.7111,
+    0.9002
+   ]
+  },
+  "cobertura_sem_greve": {
+   "dentro": 45,
+   "casos": 56,
+   "cobertura": 0.8036,
+   "ic95": [
+    0.6757,
+    0.8977
+   ]
+  },
+  "cobertura_meses_greve": {
+   "dentro": 14,
+   "casos": 16,
+   "cobertura": 0.875,
+   "ic95": [
+    0.6165,
+    0.9845
+   ]
+  },
+  "cobertura_por_linha": {
+   "verde": {
+    "dentro": 16,
+    "casos": 18,
+    "cobertura": 0.8889,
+    "ic95": [
+     0.6529,
+     0.9862
+    ]
+   },
+   "laranja": {
+    "dentro": 15,
+    "casos": 18,
+    "cobertura": 0.8333,
+    "ic95": [
+     0.5858,
+     0.9642
+    ]
+   },
+   "amarela": {
+    "dentro": 14,
+    "casos": 18,
+    "cobertura": 0.7778,
+    "ic95": [
+     0.5236,
+     0.9359
+    ]
+   },
+   "azul": {
+    "dentro": 14,
+    "casos": 18,
+    "cobertura": 0.7778,
+    "ic95": [
+     0.5236,
+     0.9359
+    ]
+   }
+  },
+  "fora_acima": 4,
+  "fora_abaixo": 9,
+  "pit_histograma_10": [
+   15,
+   6,
+   5,
+   11,
+   6,
+   9,
+   5,
+   4,
+   5,
+   6
+  ],
+  "pit_ks_p": 0.06013563189398918,
+  "ano_minutos": "2025",
+  "minutos_ano": {
+   "verde": {
+    "observado": 1450.0,
+    "mediana": 1736.0,
+    "ic95": [
+     1201.0,
+     2504.1
+    ],
+    "dentro": true
+   },
+   "laranja": {
+    "observado": 1698.0,
+    "mediana": 1492.0,
+    "ic95": [
+     1012.0,
+     2182.0
+    ],
+    "dentro": true
+   },
+   "amarela": {
+    "observado": 307.0,
+    "mediana": 468.0,
+    "ic95": [
+     254.0,
+     803.0
+    ],
+    "dentro": true
+   },
+   "azul": {
+    "observado": 708.0,
+    "mediana": 610.0,
+    "ic95": [
+     413.0,
+     864.0
+    ],
+    "dentro": true
+   }
+  },
+  "casos": [
+   {
+    "linha": "verde",
+    "mes": "2025-01",
+    "observado": 31,
+    "mediana": 30.0,
+    "ip90": [
+     18.0,
+     43.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.5506,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-02",
+    "observado": 32,
+    "mediana": 29.0,
+    "ip90": [
+     18.0,
+     41.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.6679,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-03",
+    "observado": 27,
+    "mediana": 30.0,
+    "ip90": [
+     18.0,
+     43.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3449,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-04",
+    "observado": 23,
+    "mediana": 25.0,
+    "ip90": [
+     15.0,
+     37.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3734,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-05",
+    "observado": 16,
+    "mediana": 27.0,
+    "ip90": [
+     17.0,
+     39.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0357,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-06",
+    "observado": 23,
+    "mediana": 28.0,
+    "ip90": [
+     17.0,
+     40.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2245,
+    "greve": true
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-07",
+    "observado": 14,
+    "mediana": 33.0,
+    "ip90": [
+     21.0,
+     46.049999999999955
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0008,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-08",
+    "observado": 23,
+    "mediana": 32.0,
+    "ip90": [
+     20.0,
+     45.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.1072,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-09",
+    "observado": 24,
+    "mediana": 26.0,
+    "ip90": [
+     15.0,
+     37.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3745,
+    "greve": true
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-10",
+    "observado": 19,
+    "mediana": 24.0,
+    "ip90": [
+     14.0,
+     36.049999999999955
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2204,
+    "greve": true
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-11",
+    "observado": 19,
+    "mediana": 21.0,
+    "ip90": [
+     12.0,
+     32.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.332,
+    "greve": true
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-12",
+    "observado": 37,
+    "mediana": 30.0,
+    "ip90": [
+     19.0,
+     43.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.835,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2026-01",
+    "observado": 38,
+    "mediana": 30.0,
+    "ip90": [
+     19.0,
+     43.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.8374,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2026-02",
+    "observado": 35,
+    "mediana": 30.0,
+    "ip90": [
+     19.0,
+     43.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.7756,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2026-03",
+    "observado": 28,
+    "mediana": 31.0,
+    "ip90": [
+     19.0,
+     44.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3286,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2026-04",
+    "observado": 26,
+    "mediana": 25.0,
+    "ip90": [
+     15.0,
+     36.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.5648,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2026-05",
+    "observado": 25,
+    "mediana": 26.0,
+    "ip90": [
+     16.0,
+     38.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.4022,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2026-06",
+    "observado": 21,
+    "mediana": 31.0,
+    "ip90": [
+     20.0,
+     45.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.0881,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-01",
+    "observado": 41,
+    "mediana": 31.0,
+    "ip90": [
+     18.0,
+     46.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.8799,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-02",
+    "observado": 46,
+    "mediana": 30.0,
+    "ip90": [
+     18.0,
+     46.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.9503,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-03",
+    "observado": 58,
+    "mediana": 30.0,
+    "ip90": [
+     17.0,
+     46.0
+    ],
+    "dentro": false,
+    "acima": true,
+    "pit": 0.9972,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-04",
+    "observado": 17,
+    "mediana": 27.0,
+    "ip90": [
+     15.0,
+     41.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.1081,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-05",
+    "observado": 30,
+    "mediana": 29.0,
+    "ip90": [
+     17.0,
+     44.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.5647,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-06",
+    "observado": 29,
+    "mediana": 32.0,
+    "ip90": [
+     18.0,
+     48.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3768,
+    "greve": true
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-07",
+    "observado": 26,
+    "mediana": 39.0,
+    "ip90": [
+     24.0,
+     56.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.0819,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-08",
+    "observado": 22,
+    "mediana": 37.0,
+    "ip90": [
+     22.0,
+     54.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.0428,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-09",
+    "observado": 27,
+    "mediana": 31.0,
+    "ip90": [
+     17.0,
+     47.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3082,
+    "greve": true
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-10",
+    "observado": 35,
+    "mediana": 29.0,
+    "ip90": [
+     16.0,
+     44.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.7657,
+    "greve": true
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-11",
+    "observado": 21,
+    "mediana": 24.0,
+    "ip90": [
+     13.0,
+     39.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3195,
+    "greve": true
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-12",
+    "observado": 36,
+    "mediana": 32.0,
+    "ip90": [
+     19.0,
+     47.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.6618,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2026-01",
+    "observado": 52,
+    "mediana": 32.0,
+    "ip90": [
+     19.0,
+     47.0
+    ],
+    "dentro": false,
+    "acima": true,
+    "pit": 0.9848,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2026-02",
+    "observado": 40,
+    "mediana": 32.0,
+    "ip90": [
+     18.0,
+     48.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.8118,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2026-03",
+    "observado": 33,
+    "mediana": 32.0,
+    "ip90": [
+     18.0,
+     46.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.5687,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2026-04",
+    "observado": 20,
+    "mediana": 27.0,
+    "ip90": [
+     14.0,
+     41.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2015,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2026-05",
+    "observado": 12,
+    "mediana": 28.0,
+    "ip90": [
+     15.0,
+     43.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0111,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2026-06",
+    "observado": 22,
+    "mediana": 36.0,
+    "ip90": [
+     22.0,
+     52.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.0458,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-01",
+    "observado": 10,
+    "mediana": 11.0,
+    "ip90": [
+     4.0,
+     22.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.4149,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-02",
+    "observado": 11,
+    "mediana": 11.0,
+    "ip90": [
+     3.0,
+     22.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.5108,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-03",
+    "observado": 5,
+    "mediana": 12.0,
+    "ip90": [
+     4.0,
+     22.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.0951,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-04",
+    "observado": 1,
+    "mediana": 9.0,
+    "ip90": [
+     3.0,
+     19.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0114,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-05",
+    "observado": 4,
+    "mediana": 10.0,
+    "ip90": [
+     3.0,
+     20.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.0866,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-06",
+    "observado": 10,
+    "mediana": 10.0,
+    "ip90": [
+     3.0,
+     20.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.4587,
+    "greve": true
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-07",
+    "observado": 9,
+    "mediana": 13.0,
+    "ip90": [
+     4.0,
+     24.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2682,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-08",
+    "observado": 3,
+    "mediana": 12.0,
+    "ip90": [
+     4.0,
+     23.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0282,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-09",
+    "observado": 10,
+    "mediana": 10.0,
+    "ip90": [
+     2.0,
+     20.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.5052,
+    "greve": true
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-10",
+    "observado": 6,
+    "mediana": 9.0,
+    "ip90": [
+     2.0,
+     19.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2642,
+    "greve": true
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-11",
+    "observado": 4,
+    "mediana": 8.0,
+    "ip90": [
+     2.0,
+     17.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.1587,
+    "greve": true
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-12",
+    "observado": 6,
+    "mediana": 12.0,
+    "ip90": [
+     4.0,
+     22.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.12,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2026-01",
+    "observado": 10,
+    "mediana": 12.0,
+    "ip90": [
+     4.0,
+     22.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3441,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2026-02",
+    "observado": 17,
+    "mediana": 11.0,
+    "ip90": [
+     4.0,
+     22.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.7976,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2026-03",
+    "observado": 3,
+    "mediana": 12.0,
+    "ip90": [
+     4.0,
+     22.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0221,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2026-04",
+    "observado": 10,
+    "mediana": 9.0,
+    "ip90": [
+     2.0,
+     19.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.5336,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2026-05",
+    "observado": 2,
+    "mediana": 10.0,
+    "ip90": [
+     3.0,
+     19.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0191,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2026-06",
+    "observado": 14,
+    "mediana": 12.0,
+    "ip90": [
+     3.0,
+     22.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.6368,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-01",
+    "observado": 20,
+    "mediana": 15.0,
+    "ip90": [
+     7.0,
+     24.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.8303,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-02",
+    "observado": 13,
+    "mediana": 14.0,
+    "ip90": [
+     7.0,
+     23.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3931,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-03",
+    "observado": 13,
+    "mediana": 14.0,
+    "ip90": [
+     7.0,
+     24.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.4107,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-04",
+    "observado": 15,
+    "mediana": 12.0,
+    "ip90": [
+     5.0,
+     21.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.6979,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-05",
+    "observado": 13,
+    "mediana": 13.0,
+    "ip90": [
+     6.0,
+     22.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.495,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-06",
+    "observado": 13,
+    "mediana": 12.0,
+    "ip90": [
+     5.0,
+     21.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.5533,
+    "greve": true
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-07",
+    "observado": 10,
+    "mediana": 15.0,
+    "ip90": [
+     7.0,
+     25.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.1683,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-08",
+    "observado": 5,
+    "mediana": 15.0,
+    "ip90": [
+     7.0,
+     24.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.024,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-09",
+    "observado": 7,
+    "mediana": 11.0,
+    "ip90": [
+     5.0,
+     20.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.1643,
+    "greve": true
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-10",
+    "observado": 3,
+    "mediana": 11.0,
+    "ip90": [
+     4.0,
+     20.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0234,
+    "greve": true
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-11",
+    "observado": 18,
+    "mediana": 9.0,
+    "ip90": [
+     3.0,
+     17.0
+    ],
+    "dentro": false,
+    "acima": true,
+    "pit": 0.9589,
+    "greve": true
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-12",
+    "observado": 23,
+    "mediana": 14.0,
+    "ip90": [
+     6.0,
+     24.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.9217,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2026-01",
+    "observado": 34,
+    "mediana": 15.0,
+    "ip90": [
+     7.0,
+     24.049999999999955
+    ],
+    "dentro": false,
+    "acima": true,
+    "pit": 0.9986,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2026-02",
+    "observado": 17,
+    "mediana": 15.0,
+    "ip90": [
+     7.0,
+     24.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.6417,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2026-03",
+    "observado": 15,
+    "mediana": 16.0,
+    "ip90": [
+     7.0,
+     25.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.4238,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2026-04",
+    "observado": 11,
+    "mediana": 12.0,
+    "ip90": [
+     5.0,
+     21.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3899,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2026-05",
+    "observado": 13,
+    "mediana": 12.0,
+    "ip90": [
+     5.0,
+     21.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.5441,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2026-06",
+    "observado": 18,
+    "mediana": 14.0,
+    "ip90": [
+     7.0,
+     24.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.7591,
+    "greve": false
+   }
+  ]
+ },
+ "C": {
+  "corte": "2024-12-31",
+  "teste": [
+   "2025-01-01",
+   "2026-06-30"
+  ],
+  "pre_registrada": false,
+  "descricao": "treino até 2024-12; efeito do ano sorteado entre 2019 e 2024 a cada caminho",
+  "regra_ano": "sorteio",
+  "ano_fixo": null,
+  "vetores_bootstrap": 100,
+  "caminhos_por_vetor": 20,
+  "caminhos": 2000,
+  "forma_renovacao_treino": {
+   "verde|MR": 0.8136,
+   "laranja|MR": 0.7371,
+   "amarela|MR": 0.6832,
+   "azul|MR": 0.7367,
+   "verde|EF": 0.7535,
+   "laranja|EF": 0.6705,
+   "amarela|EF": 0.4525,
+   "azul|EF": 0.6561
+  },
+  "cobertura_total": {
+   "dentro": 61,
+   "casos": 72,
+   "cobertura": 0.8472,
+   "ic95": [
+    0.7431,
+    0.9212
+   ]
+  },
+  "cobertura_sem_greve": {
+   "dentro": 46,
+   "casos": 56,
+   "cobertura": 0.8214,
+   "ic95": [
+    0.696,
+    0.9109
+   ]
+  },
+  "cobertura_meses_greve": {
+   "dentro": 15,
+   "casos": 16,
+   "cobertura": 0.9375,
+   "ic95": [
+    0.6977,
+    0.9984
+   ]
+  },
+  "cobertura_por_linha": {
+   "verde": {
+    "dentro": 17,
+    "casos": 18,
+    "cobertura": 0.9444,
+    "ic95": [
+     0.7271,
+     0.9986
+    ]
+   },
+   "laranja": {
+    "dentro": 15,
+    "casos": 18,
+    "cobertura": 0.8333,
+    "ic95": [
+     0.5858,
+     0.9642
+    ]
+   },
+   "amarela": {
+    "dentro": 14,
+    "casos": 18,
+    "cobertura": 0.7778,
+    "ic95": [
+     0.5236,
+     0.9359
+    ]
+   },
+   "azul": {
+    "dentro": 15,
+    "casos": 18,
+    "cobertura": 0.8333,
+    "ic95": [
+     0.5858,
+     0.9642
+    ]
+   }
+  },
+  "fora_acima": 3,
+  "fora_abaixo": 8,
+  "pit_histograma_10": [
+   13,
+   12,
+   7,
+   7,
+   10,
+   3,
+   6,
+   5,
+   5,
+   4
+  ],
+  "pit_ks_p": 0.01038490955545568,
+  "ano_minutos": "2025",
+  "minutos_ano": {
+   "verde": {
+    "observado": 1450.0,
+    "mediana": 1658.5,
+    "ic95": [
+     990.0,
+     2923.0
+    ],
+    "dentro": true
+   },
+   "laranja": {
+    "observado": 1698.0,
+    "mediana": 1598.5,
+    "ic95": [
+     910.0,
+     3304.1
+    ],
+    "dentro": true
+   },
+   "amarela": {
+    "observado": 307.0,
+    "mediana": 561.0,
+    "ic95": [
+     274.0,
+     1054.4
+    ],
+    "dentro": true
+   },
+   "azul": {
+    "observado": 708.0,
+    "mediana": 1817.5,
+    "ic95": [
+     492.9,
+     5544.0
+    ],
+    "dentro": true
+   }
+  },
+  "casos": [
+   {
+    "linha": "verde",
+    "mes": "2025-01",
+    "observado": 31,
+    "mediana": 27.0,
+    "ip90": [
+     14.0,
+     44.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.681,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-02",
+    "observado": 32,
+    "mediana": 27.0,
+    "ip90": [
+     15.0,
+     45.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.7032,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-03",
+    "observado": 27,
+    "mediana": 27.0,
+    "ip90": [
+     15.0,
+     45.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.4922,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-04",
+    "observado": 23,
+    "mediana": 24.0,
+    "ip90": [
+     13.0,
+     39.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.466,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-05",
+    "observado": 16,
+    "mediana": 26.0,
+    "ip90": [
+     14.0,
+     43.049999999999955
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.0925,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-06",
+    "observado": 23,
+    "mediana": 27.0,
+    "ip90": [
+     15.0,
+     46.049999999999955
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2895,
+    "greve": true
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-07",
+    "observado": 14,
+    "mediana": 33.0,
+    "ip90": [
+     19.0,
+     54.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0074,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-08",
+    "observado": 23,
+    "mediana": 31.0,
+    "ip90": [
+     18.0,
+     53.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.1664,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-09",
+    "observado": 24,
+    "mediana": 30.0,
+    "ip90": [
+     17.0,
+     55.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2449,
+    "greve": true
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-10",
+    "observado": 19,
+    "mediana": 27.0,
+    "ip90": [
+     14.0,
+     48.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.1468,
+    "greve": true
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-11",
+    "observado": 19,
+    "mediana": 22.0,
+    "ip90": [
+     11.0,
+     39.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3602,
+    "greve": true
+   },
+   {
+    "linha": "verde",
+    "mes": "2025-12",
+    "observado": 37,
+    "mediana": 27.0,
+    "ip90": [
+     15.0,
+     44.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.8342,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2026-01",
+    "observado": 38,
+    "mediana": 28.0,
+    "ip90": [
+     15.0,
+     45.049999999999955
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.8508,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2026-02",
+    "observado": 35,
+    "mediana": 29.0,
+    "ip90": [
+     16.0,
+     46.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.7517,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2026-03",
+    "observado": 28,
+    "mediana": 29.0,
+    "ip90": [
+     17.0,
+     47.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.4823,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2026-04",
+    "observado": 26,
+    "mediana": 24.0,
+    "ip90": [
+     13.0,
+     40.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.625,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2026-05",
+    "observado": 25,
+    "mediana": 25.0,
+    "ip90": [
+     14.0,
+     42.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.4916,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2026-06",
+    "observado": 21,
+    "mediana": 30.0,
+    "ip90": [
+     17.0,
+     51.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.115,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-01",
+    "observado": 41,
+    "mediana": 26.0,
+    "ip90": [
+     13.0,
+     46.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.9016,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-02",
+    "observado": 46,
+    "mediana": 29.0,
+    "ip90": [
+     15.0,
+     52.049999999999955
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.8981,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-03",
+    "observado": 58,
+    "mediana": 28.0,
+    "ip90": [
+     14.0,
+     50.0
+    ],
+    "dentro": false,
+    "acima": true,
+    "pit": 0.9843,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-04",
+    "observado": 17,
+    "mediana": 25.0,
+    "ip90": [
+     11.0,
+     45.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.1741,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-05",
+    "observado": 30,
+    "mediana": 29.0,
+    "ip90": [
+     14.0,
+     52.049999999999955
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.5344,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-06",
+    "observado": 29,
+    "mediana": 31.0,
+    "ip90": [
+     16.0,
+     59.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.4245,
+    "greve": true
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-07",
+    "observado": 26,
+    "mediana": 38.0,
+    "ip90": [
+     21.0,
+     73.04999999999995
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.1406,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-08",
+    "observado": 22,
+    "mediana": 36.0,
+    "ip90": [
+     19.0,
+     69.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.0961,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-09",
+    "observado": 27,
+    "mediana": 40.0,
+    "ip90": [
+     22.0,
+     80.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.128,
+    "greve": true
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-10",
+    "observado": 35,
+    "mediana": 34.0,
+    "ip90": [
+     17.0,
+     65.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.5466,
+    "greve": true
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-11",
+    "observado": 21,
+    "mediana": 26.0,
+    "ip90": [
+     13.0,
+     50.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2693,
+    "greve": true
+   },
+   {
+    "linha": "laranja",
+    "mes": "2025-12",
+    "observado": 36,
+    "mediana": 28.0,
+    "ip90": [
+     14.0,
+     50.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.7666,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2026-01",
+    "observado": 52,
+    "mediana": 28.0,
+    "ip90": [
+     14.0,
+     50.049999999999955
+    ],
+    "dentro": false,
+    "acima": true,
+    "pit": 0.9582,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2026-02",
+    "observado": 40,
+    "mediana": 29.5,
+    "ip90": [
+     15.0,
+     53.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.7961,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2026-03",
+    "observado": 33,
+    "mediana": 28.0,
+    "ip90": [
+     14.0,
+     50.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.6626,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2026-04",
+    "observado": 20,
+    "mediana": 25.0,
+    "ip90": [
+     12.0,
+     45.049999999999955
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2531,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2026-05",
+    "observado": 12,
+    "mediana": 27.0,
+    "ip90": [
+     14.0,
+     51.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0258,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2026-06",
+    "observado": 22,
+    "mediana": 36.0,
+    "ip90": [
+     19.0,
+     67.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.1043,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-01",
+    "observado": 10,
+    "mediana": 13.0,
+    "ip90": [
+     3.950000000000003,
+     27.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3416,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-02",
+    "observado": 11,
+    "mediana": 13.0,
+    "ip90": [
+     4.0,
+     29.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3711,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-03",
+    "observado": 5,
+    "mediana": 14.0,
+    "ip90": [
+     4.0,
+     29.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.0672,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-04",
+    "observado": 1,
+    "mediana": 12.0,
+    "ip90": [
+     3.0,
+     25.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.008,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-05",
+    "observado": 4,
+    "mediana": 13.0,
+    "ip90": [
+     4.0,
+     29.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.0524,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-06",
+    "observado": 10,
+    "mediana": 14.0,
+    "ip90": [
+     4.0,
+     30.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2822,
+    "greve": true
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-07",
+    "observado": 9,
+    "mediana": 17.0,
+    "ip90": [
+     5.0,
+     36.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.1533,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-08",
+    "observado": 3,
+    "mediana": 16.0,
+    "ip90": [
+     4.0,
+     33.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0247,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-09",
+    "observado": 10,
+    "mediana": 16.0,
+    "ip90": [
+     4.0,
+     37.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2209,
+    "greve": true
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-10",
+    "observado": 6,
+    "mediana": 14.0,
+    "ip90": [
+     3.0,
+     31.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.1334,
+    "greve": true
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-11",
+    "observado": 4,
+    "mediana": 11.0,
+    "ip90": [
+     2.0,
+     26.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.1126,
+    "greve": true
+   },
+   {
+    "linha": "amarela",
+    "mes": "2025-12",
+    "observado": 6,
+    "mediana": 14.0,
+    "ip90": [
+     4.0,
+     28.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.117,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2026-01",
+    "observado": 10,
+    "mediana": 14.0,
+    "ip90": [
+     4.0,
+     29.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2919,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2026-02",
+    "observado": 17,
+    "mediana": 14.0,
+    "ip90": [
+     5.0,
+     30.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.6506,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2026-03",
+    "observado": 3,
+    "mediana": 14.0,
+    "ip90": [
+     4.0,
+     28.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0287,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2026-04",
+    "observado": 10,
+    "mediana": 11.0,
+    "ip90": [
+     3.0,
+     26.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.4145,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2026-05",
+    "observado": 2,
+    "mediana": 13.0,
+    "ip90": [
+     3.0,
+     28.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0301,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2026-06",
+    "observado": 14,
+    "mediana": 16.0,
+    "ip90": [
+     4.0,
+     34.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.4163,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-01",
+    "observado": 20,
+    "mediana": 15.0,
+    "ip90": [
+     6.0,
+     27.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.7724,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-02",
+    "observado": 13,
+    "mediana": 15.0,
+    "ip90": [
+     6.0,
+     27.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3521,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-03",
+    "observado": 13,
+    "mediana": 16.0,
+    "ip90": [
+     7.0,
+     28.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3467,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-04",
+    "observado": 15,
+    "mediana": 13.0,
+    "ip90": [
+     5.0,
+     24.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.6594,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-05",
+    "observado": 13,
+    "mediana": 14.0,
+    "ip90": [
+     6.0,
+     25.049999999999955
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.4504,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-06",
+    "observado": 13,
+    "mediana": 15.0,
+    "ip90": [
+     5.0,
+     26.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.4106,
+    "greve": true
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-07",
+    "observado": 10,
+    "mediana": 17.0,
+    "ip90": [
+     8.0,
+     31.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.1153,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-08",
+    "observado": 5,
+    "mediana": 17.0,
+    "ip90": [
+     7.0,
+     29.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0238,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-09",
+    "observado": 7,
+    "mediana": 15.0,
+    "ip90": [
+     6.0,
+     27.049999999999955
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.0923,
+    "greve": true
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-10",
+    "observado": 3,
+    "mediana": 14.0,
+    "ip90": [
+     5.0,
+     26.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0104,
+    "greve": true
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-11",
+    "observado": 18,
+    "mediana": 11.0,
+    "ip90": [
+     4.0,
+     22.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.8448,
+    "greve": true
+   },
+   {
+    "linha": "azul",
+    "mes": "2025-12",
+    "observado": 23,
+    "mediana": 15.0,
+    "ip90": [
+     6.0,
+     27.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.8648,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2026-01",
+    "observado": 34,
+    "mediana": 16.0,
+    "ip90": [
+     7.0,
+     28.0
+    ],
+    "dentro": false,
+    "acima": true,
+    "pit": 0.9888,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2026-02",
+    "observado": 17,
+    "mediana": 16.0,
+    "ip90": [
+     7.0,
+     28.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.561,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2026-03",
+    "observado": 15,
+    "mediana": 17.0,
+    "ip90": [
+     7.0,
+     29.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3822,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2026-04",
+    "observado": 11,
+    "mediana": 13.0,
+    "ip90": [
+     5.0,
+     24.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3385,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2026-05",
+    "observado": 13,
+    "mediana": 14.0,
+    "ip90": [
+     5.0,
+     25.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.4625,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2026-06",
+    "observado": 18,
+    "mediana": 16.0,
+    "ip90": [
+     7.0,
+     28.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.6233,
+    "greve": false
+   }
+  ]
+ },
+ "D": {
+  "corte": "2022-12-31",
+  "teste": [
+   "2023-01-01",
+   "2024-06-30"
+  ],
+  "pre_registrada": false,
+  "descricao": "reteste da regra C em outro período: treino até 2022-12, teste de 2023-01 a 2024-06",
+  "regra_ano": "sorteio",
+  "ano_fixo": null,
+  "vetores_bootstrap": 100,
+  "caminhos_por_vetor": 20,
+  "caminhos": 2000,
+  "forma_renovacao_treino": {
+   "verde|MR": 0.8123,
+   "laranja|MR": 0.7264,
+   "amarela|MR": 0.6757,
+   "azul|MR": 0.7523,
+   "verde|EF": 0.7867,
+   "laranja|EF": 0.6663,
+   "amarela|EF": 0.5353,
+   "azul|EF": 0.7363
+  },
+  "cobertura_total": {
+   "dentro": 65,
+   "casos": 72,
+   "cobertura": 0.9028,
+   "ic95": [
+    0.8099,
+    0.96
+   ]
+  },
+  "cobertura_sem_greve": {
+   "dentro": 65,
+   "casos": 72,
+   "cobertura": 0.9028,
+   "ic95": [
+    0.8099,
+    0.96
+   ]
+  },
+  "cobertura_meses_greve": null,
+  "cobertura_por_linha": {
+   "verde": {
+    "dentro": 18,
+    "casos": 18,
+    "cobertura": 1.0,
+    "ic95": [
+     0.8147,
+     1.0
+    ]
+   },
+   "laranja": {
+    "dentro": 14,
+    "casos": 18,
+    "cobertura": 0.7778,
+    "ic95": [
+     0.5236,
+     0.9359
+    ]
+   },
+   "amarela": {
+    "dentro": 15,
+    "casos": 18,
+    "cobertura": 0.8333,
+    "ic95": [
+     0.5858,
+     0.9642
+    ]
+   },
+   "azul": {
+    "dentro": 18,
+    "casos": 18,
+    "cobertura": 1.0,
+    "ic95": [
+     0.8147,
+     1.0
+    ]
+   }
+  },
+  "fora_acima": 4,
+  "fora_abaixo": 3,
+  "pit_histograma_10": [
+   7,
+   12,
+   9,
+   8,
+   7,
+   5,
+   4,
+   4,
+   10,
+   6
+  ],
+  "pit_ks_p": 0.1556377206409798,
+  "ano_minutos": "2023",
+  "minutos_ano": {
+   "verde": {
+    "observado": 1390.0,
+    "mediana": 1913.0,
+    "ic95": [
+     1189.9,
+     2822.1
+    ],
+    "dentro": true
+   },
+   "laranja": {
+    "observado": 1492.0,
+    "mediana": 1619.0,
+    "ic95": [
+     985.0,
+     2404.2
+    ],
+    "dentro": true
+   },
+   "amarela": {
+    "observado": 448.0,
+    "mediana": 559.0,
+    "ic95": [
+     270.9,
+     942.1
+    ],
+    "dentro": true
+   },
+   "azul": {
+    "observado": 688.0,
+    "mediana": 701.0,
+    "ic95": [
+     436.0,
+     1117.0
+    ],
+    "dentro": true
+   }
+  },
+  "casos": [
+   {
+    "linha": "verde",
+    "mes": "2023-01",
+    "observado": 33,
+    "mediana": 33.0,
+    "ip90": [
+     20.0,
+     51.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.4826,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2023-02",
+    "observado": 26,
+    "mediana": 32.0,
+    "ip90": [
+     19.0,
+     48.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2708,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2023-03",
+    "observado": 49,
+    "mediana": 36.0,
+    "ip90": [
+     22.0,
+     55.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.8834,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2023-04",
+    "observado": 28,
+    "mediana": 25.0,
+    "ip90": [
+     14.0,
+     38.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.6501,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2023-05",
+    "observado": 36,
+    "mediana": 27.0,
+    "ip90": [
+     15.0,
+     43.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.8157,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2023-06",
+    "observado": 31,
+    "mediana": 32.5,
+    "ip90": [
+     19.0,
+     48.049999999999955
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.4233,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2023-07",
+    "observado": 28,
+    "mediana": 35.0,
+    "ip90": [
+     20.0,
+     51.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2347,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2023-08",
+    "observado": 22,
+    "mediana": 35.0,
+    "ip90": [
+     21.0,
+     52.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.0513,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2023-09",
+    "observado": 38,
+    "mediana": 27.0,
+    "ip90": [
+     15.0,
+     42.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.8999,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2023-10",
+    "observado": 23,
+    "mediana": 25.0,
+    "ip90": [
+     14.0,
+     39.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3692,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2023-11",
+    "observado": 33,
+    "mediana": 24.5,
+    "ip90": [
+     13.0,
+     37.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.8715,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2023-12",
+    "observado": 19,
+    "mediana": 27.0,
+    "ip90": [
+     15.0,
+     42.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.157,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2024-01",
+    "observado": 26,
+    "mediana": 33.0,
+    "ip90": [
+     19.0,
+     49.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2254,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2024-02",
+    "observado": 28,
+    "mediana": 29.0,
+    "ip90": [
+     17.0,
+     46.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.4264,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2024-03",
+    "observado": 23,
+    "mediana": 27.0,
+    "ip90": [
+     15.0,
+     42.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3245,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2024-04",
+    "observado": 27,
+    "mediana": 27.0,
+    "ip90": [
+     16.0,
+     42.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.4827,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2024-05",
+    "observado": 20,
+    "mediana": 29.0,
+    "ip90": [
+     17.0,
+     45.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.1394,
+    "greve": false
+   },
+   {
+    "linha": "verde",
+    "mes": "2024-06",
+    "observado": 24,
+    "mediana": 31.0,
+    "ip90": [
+     18.0,
+     46.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2074,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2023-01",
+    "observado": 48,
+    "mediana": 34.0,
+    "ip90": [
+     19.0,
+     52.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.8997,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2023-02",
+    "observado": 16,
+    "mediana": 33.0,
+    "ip90": [
+     17.0,
+     51.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0344,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2023-03",
+    "observado": 21,
+    "mediana": 35.0,
+    "ip90": [
+     20.0,
+     53.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.0746,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2023-04",
+    "observado": 25,
+    "mediana": 25.0,
+    "ip90": [
+     13.0,
+     40.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.4985,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2023-05",
+    "observado": 25,
+    "mediana": 28.0,
+    "ip90": [
+     14.0,
+     44.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3624,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2023-06",
+    "observado": 27,
+    "mediana": 34.0,
+    "ip90": [
+     19.0,
+     53.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2358,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2023-07",
+    "observado": 40,
+    "mediana": 37.0,
+    "ip90": [
+     21.0,
+     56.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.612,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2023-08",
+    "observado": 47,
+    "mediana": 36.0,
+    "ip90": [
+     20.950000000000003,
+     56.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.8372,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2023-09",
+    "observado": 43,
+    "mediana": 32.0,
+    "ip90": [
+     18.0,
+     50.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.868,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2023-10",
+    "observado": 70,
+    "mediana": 29.0,
+    "ip90": [
+     14.0,
+     46.0
+    ],
+    "dentro": false,
+    "acima": true,
+    "pit": 0.9995,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2023-11",
+    "observado": 30,
+    "mediana": 27.0,
+    "ip90": [
+     13.0,
+     44.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.5947,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2023-12",
+    "observado": 20,
+    "mediana": 29.0,
+    "ip90": [
+     15.0,
+     46.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.1466,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2024-01",
+    "observado": 15,
+    "mediana": 32.0,
+    "ip90": [
+     18.0,
+     51.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.024,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2024-02",
+    "observado": 12,
+    "mediana": 29.0,
+    "ip90": [
+     16.0,
+     47.0
+    ],
+    "dentro": false,
+    "acima": false,
+    "pit": 0.0154,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2024-03",
+    "observado": 21,
+    "mediana": 27.0,
+    "ip90": [
+     14.0,
+     42.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2603,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2024-04",
+    "observado": 23,
+    "mediana": 27.0,
+    "ip90": [
+     14.0,
+     42.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3405,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2024-05",
+    "observado": 22,
+    "mediana": 29.0,
+    "ip90": [
+     16.0,
+     46.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2063,
+    "greve": false
+   },
+   {
+    "linha": "laranja",
+    "mes": "2024-06",
+    "observado": 32,
+    "mediana": 33.0,
+    "ip90": [
+     18.0,
+     51.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.4696,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2023-01",
+    "observado": 6,
+    "mediana": 13.0,
+    "ip90": [
+     5.0,
+     25.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.0945,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2023-02",
+    "observado": 7,
+    "mediana": 13.0,
+    "ip90": [
+     4.0,
+     24.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.1484,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2023-03",
+    "observado": 14,
+    "mediana": 15.0,
+    "ip90": [
+     6.0,
+     28.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.4133,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2023-04",
+    "observado": 11,
+    "mediana": 10.0,
+    "ip90": [
+     3.0,
+     20.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.537,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2023-05",
+    "observado": 6,
+    "mediana": 11.0,
+    "ip90": [
+     3.0,
+     23.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.1589,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2023-06",
+    "observado": 11,
+    "mediana": 13.0,
+    "ip90": [
+     4.0,
+     26.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3595,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2023-07",
+    "observado": 33,
+    "mediana": 14.0,
+    "ip90": [
+     5.0,
+     25.049999999999955
+    ],
+    "dentro": false,
+    "acima": true,
+    "pit": 0.993,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2023-08",
+    "observado": 7,
+    "mediana": 14.0,
+    "ip90": [
+     5.0,
+     27.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.1015,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2023-09",
+    "observado": 6,
+    "mediana": 11.0,
+    "ip90": [
+     3.0,
+     21.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.1742,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2023-10",
+    "observado": 6,
+    "mediana": 10.0,
+    "ip90": [
+     3.0,
+     20.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2237,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2023-11",
+    "observado": 14,
+    "mediana": 9.0,
+    "ip90": [
+     2.0,
+     20.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.7942,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2023-12",
+    "observado": 8,
+    "mediana": 11.0,
+    "ip90": [
+     3.0,
+     21.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3293,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2024-01",
+    "observado": 14,
+    "mediana": 13.0,
+    "ip90": [
+     4.0,
+     25.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.5537,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2024-02",
+    "observado": 19,
+    "mediana": 12.0,
+    "ip90": [
+     4.0,
+     23.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.8698,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2024-03",
+    "observado": 6,
+    "mediana": 11.0,
+    "ip90": [
+     3.0,
+     22.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.1627,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2024-04",
+    "observado": 15,
+    "mediana": 11.0,
+    "ip90": [
+     3.0,
+     21.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.7813,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2024-05",
+    "observado": 50,
+    "mediana": 12.0,
+    "ip90": [
+     3.0,
+     23.0
+    ],
+    "dentro": false,
+    "acima": true,
+    "pit": 1.0,
+    "greve": false
+   },
+   {
+    "linha": "amarela",
+    "mes": "2024-06",
+    "observado": 30,
+    "mediana": 12.0,
+    "ip90": [
+     4.0,
+     24.0
+    ],
+    "dentro": false,
+    "acima": true,
+    "pit": 0.9915,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2023-01",
+    "observado": 14,
+    "mediana": 16.0,
+    "ip90": [
+     7.0,
+     28.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3269,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2023-02",
+    "observado": 10,
+    "mediana": 16.0,
+    "ip90": [
+     7.0,
+     28.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.1492,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2023-03",
+    "observado": 13,
+    "mediana": 19.0,
+    "ip90": [
+     9.0,
+     32.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.1617,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2023-04",
+    "observado": 16,
+    "mediana": 12.0,
+    "ip90": [
+     5.0,
+     22.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.7156,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2023-05",
+    "observado": 17,
+    "mediana": 14.0,
+    "ip90": [
+     6.0,
+     25.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.7171,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2023-06",
+    "observado": 10,
+    "mediana": 16.0,
+    "ip90": [
+     7.0,
+     27.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.1346,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2023-07",
+    "observado": 16,
+    "mediana": 15.0,
+    "ip90": [
+     7.0,
+     26.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.5824,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2023-08",
+    "observado": 18,
+    "mediana": 16.0,
+    "ip90": [
+     7.0,
+     27.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.6086,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2023-09",
+    "observado": 19,
+    "mediana": 12.0,
+    "ip90": [
+     5.0,
+     23.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.8633,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2023-10",
+    "observado": 13,
+    "mediana": 12.0,
+    "ip90": [
+     5.0,
+     21.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.526,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2023-11",
+    "observado": 21,
+    "mediana": 12.0,
+    "ip90": [
+     5.0,
+     21.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.9453,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2023-12",
+    "observado": 22,
+    "mediana": 13.0,
+    "ip90": [
+     5.0,
+     23.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.917,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2024-01",
+    "observado": 22,
+    "mediana": 16.0,
+    "ip90": [
+     8.0,
+     27.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.8048,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2024-02",
+    "observado": 8,
+    "mediana": 15.0,
+    "ip90": [
+     6.0,
+     26.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.0957,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2024-03",
+    "observado": 8,
+    "mediana": 14.0,
+    "ip90": [
+     6.0,
+     24.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.1351,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2024-04",
+    "observado": 9,
+    "mediana": 14.0,
+    "ip90": [
+     5.0,
+     24.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.2201,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2024-05",
+    "observado": 12,
+    "mediana": 14.0,
+    "ip90": [
+     6.0,
+     25.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.3266,
+    "greve": false
+   },
+   {
+    "linha": "azul",
+    "mes": "2024-06",
+    "observado": 17,
+    "mediana": 15.0,
+    "ip90": [
+     6.0,
+     25.0
+    ],
+    "dentro": true,
+    "acima": false,
+    "pit": 0.6107,
+    "greve": false
+   }
+  ]
+ }
+}

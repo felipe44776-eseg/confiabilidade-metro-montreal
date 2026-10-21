@@ -1,6 +1,6 @@
 # 003 — Clima horário e eventos externos
 
-**Status:** especificada
+**Status:** implementada
 **Fase:** F1 (semanas 2 e 3)
 **Depende de:** 000, 001
 
@@ -20,6 +20,21 @@ Chuva, neve, chuva congelante, frio intenso, greves e grandes eventos mudam a ta
 - Dado cada evento externo (greve, jogo, GP), quando entra no painel, então tem data, faixa horária, URL da fonte e status (verificado ou não verificado).
 - Dadas as greves de 2025, quando cruzadas com o serviço previsto, então as horas sem serviço viram exposição zero, e não "hora sem falha".
 - Dado um fator sem fonte pública (passageiros diários, fechamentos planejados, quedas de energia), quando a spec é encerrada, então ele aparece como ausente no dicionário de dados, nunca como zero.
+
+## Resultado (2026-10-21)
+
+Scripts `pipeline/baixa_clima_eventos.py` e `pipeline/clima_eventos.py`; testes em `pipeline/tests/test_clima.py`; saídas em `dados/derivados/clima/`.
+
+| Critério | Resultado |
+|---|---|
+| ≥ 95% das horas de operação com precipitação e estação indicada | **Atende**: 99,99% (99,3% da 10761, o resto da 30165) |
+| 4 trocas de horário sem hora repetida nem faltando | **Atende** (teste em março e novembro de 2023 e 2024) |
+| Chuva congelante em 2023-04-05, 09h a 20h | **Atende**: as 12 horas (09h a 20h LST, 10h a 21h locais); recálculo independente direto do ECCC |
+| Evento com data, faixa, URL e status | **Atende**: 348 eventos; jogos "verificado", greves e GP "não verificado" |
+| Greve vira exposição zero | **Atende** (teste): 2025-11-01 sem serviço; faixas parciais nos demais dias |
+| Fatores sem fonte como ausentes no dicionário | **Atende**: `docs/dicionario_dados.md` |
+
+Limitação declarada: a condição do tempo (campo "Weather" da 51157) só existe em 45,8% das horas de operação; o resto fica "sem_dado".
 
 ## Fora de escopo
 - Previsão do tempo. O projeto usa só o histórico.

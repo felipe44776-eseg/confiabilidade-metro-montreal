@@ -1,0 +1,12 @@
+{
+ "disciplina": "Sistemas Tolerantes a Falhas",
+ "instituicao": "ESEG",
+ "ano": 2026,
+ "nota": "Nomes em ordem alfabética. O RA de cada integrante não fica no repositório público; entra só no relatório de entrega.",
+ "integrantes": [
+  {"nome": "Ana Paula Duanetti", "curso": "Engenharia de Produção"},
+  {"nome": "Felipe Marins", "curso": "Engenharia de Produção"},
+  {"nome": "Lorena Feitosa de Freitas", "curso": "Engenharia de Produção"},
+  {"nome": "Sophia Braz", "curso": "Engenharia de Produção"}
+ ]
+}

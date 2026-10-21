@@ -15,6 +15,7 @@ Saidas:
 import csv
 import json
 import math
+import os
 import re
 import sys
 import unicodedata
@@ -243,6 +244,8 @@ for l, pts in tracados.items():
 # Sem data de geracao nos arquivos: rodar de novo com as mesmas entradas precisa dar arquivos identicos (constituicao, principio III).
 meta = {"osm_timestamp": osm["osm3s"]["timestamp_osm_base"], "licenca": "Traçado: ODbL (OpenStreetMap). Estações: GTFS STM, CC BY 4.0."}
 gerado_em = datetime.now(timezone.utc).isoformat(timespec="seconds")
+os.makedirs(f"{DERIV}/geo", exist_ok=True)
+os.makedirs("fontes/verificacao", exist_ok=True)
 json.dump({"type": "FeatureCollection", "metadata": meta, "features": feat_lin}, open(f"{DERIV}/geo/linhas.geojson", "w", encoding="utf-8", newline="\n"), ensure_ascii=False)
 json.dump({"type": "FeatureCollection", "metadata": meta, "features": feat_est}, open(f"{DERIV}/geo/estacoes.geojson", "w", encoding="utf-8", newline="\n"), ensure_ascii=False)
 json.dump(locais, open(f"{DERIV}/geo/locais.json", "w", encoding="utf-8", newline="\n"), ensure_ascii=False, indent=0)

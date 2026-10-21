@@ -1,0 +1,22 @@
+{
+ "tecnicos_uma_linha": 8530,
+ "por_linha": {
+  "verde": 2826,
+  "laranja": 3088,
+  "amarela": 1146,
+  "azul": 1470
+ },
+ "por_causa": {
+  "MR": 3982,
+  "EF": 4548
+ },
+ "na_faixa": 8319,
+ "na_faixa_ou_vizinha": 8430,
+ "pct_na_faixa_ou_vizinha": 0.9883,
+ "excecoes": 100,
+ "causa_comum": 45,
+ "causa_comum_verde_laranja": 31,
+ "sem_linha": 44,
+ "inicio_depois_da_meia_noite": 224,
+ "duracao_max_min": 1170
+}

@@ -1,6 +1,6 @@
 # 008 — Políticas de tolerância a falhas
 
-**Status:** especificada
+**Status:** implementada
 **Fase:** F4 (semanas 6 a 8)
 **Depende de:** 006, 007, 009
 
@@ -20,6 +20,21 @@ Que política de tolerância a falhas reduz mais os trens-hora perdidos e os min
 - Dado o retorno parcial, quando a posição dos aparelhos de mudança de via não estiver verificada, então a política só usa terminais, e o resultado aparece marcado como hipótese.
 - Dado cada resultado, quando publicado, então o relatório separa o efeito em falhas de trem e em falhas de equipamento fixo.
 - Dado o tempo de reparo, quando varia de 0,5 a 4 dias, então o relatório traz a sensibilidade de cada política a ele.
+
+## Resultado (2026-10-21)
+
+Código em `app/src/motor/politicas.ts`, `frota.ts` e `dia.ts`; relatório [`politicas.md`](../../fontes/verificacao/politicas.md) gerado por `app/relatorios/politicas.relatorio.ts` com o `parametros.json` real.
+
+| Critério | Resultado |
+|---|---|
+| Cada política liga e desliga sozinha | **Atende** (teste) |
+| Diferença contra "nenhuma política" com números aleatórios comuns e IC 95% | **Atende**: 3.000 dias úteis pareados por política e por tempo de reparo |
+| Reserva k-de-n contra Markov a até 5 p.p. | **Atende**: na Laranja, simulação 0,674, 0,939 e 0,992 contra Markov 0,671, 0,938 e 0,992 (0, 1 e 2 reservas) |
+| Retorno parcial só nos terminais, marcado como hipótese | **Atende**: só nas pontas de viagem do horário; aviso no relatório e na página |
+| Efeito separado em falha de trem e de equipamento fixo | **Atende**: colunas MR, EF e causa comum |
+| Sensibilidade ao reparo de 0,5 a 4 dias | **Atende**: tabelas para 0,5, 1, 2 e 4 dias |
+
+Achados (reparo de 1 dia): a operação degradada é a política que mais reduz minutos parados (−7,8 min por dia útil na soma das linhas; IC −9,7 a −5,9) e trens-hora perdidos; a reserva fria não muda os minutos parados, mas eleva a chance de frota completa na Laranja em 32,5 p.p. (58 p.p. com reparo de 4 dias); a retirada do trem falho reduz os minutos de material rodante em 1,1 por dia útil; retorno parcial e rota alternativa só mudam a disponibilidade origem-destino.
 
 ## Fora de escopo
 - Custo financeiro de cada política (pode entrar depois, com fonte).

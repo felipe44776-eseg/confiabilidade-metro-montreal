@@ -1,6 +1,6 @@
 # 009 — Monte Carlo e métricas
 
-**Status:** especificada
+**Status:** implementada com exceções
 **Fase:** F3 (semanas 4 a 7)
 **Depende de:** 006, 007
 
@@ -19,6 +19,19 @@ Com quantas rodadas a estimativa de disponibilidade fica precisa, e a simulaçã
 - Dadas as métricas, quando publicadas, então incluem: disponibilidade por linha; disponibilidade por par origem-destino (fração do tempo com caminho, mais o tempo extra de viagem), ponderada pela oferta; trens-hora perdidos contra o horário; minutos de interrupção.
 - Dada cada métrica, quando mostrada, então vem com intervalo de 95%, número de rodadas e semente.
 - Dado um cenário, quando executado, então o tempo total para o número padrão de rodadas é medido e registrado, para confirmar a estimativa de 10 a 30 segundos para 5.000 rodadas.
+
+## Resultado (2026-10-21)
+
+Código em `app/src/mc/`; testes em `app/tests/motor/montecarlo.test.ts`; relatório [`politicas.md`](../../fontes/verificacao/politicas.md).
+
+| Critério | Resultado |
+|---|---|
+| 1 ou 8 processos dão resultados idênticos | **Atende** (teste: 1 contra 8 lotes) |
+| Meia-largura do IC 95% até 5% da média dos minutos parados | **Exceção na Azul**: o modo adaptativo para em 50.000 dias; Verde, Laranja e Amarela atingem 5% com 18 mil a 40 mil dias, mas a Azul precisaria de cerca de 168 mil, por causa de poucas interrupções de quase 20 horas na amostra observada. Com 50 mil dias, a meia-largura da Azul fica perto de 9% |
+| Laranja: IC contém 1.852 ou 1.797 min/ano | **Atende**: 1.704 (1.528 a 1.881) contém os dois. Antes da correção da duração (lognormal) dava 1.433, fora do intervalo; a diferença foi explicada e corrigida em 2026-10-21 |
+| Métricas: disponibilidade por linha e por par origem-destino (com tempo extra), trens-hora perdidos, minutos de interrupção | **Atende** |
+| Cada métrica com IC 95%, número de rodadas e semente | **Atende** |
+| Tempo de 5.000 rodadas medido | **Atende**: 12.000 dias em 11,7 s numa thread (cerca de 5 s para 5.000); na página, 1.000 dias em 2,6 a 3,8 s com 12 workers |
 
 ## Fora de escopo
 - Otimização automática de parâmetros.

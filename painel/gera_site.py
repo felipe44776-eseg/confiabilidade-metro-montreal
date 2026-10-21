@@ -14,6 +14,10 @@ import sys
 REPO = "https://github.com/felipe44776-eseg/confiabilidade-metro-montreal"
 SAIDA = sys.argv[1] if len(sys.argv) > 1 else "_site"
 D3 = "painel/vendor/d3.v7.9.0.min.js"
+_eq = json.load(open("docs/equipe.json", encoding="utf-8"))["integrantes"]
+_man = json.load(open("fontes/fontes_manifesto.json", encoding="utf-8"))
+VERSAO_DADOS = " e ".join(f'<a href="{REPO}/releases/tag/{r}">{r}</a>' for r in _man.get("releases", [_man["release"]]))
+EQUIPE = ", ".join(p["nome"] for p in _eq[:-1]) + " e " + _eq[-1]["nome"]
 
 pagina = open("painel/painel_index.html", encoding="utf-8").read()
 estilo = re.search(r"<style>(.*?)</style>", pagina, re.S).group(1)
@@ -87,8 +91,9 @@ window.dash = (() => {
 
 RODAPE = f"""
 <footer class="mtl-rodape">
-  <p>Trabalho da disciplina Sistemas Tolerantes a Falhas, Engenharia de Produção, ESEG, 2026. Código e tabelas: <a href="{REPO}">{REPO.replace("https://", "")}</a>. Veja também: <a href="mapa/">mapa da rede</a>, <a href="fontes/">fontes e verificação</a>, <a href="specs/">especificações do projeto</a>.</p>
+  <p>Trabalho da disciplina Sistemas Tolerantes a Falhas, Engenharia de Produção, ESEG, 2026. Equipe: {EQUIPE}. Código e tabelas: <a href="{REPO}">{REPO.replace("https://", "")}</a>. Veja também: <a href="simulador/">simulador</a>, <a href="mapa/">mapa da rede</a>, <a href="relatorio/">relatório</a>, <a href="fontes/">fontes e verificação</a>, <a href="specs/">especificações do projeto</a>.</p>
   <p>Dados: Société de transport de Montréal (STM), dados abertos, licença CC BY 4.0: incidentes do metrô, quilometragem real das voitures e GTFS. Clima: Environment and Climate Change Canada, estação MONTREAL INTL A, Licença de Governo Aberto do Canadá. Mobilidade: Google LLC, Google COVID-19 Community Mobility Reports. Os resultados são análise própria e não representam a STM.</p>
+  <p>Versão dos dados: {VERSAO_DADOS}.</p>
 </footer>
 """
 
