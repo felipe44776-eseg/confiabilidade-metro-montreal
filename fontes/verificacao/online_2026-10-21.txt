@@ -1,0 +1,124 @@
+manifesto gerado em 2026-10-21T01:25:00+00:00 | verificacao em 2026-10-21T01:26:48+00:00
+== Download da Release dados-2026-10-20
+  OK      stm_incidentes
+  OK      stm_km_reel
+  OK      stm_km_planifie
+  OK      stm_km_budgete
+  OK      gtfs_stm
+  OK      osm_metro
+  OK      wikidata_estacoes
+  OK      eccc_2019
+  OK      eccc_2020
+  OK      eccc_2021
+  OK      eccc_2022
+  OK      eccc_2023
+  OK      eccc_2024
+  OK      eccc_2025
+  OK      eccc_2026
+== Integridade local (SHA-256 contra o manifesto)
+  OK      dados/brutos/stm/incidents_metro.csv
+  OK      dados/brutos/stm/km_reel.csv
+  OK      dados/brutos/stm/km_planifie.csv
+  OK      dados/brutos/stm/km_budgete.csv
+  OK      dados/brutos/gtfs/gtfs_stm_mdb-2126_latest.zip
+  OK      dados/brutos/osm/overpass_metro_mtl.json
+  OK      dados/brutos/wikidata/estacoes_metro_mtl.json
+  ORIGEM  dados/brutos/google/google_Region_Mobility_Report_CSVs.zip (nao distribuido: baixar da origem para conferir)
+  OK      dados/brutos/eccc/eccc_diario_2019.csv
+  OK      dados/brutos/eccc/eccc_diario_2020.csv
+  OK      dados/brutos/eccc/eccc_diario_2021.csv
+  OK      dados/brutos/eccc/eccc_diario_2022.csv
+  OK      dados/brutos/eccc/eccc_diario_2023.csv
+  OK      dados/brutos/eccc/eccc_diario_2024.csv
+  OK      dados/brutos/eccc/eccc_diario_2025.csv
+  OK      dados/brutos/eccc/eccc_diario_2026.csv
+  ORIGEM  dados/brutos/nager/nager_CA_2019.json (nao distribuido: baixar da origem para conferir)
+  ORIGEM  dados/brutos/nager/nager_CA_2020.json (nao distribuido: baixar da origem para conferir)
+  ORIGEM  dados/brutos/nager/nager_CA_2021.json (nao distribuido: baixar da origem para conferir)
+  ORIGEM  dados/brutos/nager/nager_CA_2022.json (nao distribuido: baixar da origem para conferir)
+  ORIGEM  dados/brutos/nager/nager_CA_2023.json (nao distribuido: baixar da origem para conferir)
+  ORIGEM  dados/brutos/nager/nager_CA_2024.json (nao distribuido: baixar da origem para conferir)
+  ORIGEM  dados/brutos/nager/nager_CA_2025.json (nao distribuido: baixar da origem para conferir)
+  ORIGEM  dados/brutos/nager/nager_CA_2026.json (nao distribuido: baixar da origem para conferir)
+  ORIGEM  dados/brutos/stm_relatorios/ra2019.html (nao distribuido: baixar da origem para conferir)
+  ORIGEM  dados/brutos/stm_relatorios/ra2020.html (nao distribuido: baixar da origem para conferir)
+  ORIGEM  dados/brutos/stm_relatorios/ra2021.html (nao distribuido: baixar da origem para conferir)
+  ORIGEM  dados/brutos/stm_relatorios/ra2022.html (nao distribuido: baixar da origem para conferir)
+  ORIGEM  dados/brutos/stm_relatorios/ra2023.html (nao distribuido: baixar da origem para conferir)
+  OK      painel/vendor/d3.v7.9.0.min.js
+  OK      dados/derivados/gtfs/metro_sequencias.csv
+  OK      dados/derivados/gtfs/stops.txt
+  OK      dados/derivados/mobilidade/google_mobilidade_montreal_2020_2022.csv
+  OK      dados/derivados/painel_diario_linha.csv
+  OK      dados/derivados/painel/linhas.json
+  OK      dados/derivados/painel/ajustes.json
+  OK      dados/derivados/painel/tbf_curvas.json
+  OK      dados/derivados/painel/tbf_hist.json
+  OK      dados/derivados/painel/anual.json
+  OK      dados/derivados/painel/frota_anual.json
+  OK      dados/derivados/painel/ttr_faixas.json
+  OK      dados/derivados/painel/perfil.json
+  OK      dados/derivados/painel/correlacoes.json
+  OK      dados/derivados/painel/locais.json
+  OK      dados/derivados/painel/pareto.json
+  OK      dados/derivados/painel/causa_comum.json
+  OK      dados/derivados/painel/corredor.json
+  OK      dados/derivados/painel/sim_hist.json
+  OK      dados/derivados/painel/sim_amostra.json
+  OK      dados/derivados/painel/kdn.json
+  OK      dados/derivados/painel/estacoes.json
+  OK      dados/derivados/geo/linhas.geojson
+  OK      dados/derivados/geo/estacoes.geojson
+  OK      dados/derivados/geo/locais.json
+  -> 0 problema(s)
+== Fontes na internet (baixa de novo e compara com a copia do manifesto)
+  IGUAL   stm_incidentes: HTTP 200, conteudo identico
+  IGUAL   stm_km_reel: HTTP 200, conteudo identico
+  IGUAL   stm_km_planifie: HTTP 200, conteudo identico
+  IGUAL   stm_km_budgete: HTTP 200, conteudo identico
+  IGUAL   gtfs_stm: HTTP 200, conteudo identico
+  MUDOU   osm_metro: HTTP 200, hash diferente (esperado: a fonte e atualizada; vale o snapshot da Release)
+  ERRO    wikidata_estacoes: HTTP Error 429: Aggressively rate-limiting to 1 req / min - this rule was created during active wdqs outage (797a132)
+  IGUAL   google_mobilidade: HTTP 200, 98167694 bytes (manifesto 98167694); use --completo para o hash
+  IGUAL   eccc_2019: HTTP 200, conteudo identico
+  IGUAL   eccc_2020: HTTP 200, conteudo identico
+  MUDOU   eccc_2021: HTTP 200, hash diferente (verificar) | linhas: manifesto 365, agora 200
+  IGUAL   eccc_2022: HTTP 200, conteudo identico
+  IGUAL   eccc_2023: HTTP 200, conteudo identico
+  MUDOU   eccc_2024: HTTP 200, hash diferente (verificar) | linhas: manifesto 366, agora 200
+  MUDOU   eccc_2025: HTTP 200, hash diferente (verificar) | linhas: manifesto 365, agora 200
+  MUDOU   eccc_2026: HTTP 200, hash diferente (esperado: a fonte e atualizada; vale o snapshot da Release) | linhas: manifesto 365, agora 200
+  IGUAL   nager_2019: HTTP 200, conteudo identico
+  IGUAL   nager_2020: HTTP 200, conteudo identico
+  IGUAL   nager_2021: HTTP 200, conteudo identico
+  IGUAL   nager_2022: HTTP 200, conteudo identico
+  IGUAL   nager_2023: HTTP 200, conteudo identico
+  IGUAL   nager_2024: HTTP 200, conteudo identico
+  IGUAL   nager_2025: HTTP 200, conteudo identico
+  IGUAL   nager_2026: HTTP 200, conteudo identico
+  IGUAL   stm_relatorio_2019: HTTP 200, conteudo identico
+  IGUAL   stm_relatorio_2020: HTTP 200, conteudo identico
+  IGUAL   stm_relatorio_2021: HTTP 200, conteudo identico
+  IGUAL   stm_relatorio_2022: HTTP 200, conteudo identico
+  IGUAL   stm_relatorio_2023: HTTP 200, conteudo identico
+  IGUAL   d3: HTTP 200, conteudo identico
+== Recalculo independente de numeros publicados
+  OK     incidentes no arquivo (todas as causas): recalculado 45785 | publicado 45785
+  OK     periodo: recalculado 2019-01-01 a 2026-06-30 | publicado 2019-01-01 a 2026-06-30
+  OK     falhas tecnicas de uma linha (rede): recalculado 8530 | publicado 8530
+  OK     tecnicos fora: sem linha: recalculado 44 | publicado 44
+  OK     tecnicos fora: mais de uma linha: recalculado 45 | publicado 45
+  OK     MTBF da rede, h de operacao (20 h/dia): recalculado 6.42 | publicado 6.42
+  OK     falhas tecnicas, linha verde: recalculado 2826 | publicado 2826
+  OK     falhas de material rodante, linha verde: recalculado 1502 | publicado 1502
+  OK     falhas tecnicas, linha laranja: recalculado 3088 | publicado 3088
+  OK     falhas de material rodante, linha laranja: recalculado 917 | publicado 917
+  OK     falhas tecnicas, linha amarela: recalculado 1146 | publicado 1146
+  OK     falhas de material rodante, linha amarela: recalculado 544 | publicado 544
+  OK     falhas tecnicas, linha azul: recalculado 1470 | publicado 1470
+  OK     falhas de material rodante, linha azul: recalculado 1019 | publicado 1019
+  OK     km-carro real 2019-01 a 2023-09 (milhoes): recalculado 411.63 | publicado 411.63
+  OK     estacoes no GTFS (sentido 0) e no estacoes.geojson: recalculado 73 | publicado 73
+  OK     falhas tecnicas somadas em locais.json: recalculado 8530 | publicado 8530
+  OK     falhas no codigo 4S50 (plataforma da Amarela em Berri-UQAM): recalculado 561 | publicado 561
+  -> 0 diferenca(s)
