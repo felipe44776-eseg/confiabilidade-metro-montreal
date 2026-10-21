@@ -57,6 +57,14 @@ def carrega_estacao(est):
     return out
 
 
+def meses_da_estacao(est):
+    """Meses disponíveis da estação: no zip da Release ou, sem ele, nos CSV baixados."""
+    zipado = f"dados/brutos/eccc_horario/eccc_horario_{est}.zip"
+    if os.path.exists(zipado):
+        return sum(1 for n in zipfile.ZipFile(zipado).namelist() if n.endswith(".csv"))
+    return len(glob.glob(f"dados/brutos/eccc_horario/{est}/*.csv"))
+
+
 def coluna(r, *prefixos):
     for k in r:
         if any(k.startswith(p) for p in prefixos):
@@ -165,7 +173,7 @@ def main():
         "jogos_canadiens_em_casa": len(jogos),
         "gp_f1": sorted(gp),
         "dias_de_greve": len(greves),
-        "meses_baixados": {e: len(glob.glob(f"dados/brutos/eccc_horario/{e}/*.csv")) for e in ("10761", "30165", "51157")},
+        "meses_baixados": {e: meses_da_estacao(e) for e in ("10761", "30165", "51157")},
     }
     with open(f"{SAIDA}/resumo_clima.json", "w", encoding="utf-8", newline="\n") as f:
         json.dump(resumo, f, ensure_ascii=False, indent=1)

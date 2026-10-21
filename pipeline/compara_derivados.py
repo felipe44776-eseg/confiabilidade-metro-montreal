@@ -16,7 +16,7 @@ import sys
 TOL_PADRAO = 1e-9
 TOL_MODELOS = 1e-3  # modelos/ e simulador/parametros.json: bootstrap, verossimilhança perfilada e BFGS
 LENTOS = ("modelos/", "simulador/parametros.json")
-IGNORAR = {"codigo_commit", "bootstrap_segundos"}  # registram onde e em quanto tempo rodou, não o resultado
+IGNORAR = {"codigo_commit", "codigo_parametros", "bootstrap_segundos", "segundos"}  # registram onde e em quanto tempo rodou, não o resultado
 
 
 def num(x):
