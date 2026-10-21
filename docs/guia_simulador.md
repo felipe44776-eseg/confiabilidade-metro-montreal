@@ -50,6 +50,16 @@ Um dia simulado, com os trens andando sobre o traçado real. Use ▶ para tocar 
 
 **Rodar** simula os dias pedidos em paralelo (um processo por núcleo do computador, até 16) e mostra o cenário da rodada e, por linha: minutos parados, disponibilidade, trens-hora perdidos, viagens afetadas e chance de frota completa, cada um com o intervalo de 95%; falhas por dia (soma das três causas, só a média), ao lado do **esperado pelo modelo**; e, para a rede, a disponibilidade por par origem-destino. O resultado traz o número de dias e a semente. **Estimar o ano** roda dia útil, sábado e domingo e soma pelo calendário (251, 52 e 62 dias). Ao abrir a página, o cenário do link (ou o padrão) já roda com o número de dias escolhido: 1.000 no padrão.
 
+### Viagem de A a B
+
+Para quem precisa ir de uma estação a outra. Escolha **De** e **Para** (⇄ inverte). A página mostra o caminho de sempre, o mais rápido sem falhas no horário do tipo de dia: os trechos por linha e sentido e as baldeações, também destacados no mapa. **Avaliar a viagem** simula os dias pedidos no painel (os mesmos dias da aba **Muitos dias**) e mostra:
+
+- **Disponibilidade do caminho:** a fração do horário de serviço em que dá para fazer a viagem, para cada trecho e para a viagem inteira, com os minutos por dia sem caminho e a chance de o dia ter ao menos uma interrupção no caminho;
+- **Produto dos trechos:** a conta em série, como se as linhas falhassem de forma independente, ao lado do valor simulado. Se o produto cai dentro do intervalo do simulado, a viagem se comporta como série. Se a mesma linha aparece em dois trechos, eles não são independentes, e a página avisa;
+- **Atraso de quem viaja:** para saídas a cada 10 minutos, a chance de chegar mais de 5, 15 e 60 minutos depois do programado, de não chegar até o fim do serviço, o atraso médio e a chance de atraso por hora de saída. O atraso usa os trens simulados do dia, inclusive a espera até a linha voltar e a fila de trens depois.
+
+Com a política **Rota alternativa de passageiros** ligada no painel, a pessoa pode usar qualquer caminho livre: os caminhos ficam em paralelo. Ela escolhe sabendo quanto vai durar cada interrupção, o que é o limite otimista. Não entram ônibus de substituição, caminhada até a plataforma nem lotação. O atraso médio é puxado pelas poucas saídas que pegam paradas longas: a amostra de durações da STM tem paradas de horas. Origem e destino vão no link.
+
 ### Comparar cenários
 
 **Fixar o cenário atual como A**, mude o que quiser e **Comparar A com o cenário atual (B)**. Os dois lados usam as mesmas falhas sorteadas (números aleatórios comuns), então a diferença mostra só o efeito da mudança, com intervalo de 95%. É assim que se mede o efeito de uma política.

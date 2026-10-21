@@ -6,7 +6,7 @@ import { montaRede, trensProgramados } from '../../src/motor/rede';
 import { condicoesDaHora, multiplicador } from '../../src/motor/taxas';
 import type { Parametros } from '../../src/motor/tipos';
 import type { EstadoCenario } from '../../src/simulador/cenario';
-import { aplicaGreve, copia, desserializa, HORAS_JOGO, NIVEIS, PADRAO, paraCenarioMotor, serializa } from '../../src/simulador/cenario';
+import { aplicaGreve, chaveCenario, copia, desserializa, HORAS_JOGO, NIVEIS, PADRAO, paraCenarioMotor, serializa } from '../../src/simulador/cenario';
 import { carregaFixture, carregaRede, carregaRedeJson } from '../motor/apoio';
 
 function cenarioVariado(): EstadoCenario {
@@ -58,6 +58,20 @@ describe('link compartilhável', () => {
     expect(e.politicas.reservaFria).toBe(true);
     expect(e.politicas.retiradaTrem).toBe(false);
     expect(e.hipoteses).toEqual({ ok_nome: 3 });
+  });
+
+  it('a viagem de A a B vai no link e não muda a chave do cenário (spec 015)', () => {
+    const e = copia(PADRAO);
+    e.viagemDe = 'STATION_M222';
+    e.viagemPara = 'STATION_M454';
+    const volta = desserializa(`#${serializa(e)}`);
+    expect(volta.viagemDe).toBe('STATION_M222');
+    expect(volta.viagemPara).toBe('STATION_M454');
+    expect(chaveCenario(e)).toBe(chaveCenario(PADRAO));
+    // id inválido no link volta ao padrão
+    const ruim = desserializa('#vo=<script>&vd=');
+    expect(ruim.viagemDe).toBe(PADRAO.viagemDe);
+    expect(ruim.viagemPara).toBe(PADRAO.viagemPara);
   });
 
   it('mesmo link e mesma semente: os mesmos números', () => {

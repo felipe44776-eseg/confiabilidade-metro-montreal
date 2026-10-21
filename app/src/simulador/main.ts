@@ -18,6 +18,8 @@ import { sementeDaRodada } from '../motor/prng';
 import type { Rede } from '../motor/rede';
 import { montaRede } from '../motor/rede';
 import type { Parametro, Parametros, RedeJson, TipoDia } from '../motor/tipos';
+import type { AvaliadorViagem } from '../motor/viagem';
+import { LIMIARES_ATRASO_MIN, nomesViagem, PASSO_SAIDAS_S, preparaViagem } from '../motor/viagem';
 import { TIPOS_DIA } from '../motor/tipos';
 import { graficoBarras } from '../ui/graficos';
 import { casasPara, comIC, comSinal, inteiro, num, pct, pp } from '../ui/formato';
@@ -36,6 +38,8 @@ import { notaDoMetodo, pesosDoCenario } from './pesos';
 import type { VistaMapa } from './mapa_sim';
 import { corDaCandidata, MapaSimulador, VistaSemMapa } from './mapa_sim';
 import { PoolAB } from './pool_ab';
+import type { ResultadoViagem } from './pool_viagem';
+import { PoolViagem } from './pool_viagem';
 import type { PedidoExpansao, RespostaExpansao } from './trabalhador_expansao';
 
 const BASE = import.meta.env.BASE_URL;
@@ -282,6 +286,7 @@ function mudou(): void {
   esperaDia = setTimeout(() => {
     simulaDiaMostrado();
     aplicado();
+    mostraRotaViagem();
   }, 120);
 }
 
@@ -721,6 +726,221 @@ function marcaDesatualizado(): void {
   if (resultadoMC && resultadoMC.estado !== chaveCenario(estado)) $('s-mc').textContent = 'O cenário mudou: os resultados abaixo são do cenário anterior. Rode de novo.';
 }
 
+// ---------- viagem de A a B (spec 015) ----------
+const poolViagem = new PoolViagem();
+let resultadoViagem: { chave: string; r: ResultadoViagem; av: AvaliadorViagem; estado: EstadoCenario } | null = null;
+let avaliadorGuardado: { chave: string; av: AvaliadorViagem | null } | null = null;
+
+const chaveViagem = () => `${chaveCenario(estado)}|${estado.viagemDe}|${estado.viagemPara}`;
+const nomeDaEstacao = (id: string) => redeBase().estacoes.find((e) => e.id === id)?.nome ?? id;
+const relogioMin = (s: number) => `${String(Math.floor(s / 3600) % 24).padStart(2, '0')}:${String(Math.floor((s % 3600) / 60)).padStart(2, '0')}`;
+
+/** Caminho e saídas da viagem no cenário atual (guardado: preparar custa algumas dezenas de ms). */
+function avaliadorAtual(): AvaliadorViagem | null {
+  const chave = chaveViagem();
+  if (avaliadorGuardado?.chave !== chave) {
+    avaliadorGuardado = { chave, av: preparaViagem(contextoDoCenario().ctx, estado.viagemDe, estado.viagemPara, estado.politicas.rotaAlternativa) };
+  }
+  return avaliadorGuardado.av;
+}
+
+function montaViagem(): void {
+  const itens: [string, string][] = [...redeBase().estacoes]
+    .sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'))
+    .map((e) => [e.id, `${e.nome} (${[...new Set(e.plataformas.map((p) => nomeLinha(p.linha)))].join(', ')})`]);
+  for (const [id, campo] of [['v-de', 'viagemDe'], ['v-para', 'viagemPara']] as const) {
+    const sel = $<HTMLSelectElement>(id);
+    opcoes(sel, itens, estado[campo]);
+    if (sel.value !== estado[campo]) {
+      // id do link que não existe na rede: volta ao padrão
+      estado[campo] = PADRAO[campo];
+      sel.value = estado[campo];
+    }
+  }
+  mostraRotaViagem();
+}
+
+function sentidoDe(linha: string, de: number, ate: number): string {
+  const est = redeBase().linhas[linha].estacoes;
+  return (ate > de ? est[est.length - 1] : est[0]).nome;
+}
+
+function mostraRotaViagem(): void {
+  const caixa = $('v-rota');
+  if (!caixa) return;
+  caixa.replaceChildren();
+  const ativa = $('tab-viagem').getAttribute('aria-selected') === 'true';
+  if (estado.viagemDe === estado.viagemPara) {
+    caixa.append(el('p', 'Escolha duas estações diferentes.', 'nota'));
+    if (ativa) mapa.mostraRota(null);
+    return;
+  }
+  const av = avaliadorAtual();
+  if (!av) {
+    caixa.append(el('p', 'Não há caminho entre essas estações no horário deste tipo de dia.', 'nota'));
+    if (ativa) mapa.mostraRota(null);
+    return;
+  }
+  const transfer = av.transferenciaS / 60;
+  caixa.append(el('h3', `Caminho de sempre (o mais rápido sem falhas, ${ROTULOS[estado.tipoDia]})`));
+  const ol = el('ul');
+  av.rota.trechos.forEach((t, i) => {
+    if (i > 0) ol.append(el('li', `Baldeação em ${t.deNome}: ${num(transfer, 0)} min (hipótese tempo_transferencia_min)`, 'baldeacao'));
+    const li = el('li');
+    const p = el('span', undefined, 'ponto');
+    p.style.background = corLinha(t.linha);
+    li.append(p, ` ${nomeLinha(t.linha)}, sentido ${sentidoDe(t.linha, t.de, t.ate)}: ${t.deNome} → ${t.ateNome} (${t.paradas} ${t.paradas === 1 ? 'trecho' : 'trechos'}, ${num(t.minutos, 0)} min)`);
+    ol.append(li);
+  });
+  caixa.append(ol);
+  const ini = av.saidas[0];
+  const fim = av.saidas[av.saidas.length - 1];
+  caixa.append(
+    el(
+      'p',
+      `Tempo de percurso: ${num(av.rota.minutos, 0)} min (percurso mediano do horário mais as baldeações, sem a espera na plataforma). Saídas simuladas: a cada ${PASSO_SAIDAS_S / 60} min, das ${relogioMin(ini)} às ${relogioMin(fim)} (${inteiro(av.saidas.length)} por dia).` +
+        (estado.politicas.rotaAlternativa ? ' Rota alternativa ligada: a pessoa pode usar qualquer caminho livre.' : ' Rota alternativa desligada: a pessoa usa só este caminho e espera a linha voltar.'),
+      'nota',
+    ),
+  );
+  if (ativa) mapa.mostraRota(av.rota.trechos.map((t) => ({ linha: t.linha, de: t.de, ate: t.ate })));
+  if (resultadoViagem && resultadoViagem.chave !== chaveViagem()) $('s-viagem').textContent = 'A viagem ou o cenário mudou: o resultado abaixo é do anterior. Avalie de novo.';
+}
+
+async function avaliaViagem(): Promise<void> {
+  const av = avaliadorAtual();
+  if (!av) {
+    mostraRotaViagem();
+    return;
+  }
+  const b = $<HTMLButtonElement>('b-viagem');
+  const canc = $<HTMLButtonElement>('b-viagem-cancela');
+  b.disabled = true;
+  canc.disabled = false;
+  const chave = chaveViagem();
+  const congelado = copia(estado);
+  try {
+    const { json } = redeDo(estado.greve);
+    const r = await poolViagem.executa(
+      {
+        redeJson: json,
+        chaveRede: chaveRede(estado.greve),
+        parametros: dados.parametros,
+        cenario: paraCenarioMotor(estado),
+        politicas: estado.politicas,
+        sementeBase: estado.semente,
+        rodadas: estado.rodadas,
+        origem: estado.viagemDe,
+        destino: estado.viagemPara,
+      },
+      nomesViagem(av),
+      progresso('p-viagem', 's-viagem'),
+    );
+    resultadoViagem = { chave, r, av, estado: congelado };
+    $('s-viagem').textContent = `${inteiro(r.n)} dias em ${num(r.segundos, 1)} s com ${r.workers} worker(s); semente ${r.sementeBase}.`;
+    mostraResultadoViagem(r, av, congelado);
+  } catch (e) {
+    if (!(e instanceof Error && e.message === 'cancelado')) mostraErro(e);
+    else $('s-viagem').textContent = 'Cancelado.';
+  } finally {
+    b.disabled = false;
+    canc.disabled = true;
+    $('p-viagem').hidden = true;
+  }
+}
+
+function mostraResultadoViagem(r: Agregado, av: AvaliadorViagem, e: EstadoCenario): void {
+  const caixa = $('r-viagem');
+  caixa.replaceChildren();
+  // o intervalo normal perto de 0 (ou de 1, nas proporções) passa da faixa possível: mostra recortado
+  const m: Record<string, Estimativa> = Object.fromEntries(
+    Object.entries(r.porMetrica).map(([k, x]) => {
+      const teto = k === 'minSemCaminho' || k === 'atrasoMedioMin' ? Infinity : 1;
+      return [k, { ...x, ic95: [Math.max(0, x.ic95[0]), Math.min(teto, x.ic95[1])] as [number, number] }];
+    }),
+  );
+  const pctF = (x: number, c: number) => pct(x, Math.min(c, 4));
+  const trechos = av.rota.trechos;
+  caixa.append(el('h3', `${nomeDaEstacao(e.viagemDe)} → ${nomeDaEstacao(e.viagemPara)}: ${inteiro(r.n)} dias (${ROTULOS[e.tipoDia]}), média e intervalo de 95%`));
+  caixa.append(el('p', `Cenário desta rodada: ${resumoCenario(e)} Os dias são os mesmos da aba "Muitos dias" (semente ${r.sementeBase}).`, 'nota'));
+
+  caixa.append(el('h4', 'Disponibilidade do caminho: fração do horário de serviço com caminho livre'));
+  const linhas: (string | Node)[][] = trechos.map((t, i) => {
+    const nome = el('span');
+    const p = el('span', undefined, 'ponto');
+    p.style.background = corLinha(t.linha);
+    nome.append(p, ` ${nomeLinha(t.linha)}: ${t.deNome} → ${t.ateNome}`);
+    return [nome, estimativaTexto(m[`disp.trecho.${i}`], pctF, 2, 100), '—'];
+  });
+  const produto = trechos.reduce((s, _, i) => s * (m[`disp.trecho.${i}`]?.media ?? 1), 1);
+  if (trechos.length > 1) linhas.push(['Produto dos trechos (em série, se as linhas falhassem de forma independente)', pct(produto, 2), '—']);
+  linhas.push([el('strong', 'Viagem inteira (simulada)'), estimativaTexto(m.disp, pctF, 2, 100), estimativaTexto(m.minSemCaminho, num)]);
+  caixa.append(tabela(['Parte da viagem', 'Disponibilidade (IC 95%)', 'Minutos por dia sem caminho'], linhas, [1, 2]));
+
+  const d = m.disp;
+  const repetidas = [...new Set(trechos.map((t) => t.linha).filter((l, i, xs) => xs.indexOf(l) !== i))].map(nomeLinha);
+  let leitura: string;
+  if (trechos.length === 1) leitura = 'Uma linha só: a disponibilidade da viagem é a do trecho.';
+  else if (repetidas.length && !e.politicas.rotaAlternativa)
+    leitura = `A ${repetidas.join(' e a ')} aparece em mais de um trecho: uma falha nela para esses trechos ao mesmo tempo, então eles não são independentes, e o produto dos trechos (${pct(produto, 2)}) fica abaixo do simulado (${pct(d.media, 2)}). Sem a política de retorno parcial, qualquer falha numa linha tira a linha inteira do caminho.`;
+  else if (e.politicas.rotaAlternativa)
+    leitura =
+      d.ic95[0] > produto
+        ? `Com a rota alternativa, a viagem só fica sem caminho quando nenhum caminho está livre: os caminhos ficam em paralelo, e a disponibilidade simulada (${pct(d.media, 2)}) passa o produto dos trechos do caminho de sempre (${pct(produto, 2)}).`
+        : `Com a rota alternativa, a viagem só fica sem caminho quando nenhum caminho está livre; aqui a alternativa quase não muda o resultado (simulado ${pct(d.media, 2)}, produto dos trechos ${pct(produto, 2)}), porque não há caminho que evite as linhas paradas.`;
+  else if (produto >= d.ic95[0] && produto <= d.ic95[1])
+    leitura = `O produto dos trechos (${pct(produto, 2)}) cai dentro do intervalo do simulado: as linhas do caminho falham quase de forma independente, e a viagem se comporta como um sistema em série.`;
+  else if (produto < d.ic95[0])
+    leitura = `O simulado (${pct(d.media, 2)}) fica acima do produto dos trechos (${pct(produto, 2)}): as interrupções de linhas diferentes coincidem no tempo mais do que se fossem independentes (a causa comum para várias linhas juntas), e o tempo total sem caminho é menor que a soma das partes.`;
+  else leitura = `O simulado (${pct(d.media, 2)}) fica abaixo do produto dos trechos (${pct(produto, 2)}).`;
+  caixa.append(el('p', `${leitura} Em ${estimativaTexto(m.diaComInterrupcao, pctF, 0, 100)} dos dias houve ao menos uma interrupção no caminho.`, 'nota'));
+
+  caixa.append(el('h4', `Atraso de quem viaja (saídas a cada ${PASSO_SAIDAS_S / 60} min, com os trens simulados do dia)`));
+  const l1 = LIMIARES_ATRASO_MIN[0];
+  const lMax = LIMIARES_ATRASO_MIN[LIMIARES_ATRASO_MIN.length - 1];
+  caixa.append(
+    tabela(
+      ['Medida', 'Valor (IC 95%)'],
+      [
+        ...LIMIARES_ATRASO_MIN.map((l) => [`Chance de chegar mais de ${l} min depois do programado`, estimativaTexto(m[`atraso${l}`], pctF, 2, 100)]),
+        ['Chance de não chegar até o fim do serviço', estimativaTexto(m.naoChega, pctF, 2, 100)],
+        ['Atraso médio por viagem (minutos)', estimativaTexto(m.atrasoMedioMin, num, 2)],
+      ],
+      [1],
+    ),
+  );
+  caixa.append(
+    el(
+      'p',
+      `O atraso médio inclui as saídas sem atraso e é puxado pelas poucas que pegam uma interrupção longa (${pct(m[`atraso${lMax}`].media, 2)} das saídas atrasam mais de ${lMax} min): a amostra de durações da STM tem paradas de horas, e ` +
+        (e.politicas.rotaAlternativa ? 'mesmo com a rota alternativa há trechos sem outro caminho.' : 'sem a rota alternativa a pessoa espera a linha voltar.'),
+      'nota',
+    ),
+  );
+  // 20 barras: na largura natural do gráfico (640 px), sem esticar
+  const g = el('div', undefined, 'grafico-estreito');
+  const cor = getComputedStyle(document.documentElement).getPropertyValue('--destaque').trim() || '#2a5bd7';
+  graficoBarras(
+    g,
+    av.horas.map((h) => {
+      const x = m[`atraso${l1}.h${h}`];
+      return { rotulo: `${relogioMin(h * 3600)}–${relogioMin((h + 1) * 3600)}`, valor: x.media * 100, ic: [x.ic95[0] * 100, x.ic95[1] * 100] as [number, number], cor };
+    }),
+    { titulo: `Chance de atraso de mais de ${l1} min, por hora de saída (IC 95%)`, formata: (x) => `${num(x, 2)}%`, eixo: '% das saídas', colunaValor: '% das saídas' },
+  );
+  caixa.append(g);
+  caixa.append(
+    el(
+      'p',
+      'Como se mede: a disponibilidade vem dos bloqueios do dia no grafo das estações, o mesmo método da disponibilidade origem-destino da rede. ' +
+        'O atraso compara, para cada saída, a chegada mais cedo ao destino com os trens simulados (inclusive esperar a linha voltar e o atraso dos trens depois) com a mesma saída num dia sem falhas. ' +
+        'Com a rota alternativa, a pessoa escolhe o caminho sabendo quanto vai durar cada interrupção: é o limite otimista da política. ' +
+        `Não entram ônibus de substituição, caminhada até a plataforma nem lotação. Limiares de ${LIMIARES_ATRASO_MIN.join(', ').replace(/, (\d+)$/, ' e $1')} min: escolha de apresentação (spec 015).`,
+      'nota',
+    ),
+  );
+}
+
 // ---------- comparação A/B ----------
 const poolAB = new PoolAB();
 let cenarioA: EstadoCenario | null = null;
@@ -1074,10 +1294,12 @@ function trocaAba(id: string): void {
     b.setAttribute('aria-selected', String(ativa));
     $(b.getAttribute('aria-controls')!).hidden = !ativa;
   }
-  const comMapa = id === 'dia' || id === 'expansao';
+  const comMapa = id === 'dia' || id === 'expansao' || id === 'viagem';
   $('mapa-caixa').hidden = !comMapa;
   if (comMapa) requestAnimationFrame(() => mapa.resize());
   mapa.mostraCandidatas(id === 'expansao' ? candidatas : null);
+  if (id === 'viagem') mostraRotaViagem();
+  else mapa.mostraRota(null);
 }
 
 // ---------- início ----------
@@ -1120,6 +1342,7 @@ async function inicia(): Promise<void> {
     String(VELOCIDADE_PADRAO),
   );
   montaCandidatas();
+  montaViagem();
   mostraAvisos();
   mostraParametros();
   history.replaceState(null, '', `#${serializa(estado)}`);
@@ -1154,6 +1377,7 @@ async function inicia(): Promise<void> {
     if (serializa(novo) === serializa(estado)) return;
     estado = novo;
     montaFormulario();
+    montaViagem();
     mudou();
   });
   for (const b of document.querySelectorAll<HTMLButtonElement>('.abas [role="tab"]')) b.addEventListener('click', () => trocaAba(b.id.replace('tab-', '')));
@@ -1181,6 +1405,22 @@ async function inicia(): Promise<void> {
   $('b-exp').addEventListener('click', avaliaPublicadas);
   $('b-livre').addEventListener('click', avaliaLivre);
   $('b-busca').addEventListener('click', busca);
+  for (const [id, campo] of [['v-de', 'viagemDe'], ['v-para', 'viagemPara']] as const) {
+    $(id).addEventListener('change', () => {
+      estado[campo] = $<HTMLSelectElement>(id).value;
+      history.replaceState(null, '', `#${serializa(estado)}`);
+      mostraRotaViagem();
+    });
+  }
+  $('b-inverte').addEventListener('click', () => {
+    [estado.viagemDe, estado.viagemPara] = [estado.viagemPara, estado.viagemDe];
+    $<HTMLSelectElement>('v-de').value = estado.viagemDe;
+    $<HTMLSelectElement>('v-para').value = estado.viagemPara;
+    history.replaceState(null, '', `#${serializa(estado)}`);
+    mostraRotaViagem();
+  });
+  $('b-viagem').addEventListener('click', avaliaViagem);
+  $('b-viagem-cancela').addEventListener('click', () => poolViagem.cancela());
 
   simulaDiaMostrado();
   aplicado(true);

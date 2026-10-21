@@ -49,5 +49,6 @@ Spec-Driven Development: a especificação é a fonte de verdade; o código é d
 | 012 | [Validação contra o histórico](012-backtest/spec.md) | F5 |
 | 013 | [Publicação](013-publicacao/spec.md) | F6 |
 | 014 | [Expansão da rede: que linha construir](014-expansao-rede/spec.md) | F4 |
+| 015 | [Confiabilidade de uma viagem: de uma estação a outra](015-viagem/spec.md) | F4 |
 
 Decisões de arquitetura ficam em [`../docs/decisoes/`](../docs/decisoes/).

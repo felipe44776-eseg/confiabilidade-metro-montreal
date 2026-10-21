@@ -188,6 +188,11 @@ tr.destaque td { background: var(--grade); }
 .marcas i.para { width: 3px; height: 8px; margin-left: -1.5px; }
 .marcas i.passou { opacity: 1; }
 tr.futura td { color: var(--tinta-3); }
+.rota-viagem ul { list-style: none; margin: 4px 0 6px; padding: 0; display: grid; gap: 3px; font-size: 14px; }
+.rota-viagem li.baldeacao { color: var(--tinta-2); font-size: 13px; padding-left: 18px; }
+.rota-viagem li.baldeacao::before { content: "↳ "; }
+#aba-viagem h4 { font-size: 14px; margin: 16px 0 4px; }
+.grafico-estreito { max-width: 640px; }
 
 @media (max-width: 860px) {
   .corpo { grid-template-columns: minmax(0, 1fr); }

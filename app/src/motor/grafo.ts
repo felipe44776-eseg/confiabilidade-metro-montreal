@@ -35,6 +35,45 @@ export interface ArestaGrafo {
   sentido: Sentido;
 }
 
+/** Arestas sem serviço durante [ini, fim) (segundos do dia de operação). */
+export interface BloqueioOD {
+  ini: number;
+  fim: number;
+  arestas: number[];
+}
+
+/** Intervalo [a, b) do dia em que o conjunto de arestas bloqueadas não muda (ids em ordem crescente). */
+export interface SegmentoBloqueado {
+  a: number;
+  b: number;
+  arestas: number[];
+}
+
+/**
+ * Varredura no tempo: divide a janela nos instantes em que um bloqueio começa ou termina e devolve os
+ * pedaços com alguma aresta bloqueada. Usada pela disponibilidade da rede (spec 009) e da viagem (spec 015).
+ */
+export function segmentosBloqueados(bloqueios: readonly BloqueioOD[], janela: readonly [number, number]): SegmentoBloqueado[] {
+  const [ini, fim] = janela;
+  if (bloqueios.length === 0) return [];
+  const marcos = new Set<number>([ini, fim]);
+  for (const b of bloqueios) {
+    if (b.ini > ini && b.ini < fim) marcos.add(b.ini);
+    if (b.fim > ini && b.fim < fim) marcos.add(b.fim);
+  }
+  const ts = [...marcos].sort((a, b) => a - b);
+  const saida: SegmentoBloqueado[] = [];
+  for (let i = 0; i + 1 < ts.length; i++) {
+    const a = ts[i];
+    const b = ts[i + 1];
+    const meio = (a + b) / 2;
+    const ativas = new Set<number>();
+    for (const bl of bloqueios) if (bl.ini <= meio && meio < bl.fim) for (const e of bl.arestas) ativas.add(e);
+    if (ativas.size) saida.push({ a, b, arestas: [...ativas].sort((x, y) => x - y) });
+  }
+  return saida;
+}
+
 export interface AvaliacaoOD {
   /** Fração da oferta (pares ponderados) sem caminho. */
   indisponivel: number;
@@ -236,7 +275,7 @@ function calculaPesos(g: Grafo, rede: Rede, horario: HorarioDia): void {
   }
 }
 
-function melhorNo(g: Grafo, estacao: number, dist: Float64Array): [number, number] {
+export function melhorNo(g: Grafo, estacao: number, dist: Float64Array): [number, number] {
   let melhor = -1;
   let valor = Infinity;
   for (const no of g.nosDaEstacao[estacao]) {

@@ -18,6 +18,7 @@
   <nav class="abas" role="tablist" aria-label="Partes do simulador">
     <button role="tab" id="tab-dia" aria-controls="aba-dia" aria-selected="true">Dia no mapa</button>
     <button role="tab" id="tab-mc" aria-controls="aba-mc" aria-selected="false">Muitos dias</button>
+    <button role="tab" id="tab-viagem" aria-controls="aba-viagem" aria-selected="false">Viagem de A a B</button>
     <button role="tab" id="tab-comparar" aria-controls="aba-comparar" aria-selected="false">Comparar cenários</button>
     <button role="tab" id="tab-expansao" aria-controls="aba-expansao" aria-selected="false">Que linha construir</button>
     <button role="tab" id="tab-parametros" aria-controls="aba-parametros" aria-selected="false">Parâmetros</button>
@@ -137,6 +138,21 @@
           <span class="nota" id="s-mc" aria-live="polite"></span>
         </div>
         <div id="r-mc"></div>
+      </section>
+
+      <section id="aba-viagem" role="tabpanel" aria-labelledby="tab-viagem" class="aba" hidden>
+        <p>Para quem precisa ir de uma estação a outra: com que frequência a falha de alguma linha do caminho impede a viagem ou a atrasa. Uma viagem com baldeação depende de todas as linhas que usa, como um sistema em série; com a política "Rota alternativa de passageiros" ligada no painel do cenário, vale qualquer caminho livre, e os caminhos ficam em paralelo.</p>
+        <div class="acoes">
+          <label>De <select id="v-de"></select></label>
+          <button type="button" id="b-inverte" class="secundario" title="Inverter origem e destino" aria-label="Inverter origem e destino">⇄</button>
+          <label>Para <select id="v-para"></select></label>
+          <button type="button" id="b-viagem">Avaliar a viagem</button>
+          <button type="button" id="b-viagem-cancela" class="secundario" disabled>Cancelar</button>
+          <progress id="p-viagem" max="1" value="0" hidden></progress>
+          <span class="nota" id="s-viagem" aria-live="polite"></span>
+        </div>
+        <div id="v-rota" class="rota-viagem"></div>
+        <div id="r-viagem"></div>
       </section>
 
       <section id="aba-comparar" role="tabpanel" aria-labelledby="tab-comparar" class="aba" hidden>

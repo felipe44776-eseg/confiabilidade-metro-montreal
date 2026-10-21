@@ -7,7 +7,7 @@ WebGL, quadros por segundo com a animação parada e tocando a 300×, 1 h/s, 10 
 da página em cada uma), o resultado do Monte Carlo de abertura,
 os erros no console e, a 1 dia/s, os eventos vermelhos, os dias emendados e o placar (decisão D49); depois muda o clima
 e confere que a faixa "Cenário aplicado" e o peso da neve no solo mudaram (decisões D50 e D51), abre a nota do método
-e captura o painel do cenário. Grava capturas e resultado.json na pasta de saída.
+e captura o painel do cenário; por fim, roda a viagem padrão da aba "Viagem de A a B" e lê as tabelas (spec 015). Grava capturas e resultado.json na pasta de saída.
 Rode um tamanho por vez (SO=...): reaproveitar a aba entre tamanhos perde o contexto WebGL por software.
 A aba é trazida para a frente (Page.bringToFront): sem isso, o navegador sem janela deixa a página oculta, o
 requestAnimationFrame não roda e o contador de fps da página fica parado no último valor (revisão crítica de
@@ -106,6 +106,28 @@ try:
               pesos: Object.fromEntries([...document.querySelectorAll('.painel .peso')].map(p => [p.id, p.textContent])),
               painel: {x: a.left + scrollX, y: a.top + scrollY, w: a.width, h: a.height}}; })()"""
 
+    # viagem de A a B (spec 015): abre a aba, roda a viagem padrão e lê as tabelas
+    # a animação é pausada antes: o desenho por software a 1 dia/s disputa a CPU com os workers
+    VIAGEM = """(async () => { const play = document.getElementById('b-play'); if (play.textContent.trim() !== '▶') play.click();
+      document.getElementById('tab-viagem').click();
+      await new Promise(q => setTimeout(q, 800));
+      const rota = document.getElementById('v-rota').innerText;
+      document.getElementById('b-viagem').click();
+      const t0 = performance.now();
+      while (!/dias em/.test(document.getElementById('s-viagem').textContent) && performance.now() - t0 < 120000) await new Promise(q => setTimeout(q, 250));
+      await new Promise(q => setTimeout(q, 500));
+      const caixa = document.getElementById('r-viagem');
+      const d = document.documentElement;
+      const p = document.querySelector('.principal').getBoundingClientRect();
+      return {rota: rota.slice(0, 700), status: document.getElementById('s-viagem').textContent,
+              tabelas: [...caixa.querySelectorAll('table')].map(t => [...t.querySelectorAll('tbody tr')].map(tr => [...tr.cells].map(c => c.textContent.trim()))),
+              barras_por_hora: caixa.querySelectorAll('svg .marca').length,
+              leitura: [...caixa.querySelectorAll('p.nota')].map(x => x.textContent).slice(0, 2),
+              segundos_ate_o_resultado: Math.round((performance.now() - t0) / 100) / 10,
+              scrollWidth: d.scrollWidth, clientWidth: d.clientWidth,
+              elementosAlemDaLargura: [...document.querySelectorAll('body *')].filter(e => e.getBoundingClientRect().right > d.clientWidth + 1).length,
+              principal: {x: p.left + scrollX, y: p.top + scrollY, w: p.width, h: p.height}}; })()"""
+
     cmd("Runtime.enable")
     cmd("Log.enable")
     cmd("Page.enable")
@@ -164,6 +186,12 @@ try:
                    clip={"x": r["x"], "y": r["y"], "width": r["w"], "height": min(r["h"], 2400), "scale": 1})
         open(os.path.join(SAIDA, f"site_{nome}_nota_metodo.png"), "wb").write(base64.b64decode(shot["data"]))
         medidas["peso_das_variaveis"] = pesos
+        viagem = avalia(VIAGEM)
+        r = viagem.pop("principal")
+        shot = cmd("Page.captureScreenshot", format="png", captureBeyondViewport=True,
+                   clip={"x": r["x"], "y": r["y"], "width": r["w"], "height": min(r["h"], 3200), "scale": 1})
+        open(os.path.join(SAIDA, f"site_{nome}_viagem.png"), "wb").write(base64.b64decode(shot["data"]))
+        medidas["viagem_de_a_a_b"] = viagem
         erros = [e for e in eventos if e.get("method") == "Runtime.exceptionThrown"
                  or (e.get("method") == "Runtime.consoleAPICalled" and e["params"].get("type") == "error")
                  or (e.get("method") == "Log.entryAdded" and e["params"]["entry"].get("level") == "error")]

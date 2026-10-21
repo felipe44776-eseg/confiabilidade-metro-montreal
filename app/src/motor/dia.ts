@@ -12,7 +12,8 @@ import type { Contexto, Duracao } from './contexto';
 import { reducaoCausaComum } from './contexto';
 import { sorteiaOficina } from './frota';
 import type { Grafo } from './grafo';
-import { avaliaOD, efeitoBloqueio } from './grafo';
+import type { BloqueioOD } from './grafo';
+import { avaliaOD, efeitoBloqueio, segmentosBloqueados } from './grafo';
 import { Heap } from './heap';
 import { hipotese } from './hipoteses';
 import type { Politicas } from './politicas';
@@ -100,12 +101,17 @@ export interface ResultadoDia {
   registro: EventoRegistro[];
   hash: string;
   trajetorias?: Record<string, Trajetoria[]>; // chave linha:sentido
+  /** Arestas do grafo sem serviço e quando (com `opcoes.bloqueiosOD`; spec 015). */
+  bloqueiosOD?: BloqueioOD[];
 }
 
 export interface OpcoesDia {
   injetadas?: FalhaInjetada[];
   registrar?: boolean;
   trajetorias?: boolean;
+  bloqueiosOD?: boolean;
+  /** false: não calcula a disponibilidade origem-destino da rede (a viagem da spec 015 não usa; fica NaN). */
+  odDaRede?: boolean;
 }
 
 interface Bloqueio {
@@ -128,12 +134,6 @@ export interface EstadoSentido {
   cancelada: Uint8Array;
   traj: Trajetoria[] | null;
   mexido: boolean;
-}
-
-interface BloqueioOD {
-  ini: number;
-  fim: number;
-  arestas: number[];
 }
 
 type Pendente = { tipo: 'MR' | 'EF'; li: number; injetada?: FalhaInjetada } | { tipo: 'CC'; ci: number; injetada?: FalhaInjetada };
@@ -491,7 +491,7 @@ export function simulaDia(ctx: Contexto, politicas: Politicas, semente: number, 
       frotaCompleta: frotaCompleta[linha],
     };
   }
-  const od = origemDestino(grafo, bloqueiosOD, horario.janelaRede, politicas.rotaAlternativa);
+  const od = opcoes.odDaRede === false ? { dispOD: NaN, extraMin: NaN, minutosParInterrompido: NaN } : origemDestino(grafo, bloqueiosOD, horario.janelaRede, politicas.rotaAlternativa);
   if (registrar) registro.sort((a, b) => a.t - b.t);
   const resultado: ResultadoDia = {
     semente,
@@ -501,6 +501,7 @@ export function simulaDia(ctx: Contexto, politicas: Politicas, semente: number, 
     hash: hashRegistro(registro),
   };
   if (opcoes.trajetorias) resultado.trajetorias = trajSaida;
+  if (opcoes.bloqueiosOD) resultado.bloqueiosOD = bloqueiosOD;
   return resultado;
 }
 
@@ -607,22 +608,10 @@ function origemDestino(grafo: Grafo, bloqueios: BloqueioOD[], janela: [number, n
   const [ini, fim] = janela;
   const T = Math.max(fim - ini, 1);
   if (bloqueios.length === 0) return { dispOD: 1, extraMin: 0, minutosParInterrompido: 0 };
-  const marcos = new Set<number>([ini, fim]);
-  for (const b of bloqueios) {
-    if (b.ini > ini && b.ini < fim) marcos.add(b.ini);
-    if (b.fim > ini && b.fim < fim) marcos.add(b.fim);
-  }
-  const ts = [...marcos].sort((a, b) => a - b);
   let fora = 0;
   let extra = 0;
-  for (let i = 0; i + 1 < ts.length; i++) {
-    const a = ts[i];
-    const b = ts[i + 1];
-    const meio = (a + b) / 2;
-    const ativas = new Set<number>();
-    for (const bl of bloqueios) if (bl.ini <= meio && meio < bl.fim) for (const e of bl.arestas) ativas.add(e);
-    if (ativas.size === 0) continue;
-    const r = avaliaOD(grafo, [...ativas].sort((x, y) => x - y), rotaAlternativa);
+  for (const { a, b, arestas } of segmentosBloqueados(bloqueios, janela)) {
+    const r = avaliaOD(grafo, arestas, rotaAlternativa);
     fora += r.indisponivel * (b - a);
     extra += r.extraMin * (b - a);
   }

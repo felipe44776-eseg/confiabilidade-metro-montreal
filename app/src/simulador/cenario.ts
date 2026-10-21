@@ -25,6 +25,9 @@ export interface EstadoCenario {
   semente: number;
   rodadas: number;
   dia: number; // índice da rodada mostrada no mapa (a rodada i do Monte Carlo)
+  /** Viagem da aba "Viagem de A a B" (spec 015): ids das estações. Não muda o cenário. */
+  viagemDe: string;
+  viagemPara: string;
 }
 
 export const ORDEM_POLITICAS: readonly NomePolitica[] = ['reservaFria', 'retiradaTrem', 'operacaoDegradada', 'retornoParcial', 'rotaAlternativa', 'tratamentoCausaComum'];
@@ -93,6 +96,9 @@ export const PADRAO: EstadoCenario = {
   semente: 20261021,
   rodadas: 1000,
   dia: 0,
+  // Angrignon (Verde) a Saint-Michel (Azul): três linhas em série
+  viagemDe: 'STATION_M118',
+  viagemPara: 'STATION_M556',
 };
 
 export function copia(e: EstadoCenario): EstadoCenario {
@@ -164,6 +170,8 @@ export function serializa(e: EstadoCenario): string {
   p.set('s', String(e.semente));
   p.set('r', String(e.rodadas));
   p.set('dia', String(e.dia));
+  p.set('vo', e.viagemDe);
+  p.set('vd', e.viagemPara);
   return p.toString();
 }
 
@@ -202,12 +210,15 @@ export function desserializa(texto: string): EstadoCenario {
   e.semente = inteiro(p.get('s'), PADRAO.semente, 0, 2 ** 32 - 1);
   e.rodadas = inteiro(p.get('r'), PADRAO.rodadas, 10, 50_000);
   e.dia = inteiro(p.get('dia'), PADRAO.dia, 0, 49_999);
+  const id = (v: string | null, padrao: string) => (v !== null && /^[A-Za-z0-9_]{1,40}$/.test(v) ? v : padrao);
+  e.viagemDe = id(p.get('vo'), PADRAO.viagemDe);
+  e.viagemPara = id(p.get('vd'), PADRAO.viagemPara);
   return e;
 }
 
-/** Chave do cenário sem o dia mostrado: trocar de dia não muda o cenário nem o resultado do Monte Carlo. */
+/** Chave do cenário sem o dia mostrado e sem a viagem: trocar de dia ou de viagem não muda o cenário nem o resultado do Monte Carlo. */
 export function chaveCenario(e: EstadoCenario): string {
-  return serializa({ ...e, dia: 0 });
+  return serializa({ ...e, dia: 0, viagemDe: PADRAO.viagemDe, viagemPara: PADRAO.viagemPara });
 }
 
 const NOMES_ESTACAO: Record<string, string> = { inverno: 'inverno', primavera: 'primavera', verao: 'verão', outono: 'outono' };

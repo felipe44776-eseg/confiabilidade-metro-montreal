@@ -56,7 +56,15 @@ export interface VistaMapa {
   pulsa(o: Ocorrencia): void;
   mostraLocais(ver: boolean): void;
   mostraCandidatas(cands: readonly Candidata[] | null, destaque?: string): void;
+  /** Caminho de uma viagem (spec 015): trechos por linha, entre índices de estação; null apaga. */
+  mostraRota(trechos: readonly TrechoNoMapa[] | null): void;
   resize(): void;
+}
+
+export interface TrechoNoMapa {
+  linha: string;
+  de: number; // índice da estação na linha
+  ate: number;
 }
 
 export class VistaSemMapa implements VistaMapa {
@@ -67,6 +75,7 @@ export class VistaSemMapa implements VistaMapa {
   pulsa(): void {}
   mostraLocais(): void {}
   mostraCandidatas(): void {}
+  mostraRota(): void {}
   resize(): void {}
 }
 
@@ -114,6 +123,10 @@ export class MapaSimulador implements VistaMapa {
     m.addSource('candidatas', { type: 'geojson', data: VAZIO });
     m.addLayer({ id: 'candidatas', type: 'line', source: 'candidatas', layout: { 'line-cap': 'butt', 'line-join': 'round' }, paint: { 'line-color': ['get', 'cor'], 'line-width': ['case', ['get', 'destaque'], 5, 3], 'line-dasharray': [2, 1.5] } });
     m.addLayer({ id: 'candidatas-estacoes', type: 'circle', source: 'candidatas', filter: ['==', ['geometry-type'], 'Point'], paint: { 'circle-radius': 3.5, 'circle-color': '#ffffff', 'circle-stroke-color': ['get', 'cor'], 'circle-stroke-width': 2 } });
+    m.addSource('rota', { type: 'geojson', data: VAZIO });
+    m.addLayer({ id: 'rota-contorno', type: 'line', source: 'rota', filter: ['==', ['geometry-type'], 'LineString'], layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#1d1d1b', 'line-width': 11, 'line-opacity': 0.55 } });
+    m.addLayer({ id: 'rota', type: 'line', source: 'rota', filter: ['==', ['geometry-type'], 'LineString'], layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': ['get', 'cor'], 'line-width': 7 } });
+    m.addLayer({ id: 'rota-paradas', type: 'circle', source: 'rota', filter: ['==', ['geometry-type'], 'Point'], paint: { 'circle-radius': 6.5, 'circle-color': '#ffffff', 'circle-stroke-color': '#1d1d1b', 'circle-stroke-width': 2.5 } });
     m.addSource('bloqueios', { type: 'geojson', data: VAZIO });
     m.addLayer({ id: 'bloqueios', type: 'line', source: 'bloqueios', layout: { 'line-cap': 'butt' }, paint: { 'line-color': '#c0262d', 'line-width': 6, 'line-dasharray': [1.2, 0.8] } });
     m.addSource('estacoes', { type: 'geojson', data: estacoesGeo });
@@ -258,6 +271,21 @@ export class MapaSimulador implements VistaMapa {
       const coords = c.sequencia.map((id) => pos.get(id)).filter((x): x is Coord => !!x);
       feats.push({ type: 'Feature', properties: { cor, destaque: c.id === destaque, id: c.id }, geometry: { type: 'LineString', coordinates: coords } });
       for (const e of c.estacoesNovas ?? []) feats.push({ type: 'Feature', properties: { cor, destaque: false }, geometry: { type: 'Point', coordinates: [e.lon, e.lat] } });
+    }
+    src.setData({ type: 'FeatureCollection', features: feats });
+  }
+
+  mostraRota(trechos: readonly TrechoNoMapa[] | null): void {
+    const src = this.fonte('rota');
+    if (!src) return;
+    const feats: GeoJSON.Feature[] = [];
+    for (const t of trechos ?? []) {
+      const l = this.dados.rede.linhas[t.linha];
+      const tr = this.tracados[t.linha];
+      if (!l || !tr) continue;
+      const cor = l.cor ?? '#6b6a64';
+      feats.push({ type: 'Feature', properties: { cor }, geometry: { type: 'LineString', coordinates: trechoEntre(tr, l.estacoes[t.de].km, l.estacoes[t.ate].km) } });
+      for (const g of [t.de, t.ate]) feats.push({ type: 'Feature', properties: {}, geometry: { type: 'Point', coordinates: pontoNoKm(tr, l.estacoes[g].km) } });
     }
     src.setData({ type: 'FeatureCollection', features: feats });
   }
