@@ -117,7 +117,7 @@ A duração vem da massa em zero e da amostra observada das durações positivas
 
 Validação: sem falhas, o motor reproduz o horário exatamente (26, 31, 2 e 9 trens às 08:00). A reserva k-de-n simulada bate com o modelo de Markov (Laranja: 0,674, 0,939 e 0,992 contra 0,671, 0,938 e 0,992). Os minutos parados por ano da Laranja, 1.704 (IC 1.528–1.881), contêm os 1.797 do cálculo analítico e os 1.852 do Monte Carlo do painel. O Monte Carlo usa Web Workers e dá o mesmo resultado com 1 ou 8 processos; 1.000 dias levam cerca de 3 s no navegador.
 
-Esse teste também mudou o modelo. A média observada das durações era maior que a da lognormal ajustada (23% a 29% na Laranja (material rodante e equipamentos fixos) e 26% nos equipamentos fixos da Verde; 3,4 vezes nos equipamentos fixos da Azul, por poucas interrupções de quase 20 horas), e o simulador passou a sortear da amostra observada. A causa comum era sorteada por par de linhas e contava duas ou três vezes os eventos de 3 ou 4 linhas; passou a ser sorteada por grupo. As duas mudanças estão registradas com data nas specs 006 e 009.
+Esse teste também mudou o modelo. A média observada das durações era maior que a da lognormal ajustada (23% a 29% na Laranja (material rodante e equipamentos fixos) e 26% nos equipamentos fixos da Verde; 3,4 vezes nos equipamentos fixos da Azul, por poucas interrupções de quase 20 horas), e o simulador passou a sortear da amostra observada (tabela em `fontes/verificacao/duracoes.md`). A causa comum era sorteada por par de linhas e contava duas ou três vezes os eventos de 3 ou 4 linhas; passou a ser sorteada por grupo. As duas mudanças estão registradas com data nas specs 006 e 009.
 
 **Políticas (dia útil, reparo de 1 dia; diferença contra nenhuma política, IC 95%):**
 

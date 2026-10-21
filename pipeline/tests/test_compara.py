@@ -20,12 +20,15 @@ def test_iguais_tolerancia_e_diferenca(tmp_path):
     assert cd.compara(str(a / "x.csv"), str(b / "x.csv"), "x.csv")[0] == "DIFERE"
 
 
-def test_modelos_tem_tolerancia_maior_e_ignora_commit(tmp_path):
+def test_modelos_tem_tolerancia_maior_e_ignora_so_o_tempo(tmp_path):
     a, b = tmp_path / "pub", tmp_path / "novo"
-    _grava(a / "modelos/m.json", json.dumps({"alpha": 1.8330, "codigo_commit": "abc"}))
-    _grava(b / "modelos/m.json", json.dumps({"alpha": 1.8331, "codigo_commit": "def"}))
+    _grava(a / "modelos/m.json", json.dumps({"alpha": 1.8330, "bootstrap_segundos": 600.1, "codigo_commit": "sha256-scripts:abc"}))
+    _grava(b / "modelos/m.json", json.dumps({"alpha": 1.8331, "bootstrap_segundos": 645.4, "codigo_commit": "sha256-scripts:abc"}))
     assert cd.compara(str(a / "modelos/m.json"), str(b / "modelos/m.json"), "modelos/m.json")[0] == "DENTRO DA TOLERÂNCIA"
-    _grava(b / "modelos/m.json", json.dumps({"alpha": 1.9, "codigo_commit": "def"}))
+    _grava(b / "modelos/m.json", json.dumps({"alpha": 1.9, "bootstrap_segundos": 645.4, "codigo_commit": "sha256-scripts:abc"}))
+    assert cd.compara(str(a / "modelos/m.json"), str(b / "modelos/m.json"), "modelos/m.json")[0] == "DIFERE"
+    # código diferente (hash dos scripts) é diferença, não metadado (decisão D43)
+    _grava(b / "modelos/m.json", json.dumps({"alpha": 1.8330, "bootstrap_segundos": 600.1, "codigo_commit": "sha256-scripts:xyz"}))
     assert cd.compara(str(a / "modelos/m.json"), str(b / "modelos/m.json"), "modelos/m.json")[0] == "DIFERE"
 
 

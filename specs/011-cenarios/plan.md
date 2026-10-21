@@ -22,7 +22,7 @@ flowchart LR
 |---|---|
 | Clima | Cada escolha vira o nível do fator no modelo da spec 005 (estação do ano pelo mês, temperatura, precipitação, condição, neve no solo); a taxa muda só pelos multiplicadores do `parametros.json` |
 | Jogo | Indicador ligado nas horas 18 a 22 (jogo às 19h; janela do pipeline: 1 h antes a 3 h 30 depois) |
-| Greve | O horário mantém só as viagens que partem nas faixas com serviço (set.–out. ou junho de 2025, `dados/manuais/greves_stm.csv`, status "não verificado"); a oferta menor entra pelo próprio horário, como a exposição da spec 004; o indicador de greve também entra no multiplicador |
+| Greve | O horário mantém só as viagens que partem nas faixas com serviço (set.–out. ou junho de 2025, `dados/manuais/greves_stm.csv`, status "não verificado"); a oferta menor entra pelo próprio horário, como a exposição da spec 004. Desde 2026-10-21 (decisão D42), o indicador de greve não muda a taxa por trem-hora: o contrato não leva esse multiplicador, porque a spec 005 concluiu que a greve atua só pela exposição |
 | Link | `URLSearchParams` com todos os campos, políticas como bits e hipóteses alteradas como `nome:valor`; valor inválido volta ao padrão |
 | Determinismo | A rodada i usa a semente derivada de (semente, i); o mesmo link dá o mesmo cenário e os mesmos números, com qualquer número de workers |
 | Extrapolação | Horas observadas de 2019 a 2026 por par de condições (mês × temperatura, temperatura × condição, mês × condição, condição × precipitação, mês × neve no solo, tipo de dia × eventos), contadas em `painel_modelo.csv.gz` e embutidas em `observado.ts`. Zero horas: "extrapolação"; menos de 30: "poucos dados". Hipótese fora da `faixa`: "extrapolação". Multiplicador com IC 95% mais largo que 3×: "incerteza alta" |

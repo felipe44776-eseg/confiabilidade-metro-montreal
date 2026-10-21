@@ -125,6 +125,7 @@ def test_contrato_parametros():
         assert a["n"] == len(a["minutos"]) > 0 and a["minutos"] == sorted(a["minutos"]) and min(a["minutos"]) > 0, k
     assert p["causa_comum_beta"]["verde-laranja"]["eventos"] == 31
     assert not any(nivel == "sem_dado" for c in ("MR", "EF") for f in p["taxas"][c]["multiplicadores"].values() for nivel in f)
+    assert all("greve" not in p["taxas"][c]["multiplicadores"] for c in ("MR", "EF"))  # D42: greve só pela oferta
     for l in ("verde", "laranja", "amarela", "azul"):
         assert p["taxas"]["MR"]["base_por_trem_hora"][l]["ic95"]
         assert sum(x["peso"] for x in p["locais_ef"][l]) > 0

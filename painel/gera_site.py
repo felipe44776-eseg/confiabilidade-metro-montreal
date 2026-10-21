@@ -101,6 +101,7 @@ html = f"""<!doctype html>
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
+<link rel="icon" href="data:,">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Confiabilidade do Metrô de Montreal</title>
 <meta name="description" content="Tempo médio entre falhas, disponibilidade e tolerância a falhas das linhas do metrô de Montreal, com dados abertos da STM de 2019 a 2026.">

@@ -2,7 +2,7 @@
  "semente": 20261021,
  "rodadas_por_politica": 3000,
  "rodadas_por_tipo_dia": 4000,
- "codigo_parametros": "sha256-scripts:e05a311efcb01915",
+ "codigo_parametros": "sha256-scripts:70cf9c002aa2ba0a",
  "minutos_por_ano": {
   "verde": {
    "media": 1802.3993695837587,
@@ -83,9 +83,11 @@
   "amarela": 40288,
   "azul": 168183
  },
- "segundos_para_3x_rodadas": {
-  "segundos": 8.9530925,
-  "rodadas": 12000
+ "meia_largura_pct_com_50000_dias": {
+  "verde": 3.036033596652053,
+  "laranja": 3.542386201418473,
+  "amarela": 4.488206768855464,
+  "azul": 9.170141765534488
  },
  "disponibilidade_dia_util": {
   "verde": {

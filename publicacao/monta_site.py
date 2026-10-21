@@ -79,7 +79,7 @@ def pagina(titulo, descricao, corpo):
     rodape = (f'<p class="muted" style="margin-top:32px">Sistemas Tolerantes a Falhas, Engenharia de Produção, ESEG, 2026. '
               f'Equipe: {html.escape(EQUIPE)}. Versão dos dados: {VERSAO_DADOS}. <a href="{REPO}/blob/main/fontes/FONTES.md">Fontes</a>.</p>')
     return f"""<!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<html lang="pt-BR"><head><meta charset="utf-8"><link rel="icon" href="data:,"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{html.escape(titulo)}</title><meta name="description" content="{html.escape(descricao)}"><style>{ESTILO}</style></head>
 <body><main>{corpo}{rodape}</main></body></html>
 """

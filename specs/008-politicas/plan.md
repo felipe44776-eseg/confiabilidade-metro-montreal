@@ -36,7 +36,7 @@ O Markov do motor bate com as 144 linhas de `kdn.json` a menos de 0,001; a difer
 
 | Desvio | Por quê |
 |---|---|
-| Operação degradada: a marcha lenta dura o restante do reparo (D − ativação), não `duracao_degradada_min` | Uma política que só acrescenta marcha lenta depois do reparo nunca melhora nada. A política troca parada total por marcha lenta. `duracao_degradada_min` fica sem uso no motor; sugestão: trocar por `tempo_ativacao_degradada_min` no `pipeline/parametros.py` |
+| Operação degradada: a marcha lenta dura o restante do reparo (D − ativação), não `duracao_degradada_min` | Uma política que só acrescenta marcha lenta depois do reparo nunca melhora nada. A política troca parada total por marcha lenta. Desde 2026-10-21, `tempo_ativacao_degradada_min` está no `parametros.json` (com faixa) e `duracao_degradada_min` saiu das hipóteses do motor |
 | Retirada: a política é "retirada rápida" com tempo-alvo | As durações observadas já refletem a prática atual da STM; a política mede quanto se ganha com um tempo de retirada menor |
 | Retorno parcial e rota alternativa só mudam as métricas origem-destino | O movimento dos trens não muda: os trens da linha continuam no horário nos trechos livres. O efeito aparece na disponibilidade origem-destino |
 | Retorno parcial com as pontas de viagem do horário | Os aparelhos de mudança de via não estão verificados. O GTFS mostra onde as viagens começam e terminam: Laranja em Côte-Vertu, Henri-Bourassa e Montmorency; as outras linhas só nos terminais. Pontos extras entram como hipótese do cenário, e `avisosDoCenario` marca o resultado |

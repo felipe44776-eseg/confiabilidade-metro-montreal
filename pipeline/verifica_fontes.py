@@ -159,6 +159,8 @@ PAINEL = ("linhas", "ajustes", "tbf_curvas", "tbf_hist", "anual", "frota_anual",
 DERIVADOS = [
     {"arquivo": f"{D}/gtfs/metro_sequencias.csv", "de": ["gtfs_stm"], "script": "pipeline/extrai_gtfs_metro.py"},
     {"arquivo": f"{D}/gtfs/stops.txt", "de": ["gtfs_stm"], "script": "pipeline/extrai_gtfs_metro.py"},
+] + [{"arquivo": f"{D}/gtfs/{n}", "de": ["gtfs_stm"], "script": "pipeline/extrai_gtfs_metro.py"}
+      for n in ("agency.txt", "calendar.txt", "calendar_dates.txt", "feed_info.txt", "routes.txt")] + [
     {"arquivo": f"{D}/mobilidade/google_mobilidade_montreal_2020_2022.csv", "de": ["google_mobilidade"], "script": "pipeline/extrai_mobilidade.py"},
     {"arquivo": f"{D}/painel_diario_linha.csv", "de": ["stm_incidentes", "stm_km_reel", "stm_km_planifie", "eccc_*", "nager_*", "google_mobilidade"],
      "script": "pipeline/monta_painel.py"},
@@ -250,7 +252,8 @@ def gera_manifesto():
 
 
 def baixa_release(man):
-    print(f"== Download da Release {man['release']}")
+    releases = man.get("releases", [man["release"]])
+    print(f"== Download das Releases {', '.join(releases)}" if len(releases) > 1 else f"== Download da Release {releases[0]}")
     problemas = 0
     for e in man["fontes"]:
         if e.get("distribuicao") != "release":

@@ -48,7 +48,9 @@ export function multiplicador(taxa: Taxa, cond: Condicoes): number {
  */
 export function taxaAcumulada(params: Parametros, horario: HorarioDia, cenario: Cenario, linha: string, causa: Causa): Float64Array {
   const taxa = params.taxas[causa];
-  const base = taxa.base_por_trem_hora[linha]?.valor ?? 0;
+  const base = taxa.base_por_trem_hora[linha]?.valor;
+  // dado ausente nunca vira zero (constituição, princípio 6): taxa zero faria a linha nunca falhar
+  if (base === undefined) throw new Error(`parametros.json sem taxa-base de ${causa} para a linha ${linha}`);
   const trens = horario.trensPorMinuto[linha];
   const acum = new Float64Array(MINUTOS_DIA_OPERACAO + 1);
   const multHora = new Map<number, number>();

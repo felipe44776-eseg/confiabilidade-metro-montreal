@@ -172,7 +172,7 @@ function montaFormulario(): void {
 function montaHipoteses(): void {
   const caixa = $('c-hipoteses');
   caixa.replaceChildren();
-  const nomes = [...new Set([...Object.keys(dados.parametros.hipoteses), ...Object.keys(HIPOTESES_PADRAO)])].filter((n) => n !== 'duracao_degradada_min');
+  const nomes = [...new Set([...Object.keys(dados.parametros.hipoteses), ...Object.keys(HIPOTESES_PADRAO)])];
   for (const nome of nomes) {
     const p = dados.parametros.hipoteses[nome];
     const padrao = p?.valor ?? HIPOTESES_PADRAO[nome as keyof typeof HIPOTESES_PADRAO];

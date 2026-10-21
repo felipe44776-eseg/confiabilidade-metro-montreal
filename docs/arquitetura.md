@@ -95,9 +95,11 @@ Mudar o formato exige mudar o esquema em `contratos/`, o `parametros.py`, os tip
 
 ```bash
 python -m pytest pipeline/tests -q                  # 55 testes: critérios das specs 001 a 006, 012 e 013
-cd app && npm test                                  # 86 testes: motor e interface
+cd app && npm test                                  # 87 testes: motor e interface
 python -I pipeline/verifica_fontes.py --recalcula   # 25 números recalculados direto dos brutos
 ```
+
+Teste no navegador (opcional, fora do CI): `publicacao/testa_navegador.py` abre o simulador publicado num Edge ou Chrome sem janela, em tamanho de celular e de notebook, e mede rolagem lateral, WebGL, quadros por segundo e erros no console. Precisa de `websocket-client` num ambiente à parte.
 
 Todos rodam a cada publicação. Um teste novo para cada critério de aceite novo.
 

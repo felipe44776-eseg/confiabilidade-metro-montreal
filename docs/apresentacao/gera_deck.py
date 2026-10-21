@@ -738,7 +738,7 @@ slide("Decisões tomadas depois de ver os dados", "Três mudanças feitas depois
 <div class="cards c3 cards-alto">
   <div class="card"><h3>Duração das interrupções</h3>
     <p class="vimos"><span class="label">O que vimos</span>A média observada era maior que a da lognormal: 23% a 29% na Laranja e 26% nos equipamentos fixos da Verde; 3,4 vezes na Azul.</p>
-    <p class="mudou"><span class="label">O que mudou</span>O simulador passou a sortear a duração da amostra observada. Na Laranja, de 1.433 min/ano, fora do esperado, para 1.704, que contém os valores do painel.</p>
+    <p class="mudou"><span class="label">O que mudou</span>O simulador passou a sortear a duração da amostra observada. Na Laranja, de 1.433 min/ano (execução anterior à correção, registro histórico na D25), para 1.704, que contém os valores do painel.</p>
     <p class="onde">specs 006 e 009 · 2026-10-21</p></div>
   <div class="card"><h3>Causa comum por grupo</h3>
     <p class="vimos"><span class="label">O que vimos</span>Sorteada por par de linhas, a causa comum contava duas ou três vezes os eventos de 3 ou 4 linhas.</p>
@@ -1077,6 +1077,7 @@ def monta():
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
+<link rel="icon" href="data:,">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Confiabilidade e tolerância a falhas do metrô de Montreal · apresentação</title>
 <style>{CSS}</style>

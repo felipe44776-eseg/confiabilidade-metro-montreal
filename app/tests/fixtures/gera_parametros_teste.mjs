@@ -42,7 +42,8 @@ function taxa(causa) {
     mult[f] = {};
     for (const nv of ns) mult[f][nv] = P(especiais[`${f}=${nv}`] ?? 1.0, { unidade: 'multiplicador da taxa' });
   }
-  for (const ind of ['jogo', 'gp_fds', 'feriado', 'greve']) mult[ind] = { 1: P(1.0, { unidade: 'multiplicador da taxa' }) };
+  // greve não entra na taxa: atua só pela oferta (spec 005, decisão D42)
+  for (const ind of ['jogo', 'gp_fds', 'feriado']) mult[ind] = { 1: P(1.0, { unidade: 'multiplicador da taxa' }) };
   const base = {};
   for (const l of LINHAS) {
     const falhas = causa === 'MR' ? painel[l].falhas_mr : painel[l].falhas_ef;
@@ -82,7 +83,7 @@ const out = {
   hipoteses: {
     reparo_oficina_dias: H(1.0, [0.5, 4], 'dias'), p_retirada: H(1.0, [0, 1]), reservas_por_linha: H(2, [0, 8], 'trens'),
     intervalo_minimo_s: H(90, [60, 180], 's'), sentidos_bloqueio_ef: H(2, [1, 2], 'sentidos'), fator_velocidade_degradada: H(1.25, [1, 2]),
-    duracao_degradada_min: H(30, [0, 120], 'min'), tempo_transferencia_min: H(4, [2, 8], 'min'), reducao_causa_comum: H(0, [0, 1]),
+    tempo_transferencia_min: H(4, [2, 8], 'min'), reducao_causa_comum: H(0, [0, 1]),
     velocidade_comercial_candidata_kmh: H(36, [30, 45], 'km/h'),
   },
   _nota: 'Fixture de teste do motor: valores plausíveis tirados do painel (dados/derivados/painel), não ajustados. Trem-horas por dia usados na taxa-base: ' + JSON.stringify(Object.fromEntries(Object.entries(thDia).map(([k, v]) => [k, Math.round(v * 10) / 10]))),

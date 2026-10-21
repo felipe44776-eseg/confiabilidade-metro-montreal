@@ -1,6 +1,6 @@
 # Expansão da rede: que linha construir (spec 014)
 
-Gerado por `app/relatorios/expansao.relatorio.ts` com o motor do simulador e o `parametros.json` real (sha256-scripts:e05a311efcb01915). Método de estados: 200.000 sorteios do estado de cada trecho (aberto ou bloqueado, pela taxa de falha e pela duração), semente 20261021, dia útil. A disponibilidade origem-destino é a fração dos pares de estações atuais com caminho, ponderada pela oferta de hoje; o ganho de cada candidata é pareado com a rede atual.
+Gerado por `app/relatorios/expansao.relatorio.ts` com o motor do simulador e o `parametros.json` real (sha256-scripts:70cf9c002aa2ba0a). Método de estados: 200.000 sorteios do estado de cada trecho (aberto ou bloqueado, pela taxa de falha e pela duração), semente 20261021, dia útil. A disponibilidade origem-destino é a fração dos pares de estações atuais com caminho, ponderada pela oferta de hoje; o ganho de cada candidata é pareado com a rede atual.
 
 Rede atual: disponibilidade origem-destino 99,2360 (99,2029 a 99,2692)%; minutos de par interrompido por ano 3.341 (3.196 a 3.485).
 

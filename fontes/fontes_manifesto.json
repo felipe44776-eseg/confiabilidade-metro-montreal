@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-21T06:04:01+00:00",
+ "gerado_em": "2026-10-21T06:33:41+00:00",
  "release": "dados-2026-10-20",
  "releases": [
   "dados-2026-10-20",
@@ -1186,6 +1186,51 @@
    "sha256": "085a19ad8652cdde4bbea2c52277c2224d6764bb065d5333f785b8e5b7f1b8ce"
   },
   {
+   "arquivo": "dados/derivados/gtfs/agency.txt",
+   "de": [
+    "gtfs_stm"
+   ],
+   "script": "pipeline/extrai_gtfs_metro.py",
+   "bytes": 207,
+   "sha256": "812857d627d344ec01984e1523ec06f3b1a79897af7438b226e13d5eb0b709eb"
+  },
+  {
+   "arquivo": "dados/derivados/gtfs/calendar.txt",
+   "de": [
+    "gtfs_stm"
+   ],
+   "script": "pipeline/extrai_gtfs_metro.py",
+   "bytes": 7895,
+   "sha256": "d7ce96dee60598aebc08f2db5692c7f19c94d797434f4efad72ab600803b578c"
+  },
+  {
+   "arquivo": "dados/derivados/gtfs/calendar_dates.txt",
+   "de": [
+    "gtfs_stm"
+   ],
+   "script": "pipeline/extrai_gtfs_metro.py",
+   "bytes": 599,
+   "sha256": "119fa151a9bd61933ec6b1446b8bd32865d176ed009c860e5b0ca413e74823a4"
+  },
+  {
+   "arquivo": "dados/derivados/gtfs/feed_info.txt",
+   "de": [
+    "gtfs_stm"
+   ],
+   "script": "pipeline/extrai_gtfs_metro.py",
+   "bytes": 193,
+   "sha256": "f6c71f0c7bf03137cbdf23f02c210c4da54fa818eecb7f5a43db4bb10e5a7943"
+  },
+  {
+   "arquivo": "dados/derivados/gtfs/routes.txt",
+   "de": [
+    "gtfs_stm"
+   ],
+   "script": "pipeline/extrai_gtfs_metro.py",
+   "bytes": 28024,
+   "sha256": "bb69eaebc18a70c366c8f04064766676e49839eb8321f2e67cf803197d78bb0c"
+  },
+  {
    "arquivo": "dados/derivados/mobilidade/google_mobilidade_montreal_2020_2022.csv",
    "de": [
     "google_mobilidade"
@@ -1686,7 +1731,7 @@
    ],
    "script": "pipeline/parametros.py",
    "bytes": 133610,
-   "sha256": "ab9524a34936fe664e62bd1d1488c18091e2366d38e0aea032a8286b0a17d47e"
+   "sha256": "d7c9fa66f46264a8b51f3453b20152a2f079ef64cd8795b681989d52c5fb9db8"
   },
   {
    "arquivo": "dados/derivados/simulador/candidatas.json",
@@ -1730,8 +1775,8 @@
     "eccc_horario_*"
    ],
    "script": "app/relatorios/politicas.relatorio.ts",
-   "bytes": 48476,
-   "sha256": "87eefb788ae042536b8341c5cbe0840936d8608c5963ce2af8463fa975cea264"
+   "bytes": 48561,
+   "sha256": "21f87a9e10b5b1d83e70f09be5c258a91054c7eccc694657730dc53320285faa"
   },
   {
    "arquivo": "dados/derivados/simulador/expansao.json",
@@ -1743,7 +1788,7 @@
    ],
    "script": "app/relatorios/expansao.relatorio.ts",
    "bytes": 60615,
-   "sha256": "0d8ec5a8df5075b061f8ed51d0553ae118733e36a0a7acadf1218d747556e172"
+   "sha256": "c3fdd0668ce0e1871ebd2ee7446f808693741c911dcec3c4edf98a9dd297a98a"
   }
  ]
 }

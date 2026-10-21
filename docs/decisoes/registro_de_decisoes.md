@@ -159,7 +159,7 @@ Formato de cada item: **Decisão** · **Por quê** · **Alternativas** · **Cons
 ### D25 — Duração pela amostra observada
 
 - **Decisão:** o simulador e o backtest sorteiam a duração positiva da amostra observada (massa em zero + reamostragem); a lognormal ficou para o modelo de fatores (tempo acelerado).
-- **Por quê (depois de ver):** ao validar o simulador, a Laranja deu 1.433 min/ano, fora do intervalo do painel (execução de 2026-10-21 antes da correção; registro histórico, o relatório daquela execução foi substituído). A média observada das durações era maior que a da lognormal: 23% a 29% na Laranja (material rodante e equipamentos fixos) e 26% nos equipamentos fixos da Verde, e 3,4 vezes nos equipamentos fixos da Azul, por poucas interrupções de quase 20 horas. Com a amostra, deu 1.704 (IC 1.528 a 1.881), que contém 1.797 e 1.852. Quantis interpolados foram testados antes e perdiam 3% a 5% da média (conferência feita na sessão, registro histórico).
+- **Por quê (depois de ver):** ao validar o simulador, a Laranja deu 1.433 min/ano, fora do intervalo do painel (execução de 2026-10-21 antes da correção; registro histórico, o relatório daquela execução foi substituído). A média observada das durações era maior que a da lognormal: 23% a 29% na Laranja (material rodante e equipamentos fixos) e 26% nos equipamentos fixos da Verde, e 3,4 vezes nos equipamentos fixos da Azul, por poucas interrupções de quase 20 horas (razões em `fontes/verificacao/duracoes.md`). Com a amostra, deu 1.704 (IC 1.528 a 1.881), que contém 1.797 e 1.852. Quantis interpolados foram testados antes e perdiam 3% a 5% da média (conferência feita na sessão, registro histórico).
 
 ### D26 — Local das falhas de equipamento fixo
 
@@ -268,3 +268,15 @@ Formato de cada item: **Decisão** · **Por quê** · **Alternativas** · **Cons
 
 - **Decisão:** o campo `codigo_commit` do `parametros.json` passou a ser o SHA-256 dos scripts que geram o contrato (`modelo_taxa.py`, `distribuicoes.py` e `parametros.py`), com fim de linha normalizado.
 - **Por quê (depois de ver):** o hash do commit do git mudava a cada commit, mesmo sem mudança no código, e quebrava a reprodução byte a byte (achado 15).
+
+### D44 — Correções da revisão crítica de 2026-10-21, rodada 2
+
+- **Decisão:** o motor para com erro quando o `parametros.json` não tem a taxa-base de uma linha (antes, a taxa virava zero e a linha nunca falhava); um teste do contrato garante que o multiplicador de greve ficou fora (D42); a verificação passa a citar todas as Releases que baixa. Textos alinhados: plano e spec 011 (greve só pela oferta, com data), plano 008, tempo medido na spec 009 e a conferência de 97,95% no `fontes/FONTES.md`.
+- **Por quê (depois de ver):** a revisão reproduziu cada defeito com um teste ou um comando. Com os dados publicados, as quatro linhas têm taxa-base, então nenhum número muda.
+- **Registro:** `fontes/verificacao/critica_2026-10-21_rodada2.md`.
+
+### D45 — Propostas da rodada 2 aplicadas pela sessão principal
+
+- **Decisão:** a fixture de testes e o teste de cenário deixam de ter o multiplicador de greve (D42) e a hipótese sem uso; as razões entre a média observada e a da lognormal saem de um relatório gerado (`fontes/verificacao/duracoes.md`); o relatório das políticas grava a meia-largura esperada com 50.000 dias e tira o tempo de relógio do JSON versionado; o comparador da reprodução passa a comparar o `codigo_commit`, que agora é determinístico; os cinco arquivos do GTFS que estavam fora do manifesto entraram nele.
+- **Por quê:** achados 3, 7, 8, 9, 10, 11, 12 e 13 da rodada 2. Nenhum número de modelo mudou.
+- **Registro:** `fontes/verificacao/critica_2026-10-21_rodada2.md`.

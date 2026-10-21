@@ -27,11 +27,11 @@ Código em `app/src/mc/`; testes em `app/tests/motor/montecarlo.test.ts`; relat�
 | Critério | Resultado |
 |---|---|
 | 1 ou 8 processos dão resultados idênticos | **Atende** (teste: 1 contra 8 lotes) |
-| Meia-largura do IC 95% até 5% da média dos minutos parados | **Exceção na Azul**: o modo adaptativo para em 50.000 dias; Verde, Laranja e Amarela atingem 5% com 18 mil a 40 mil dias, mas a Azul precisaria de cerca de 168 mil, por causa de poucas interrupções de quase 20 horas na amostra observada. Com 50 mil dias, a meia-largura da Azul fica perto de 9% |
+| Meia-largura do IC 95% até 5% da média dos minutos parados | **Exceção na Azul**: o modo adaptativo para em 50.000 dias; Verde, Laranja e Amarela atingem 5% com 18 mil a 40 mil dias, mas a Azul precisaria de cerca de 168 mil, por causa de poucas interrupções de quase 20 horas na amostra observada. Com 50 mil dias, a meia-largura esperada da Azul é de 9,2% da média (`fontes/verificacao/politicas.md`) |
 | Laranja: IC contém 1.852 ou 1.797 min/ano | **Atende**: 1.704 (1.528 a 1.881) contém os dois. Antes da correção da duração (lognormal) dava 1.433, fora do intervalo; a diferença foi explicada e corrigida em 2026-10-21 |
 | Métricas: disponibilidade por linha e por par origem-destino (com tempo extra), trens-hora perdidos, minutos de interrupção | **Atende** |
 | Cada métrica com IC 95%, número de rodadas e semente | **Atende** |
-| Tempo de 5.000 rodadas medido | **Atende**: 12.000 dias em 11,7 s numa thread (cerca de 5 s para 5.000); na página, 1.000 dias em 2,6 a 3,8 s com 12 workers |
+| Tempo de 5.000 rodadas medido | **Atende**: 12.000 dias (mais que as 5.000 pedidas) em 9,0 s numa thread, na execução publicada de `politicas.relatorio.ts` (o tempo muda a cada execução e com a máquina; ver `politicas.md`); na página, 1.000 dias em 2,6 a 3,8 s com 12 workers |
 
 ## Fora de escopo
 - Otimização automática de parâmetros.

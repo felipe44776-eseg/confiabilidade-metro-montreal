@@ -59,7 +59,7 @@ Acesso a todas: 2026-10-20. Hash completo no manifesto.
 - **Particularidades conferidas:**
   - Depois da meia-noite a hora continua como 24:xx e 25:xx (dia de operação).
   - A hora de retomada não tem data.
-  - A duração calculada cai dentro da faixa oficial `Incident en minutes` em **97,5%** dos eventos técnicos (8.319 de 8.530 exatos; 97,95% com tolerância de 1 minuto).
+  - A duração calculada cai dentro da faixa oficial `Incident en minutes` em **97,5%** dos eventos técnicos (8.319 de 8.530 exatos, `na_faixa` em `resumo_normalizacao.json`; 97,95% com tolerância de 1 minuto: conferência pontual, sem arquivo gerado, refeita de `eventos_tecnicos.csv` na revisão crítica de 2026-10-21, rodada 2).
 - **Falha técnica:** causa primária "Matériel roulant" ou "Équipements fixes".
   - Total: **8.619**, das quais **8.530** são de uma linha só e entram nas métricas por linha.
   - Ficam fora **44** sem linha ("Non affecté").

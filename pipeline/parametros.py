@@ -173,6 +173,17 @@ def main():
            "janela_operacao_h": P(20, "hipótese", "inferida do horário dos incidentes (05:00 a 01:00)", ["stm_incidentes"], "pipeline/analise_confiabilidade.py", None, None, "h"),
            "taxas": {"MR": taxa("MR"), "EF": taxa("EF")}, "renovacao": renov, "ttr": ttr, "causa_comum": cc, "causa_comum_beta": beta,
            "locais_ef": locais_ef, "locais_ef_sem_posicao": dict(sem_posicao), "frota": frota, "hipoteses": hip}
+    # Relatório: média observada das durações positivas contra a média da lognormal ajustada (decisão D25)
+    L = ["# Duração das interrupções: amostra observada contra lognormal", "",
+         "Gerado por `pipeline/parametros.py`. Média das durações positivas observadas contra a média exp(μ + σ²/2) da lognormal "
+         "ajustada às mesmas durações (`fontes/verificacao/distribuicoes.md`). Razão acima de 1: a lognormal subestima a média, "
+         "por isso o simulador sorteia da amostra observada.", "",
+         "| Linha e causa | Durações positivas | Média observada (min) | Média da lognormal (min) | Razão |", "|---|---|---|---|---|"]
+    for k, v in ttr.items():
+        a = v["amostra_positivos"]
+        m_ln = float(np.exp(v["mu_log"]["valor"] + v["sigma_log"]["valor"] ** 2 / 2))
+        L.append(f"| {k.replace('|', ' · ')} | {a['n']} | {a['media_min']:.2f} | {m_ln:.2f} | {a['media_min'] / m_ln:.3f} |".replace(".", ","))
+    open("fontes/verificacao/duracoes.md", "w", encoding="utf-8", newline="\n").write("\n".join(L) + "\n")
     with open("dados/derivados/simulador/parametros.json", "w", encoding="utf-8", newline="\n") as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
     print("parametros.json:", {k: (len(v) if isinstance(v, dict) else v) for k, v in out.items() if k != "codigo_commit"})

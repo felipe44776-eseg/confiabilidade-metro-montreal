@@ -60,7 +60,10 @@ it('relatório das políticas e do Monte Carlo', { timeout: 3_600_000 }, () => {
   saida.minutos_por_ano = anual;
   saida.minutos_cc_laranja_por_ano = ccLaranja;
   saida.rodadas_para_5pct_dia_util = precisao;
-  saida.segundos_para_3x_rodadas = { segundos, rodadas: 3 * N_ANO };
+  // tempo de relógio fica só no relatório .md: no JSON versionado, mudaria o hash a cada execução
+  const meia50k: Record<string, number> = {};
+  for (const l of rede.ids) meia50k[l] = 5 * Math.sqrt(precisao[l] / 50_000); // meia-largura (% da média) esperada com o teto de 50.000 dias
+  saida.meia_largura_pct_com_50000_dias = meia50k;
   const disp: Record<string, Estimativa> = {};
   for (const l of rede.ids) disp[l] = porTipo.util.porMetrica[`${l}.disponibilidade`];
   saida.disponibilidade_dia_util = disp;
@@ -103,10 +106,10 @@ it('relatório das políticas e do Monte Carlo', { timeout: 3_600_000 }, () => {
     '',
     `${N_ANO} dias simulados por tipo de dia (útil, sábado, domingo), somados pelo calendário de 251, 52 e 62 dias. Tempo: ${fmt(segundos, 1)} s para ${3 * N_ANO} dias numa thread.`,
     '',
-    '| Linha | Minutos por ano (IC 95%) | Disponibilidade no dia útil | Rodadas para 5% de precisão no dia útil |',
-    '|---|---|---|---|',
+    '| Linha | Minutos por ano (IC 95%) | Disponibilidade no dia útil | Rodadas para 5% de precisão no dia útil | Meia-largura com 50.000 dias (% da média) |',
+    '|---|---|---|---|---|',
   ];
-  for (const l of rede.ids) L.push(`| ${l} | ${ic(anual[l], 0)} | ${fmt(100 * disp[l].media, 3)}% | ${precisao[l].toLocaleString('pt-BR')} |`);
+  for (const l of rede.ids) L.push(`| ${l} | ${ic(anual[l], 0)} | ${fmt(100 * disp[l].media, 3)}% | ${precisao[l].toLocaleString('pt-BR')} | ${fmt(meia50k[l], 1)} |`);
   L.push(
     `| rede (soma) | ${ic(anual.rede, 0)} | disponibilidade origem-destino ${fmt(100 * porTipo.util.porMetrica['rede.dispOD'].media, 3)}% | |`,
     '',

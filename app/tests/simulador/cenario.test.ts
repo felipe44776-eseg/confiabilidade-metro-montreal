@@ -105,7 +105,7 @@ describe('cenário do motor', () => {
       esperado *= m.cond.neve.valor;
       esperado *= m.neve_solo.acima_10.valor;
       esperado *= m.feriado['1'].valor;
-      esperado *= m.greve['1'].valor;
+      expect(m.greve, 'greve não entra na taxa (D42)').toBeUndefined();
       if (HORAS_JOGO.includes(hora)) esperado *= m.jogo['1'].valor; // jogo só nas horas 18 a 22
       expect(multiplicador(p.taxas.MR, cond), `hora ${hora}`).toBeCloseTo(esperado, 12);
     }

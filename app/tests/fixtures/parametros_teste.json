@@ -542,20 +542,6 @@
       "script": "app/tests/fixtures (gerada a partir do painel)",
       "status": "hipótese"
      }
-    },
-    "greve": {
-     "1": {
-      "valor": 1,
-      "ic95": null,
-      "n": null,
-      "unidade": "multiplicador da taxa",
-      "metodo": "fixture de teste",
-      "fontes": [
-       "dados/derivados/painel"
-      ],
-      "script": "app/tests/fixtures (gerada a partir do painel)",
-      "status": "hipótese"
-     }
     }
    }
   },
@@ -1074,20 +1060,6 @@
      }
     },
     "feriado": {
-     "1": {
-      "valor": 1,
-      "ic95": null,
-      "n": null,
-      "unidade": "multiplicador da taxa",
-      "metodo": "fixture de teste",
-      "fontes": [
-       "dados/derivados/painel"
-      ],
-      "script": "app/tests/fixtures (gerada a partir do painel)",
-      "status": "hipótese"
-     }
-    },
-    "greve": {
      "1": {
       "valor": 1,
       "ic95": null,
@@ -3063,22 +3035,6 @@
    "faixa": [
     1,
     2
-   ]
-  },
-  "duracao_degradada_min": {
-   "valor": 30,
-   "ic95": null,
-   "n": null,
-   "unidade": "min",
-   "metodo": "fixture de teste",
-   "fontes": [
-    "dados/derivados/painel"
-   ],
-   "script": "app/tests/fixtures (gerada a partir do painel)",
-   "status": "hipótese",
-   "faixa": [
-    0,
-    120
    ]
   },
   "tempo_transferencia_min": {
