@@ -39,6 +39,7 @@ Código em `app/src/motor/viagem.ts`; aba "Viagem de A a B" no `/simulador/`; re
 | Ponderada pela oferta, reproduz a disponibilidade origem-destino da rede no mesmo dia | **Atende** (teste, com e sem rota alternativa, até a 10ª casa) |
 | Sem falhas: atraso zero e disponibilidade 1 | **Atende** (teste) |
 | Mesmo link, mesmos números; rodada i = dia i do Monte Carlo | **Atende** (testes do link e das rodadas) |
+| Conferência no site publicado (commit c2ff117) | Em tamanho de celular e de notebook, a viagem padrão rodou 1.000 dias em 3,1 e 3,2 s com 12 workers (navegador sem placa de vídeo), com as tabelas, as 20 barras por hora de saída e o caminho no mapa; sem rolagem lateral e sem erro no console (`fontes/verificacao/viagem_navegador_2026-10-21.json`) |
 
 Achado: quando a mesma linha aparece em dois trechos (Côte-Vertu → Montmorency usa a Laranja duas vezes), os trechos não são independentes, e o produto (98,35%) fica abaixo do simulado (98,90%). A página explica esse caso na leitura do resultado.
 

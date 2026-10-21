@@ -1,0 +1,344 @@
+{
+ "gerado_por": "publicacao/testa_navegador.py (um tamanho por vez: SO=celular, depois SO=notebook; ESPERA=45)",
+ "data": "2026-10-21",
+ "url": "https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/simulador/",
+ "commit_publicado": "c2ff117",
+ "spec": "015",
+ "decisao": "D52",
+ "ambiente": "Edge sem janela (headless), WebGL por software (SwiftShader), sem placa de vídeo, 12 núcleos lógicos",
+ "nota": "Viagem padrão (Angrignon a Saint-Michel), 1.000 dias, semente 20261021, rodada depois de o teste mudar o clima para chuva congelante e mais de 10 cm de neve no solo (passo da decisão D50), com a animação pausada.",
+ "celular": {
+  "status": "1.000 dias em 3,1 s com 12 worker(s); semente 20261021.",
+  "segundos_ate_o_resultado": 3.5,
+  "barras_por_hora": 20,
+  "scrollWidth": 390,
+  "clientWidth": 390,
+  "elementosAlemDaLargura": 0,
+  "rota": "Caminho de sempre (o mais rápido sem falhas, dia útil)\n Verde, sentido Honoré-Beaugrand: Angrignon → Berri-Uqam (14 trechos, 21 min)\nBaldeação em Berri-Uqam: 4 min (hipótese tempo_transferencia_min)\n Laranja, sentido Montmorency: Berri-Uqam → Jean-Talon (6 trechos, 7 min)\nBaldeação em Jean-Talon: 4 min (hipótese tempo_transferencia_min)\n Azul, sentido Saint-Michel: Jean-Talon → Saint-Michel (3 trechos, 4 min)\n\nTempo de percurso: 40 min (percurso mediano do horário mais as baldeações, sem a espera na plataforma). Saídas simuladas: a cada 10 min, das 05:30 às 00:10 (113 por dia). Rota alternativa desligada: a pessoa usa só este caminho e espera a linha voltar.",
+  "tabelas": [
+   [
+    [
+     "Verde: Angrignon → Berri-Uqam",
+     "99,49% (99,39%–99,59%)",
+     "—"
+    ],
+    [
+     "Laranja: Berri-Uqam → Jean-Talon",
+     "99,44% (99,26%–99,62%)",
+     "—"
+    ],
+    [
+     "Azul: Jean-Talon → Saint-Michel",
+     "99,42% (99,08%–99,76%)",
+     "—"
+    ],
+    [
+     "Produto dos trechos (em série, se as linhas falhassem de forma independente)",
+     "98,36%",
+     "—"
+    ],
+    [
+     "Viagem inteira (simulada)",
+     "98,39% (98,00%–98,79%)",
+     "19,3 (14,5–24,0)"
+    ]
+   ],
+   [
+    [
+     "Chance de chegar mais de 5 min depois do programado",
+     "1,29% (0,84%–1,73%)"
+    ],
+    [
+     "Chance de chegar mais de 15 min depois do programado",
+     "0,83% (0,42%–1,23%)"
+    ],
+    [
+     "Chance de chegar mais de 60 min depois do programado",
+     "0,61% (0,22%–1,00%)"
+    ],
+    [
+     "Chance de não chegar até o fim do serviço",
+     "0,0018% (0,0000%–0,0042%)"
+    ],
+    [
+     "Atraso médio por viagem (minutos)",
+     "3,19 (0,83–5,56)"
+    ]
+   ],
+   [
+    [
+     "05:00–06:00",
+     "0,53%",
+     "0,23% a 0,84%"
+    ],
+    [
+     "06:00–07:00",
+     "1,15%",
+     "0,66% a 1,64%"
+    ],
+    [
+     "07:00–08:00",
+     "1,12%",
+     "0,63% a 1,60%"
+    ],
+    [
+     "08:00–09:00",
+     "1,48%",
+     "0,89% a 2,07%"
+    ],
+    [
+     "09:00–10:00",
+     "2,18%",
+     "1,45% a 2,92%"
+    ],
+    [
+     "10:00–11:00",
+     "1,47%",
+     "0,79% a 2,14%"
+    ],
+    [
+     "11:00–12:00",
+     "1,43%",
+     "0,82% a 2,05%"
+    ],
+    [
+     "12:00–13:00",
+     "1,30%",
+     "0,67% a 1,93%"
+    ],
+    [
+     "13:00–14:00",
+     "1,10%",
+     "0,53% a 1,67%"
+    ],
+    [
+     "14:00–15:00",
+     "0,90%",
+     "0,37% a 1,43%"
+    ],
+    [
+     "15:00–16:00",
+     "1,08%",
+     "0,50% a 1,66%"
+    ],
+    [
+     "16:00–17:00",
+     "1,32%",
+     "0,71% a 1,92%"
+    ],
+    [
+     "17:00–18:00",
+     "1,48%",
+     "0,84% a 2,13%"
+    ],
+    [
+     "18:00–19:00",
+     "1,33%",
+     "0,74% a 1,92%"
+    ],
+    [
+     "19:00–20:00",
+     "1,38%",
+     "0,74% a 2,02%"
+    ],
+    [
+     "20:00–21:00",
+     "1,42%",
+     "0,76% a 2,08%"
+    ],
+    [
+     "21:00–22:00",
+     "1,42%",
+     "0,76% a 2,08%"
+    ],
+    [
+     "22:00–23:00",
+     "1,38%",
+     "0,75% a 2,01%"
+    ],
+    [
+     "23:00–00:00",
+     "0,75%",
+     "0,25% a 1,25%"
+    ],
+    [
+     "00:00–01:00",
+     "0,80%",
+     "0,28% a 1,32%"
+    ]
+   ]
+  ],
+  "leitura": [
+   "Cenário desta rodada: dia útil, outubro, 5 a 15 °C, precipitação nenhuma, chuva congelante, neve no solo mais de 10 cm; políticas: nenhuma. Os dias são os mesmos da aba \"Muitos dias\" (semente 20261021).",
+   "O produto dos trechos (98,36%) cai dentro do intervalo do simulado: as linhas do caminho falham quase de forma independente, e a viagem se comporta como um sistema em série. Em 78,3% (75,7%–80,9%) dos dias houve ao menos uma interrupção no caminho."
+  ],
+  "erros_console": []
+ },
+ "notebook": {
+  "status": "1.000 dias em 3,2 s com 12 worker(s); semente 20261021.",
+  "segundos_ate_o_resultado": 3.8,
+  "barras_por_hora": 20,
+  "scrollWidth": 1351,
+  "clientWidth": 1351,
+  "elementosAlemDaLargura": 0,
+  "rota": "Caminho de sempre (o mais rápido sem falhas, dia útil)\n Verde, sentido Honoré-Beaugrand: Angrignon → Berri-Uqam (14 trechos, 21 min)\nBaldeação em Berri-Uqam: 4 min (hipótese tempo_transferencia_min)\n Laranja, sentido Montmorency: Berri-Uqam → Jean-Talon (6 trechos, 7 min)\nBaldeação em Jean-Talon: 4 min (hipótese tempo_transferencia_min)\n Azul, sentido Saint-Michel: Jean-Talon → Saint-Michel (3 trechos, 4 min)\n\nTempo de percurso: 40 min (percurso mediano do horário mais as baldeações, sem a espera na plataforma). Saídas simuladas: a cada 10 min, das 05:30 às 00:10 (113 por dia). Rota alternativa desligada: a pessoa usa só este caminho e espera a linha voltar.",
+  "tabelas": [
+   [
+    [
+     "Verde: Angrignon → Berri-Uqam",
+     "99,49% (99,39%–99,59%)",
+     "—"
+    ],
+    [
+     "Laranja: Berri-Uqam → Jean-Talon",
+     "99,44% (99,26%–99,62%)",
+     "—"
+    ],
+    [
+     "Azul: Jean-Talon → Saint-Michel",
+     "99,42% (99,08%–99,76%)",
+     "—"
+    ],
+    [
+     "Produto dos trechos (em série, se as linhas falhassem de forma independente)",
+     "98,36%",
+     "—"
+    ],
+    [
+     "Viagem inteira (simulada)",
+     "98,39% (98,00%–98,79%)",
+     "19,3 (14,5–24,0)"
+    ]
+   ],
+   [
+    [
+     "Chance de chegar mais de 5 min depois do programado",
+     "1,29% (0,84%–1,73%)"
+    ],
+    [
+     "Chance de chegar mais de 15 min depois do programado",
+     "0,83% (0,42%–1,23%)"
+    ],
+    [
+     "Chance de chegar mais de 60 min depois do programado",
+     "0,61% (0,22%–1,00%)"
+    ],
+    [
+     "Chance de não chegar até o fim do serviço",
+     "0,0018% (0,0000%–0,0042%)"
+    ],
+    [
+     "Atraso médio por viagem (minutos)",
+     "3,19 (0,83–5,56)"
+    ]
+   ],
+   [
+    [
+     "05:00–06:00",
+     "0,53%",
+     "0,23% a 0,84%"
+    ],
+    [
+     "06:00–07:00",
+     "1,15%",
+     "0,66% a 1,64%"
+    ],
+    [
+     "07:00–08:00",
+     "1,12%",
+     "0,63% a 1,60%"
+    ],
+    [
+     "08:00–09:00",
+     "1,48%",
+     "0,89% a 2,07%"
+    ],
+    [
+     "09:00–10:00",
+     "2,18%",
+     "1,45% a 2,92%"
+    ],
+    [
+     "10:00–11:00",
+     "1,47%",
+     "0,79% a 2,14%"
+    ],
+    [
+     "11:00–12:00",
+     "1,43%",
+     "0,82% a 2,05%"
+    ],
+    [
+     "12:00–13:00",
+     "1,30%",
+     "0,67% a 1,93%"
+    ],
+    [
+     "13:00–14:00",
+     "1,10%",
+     "0,53% a 1,67%"
+    ],
+    [
+     "14:00–15:00",
+     "0,90%",
+     "0,37% a 1,43%"
+    ],
+    [
+     "15:00–16:00",
+     "1,08%",
+     "0,50% a 1,66%"
+    ],
+    [
+     "16:00–17:00",
+     "1,32%",
+     "0,71% a 1,92%"
+    ],
+    [
+     "17:00–18:00",
+     "1,48%",
+     "0,84% a 2,13%"
+    ],
+    [
+     "18:00–19:00",
+     "1,33%",
+     "0,74% a 1,92%"
+    ],
+    [
+     "19:00–20:00",
+     "1,38%",
+     "0,74% a 2,02%"
+    ],
+    [
+     "20:00–21:00",
+     "1,42%",
+     "0,76% a 2,08%"
+    ],
+    [
+     "21:00–22:00",
+     "1,42%",
+     "0,76% a 2,08%"
+    ],
+    [
+     "22:00–23:00",
+     "1,38%",
+     "0,75% a 2,01%"
+    ],
+    [
+     "23:00–00:00",
+     "0,75%",
+     "0,25% a 1,25%"
+    ],
+    [
+     "00:00–01:00",
+     "0,80%",
+     "0,28% a 1,32%"
+    ]
+   ]
+  ],
+  "leitura": [
+   "Cenário desta rodada: dia útil, outubro, 5 a 15 °C, precipitação nenhuma, chuva congelante, neve no solo mais de 10 cm; políticas: nenhuma. Os dias são os mesmos da aba \"Muitos dias\" (semente 20261021).",
+   "O produto dos trechos (98,36%) cai dentro do intervalo do simulado: as linhas do caminho falham quase de forma independente, e a viagem se comporta como um sistema em série. Em 78,3% (75,7%–80,9%) dos dias houve ao menos uma interrupção no caminho."
+  ],
+  "erros_console": []
+ }
+}
