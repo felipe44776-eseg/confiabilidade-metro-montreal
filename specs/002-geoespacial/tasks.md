@@ -9,5 +9,5 @@
 - [x] Reprodutibilidade: duas execuções seguidas dão arquivos idênticos.
 - [x] Recálculo independente em `verifica_fontes.py`: 73 estações, 8.530 falhas somadas em `locais.json`, 561 falhas no 4S50.
 - [x] Página `/mapa/` com testes (`app/tests/locais.test.ts`: soma de 8.530, nenhum ponto em (0, 0), status coerente).
-- [ ] Publicar no site e conferir a página `/mapa/` no endereço público.
+- [x] Publicar no site: `/mapa/` responde no endereço público, e o painel lateral carrega as contagens e as linhas (conferido em navegador sem janela). O desenho do mapa em WebGL não pôde ser conferido sem placa de vídeo: conferir num navegador comum.
 - [ ] Pedir à STM a posição das subestações (opcional; levaria a cobertura acima de 98%).

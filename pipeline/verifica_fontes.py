@@ -225,6 +225,38 @@ def confere_local(man):
     return problemas
 
 
+def conteudo_valido(e, caminho):
+    """O servidor do ECCC as vezes devolve uma pagina HTML no lugar do CSV: confere a 1a coluna esperada."""
+    if e["formato"].startswith("csv") and e.get("colunas"):
+        with open(caminho, encoding="utf-8-sig", errors="replace") as f:
+            cabecalho = [f.readline() for _ in range(e.get("pula_linhas", 0) + 1)][-1]
+        return e["colunas"][0] in cabecalho
+    return True
+
+
+def baixar_valido(e, destino, tentativas=3):
+    """Baixa com novas tentativas: conteudo invalido espera 10 s; HTTP 429 espera o Retry-After (ou 65 s)."""
+    import time
+    import urllib.error
+    st, erro = None, None
+    for n in range(tentativas):
+        try:
+            st = baixar(e["url"], destino, e.get("post"), e.get("aceita"))
+        except urllib.error.HTTPError as ex:
+            st, erro = None, f"HTTP {ex.code}: {ex.reason}"
+            if ex.code == 429 and n + 1 < tentativas:
+                time.sleep(int(ex.headers.get("Retry-After") or 65))
+                continue
+            return st, erro
+        except Exception as ex:
+            return None, str(ex)
+        if conteudo_valido(e, destino):
+            return st, None
+        erro = "o servidor devolveu outro conteúdo no lugar do arquivo esperado (ex.: página HTML)"
+        time.sleep(10)
+    return st, erro
+
+
 def confere_online(man):
     print("== Fontes na internet (baixa de novo e compara com a copia do manifesto)")
     tmp = tempfile.mkdtemp(prefix="verifica_fontes_")
@@ -239,10 +271,9 @@ def confere_online(man):
                 print(f"  ERRO    {e['id']}: {ex}")
             continue
         destino = os.path.join(tmp, e["id"])
-        try:
-            st = baixar(e["url"], destino, e.get("post"), e.get("aceita"))
-        except Exception as ex:
-            print(f"  ERRO    {e['id']}: {ex}")
+        st, erro = baixar_valido(e, destino)
+        if erro:
+            print(f"  {'INVALIDO' if st else 'ERRO    '} {e['id']}: {erro}")
             continue
         if sha256(destino) == e.get("sha256"):
             print(f"  IGUAL   {e['id']}: HTTP {st}, conteudo identico")
