@@ -243,9 +243,9 @@ for l, pts in tracados.items():
 # Sem data de geracao nos arquivos: rodar de novo com as mesmas entradas precisa dar arquivos identicos (constituicao, principio III).
 meta = {"osm_timestamp": osm["osm3s"]["timestamp_osm_base"], "licenca": "Traçado: ODbL (OpenStreetMap). Estações: GTFS STM, CC BY 4.0."}
 gerado_em = datetime.now(timezone.utc).isoformat(timespec="seconds")
-json.dump({"type": "FeatureCollection", "metadata": meta, "features": feat_lin}, open(f"{DERIV}/geo/linhas.geojson", "w", encoding="utf-8"), ensure_ascii=False)
-json.dump({"type": "FeatureCollection", "metadata": meta, "features": feat_est}, open(f"{DERIV}/geo/estacoes.geojson", "w", encoding="utf-8"), ensure_ascii=False)
-json.dump(locais, open(f"{DERIV}/geo/locais.json", "w", encoding="utf-8"), ensure_ascii=False, indent=0)
+json.dump({"type": "FeatureCollection", "metadata": meta, "features": feat_lin}, open(f"{DERIV}/geo/linhas.geojson", "w", encoding="utf-8", newline="\n"), ensure_ascii=False)
+json.dump({"type": "FeatureCollection", "metadata": meta, "features": feat_est}, open(f"{DERIV}/geo/estacoes.geojson", "w", encoding="utf-8", newline="\n"), ensure_ascii=False)
+json.dump(locais, open(f"{DERIV}/geo/locais.json", "w", encoding="utf-8", newline="\n"), ensure_ascii=False, indent=0)
 
 # ------------------------------------------------------------------ relatorio de validacao
 tot = len(tec)
@@ -299,5 +299,5 @@ L.append("| Código | Linha mais frequente | Falhas |")
 L.append("|---|---|---|")
 for it in sorted((i for i in locais if i["status"] == "desconhecido"), key=lambda i: -i["n_tecnicos"])[:25]:
     L.append(f"| {it['codigo']} | {it['linha']} | {it['n_tecnicos']} |")
-open("fontes/verificacao/validacao_geo.md", "w", encoding="utf-8").write("\n".join(L) + "\n")
+open("fontes/verificacao/validacao_geo.md", "w", encoding="utf-8", newline="\n").write("\n".join(L) + "\n")
 print("\n".join(L[:30]))

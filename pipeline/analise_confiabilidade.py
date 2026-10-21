@@ -61,7 +61,7 @@ def r(x, n=3):
 
 
 def salva(nome, linhas):
-    with open(f"{SAIDA}/{nome}.json", "w", encoding="utf-8") as f:
+    with open(f"{SAIDA}/{nome}.json", "w", encoding="utf-8", newline="\n") as f:
         json.dump(linhas, f, ensure_ascii=False, separators=(",", ":"))
     print(f"  {nome}.json: {len(linhas)} linhas")
 

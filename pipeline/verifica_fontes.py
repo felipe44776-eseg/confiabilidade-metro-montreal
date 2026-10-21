@@ -181,7 +181,7 @@ def gera_manifesto():
             e["sha256"] = sha256(d["arquivo"])
         derivados.append(e)
     json.dump({"gerado_em": datetime.now(timezone.utc).isoformat(timespec="seconds"), "release": RELEASE,
-               "fontes": entradas, "derivados": derivados}, open(MANIFESTO, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+               "fontes": entradas, "derivados": derivados}, open(MANIFESTO, "w", encoding="utf-8", newline="\n"), ensure_ascii=False, indent=1)
     print(f"{MANIFESTO}: {len(entradas)} fontes primarias, {len(derivados)} arquivos derivados")
 
 

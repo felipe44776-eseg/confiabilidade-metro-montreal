@@ -1,0 +1,5 @@
+# Dados, manifesto e bibliotecas de terceiros: bytes exatos, sem conversão de fim de linha.
+# Os hashes de fontes/fontes_manifesto.json dependem disso (constituição, princípio 3).
+dados/** -text
+fontes/fontes_manifesto.json -text
+painel/vendor/** -text

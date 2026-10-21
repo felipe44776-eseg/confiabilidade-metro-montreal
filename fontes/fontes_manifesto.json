@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-21T01:16:43+00:00",
+ "gerado_em": "2026-10-21T01:25:00+00:00",
  "release": "dados-2026-10-20",
  "fontes": [
   {
@@ -1145,8 +1145,8 @@
     "stm_incidentes"
    ],
    "script": "pipeline/geo_base.py",
-   "bytes": 57189,
-   "sha256": "49ca0c79e9285de51d7a7eb019803e34899e49ef8128fa963b385ccbe6b3c9e7"
+   "bytes": 54420,
+   "sha256": "5ff53fee6483706b2700614292cdd39c1e0b0777fa74a38d0fe9ea03e70b04eb"
   }
  ]
 }

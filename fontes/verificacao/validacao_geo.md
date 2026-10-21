@@ -1,6 +1,6 @@
 # Validação da base geoespacial (spec 002)
 
-Gerado por `pipeline/geo_base.py` em 2026-10-21T01:15:32+00:00. OpenStreetMap consultado em 2026-10-21T01:07:06Z (Overpass API).
+Gerado por `pipeline/geo_base.py` em 2026-10-21T01:24:55+00:00. OpenStreetMap consultado em 2026-10-21T01:07:06Z (Overpass API).
 
 ## Comprimento das linhas
 
