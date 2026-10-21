@@ -3,7 +3,8 @@
 Uso: python testa_navegador.py <pasta_saida>   (variáveis: URL, SO=celular|notebook, ESPERA=segundos)
 Precisa do pacote `websocket-client` (pip install websocket-client, num ambiente à parte: não é dependência do projeto)
 e do Edge ou do Chrome instalados. Mede, em tamanho de celular (390x844) e de notebook (1366x768): rolagem lateral,
-WebGL, quadros por segundo com a animação parada, tocando a 300× e a 1 dia/s, o resultado do Monte Carlo de abertura,
+WebGL, quadros por segundo com a animação parada e tocando a 300×, 1 h/s, 10 h/s e 1 dia/s (com a ocupação da thread
+da página em cada uma), o resultado do Monte Carlo de abertura,
 os erros no console e, a 1 dia/s, os eventos vermelhos, os dias emendados e o placar (decisão D49); depois muda o clima
 e confere que a faixa "Cenário aplicado" mudou (decisão D50). Grava capturas e resultado.json na pasta de saída.
 Rode um tamanho por vez (SO=...): reaproveitar a aba entre tamanhos perde o contexto WebGL por software.
@@ -116,15 +117,25 @@ try:
                   amostraTexto: txt.slice(0, 300)};
         })()""")
         medidas["fps_parado"] = avalia(QUADROS)
-        avalia("""(() => { const v = document.getElementById('t-vel'); v.value = '300'; v.dispatchEvent(new Event('change'));
-                          const b = document.getElementById('b-play'); if (b.textContent.trim() === '▶') b.click(); return 1; })()""")
-        medidas["fps_tocando_300x"] = avalia(QUADROS)
-        # 1 dia/s: dias emendados, eventos vermelhos e placar (decisão D49)
-        avalia("(() => { const v = document.getElementById('t-vel'); v.value = '86400'; v.dispatchEvent(new Event('change')); return 1; })()")
+        # Quadros por segundo e ocupação da thread da página em cada velocidade (decisão D49): se a thread tem folga e os
+        # quadros caem, o limite é o desenho (aqui, WebGL por software), não o cálculo da página
+        cmd("Performance.enable")
+        medidas["por_velocidade"] = {}
+        for vel in (300, 3600, 36000, 86400):
+            avalia(f"""(() => {{ const v = document.getElementById('t-vel'); v.value = '{vel}'; v.dispatchEvent(new Event('change'));
+                          const b = document.getElementById('b-play'); if (b.textContent.trim() === '▶') b.click(); return 1; }})()""")
+            espera(1.5)
+            m0 = {x["name"]: x["value"] for x in cmd("Performance.getMetrics")["metrics"]}
+            t0 = time.time()
+            q = avalia(QUADROS)
+            m1 = {x["name"]: x["value"] for x in cmd("Performance.getMetrics")["metrics"]}
+            q["thread_ocupada_ms_por_s"] = round((m1["TaskDuration"] - m0["TaskDuration"]) * 1000 / (time.time() - t0), 1)
+            medidas["por_velocidade"][str(vel)] = q
+        medidas["fps_tocando_300x"] = medidas["por_velocidade"]["300"]
+        # 1 dia/s (a última da varredura): dias emendados, eventos vermelhos e placar (decisão D49)
         medidas["a_1_dia_por_s"] = avalia(EVENTOS)
         shot = cmd("Page.captureScreenshot", format="png")
         open(os.path.join(SAIDA, f"site_{nome}_1dia.png"), "wb").write(base64.b64decode(shot["data"]))
-        medidas["fps_tocando_1_dia_por_s"] = avalia(QUADROS)
         # cenário: chuva congelante e muita neve no solo mudam o esperado e marcam os itens (decisão D50)
         medidas["cenario_aplicado"] = avalia(CENARIO)
         erros = [e for e in eventos if e.get("method") == "Runtime.exceptionThrown"

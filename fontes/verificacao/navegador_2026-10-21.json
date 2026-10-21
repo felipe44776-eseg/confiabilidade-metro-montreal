@@ -1,0 +1,148 @@
+{
+ "gerado_por": "publicacao/testa_navegador.py (um tamanho por vez: SO=celular, depois SO=notebook; ESPERA=45)",
+ "data": "2026-10-21",
+ "url": "https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/simulador/",
+ "commit_publicado": "abbe2ec",
+ "ambiente": "Edge sem janela (headless), WebGL por software (SwiftShader), sem placa de vídeo; quadros contados por requestAnimationFrame durante 3 s com a aba na frente",
+ "nota": "Os quadros por segundo variam entre execuções na mesma máquina; 'thread_ocupada_ms_por_s' é o tempo de tarefas da página por segundo (Performance.getMetrics, TaskDuration).",
+ "celular": {
+  "scrollWidth": 390,
+  "clientWidth": 390,
+  "elementosAlemDaLargura": 0,
+  "temMapa": true,
+  "webgl2": true,
+  "visibilidade": "visible",
+  "textoMC": "1.000 dias em 1,5 s com 12 worker(s); semente 20261021.",
+  "fps_parado": {
+   "quadros_por_s": 60,
+   "contador_da_pagina": "parado",
+   "relogio": "07:30",
+   "visibilidade": "visible"
+  },
+  "por_velocidade": {
+   "300": {
+    "quadros_por_s": 60,
+    "contador_da_pagina": "60 fps",
+    "relogio": "07:55",
+    "visibilidade": "visible",
+    "thread_ocupada_ms_por_s": 330.7
+   },
+   "3600": {
+    "quadros_por_s": 35,
+    "contador_da_pagina": "2 fps",
+    "relogio": "12:20",
+    "visibilidade": "visible",
+    "thread_ocupada_ms_por_s": 200.0
+   },
+   "36000": {
+    "quadros_por_s": 47,
+    "contador_da_pagina": "60 fps",
+    "relogio": "20:23",
+    "visibilidade": "visible",
+    "thread_ocupada_ms_por_s": 235.6
+   },
+   "86400": {
+    "quadros_por_s": 33,
+    "contador_da_pagina": "38 fps",
+    "relogio": "11:47",
+    "visibilidade": "visible",
+    "thread_ocupada_ms_por_s": 207.4
+   }
+  },
+  "fps_tocando_300x": {
+   "quadros_por_s": 60,
+   "contador_da_pagina": "60 fps",
+   "relogio": "07:55",
+   "visibilidade": "visible",
+   "thread_ocupada_ms_por_s": 330.7
+  },
+  "a_1_dia_por_s": {
+   "pulsos_em_6_s": 19,
+   "dias_avancados": 7,
+   "eventos_na_lista": 4,
+   "primeiro_evento": " Dia 14 · 15:12 · Laranja · equipamento fixo · sem interrupção",
+   "placar": "No mapa: 15 dia(s) completo(s) deste cenário, 48 falhas sorteadas, 3,20 por dia (esperado: 3,35). Com mais dias, a média se aproxima do esperado.",
+   "marcas_na_barra": 2
+  },
+  "cenario_aplicado": {
+   "antes": "Falhas esperadas por dia neste cenário: 3,35 (cenário padrão: 3,35; ×1,00). Por linha:  Verde 1,15 ·",
+   "depois": "Falhas esperadas por dia neste cenário: 3,52 (cenário padrão: 3,35; ×1,05). Por linha:  Verde 1,23 ·",
+   "mudados": [
+    "Condição: chuva congelante",
+    "Neve no solo: mais de 10 cm"
+   ],
+   "quando": "aplicado às 13:17:06; o dia no mapa foi sorteado de novo com este cenário"
+  },
+  "erros_console": []
+ },
+ "notebook": {
+  "scrollWidth": 1351,
+  "clientWidth": 1351,
+  "elementosAlemDaLargura": 0,
+  "temMapa": true,
+  "webgl2": true,
+  "visibilidade": "visible",
+  "textoMC": "1.000 dias em 1,5 s com 12 worker(s); semente 20261021.",
+  "fps_parado": {
+   "quadros_por_s": 60,
+   "contador_da_pagina": "parado",
+   "relogio": "07:30",
+   "visibilidade": "visible"
+  },
+  "por_velocidade": {
+   "300": {
+    "quadros_por_s": 33,
+    "contador_da_pagina": "33 fps",
+    "relogio": "07:55",
+    "visibilidade": "visible",
+    "thread_ocupada_ms_por_s": 216.5
+   },
+   "3600": {
+    "quadros_por_s": 30,
+    "contador_da_pagina": "30 fps",
+    "relogio": "12:58",
+    "visibilidade": "visible",
+    "thread_ocupada_ms_por_s": 319.5
+   },
+   "36000": {
+    "quadros_por_s": 28,
+    "contador_da_pagina": "29 fps",
+    "relogio": "06:24",
+    "visibilidade": "visible",
+    "thread_ocupada_ms_por_s": 342.0
+   },
+   "86400": {
+    "quadros_por_s": 28,
+    "contador_da_pagina": "28 fps",
+    "relogio": "17:47",
+    "visibilidade": "visible",
+    "thread_ocupada_ms_por_s": 350.5
+   }
+  },
+  "fps_tocando_300x": {
+   "quadros_por_s": 33,
+   "contador_da_pagina": "33 fps",
+   "relogio": "07:55",
+   "visibilidade": "visible",
+   "thread_ocupada_ms_por_s": 216.5
+  },
+  "a_1_dia_por_s": {
+   "pulsos_em_6_s": 21,
+   "dias_avancados": 7,
+   "eventos_na_lista": 4,
+   "primeiro_evento": " Dia 15 · 09:37 · Verde · equipamento fixo · sem interrupção",
+   "placar": "No mapa: 15 dia(s) completo(s) deste cenário, 48 falhas sorteadas, 3,20 por dia (esperado: 3,35). Com mais dias, a média se aproxima do esperado.",
+   "marcas_na_barra": 2
+  },
+  "cenario_aplicado": {
+   "antes": "Falhas esperadas por dia neste cenário: 3,35 (cenário padrão: 3,35; ×1,00). Por linha:  Verde 1,15 ·",
+   "depois": "Falhas esperadas por dia neste cenário: 3,52 (cenário padrão: 3,35; ×1,05). Por linha:  Verde 1,23 ·",
+   "mudados": [
+    "Condição: chuva congelante",
+    "Neve no solo: mais de 10 cm"
+   ],
+   "quando": "aplicado às 13:18:27; o dia no mapa foi sorteado de novo com este cenário"
+  },
+  "erros_console": []
+ }
+}

@@ -33,6 +33,7 @@ Página `/simulador/` (abas dia, muitos dias, comparação, expansão e parâmet
 | Diferença entre dois cenários com IC 95% | **Atende**: comparação pareada com números aleatórios comuns |
 | Clima muda a taxa só pelos multiplicadores da spec 005 | **Atende** (teste do mapeamento) |
 | Resultado pronto ao abrir | **Atende**: 1.000 dias no cenário padrão, rodados ao abrir |
+| Mostrar o cenário que está valendo e o efeito nas falhas esperadas (acrescentado em 2026-10-21, D50) | **Atende**: faixa "Cenário aplicado" acima do mapa. A média de 2.000 dias sorteados fica a menos de 5% do esperado (`app/tests/simulador/efeito.test.ts`). No site publicado, chuva congelante com mais de 10 cm de neve no solo levou o esperado de 3,35 para 3,52 falhas por dia (×1,05) e marcou os dois itens como diferentes do padrão (`fontes/verificacao/navegador_2026-10-21.json`) |
 | Mudança registrada em 2026-10-21 | Depois da revisão crítica, a greve passou a atuar só pela oferta (viagens fora das faixas com serviço): o simulador aplicava o multiplicador de dia de greve (1,17 e 1,11), cujo intervalo de 95% contém 1 (spec 005). Decisão D42 em `docs/decisoes/registro_de_decisoes.md`; teste em `pipeline/tests/test_modelos.py` |
 
 ## Fora de escopo
