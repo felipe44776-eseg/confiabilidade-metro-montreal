@@ -158,7 +158,7 @@ A sessão do agente foi encerrada pelo Claude Code por falta de memória na máq
 | Achado | Decisão | Onde |
 |---|---|---|
 | 3 (greve sem teste) | Aplicado: a fixture não tem mais o multiplicador de greve, e o teste de cenário exige que ele não exista | `gera_parametros_teste.mjs`, `parametros_teste.json`, `cenario.test.ts` |
-| 5 (reprodução no commit atual) | Aplicado: `reproduz.yml` disparado de novo depois da publicação; a spec 013 cita a nova execução | spec 013 |
+| 5 (reprodução no commit atual) | Aplicado: execução 39556506384 do `reproduz.yml` no commit ba19e74: 48 idênticos, 5 na tolerância, 0 fora; citada na spec 013 | spec 013 |
 | 7 (números sem arquivo no deck) | Aplicado: "1.433 min/ano" marcado como registro histórico no slide 13 | `gera_deck.py` |
 | 8 (razões sem arquivo gerado) | Aplicado: `parametros.py` grava `fontes/verificacao/duracoes.md` | relatório, D25 |
 | 9 (meia-largura com 50 mil dias) | Aplicado: o relatório das políticas grava a meia-largura esperada (Azul 9,2%) | `politicas.relatorio.ts`, spec 009 |

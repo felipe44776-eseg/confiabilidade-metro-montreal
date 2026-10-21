@@ -8,5 +8,6 @@
 - [x] Rodapé com equipe, versão dos dados (Releases) e link para as fontes em todas as páginas.
 - [x] Versões congeladas: o deploy desempacota o zip do site de cada Release `v*` em `/versoes/<etiqueta>/`.
 - [x] Execução do `reproduz.yml` no GitHub Actions: a 1ª (39542896386) acusou só metadados; a 2ª (39546898051) passou.
+- [x] Nova execução no commit ba19e74 (39556506384), depois das revisões críticas: 48 idênticos, 5 na tolerância, 0 fora.
 - [x] `v1.0.0` congelada em 2026-10-21 (etiqueta no commit 6196ad2, Release com o zip do site, `/versoes/v1.0.0/`).
 - [ ] Congelar a versão de entrega no fim do semestre (v1.x).

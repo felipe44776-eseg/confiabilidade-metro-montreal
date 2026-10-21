@@ -231,7 +231,7 @@ Formato de cada item: **Decisão** · **Por quê** · **Alternativas** · **Cons
 
 - **Decisão:** um workflow mensal (`reproduz.yml`) baixa as Releases e as fontes de origem, refaz o pipeline e os relatórios do simulador numa máquina limpa e compara com os publicados: tolerância relativa de 1e-9, e de 1e-3 nos modelos com bootstrap e otimização. Commit e tempo de execução gravados nos relatórios são ignorados.
 - **Por quê (depois de ver):** a primeira execução reproduziu todos os resultados e só acusou esses metadados e uma contagem de meses que olhava uma pasta ausente no CI.
-- **Resultado:** a segunda execução passou: 45 arquivos derivados idênticos byte a byte, 8 dentro da tolerância e 0 fora.
+- **Resultado:** a segunda execução passou: 45 arquivos derivados idênticos byte a byte, 8 dentro da tolerância e 0 fora. No commit ba19e74, com o hash do código também comparado (D45): 48 idênticos, 5 na tolerância e 0 fora.
 
 ### D37 — Versão congelada servida com a própria base
 
