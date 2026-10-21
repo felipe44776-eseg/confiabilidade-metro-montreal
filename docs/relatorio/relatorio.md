@@ -10,7 +10,7 @@ Versão de 2026-10-21. Os números vêm dos relatórios em `fontes/verificacao/`
 
 ## Resumo
 
-Medimos a confiabilidade das quatro linhas do metrô de Montreal com 45.785 incidentes registrados pela Société de transport de Montréal (STM) de 2019-01-01 a 2026-06-30, dos quais 8.530 são falhas técnicas de uma linha só (material rodante ou equipamentos fixos). Ligamos cada falha à oferta de trens da hora (horário GTFS calibrado pela quilometragem real), ao clima horário e a eventos externos, ajustamos um modelo de taxa de falha e as distribuições do tempo entre falhas e do tempo até o serviço voltar, e construímos um simulador por eventos discretos da rede, que roda no navegador, para comparar políticas de tolerância a falhas e linhas candidatas de expansão. Todo número é rastreável a uma fonte pública com hash registrado e pode ser refeito por qualquer pessoa. As falhas não são independentes: agrupam-se no tempo (Weibull com forma de 0,44 a 0,80) e 45 eventos param duas a quatro linhas juntas. Nevascas (mais de 10 cm de neve no solo, +37%), calor (+83% nos equipamentos fixos) e a abertura do serviço (2,6 a 3,6 vezes) elevam a taxa. Entre as políticas simuladas, a operação degradada em marcha lenta é a que mais reduz os minutos parados. Para a rede ficar mais confiável, a ligação nova que mais ajuda é a que dá à Linha Azul um caminho que não passe pela Laranja. A validação contra 2025 e 2026 não passou na versão pré-registrada (66,7% de cobertura contra 80% exigidos), porque 2024 foi um ano atípico; a regra corrigida, testada de novo em outro período, cobriu 90%.
+Medimos a confiabilidade das quatro linhas do metrô de Montreal com 45.785 incidentes registrados pela Société de transport de Montréal (STM) de 2019-01-01 a 2026-06-30, dos quais 8.530 são falhas técnicas de uma linha só (material rodante ou equipamentos fixos). Ligamos cada falha à oferta de trens da hora (horário GTFS calibrado pela quilometragem real), ao clima horário e a eventos externos, ajustamos um modelo de taxa de falha e as distribuições do tempo entre falhas e do tempo até o serviço voltar, e construímos um simulador por eventos discretos da rede, que roda no navegador, para comparar políticas de tolerância a falhas e linhas candidatas de expansão. Todo número é rastreável a uma fonte pública com hash registrado e pode ser refeito por qualquer pessoa. As falhas não são independentes: agrupam-se no tempo (Weibull com forma de 0,44 a 0,80) e 45 eventos param duas a quatro linhas juntas. Neve acumulada (mais de 10 cm no solo, +37%), calor (+83% nos equipamentos fixos) e a abertura do serviço (2,6 a 3,6 vezes) elevam a taxa. Entre as políticas simuladas, a operação degradada em marcha lenta é a que mais reduz os minutos parados. Para a rede ficar mais confiável, a ligação nova que mais ajuda é a que dá à Linha Azul um caminho que não passe pela Laranja. A validação contra 2025 e 2026 não passou na versão pré-registrada (66,7% de cobertura contra 80% exigidos), porque 2024 foi um ano atípico; a regra corrigida, testada de novo em outro período, cobriu 90%.
 
 ## 1. Introdução
 
@@ -117,7 +117,7 @@ A duração vem da massa em zero e da amostra observada das durações positivas
 
 Validação: sem falhas, o motor reproduz o horário exatamente (26, 31, 2 e 9 trens às 08:00). A reserva k-de-n simulada bate com o modelo de Markov (Laranja: 0,674, 0,939 e 0,992 contra 0,671, 0,938 e 0,992). Os minutos parados por ano da Laranja, 1.704 (IC 1.528–1.881), contêm os 1.797 do cálculo analítico e os 1.852 do Monte Carlo do painel. O Monte Carlo usa Web Workers e dá o mesmo resultado com 1 ou 8 processos; 1.000 dias levam cerca de 3 s no navegador.
 
-Esse teste também mudou o modelo. A lognormal das durações subestimava a média (23% a 29% na Laranja e na Verde; 3,4 vezes na Azul, por poucas interrupções de quase 20 horas), e o simulador passou a sortear da amostra observada. A causa comum era sorteada por par de linhas e contava duas ou três vezes os eventos de 3 ou 4 linhas; passou a ser sorteada por grupo. As duas mudanças estão registradas com data nas specs 006 e 009.
+Esse teste também mudou o modelo. A média observada das durações era maior que a da lognormal ajustada (23% a 29% na Laranja (material rodante e equipamentos fixos) e 26% nos equipamentos fixos da Verde; 3,4 vezes nos equipamentos fixos da Azul, por poucas interrupções de quase 20 horas), e o simulador passou a sortear da amostra observada. A causa comum era sorteada por par de linhas e contava duas ou três vezes os eventos de 3 ou 4 linhas; passou a ser sorteada por grupo. As duas mudanças estão registradas com data nas specs 006 e 009.
 
 **Políticas (dia útil, reparo de 1 dia; diferença contra nenhuma política, IC 95%):**
 
@@ -162,7 +162,7 @@ Ajustamos o modelo só com os dados até 2024-12-31 e previmos o número de falh
 
 A versão oficial não passou: 22 dos 24 meses fora do intervalo ficaram abaixo dele. O modelo superestimou 2025 porque herdou o efeito de 2024, um ano atípico (o segundo semestre de 2024 teve cerca de 1.000 falhas técnicas, contra cerca de 500 nos semestres vizinhos). Registramos a mudança com data e testamos a regra nova num período diferente, como a especificação manda. Ela cobriu 90% dos casos, com PIT compatível com a uniforme. A lição de engenharia é que o efeito de um ano não se transfere para o seguinte: a incerteza entre anos precisa entrar na previsão.
 
-Em 2025, os minutos parados observados ficaram dentro do intervalo de 95% nas quatro linhas nas versões B, C e D; na versão A, Verde e Amarela ficaram abaixo.
+No primeiro ano de teste (2025 nas versões A, B e C; 2023 na versão D), os minutos parados observados ficaram dentro do intervalo de 95% nas quatro linhas nas versões B, C e D; na versão A, Verde e Amarela ficaram abaixo.
 
 ## 6. Limitações
 
@@ -173,9 +173,9 @@ Em 2025, os minutos parados observados ficaram dentro do intervalo de 95% nas qu
 
 ## 7. Conclusão
 
-O metrô de Montreal tem disponibilidade alta em cada linha (99,5% a 99,9% do tempo de operação em dia útil), mas a confiabilidade da rede como sistema depende de poucos pontos. Três conclusões valem para a decisão:
+O metrô de Montreal tem disponibilidade alta em cada linha (99,5% a 99,9% do tempo de serviço num dia útil, pelo simulador com as taxas de 2025; o painel, com todos os dias de 2019 a 2026, dá valores um pouco diferentes), mas a confiabilidade da rede como sistema depende de poucos pontos. Três conclusões valem para a decisão:
 
-1. **As falhas se agrupam e têm causa comum.** Tratar as falhas como independentes subestima o risco. O agrupamento aparece no tempo (uma falha dobra ou triplica a chance de outra na hora seguinte) e no espaço (eventos que param a Verde e a Laranja juntas tiram a única redundância de rota do centro).
+1. **As falhas se agrupam e têm causa comum.** Tratar as falhas como independentes subestima o risco. O agrupamento aparece no tempo (uma falha dobra ou quase triplica a chance de outra na hora seguinte) e no espaço (eventos que param a Verde e a Laranja juntas tiram a única redundância de rota do centro).
 2. **A política que mais rende ataca os equipamentos fixos.** Eles são mais da metade das falhas, e a operação degradada (liberar o trecho em marcha lenta) reduz mais os minutos parados do que reservar trens. A reserva de trens protege a oferta, e o efeito dela depende do tempo de reparo na oficina, que não é público.
 3. **Uma linha nova vale pelos caminhos alternativos que cria.** Ramais, como o prolongamento da Azul já em obras, ampliam a cobertura, mas não criam redundância. O maior ponto único de falha do modelo é a dependência da Azul em relação à Laranja.
 

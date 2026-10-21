@@ -19,7 +19,8 @@ ECCC = ("https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&
         "&Day=1&timeframe=1&submit=Download+Data")
 NHL = "https://api-web.nhle.com/v1/club-schedule-season/MTL/{temporada}"
 F1 = "https://api.jolpi.ca/ergast/f1/circuits/villeneuve/races.json?limit=100"
-UA = {"User-Agent": "ESEG-SistemasTolerantesFalha/1.0 (projeto academico; felipe_44776@aluno.eseg.edu.br)"}
+# Identificação pelo repositório público, sem e-mail de integrante (dado pessoal fora dos arquivos versionados).
+UA = {"User-Agent": "ESEG-SistemasTolerantesFalha/1.0 (projeto academico; https://github.com/felipe44776-eseg/confiabilidade-metro-montreal)"}
 MESES = [(a, m) for a in range(2019, 2027) for m in range(1, 13) if (a, m) <= (2026, 6)]
 
 

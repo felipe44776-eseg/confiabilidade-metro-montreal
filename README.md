@@ -11,6 +11,25 @@ Projeto da disciplina Sistemas Tolerantes a Falhas (Engenharia de Produção, ES
 | Fontes e verificação automática | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/fontes/ |
 | Especificações (SDD) | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/specs/ |
 | Simulador | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/simulador/ |
+| Relatório do trabalho | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/relatorio/ |
+| Apresentação | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/apresentacao/ |
+| Registro de decisões | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/decisoes/ |
+| Guia do simulador | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/docs/guia/ |
+| Arquitetura e manutenção | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/docs/arquitetura/ |
+| Versão congelada v1.0.0 | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/versoes/v1.0.0/ |
+
+## Documentação
+
+| Documento | Para quem | Arquivo |
+|---|---|---|
+| Relatório acadêmico | professor e turma | [`docs/relatorio/relatorio.md`](docs/relatorio/relatorio.md) |
+| Apresentação (deck HTML) | apresentação em aula | [`docs/apresentacao/index.html`](docs/apresentacao/index.html) |
+| Registro de decisões, com motivo e alternativas | quem quer saber por que | [`docs/decisoes/registro_de_decisoes.md`](docs/decisoes/registro_de_decisoes.md) |
+| Guia do simulador | quem vai usar a página | [`docs/guia_simulador.md`](docs/guia_simulador.md) |
+| Arquitetura e manutenção | quem vai mexer no código | [`docs/arquitetura.md`](docs/arquitetura.md) |
+| Dicionário de dados | quem vai usar as tabelas | [`docs/dicionario_dados.md`](docs/dicionario_dados.md) |
+| Fontes e rastreabilidade | quem duvida de um número | [`fontes/FONTES.md`](fontes/FONTES.md) |
+| Agente crítico (Claude Code) | revisão antes de entregar | [`.claude/agents/critico-stf.md`](.claude/agents/critico-stf.md) |
 
 ## Por que confiar nos números
 

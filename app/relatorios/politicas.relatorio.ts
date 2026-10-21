@@ -115,7 +115,7 @@ it('relatório das políticas e do Monte Carlo', { timeout: 3_600_000 }, () => {
       `Diferenças de definição: o motor soma a causa comum de todos os grupos de linhas que incluem a Laranja (${fmt(ccLaranja.media, 0)} min/ano; 44 dos 45 eventos multilinha), ` +
       'o painel só a Verde–Laranja (31 eventos); o motor usa a taxa de 2025 do modelo da spec 005 e o horário do GTFS, o painel a média de 2019 a 2026; ' +
       'o motor conta a união dos intervalos bloqueados (falhas sobrepostas não somam duas vezes), o painel soma as durações. ' +
-      'A duração positiva é sorteada da amostra observada (a lognormal subestimava a média em 23% a 29% na Laranja; decisão de 2026-10-21).',
+      'A duração positiva é sorteada da amostra observada (a média observada era 23% a 29% maior que a da lognormal na Laranja; decisão de 2026-10-21).',
     '',
     '## Cada política contra nenhuma política (spec 008)',
     '',

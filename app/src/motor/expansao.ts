@@ -1,7 +1,7 @@
 // Expansão da rede (spec 014, núcleo de cálculo): que ligação construir para a rede ficar mais confiável.
 //
 // Método de estados: cada componente de falha (material rodante por trecho e sentido, equipamento
-// fixo por trecho, causa comum por par de linhas, trechos da candidata) fica fora de serviço com a
+// fixo por trecho, causa comum por grupo de linhas, trechos da candidata) fica fora de serviço com a
 // probabilidade estacionária p = νd / (1 + νd), com ν a taxa média do cenário e d a duração média.
 // Cada amostra sorteia os componentes fora, monta o conjunto de arestas bloqueadas e mede a
 // disponibilidade origem-destino ponderada pela oferta de hoje (grafo.ts). O ganho de uma candidata

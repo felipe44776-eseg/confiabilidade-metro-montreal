@@ -91,7 +91,7 @@ window.dash = (() => {
 
 RODAPE = f"""
 <footer class="mtl-rodape">
-  <p>Trabalho da disciplina Sistemas Tolerantes a Falhas, Engenharia de Produção, ESEG, 2026. Equipe: {EQUIPE}. Código e tabelas: <a href="{REPO}">{REPO.replace("https://", "")}</a>. Veja também: <a href="simulador/">simulador</a>, <a href="mapa/">mapa da rede</a>, <a href="relatorio/">relatório</a>, <a href="fontes/">fontes e verificação</a>, <a href="specs/">especificações do projeto</a>.</p>
+  <p>Trabalho da disciplina Sistemas Tolerantes a Falhas, Engenharia de Produção, ESEG, 2026. Equipe: {EQUIPE}. Código e tabelas: <a href="{REPO}">{REPO.replace("https://", "")}</a>. Veja também: <a href="simulador/">simulador</a>, <a href="mapa/">mapa da rede</a>, <a href="relatorio/">relatório</a>, <a href="apresentacao/">apresentação</a>, <a href="decisoes/">decisões</a>, <a href="docs/guia/">guia do simulador</a>, <a href="fontes/">fontes e verificação</a>, <a href="specs/">especificações do projeto</a>.</p>
   <p>Dados: Société de transport de Montréal (STM), dados abertos, licença CC BY 4.0: incidentes do metrô, quilometragem real das voitures e GTFS. Clima: Environment and Climate Change Canada, estação MONTREAL INTL A, Licença de Governo Aberto do Canadá. Mobilidade: Google LLC, Google COVID-19 Community Mobility Reports. Os resultados são análise própria e não representam a STM.</p>
   <p>Versão dos dados: {VERSAO_DADOS}.</p>
 </footer>

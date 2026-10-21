@@ -154,9 +154,10 @@ def avalia(nome, cfg, painel, ev, cc, rng):
     ev_treino = [r for r in ev if r["data_servico"] <= corte]
     contagens = {c: {l: [] for l in LINHAS} for c in ("MR", "EF")}
     minutos = {c: {l: [] for l in LINHAS} for c in ("MR", "EF")}
-    formas = {}
+    formas, n_vetores = {}, {}
     for causa in ("MR", "EF"):
         colunas, vetores, alpha, mu_treino = ajusta_com_bootstrap(treino, causa, B, rng)
+        n_vetores[causa] = len(vetores)  # reamostras válidas (as descartadas não contam)
         print(f"{nome} {causa}: alpha={alpha:.3f}, {len(vetores)} vetores", flush=True)
         Xt = desenho(teste, colunas).to_numpy(float)
         off_t = np.log(teste["exposicao"].to_numpy(float))
@@ -229,7 +230,7 @@ def avalia(nome, cfg, painel, ev, cc, rng):
     pits = np.array([c["pit"] for c in casos])
     return {
         **{k: cfg[k] for k in ("corte", "teste", "pre_registrada", "descricao")}, "regra_ano": modo_ano, "ano_fixo": ano_fixo,
-        "vetores_bootstrap": B, "caminhos_por_vetor": CAMINHOS_POR_VETOR, "caminhos": n,
+        "vetores_bootstrap": min(n_vetores.values()), "caminhos_por_vetor": CAMINHOS_POR_VETOR, "caminhos": n,
         "forma_renovacao_treino": formas, "cobertura_total": cobertura(casos),
         "cobertura_sem_greve": cobertura([c for c in casos if not c["greve"]]), "cobertura_meses_greve": cobertura([c for c in casos if c["greve"]]),
         "cobertura_por_linha": {l: cobertura([c for c in casos if c["linha"] == l]) for l in LINHAS},

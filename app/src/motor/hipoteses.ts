@@ -1,7 +1,7 @@
 // Hipóteses do motor: parâmetros sem dado, ajustáveis na interface, sempre com status "hipótese".
 // O valor vem, nesta ordem: do cenário (controle da interface), de parametros.hipoteses e, por
-// último, do padrão abaixo. As cinco últimas foram criadas pelo motor e ainda não estão no
-// parametros.json gerado por pipeline/parametros.py.
+// último, do padrão abaixo. As cinco últimas foram criadas pelo motor; desde 2026-10-21 também estão no
+// parametros.json, com faixa (pipeline/parametros.py).
 
 import type { Cenario, Parametros } from './tipos';
 
@@ -12,7 +12,6 @@ export const HIPOTESES_PADRAO = {
   intervalo_minimo_s: 90, // separação mínima entre trens que entram no mesmo trecho
   sentidos_bloqueio_ef: 2, // falha de equipamento fixo bloqueia 1 ou 2 sentidos
   fator_velocidade_degradada: 1.25, // multiplica o tempo de percurso na operação degradada
-  duracao_degradada_min: 30, // não usado pelo motor (ver specs/008-politicas/plan.md)
   tempo_transferencia_min: 4, // transferência nas estações de correspondência
   reducao_causa_comum: 0, // redução da taxa de causa comum com alimentação ou controle redundante
   velocidade_comercial_candidata_kmh: 36, // linha candidata da spec 014

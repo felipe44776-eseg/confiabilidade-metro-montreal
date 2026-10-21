@@ -1,6 +1,6 @@
 {
  "versao": 1,
- "codigo_commit": "4e5a3d4+alteracoes-locais",
+ "codigo_commit": "sha256-scripts:e05a311efcb01915",
  "ano_base": 2025,
  "janela_operacao_h": {
   "valor": 20,
@@ -750,27 +750,6 @@
       "script": "pipeline/modelo_taxa.py",
       "status": "ajustado"
      }
-    },
-    "greve": {
-     "1": {
-      "valor": 1.167594,
-      "ic95": [
-       0.55636,
-       2.243673
-      ],
-      "n": 226658,
-      "unidade": "multiplicador da taxa",
-      "metodo": "GLM binomial negativa com deslocamento log(trens-hora); IC por bootstrap em blocos semanais (B=200)",
-      "fontes": [
-       "stm_incidentes",
-       "stm_km_reel",
-       "gtfs_stm",
-       "eccc_horario",
-       "eventos"
-      ],
-      "script": "pipeline/modelo_taxa.py",
-      "status": "ajustado"
-     }
     }
    }
   },
@@ -1495,27 +1474,6 @@
       "ic95": [
        0.672821,
        1.597982
-      ],
-      "n": 226658,
-      "unidade": "multiplicador da taxa",
-      "metodo": "GLM binomial negativa com deslocamento log(trens-hora); IC por bootstrap em blocos semanais (B=200)",
-      "fontes": [
-       "stm_incidentes",
-       "stm_km_reel",
-       "gtfs_stm",
-       "eccc_horario",
-       "eventos"
-      ],
-      "script": "pipeline/modelo_taxa.py",
-      "status": "ajustado"
-     }
-    },
-    "greve": {
-     "1": {
-      "valor": 1.113569,
-      "ic95": [
-       0.522996,
-       1.73019
       ],
       "n": 226658,
       "unidade": "multiplicador da taxa",

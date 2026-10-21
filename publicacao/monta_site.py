@@ -62,6 +62,9 @@ code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12.5px
 pre{margin:0;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px;overflow-x:auto;font-size:12.5px;line-height:1.45}
 .ok{color:var(--ok);font-weight:600}.bad{color:var(--bad);font-weight:600}
 .muted{color:var(--muted);font-size:13px}
+.doc{display:grid;gap:12px;min-width:0}.doc h1{margin-bottom:4px}.doc h2{font-size:1.25rem;margin-top:18px}.doc h3{font-size:1.05rem;margin:10px 0 0}
+.doc ul,.doc ol{margin:0;padding-left:22px;max-width:80ch}.doc li{margin:2px 0}.doc img{max-width:100%;height:auto}.doc hr{border:0;border-top:1px solid var(--line);width:100%}
+.doc blockquote{margin:0;padding:6px 12px;border-left:3px solid var(--line);color:var(--muted)}.doc table{font-size:13px}
 """
 
 
@@ -91,9 +94,14 @@ for e in man["fontes"]:
     tam = f'{e["bytes"]:,}'.replace(",", ".") + " bytes" if "bytes" in e else ""
     if "linhas" in e:
         tam += f' · {e["linhas"]:,} linhas'.replace(",", ".")
+    if re.match(r"^https?://", e["url"]):
+        origem = f'<a href="{html.escape(e["url"])}">origem</a>'
+    else:  # tabela do próprio repositório, às vezes com uma nota entre parênteses
+        caminho, _, nota = e["url"].partition(" (")
+        origem = f'<a href="{REPO}/blob/main/{html.escape(caminho)}">{html.escape(caminho.rsplit("/", 1)[-1])}</a>' + (f" ({html.escape(nota)}" if nota else "")
     linhas.append(
         f'<tr><td><code>{html.escape(e["id"])}</code></td><td>{html.escape(e["editor"])}</td><td>{html.escape(e["licenca"])}</td>'
-        f'<td><a href="{html.escape(e["url"])}">origem</a></td><td>{dist}</td><td>{tam}</td>'
+        f'<td>{origem}</td><td>{dist}</td><td>{tam}</td>'
         f'<td><code title="{html.escape(e.get("sha256", ""))}">{html.escape(e.get("sha256", "")[:16])}</code></td><td>{html.escape(e["uso"])}</td></tr>')
 relatorio = ""
 if "--relatorio" in sys.argv:
@@ -109,11 +117,12 @@ corpo = f"""
 <h1>Fontes e verificação</h1>
 <p>Todo número publicado neste site vem dos arquivos abaixo. Cada um tem o SHA-256 registrado no manifesto e a cópia exata dos dados brutos está nas Releases {VERSAO_DADOS}.
 Para conferir sozinho: <code>python -I pipeline/verifica_fontes.py --baixa-release --recalcula</code>.</p>
-<p>Documentação completa, com APIs acessadas, auditoria independente e limites: <a href="{REPO}/blob/main/fontes/FONTES.md">FONTES.md</a>.
-Relatórios de validação: <a href="{REPO}/blob/main/fontes/verificacao/validacao_geo.md">base geoespacial</a>,
-<a href="{REPO}/blob/main/fontes/verificacao/exposicao.md">exposição</a>, <a href="{REPO}/blob/main/fontes/verificacao/modelo_taxa.md">modelo da taxa de falha</a>,
-<a href="{REPO}/blob/main/fontes/verificacao/distribuicoes.md">distribuições</a> e <a href="{REPO}/blob/main/fontes/verificacao/backtest.md">validação contra o histórico</a>.
-Dicionário de dados e fatores sem fonte: <a href="{REPO}/blob/main/docs/dicionario_dados.md">dicionario_dados.md</a>.
+<p>Documentação completa, com APIs acessadas, auditoria independente e limites: <a href="documentacao/">FONTES.md</a>.
+Relatórios de validação: <a href="verificacao/validacao_geo.html">base geoespacial</a>, <a href="verificacao/exposicao.html">exposição</a>,
+<a href="verificacao/modelo_taxa.html">modelo da taxa de falha</a> (e <a href="verificacao/modelo_taxa_por_faixa.html">por faixa do dia</a>),
+<a href="verificacao/distribuicoes.html">distribuições</a>, <a href="verificacao/politicas.html">políticas</a>, <a href="verificacao/expansao.html">expansão da rede</a>
+e <a href="verificacao/backtest.html">validação contra o histórico</a>.
+Dicionário de dados e fatores sem fonte: <a href="../docs/dicionario/">dicionário de dados</a>. Decisões: <a href="../decisoes/">registro de decisões</a>.
 Manifesto: <a href="fontes_manifesto.json">fontes_manifesto.json</a>.</p>
 {relatorio}
 <section class="card"><h2>Fontes primárias</h2>
@@ -148,18 +157,62 @@ Ciclo e regras: <a href="{REPO}/blob/main/specs/README.md">specs/README.md</a>. 
 os.makedirs(f"{SAIDA}/specs", exist_ok=True)
 open(f"{SAIDA}/specs/index.html", "w", encoding="utf-8").write(
     pagina("Especificações do projeto", "Especificações (SDD) do simulador de tolerância a falhas do metrô de Montreal.", corpo))
-# ------------------------------------------------------------------ /relatorio/
-corpo = f"""
-<a class="voltar" href="../">← Painel de confiabilidade</a>
-<h1>Relatório do trabalho</h1>
-<p>O relatório acadêmico (dados, métodos, resultados, validação e limitações) está em
-<a href="{REPO}/blob/main/docs/relatorio/relatorio.md">docs/relatorio/relatorio.md</a>, renderizado pelo GitHub.</p>
-<p>Relatórios de cada etapa: <a href="{REPO}/blob/main/fontes/verificacao/modelo_taxa.md">modelo da taxa</a>,
-<a href="{REPO}/blob/main/fontes/verificacao/distribuicoes.md">distribuições</a>, <a href="{REPO}/blob/main/fontes/verificacao/politicas.md">políticas</a>,
-<a href="{REPO}/blob/main/fontes/verificacao/expansao.md">expansão da rede</a> e <a href="{REPO}/blob/main/fontes/verificacao/backtest.md">validação contra o histórico</a>.</p>
-<p><a href="../simulador/">Abrir o simulador</a>.</p>
-"""
-os.makedirs(f"{SAIDA}/relatorio", exist_ok=True)
-open(f"{SAIDA}/relatorio/index.html", "w", encoding="utf-8").write(
-    pagina("Relatório do trabalho", "Relatório acadêmico do projeto de confiabilidade do metrô de Montreal.", corpo))
-print(f"{SAIDA}/ montado: painel, mapa, dados, fontes ({len(man['fontes'])} fontes), specs ({len(itens)})")
+# ------------------------------------------------------------------ documentação em HTML (Markdown do repositório)
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import md  # noqa: E402
+
+# arquivo do repositório -> página no site
+PAGINAS_MD = {
+    "docs/relatorio/relatorio.md": "relatorio/index.html",
+    "docs/decisoes/registro_de_decisoes.md": "decisoes/index.html",
+    "docs/decisoes/0001-hospedagem-github-pages.md": "decisoes/0001/index.html",
+    "docs/guia_simulador.md": "docs/guia/index.html",
+    "docs/arquitetura.md": "docs/arquitetura/index.html",
+    "docs/dicionario_dados.md": "docs/dicionario/index.html",
+    "fontes/FONTES.md": "fontes/documentacao/index.html",
+}
+for arq in sorted(os.listdir("fontes/verificacao")):
+    if arq.endswith(".md"):
+        PAGINAS_MD[f"fontes/verificacao/{arq}"] = f"fontes/verificacao/{arq[:-3]}.html"
+ARQUIVOS_SITE = {"fontes/verificacao/" + a: "fontes/verificacao/" + a for a in os.listdir("fontes/verificacao") if a.endswith(".svg")}
+
+
+def resolvedor(origem, destino):
+    """Link relativo do Markdown -> página do site (se publicada) ou arquivo no GitHub."""
+    def link(url):
+        if re.match(r"^[a-z]+:", url) or url.startswith("#"):
+            return url
+        caminho, _, frag = url.partition("#")
+        alvo = os.path.normpath(os.path.join(os.path.dirname(origem), caminho)).replace(os.sep, "/")
+        no_site = PAGINAS_MD.get(alvo) or ARQUIVOS_SITE.get(alvo)
+        if no_site:
+            rel = os.path.relpath(no_site, os.path.dirname(destino)).replace(os.sep, "/")
+            if rel.endswith("index.html"):
+                rel = rel[: -len("index.html")] or "./"
+            return rel + ("#" + frag if frag else "")
+        tipo = "tree" if os.path.isdir(alvo) else "blob"
+        return f"{REPO}/{tipo}/main/{alvo}" + ("#" + frag if frag else "")
+    return link
+
+
+NAV = [("relatorio/", "Relatório"), ("decisoes/", "Decisões"), ("docs/guia/", "Guia do simulador"), ("docs/arquitetura/", "Arquitetura"),
+       ("apresentacao/", "Apresentação"), ("simulador/", "Simulador"), ("fontes/", "Fontes")]
+for origem, destino in PAGINAS_MD.items():
+    if not os.path.exists(origem):
+        continue
+    corpo_md, titulo = md.converte(open(origem, encoding="utf-8").read(), resolvedor(origem, destino))
+    raiz = os.path.relpath(".", os.path.dirname(destino)).replace(os.sep, "/") + "/"
+    nav = " · ".join(f'<a href="{raiz}{u}">{html.escape(t)}</a>' for u, t in NAV)
+    corpo = (f'<a class="voltar" href="{raiz}">← Painel de confiabilidade</a><p class="muted">{nav}</p>'
+             f'<article class="doc">{corpo_md}</article>'
+             f'<p class="muted">Gerado de <a href="{REPO}/blob/main/{origem}">{origem}</a>.</p>')
+    os.makedirs(os.path.dirname(f"{SAIDA}/{destino}"), exist_ok=True)
+    open(f"{SAIDA}/{destino}", "w", encoding="utf-8").write(pagina(titulo or origem, f"Documento do projeto: {origem}", corpo))
+
+# ------------------------------------------------------------------ /apresentacao/
+if os.path.exists("docs/apresentacao/index.html"):
+    os.makedirs(f"{SAIDA}/apresentacao", exist_ok=True)
+    for a in os.listdir("docs/apresentacao"):
+        if a.endswith((".html", ".pdf")):
+            shutil.copy(f"docs/apresentacao/{a}", f"{SAIDA}/apresentacao/{a}")
+print(f"{SAIDA}/ montado: painel, mapa, simulador, dados, fontes ({len(man['fontes'])} fontes), specs ({len(itens)}), {len(PAGINAS_MD)} documentos")

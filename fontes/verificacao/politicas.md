@@ -1,10 +1,10 @@
 # Políticas de tolerância a falhas e Monte Carlo (specs 008 e 009)
 
-Gerado por `app/relatorios/politicas.relatorio.ts` com o motor do simulador e o `parametros.json` real (4e5a3d4+alteracoes-locais), semente 20261021. Intervalos de 95% pela aproximação normal; diferenças pareadas com números aleatórios comuns (as mesmas falhas nas duas variantes).
+Gerado por `app/relatorios/politicas.relatorio.ts` com o motor do simulador e o `parametros.json` real (sha256-scripts:e05a311efcb01915), semente 20261021. Intervalos de 95% pela aproximação normal; diferenças pareadas com números aleatórios comuns (as mesmas falhas nas duas variantes).
 
 ## Minutos de interrupção por ano, sem políticas (spec 009)
 
-4000 dias simulados por tipo de dia (útil, sábado, domingo), somados pelo calendário de 251, 52 e 62 dias. Tempo: 11,7 s para 12000 dias numa thread.
+4000 dias simulados por tipo de dia (útil, sábado, domingo), somados pelo calendário de 251, 52 e 62 dias. Tempo: 9,0 s para 12000 dias numa thread.
 
 | Linha | Minutos por ano (IC 95%) | Disponibilidade no dia útil | Rodadas para 5% de precisão no dia útil |
 |---|---|---|---|
@@ -14,7 +14,7 @@ Gerado por `app/relatorios/politicas.relatorio.ts` com o motor do simulador e o 
 | azul | 1.323 (967 a 1.678) | 99,635% | 168.183 |
 | rede (soma) | 5.239 (4.800 a 5.679) | disponibilidade origem-destino 99,246% | |
 
-Laranja contra o painel: o painel tem 1.852 min/ano (Monte Carlo) e 1.797 (analítico). O intervalo do motor é 1.528 a 1.881 (contém 1.852; contém 1.797). Diferenças de definição: o motor soma a causa comum de todos os grupos de linhas que incluem a Laranja (140 min/ano; 44 dos 45 eventos multilinha), o painel só a Verde–Laranja (31 eventos); o motor usa a taxa de 2025 do modelo da spec 005 e o horário do GTFS, o painel a média de 2019 a 2026; o motor conta a união dos intervalos bloqueados (falhas sobrepostas não somam duas vezes), o painel soma as durações. A duração positiva é sorteada da amostra observada (a lognormal subestimava a média em 23% a 29% na Laranja; decisão de 2026-10-21).
+Laranja contra o painel: o painel tem 1.852 min/ano (Monte Carlo) e 1.797 (analítico). O intervalo do motor é 1.528 a 1.881 (contém 1.852; contém 1.797). Diferenças de definição: o motor soma a causa comum de todos os grupos de linhas que incluem a Laranja (140 min/ano; 44 dos 45 eventos multilinha), o painel só a Verde–Laranja (31 eventos); o motor usa a taxa de 2025 do modelo da spec 005 e o horário do GTFS, o painel a média de 2019 a 2026; o motor conta a união dos intervalos bloqueados (falhas sobrepostas não somam duas vezes), o painel soma as durações. A duração positiva é sorteada da amostra observada (a média observada era 23% a 29% maior que a da lognormal na Laranja; decisão de 2026-10-21).
 
 ## Cada política contra nenhuma política (spec 008)
 

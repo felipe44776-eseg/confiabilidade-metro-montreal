@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-21T04:08:59+00:00",
+ "gerado_em": "2026-10-21T06:04:01+00:00",
  "release": "dados-2026-10-20",
  "releases": [
   "dados-2026-10-20",
@@ -1685,8 +1685,8 @@
     "eccc_horario_*"
    ],
    "script": "pipeline/parametros.py",
-   "bytes": 134616,
-   "sha256": "3224045ad396c42d38ec5fae6c220ca0674bf856dcfb0d36be67cddb911140ed"
+   "bytes": 133610,
+   "sha256": "ab9524a34936fe664e62bd1d1488c18091e2366d38e0aea032a8286b0a17d47e"
   },
   {
    "arquivo": "dados/derivados/simulador/candidatas.json",
@@ -1730,8 +1730,8 @@
     "eccc_horario_*"
    ],
    "script": "app/relatorios/politicas.relatorio.ts",
-   "bytes": 48471,
-   "sha256": "d62a3ba2a1901302b2118cf5e313f3f7e95781a5f5e5885c3d3a7329b266d18a"
+   "bytes": 48476,
+   "sha256": "87eefb788ae042536b8341c5cbe0840936d8608c5963ce2af8463fa975cea264"
   },
   {
    "arquivo": "dados/derivados/simulador/expansao.json",
@@ -1742,8 +1742,8 @@
     "osm_metro"
    ],
    "script": "app/relatorios/expansao.relatorio.ts",
-   "bytes": 60609,
-   "sha256": "f7abd325db56ff967386217248b70053f8f4b6d4a4146ef87a05ba84008950f6"
+   "bytes": 60615,
+   "sha256": "0d8ec5a8df5075b061f8ed51d0553ae118733e36a0a7acadf1218d747556e172"
   }
  ]
 }

@@ -15,7 +15,7 @@ flowchart LR
 
 | Peça | Como funciona | Arquivo |
 |---|---|---|
-| Componentes | Material rodante por trecho e sentido (taxa da linha dividida pelo tempo de trem em cada trecho e sentido); equipamento fixo por trecho (pesos dos locais com posição + falhas sem posição uniformes por km); causa comum por par de linhas | `app/src/motor/expansao.ts` |
+| Componentes | Material rodante por trecho e sentido (taxa da linha dividida pelo tempo de trem em cada trecho e sentido); equipamento fixo por trecho (pesos dos locais com posição + falhas sem posição uniformes por km); causa comum por grupo de linhas (desde 2026-10-21) | `app/src/motor/expansao.ts` |
 | Probabilidade | Estacionária de um processo liga-desliga: p = νd / (1 + νd), com ν a taxa média do cenário na janela de serviço da linha e d a duração média (com a massa em zero) | `expansao.ts` |
 | Amostragem | Bernoulli independentes por afinamento geométrico (salta para o próximo candidato a cair com a maior probabilidade e aceita com p / p_max): uma ou duas extrações por amostra | `expansao.ts` |
 | Efeito | Sem retorno parcial, um componente fora para a linha inteira; com ele, o pedaço entre pontos de retorno. Causa comum para as duas linhas | `grafo.ts` (`efeitoBloqueio`) |

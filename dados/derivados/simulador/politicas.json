@@ -2,7 +2,7 @@
  "semente": 20261021,
  "rodadas_por_politica": 3000,
  "rodadas_por_tipo_dia": 4000,
- "codigo_parametros": "4e5a3d4+alteracoes-locais",
+ "codigo_parametros": "sha256-scripts:e05a311efcb01915",
  "minutos_por_ano": {
   "verde": {
    "media": 1802.3993695837587,
@@ -84,7 +84,7 @@
   "azul": 168183
  },
  "segundos_para_3x_rodadas": {
-  "segundos": 11.6879629,
+  "segundos": 8.9530925,
   "rodadas": 12000
  },
  "disponibilidade_dia_util": {

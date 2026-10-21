@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Confiabilidade e tolerância a falhas do metrô de Montreal · apresentação</title>
+<style>
+:root{
+  --slide-w:1280px; --slide-h:720px; --s:1;
+  --page:#E6E7EA; --surface:#FBFBFA; --zebra:#F3F3F1;
+  --ink:#15181C; --ink-2:#3F454D; --muted:#5F666E; --rule:#D3D7DC; --rule-2:#E7E9EC;
+  --accent:#4A3A8C; --accent-soft:#ECE9F5; --bar:#7B828B;
+}
+*{box-sizing:border-box}
+html{scroll-snap-type:y mandatory;background:var(--page)}
+body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Roboto,Arial,sans-serif;color:var(--ink);
+  -webkit-print-color-adjust:exact;print-color-adjust:exact;-webkit-font-smoothing:antialiased}
+.frame{height:100vh;display:flex;align-items:center;justify-content:center;scroll-snap-align:start;overflow:hidden}
+.frame-in{width:calc(var(--slide-w) * var(--s));height:calc(var(--slide-h) * var(--s));flex:none}
+.slide{width:var(--slide-w);height:var(--slide-h);overflow:hidden;position:relative;display:flex;flex-direction:column;
+  background:var(--surface);transform:scale(var(--s));transform-origin:0 0;box-shadow:0 2px 20px rgba(20,24,28,.16);
+  padding:40px 64px 0}
+.slide > header{flex:none;margin-bottom:22px}
+.slide > header::before{content:"";display:block;width:56px;height:4px;margin-bottom:16px;
+  background:linear-gradient(90deg,#008E4F 0 25%,#EF8122 25% 50%,#FFD900 50% 75%,#0076BE 75%)}
+.eyebrow{font-size:14px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+h1{font-size:50px;line-height:1.08;font-weight:700;letter-spacing:-.01em;margin:0 0 14px}
+h2{font-size:33px;line-height:1.16;font-weight:650;letter-spacing:-.005em;margin:0;max-width:1120px;text-wrap:balance}
+h3{font-size:19px;font-weight:650;margin:0 0 2px}
+.slide-body{flex:1;min-height:0;padding-bottom:50px;position:relative}
+.slide > footer{position:absolute;left:64px;right:64px;bottom:0;height:40px;border-top:1px solid var(--rule);
+  display:flex;align-items:center;justify-content:space-between;gap:24px;font-size:11.5px;color:var(--muted)}
+.slide > footer .pg{font-variant-numeric:tabular-nums;font-weight:600}
+.label{display:block;font-size:13px;font-weight:650;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.sub{font-size:15px;color:var(--muted);margin:0 0 10px}
+.muted{color:var(--muted)}
+.lede{font-size:26px;color:var(--ink-2);margin:0 0 40px}
+.nota{font-size:14.5px;line-height:1.4;color:var(--ink-2);margin:14px 0 0;max-width:1150px}
+.corpo-sm{font-size:16px;line-height:1.45;margin:10px 0 0}
+code{font-family:"Cascadia Mono",Consolas,"SFMono-Regular",Menlo,monospace;font-size:.88em;background:var(--rule-2);padding:1px 5px;border-radius:4px}
+b{font-weight:650}
+.cols{display:grid;gap:44px}
+.cap-mapa{max-width:500px;margin:8px auto 0}
+.c-60-40{grid-template-columns:3fr 2fr}.c-50-50{grid-template-columns:1fr 1fr}.c-52-48{grid-template-columns:52fr 48fr}
+.c-40-60{grid-template-columns:40fr 60fr;gap:32px}.c-55-45{grid-template-columns:55fr 45fr}
+.lista{margin:0;padding-left:20px;font-size:19px;line-height:1.42}
+.lista li{margin:0 0 10px}
+.lista-sm{font-size:16.5px}
+.lista-sm li{margin-bottom:6px}
+.caixa{background:var(--zebra);border-radius:10px;padding:22px 26px}
+.perguntas{margin:0;padding:0;list-style:none;counter-reset:q}
+.perguntas li{counter-increment:q;position:relative;padding:0 0 0 58px;margin:0 0 22px;font-size:21px;line-height:1.38}
+.perguntas li::before{content:counter(q);position:absolute;left:0;top:-2px;width:38px;height:38px;border-radius:50%;
+  border:2px solid var(--accent);color:var(--accent);font-weight:700;font-size:19px;display:flex;align-items:center;justify-content:center}
+.faixa{display:flex;gap:40px;border-top:1px solid var(--rule);padding-top:14px;margin-top:20px;font-size:16.5px;line-height:1.4}
+.faixa > div{flex:1}
+.faixa .label{margin-bottom:4px}
+.cards{display:grid;gap:18px}
+.c3{grid-template-columns:repeat(3,1fr)}
+.card{border:1px solid var(--rule);border-radius:10px;padding:18px 20px 16px;background:#fff;position:relative}
+.card h3{margin-bottom:6px}
+.card p{font-size:16px;line-height:1.42;margin:0}
+.card-k{position:absolute;top:16px;right:18px;font-size:14px;font-weight:700;color:var(--accent)}
+.tag{display:inline-block;margin-top:6px;font-size:13px;font-weight:600;color:var(--accent);background:var(--accent-soft);border-radius:4px;padding:2px 8px}
+.cards-alto .card p{margin-bottom:12px}
+.cards-alto .label{margin-bottom:2px;font-size:12px}
+.cards-alto .onde{font-size:13.5px;color:var(--accent);font-weight:600;margin:0}
+.tab{border-collapse:collapse;width:100%;font-size:16px;line-height:1.38}
+.tab th{text-align:left;font-size:13px;font-weight:650;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+  border-bottom:1.5px solid var(--ink-2);padding:6px 10px 6px 0}
+.tab td{border-bottom:1px solid var(--rule);padding:9px 12px 9px 0;vertical-align:top}
+.tab .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tab-num{width:auto;margin:4px 0 14px;font-size:16px}
+.tab-num th,.tab-num td{padding:4px 22px 4px 0;text-align:right;font-variant-numeric:tabular-nums}
+.tab-num th:first-child,.tab-num td:first-child{text-align:left}
+.tab-pol{font-size:15.5px;line-height:1.3}
+.tab-pol td{vertical-align:middle;padding:5px 14px 5px 0}
+.tab-pol td:nth-child(2){white-space:nowrap}
+.tab-pol svg{vertical-align:middle}
+.tab-pol .ic{font-size:13.5px;color:var(--muted);margin-left:2px;font-variant-numeric:tabular-nums}
+.tab-pol tr.dest td:first-child b{color:var(--accent)}
+.tab-lim td{padding:11px 16px 11px 0;font-size:17.5px}
+.tab-lim td:first-child{width:38%}
+.tri{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:14px}
+.tri p{margin:0;font-size:16.5px;line-height:1.42;border-left:3px solid var(--accent);padding-left:14px}
+.multiplos{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.multiplos h3{font-size:21px}
+.disp{display:grid;grid-template-columns:1.05fr repeat(4,1fr);gap:18px;align-items:center;margin-top:18px;
+  border-top:1px solid var(--rule);padding-top:16px}
+.disp .sub{margin:0}
+.tile-l{display:flex;gap:10px;align-items:flex-start}
+.tile-l .chip{margin-top:9px}
+.tile-v{font-size:30px;font-weight:650;line-height:1.1}
+.tile-s{font-size:14px;color:var(--muted)}
+.chip{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:-1px;margin-right:6px;flex:none}
+.chip.am,.legenda i.am{box-shadow:inset 0 0 0 1.25px #A38B00}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin:0 6px 0 0}
+.sub .sw + *{margin-left:0}
+.legenda{display:flex;gap:18px;font-size:15px;color:var(--ink-2);margin-top:6px;flex-wrap:wrap}
+.legenda .lg{display:inline-flex;align-items:center;gap:7px}
+.legenda i{display:inline-block;width:22px;height:7px;border-radius:4px}
+.stats{display:flex;flex-direction:column;gap:22px;padding-top:6px}
+.stat-v{font-size:46px;font-weight:650;line-height:1;color:var(--accent)}
+.stat-l{font-size:17px;line-height:1.38;margin-top:6px}
+.val p{font-size:17px;line-height:1.4;margin:0 0 6px}
+.capa-slide{padding-top:64px}
+.capa{display:grid;grid-template-columns:1fr 470px;gap:36px;height:100%}
+.capa-txt{display:flex;flex-direction:column;justify-content:center;padding-bottom:70px}
+.capa-txt::before{content:"";display:block;width:84px;height:6px;margin-bottom:26px;
+  background:linear-gradient(90deg,#008E4F 0 25%,#EF8122 25% 50%,#FFD900 50% 75%,#0076BE 75%)}
+.equipe p{font-size:21px;line-height:1.45;margin:0}
+.url{font-size:16px;color:var(--muted);margin:34px 0 0}
+.capa-mapa{margin:0;align-self:center}
+figure{margin:0}
+figcaption{font-size:12.5px;color:var(--muted);margin-top:6px}
+.fig-mapa{display:flex;justify-content:center}
+.links{list-style:none;margin:0;padding:0}
+.links li{padding:12px 0;border-bottom:1px solid var(--rule);font-size:17px}
+.links .label{margin-bottom:2px}
+.links a{color:var(--ink);text-decoration:none;border-bottom:1.5px solid var(--accent)}
+.cmd{font-family:"Cascadia Mono",Consolas,Menlo,monospace;font-size:17px;line-height:1.45;background:#15181C;color:#F2F2F0;
+  border-radius:8px;padding:16px 20px;margin:0}
+.obrigado{font-size:34px;font-weight:650;margin-top:34px}
+.conclusoes{margin:0;padding:0;list-style:none;counter-reset:c;display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+.conclusoes li{counter-increment:c;border-top:4px solid var(--accent);padding-top:14px}
+.conclusoes li::before{content:counter(c);display:block;font-size:40px;font-weight:700;color:var(--accent);line-height:1;margin-bottom:10px}
+.conclusoes h3{font-size:21px;line-height:1.25;margin-bottom:8px}
+.conclusoes p{font-size:17px;line-height:1.42;margin:0}
+/* graficos */
+svg text{font-family:inherit}
+.c-lab{font-size:16px;fill:var(--ink)}
+.c-sm{font-size:15px}
+.c-val{font-size:16px;font-weight:650;fill:var(--ink);font-variant-numeric:tabular-nums}
+.c-num{font-size:15px;fill:var(--ink);font-variant-numeric:tabular-nums}
+.c-forte{font-weight:700}
+.c-fraco{fill:var(--muted)}
+.c-head{font-size:13px;font-weight:650;letter-spacing:.05em;text-transform:uppercase;fill:var(--muted)}
+.c-head2{font-size:14px;font-weight:650;fill:var(--ink-2)}
+.c-tick{font-size:13px;fill:var(--muted);font-variant-numeric:tabular-nums}
+.c-acc{font-size:14px;font-weight:600;fill:var(--accent)}
+.c-acc-t{fill:var(--accent);font-weight:650}
+.c-sm-t{font-size:14px;fill:var(--ink-2)}
+.c-in{font-size:15px;fill:#fff;font-weight:600}
+.c-k{font-weight:700;fill:var(--accent)}
+.grade{stroke:var(--rule-2);stroke-width:1}
+.eixo{stroke:var(--rule);stroke-width:1}
+.ref{stroke:var(--ink-2);stroke-width:1.25}
+.m-lab{font-size:13.5px;fill:var(--ink);font-weight:600;paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round}
+.m-fraco{fill:var(--muted);font-weight:500}
+.m-acc{fill:var(--accent);font-weight:700}
+/* tela */
+.notes{display:none}
+#pos{position:fixed;right:16px;top:10px;font:600 13px/1 "Segoe UI",system-ui,sans-serif;color:#fff;background:rgba(21,24,28,.72);
+  padding:7px 10px;border-radius:6px;z-index:10;font-variant-numeric:tabular-nums}
+#ajuda{position:fixed;left:16px;top:10px;font:600 12px/1 "Segoe UI",system-ui,sans-serif;color:#fff;background:rgba(21,24,28,.72);
+  padding:7px 10px;border-radius:6px;z-index:10;transition:opacity .8s}
+#painel-notas{display:none;position:fixed;left:0;right:0;bottom:0;height:34vh;overflow:auto;background:#15181C;color:#F2F2F0;
+  font:18px/1.5 "Segoe UI",system-ui,sans-serif;padding:16px 28px 40px;z-index:9}
+#painel-notas p{margin:0 0 8px;max-width:1100px}
+body.com-notas #painel-notas{display:block}
+body.com-notas .frame{align-items:flex-start;padding-top:10px}
+#check-out{white-space:pre;font:12px monospace}
+@page{size:1280px 720px;margin:0}
+@media print{
+  html{scroll-snap-type:none;background:#fff}
+  html,body{margin:0;padding:0;background:#fff}
+  .frame{height:auto;display:block;overflow:visible;padding:0!important;break-after:page;page-break-after:always}
+  .frame:last-of-type{break-after:auto;page-break-after:auto}
+  .frame-in{width:auto;height:auto}
+  .slide{transform:none!important;box-shadow:none;break-inside:avoid;page-break-inside:avoid}
+  .no-print,#check-out{display:none!important}
+}
+</style>
+</head>
+<body>
+<div class="frame" id="s1"><div class="frame-in"><section class="slide capa-slide" data-n="1" aria-label="Slide 1 de 16"><div class="slide-body">
+<div class="capa">
+  <div class="capa-txt">
+    <div class="eyebrow">Sistemas Tolerantes a Falhas · Engenharia de Produção · ESEG · 2026</div>
+    <h1>Confiabilidade e tolerância a falhas do metrô de Montreal</h1>
+    <p class="lede">Dados públicos, modelos e simulação</p>
+    <div class="equipe">
+      <div class="label">Equipe</div>
+      <p>Ana Paula Duanetti · Felipe Marins<br>Lorena Feitosa de Freitas · Sophia Braz</p>
+    </div>
+    <p class="url">felipe44776-eseg.github.io/confiabilidade-metro-montreal</p>
+  </div>
+  <figure class="capa-mapa"><svg class="mapa" viewBox="0 0 470 470" width="470" height="470" role="img" aria-label="Mapa das quatro linhas do metrô de Montreal, posições das estações do GTFS"><polyline points="257.3,385.6 271.2,376.2 286.8,365.0 301.2,359.8 307.5,354.9 308.6,337.6 304.3,322.1 290.0,313.5 281.6,299.2 290.6,288.0 296.9,277.7 301.0,271.3 305.8,263.3 309.9,258.5 317.2,250.1 323.0,241.9 328.3,232.5 328.2,213.9 324.9,196.8 329.2,186.8 328.9,173.2 335.3,158.7 335.6,142.5 335.8,127.3 340.8,115.5 345.4,102.0 351.9,88.4" fill="none" stroke="#008E4F" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><title>Linha Verde</title></polyline><polyline points="147.0,251.3 160.2,262.9 176.5,278.8 188.7,290.1 208.9,290.1 215.9,294.6 223.3,308.7 234.4,319.9 256.5,331.2 280.7,324.3 290.0,313.5 294.5,301.3 301.8,289.7 307.4,283.3 312.9,275.8 318.0,267.0 322.2,259.6 317.2,250.1 305.9,243.0 286.5,230.5 280.1,225.2 263.9,218.0 255.7,209.7 242.7,202.1 222.1,193.5 207.9,188.4 184.2,178.8 167.2,170.1 148.5,159.9 110.2,159.6 92.0,163.8" fill="none" stroke="#EF8122" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><title>Linha Laranja</title></polyline><polyline points="370.0,230.8 355.2,255.0 317.2,250.1" fill="none" stroke="#A38B00" stroke-width="9.5" stroke-linecap="round" stroke-linejoin="round"/><polyline points="370.0,230.8 355.2,255.0 317.2,250.1" fill="none" stroke="#FFD900" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><title>Linha Amarela</title></polyline><polyline points="223.3,308.7 229.4,285.8 236.2,272.2 244.7,259.2 241.0,239.1 229.6,233.0 227.7,219.7 234.3,209.2 242.7,202.1 252.1,184.6 259.0,173.3 261.6,161.2" fill="none" stroke="#0076BE" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><title>Linha Azul</title></polyline><circle cx="257.3" cy="385.6" r="1.9" fill="#fff"/><circle cx="271.2" cy="376.2" r="1.9" fill="#fff"/><circle cx="286.8" cy="365.0" r="1.9" fill="#fff"/><circle cx="301.2" cy="359.8" r="1.9" fill="#fff"/><circle cx="307.5" cy="354.9" r="1.9" fill="#fff"/><circle cx="308.6" cy="337.6" r="1.9" fill="#fff"/><circle cx="304.3" cy="322.1" r="1.9" fill="#fff"/><circle cx="281.6" cy="299.2" r="1.9" fill="#fff"/><circle cx="290.6" cy="288.0" r="1.9" fill="#fff"/><circle cx="296.9" cy="277.7" r="1.9" fill="#fff"/><circle cx="301.0" cy="271.3" r="1.9" fill="#fff"/><circle cx="305.8" cy="263.3" r="1.9" fill="#fff"/><circle cx="309.9" cy="258.5" r="1.9" fill="#fff"/><circle cx="323.0" cy="241.9" r="1.9" fill="#fff"/><circle cx="328.3" cy="232.5" r="1.9" fill="#fff"/><circle cx="328.2" cy="213.9" r="1.9" fill="#fff"/><circle cx="324.9" cy="196.8" r="1.9" fill="#fff"/><circle cx="329.2" cy="186.8" r="1.9" fill="#fff"/><circle cx="328.9" cy="173.2" r="1.9" fill="#fff"/><circle cx="335.3" cy="158.7" r="1.9" fill="#fff"/><circle cx="335.6" cy="142.5" r="1.9" fill="#fff"/><circle cx="335.8" cy="127.3" r="1.9" fill="#fff"/><circle cx="340.8" cy="115.5" r="1.9" fill="#fff"/><circle cx="345.4" cy="102.0" r="1.9" fill="#fff"/><circle cx="351.9" cy="88.4" r="1.9" fill="#fff"/><circle cx="147.0" cy="251.3" r="1.9" fill="#fff"/><circle cx="160.2" cy="262.9" r="1.9" fill="#fff"/><circle cx="176.5" cy="278.8" r="1.9" fill="#fff"/><circle cx="188.7" cy="290.1" r="1.9" fill="#fff"/><circle cx="208.9" cy="290.1" r="1.9" fill="#fff"/><circle cx="215.9" cy="294.6" r="1.9" fill="#fff"/><circle cx="234.4" cy="319.9" r="1.9" fill="#fff"/><circle cx="256.5" cy="331.2" r="1.9" fill="#fff"/><circle cx="280.7" cy="324.3" r="1.9" fill="#fff"/><circle cx="294.5" cy="301.3" r="1.9" fill="#fff"/><circle cx="301.8" cy="289.7" r="1.9" fill="#fff"/><circle cx="307.4" cy="283.3" r="1.9" fill="#fff"/><circle cx="312.9" cy="275.8" r="1.9" fill="#fff"/><circle cx="318.0" cy="267.0" r="1.9" fill="#fff"/><circle cx="322.2" cy="259.6" r="1.9" fill="#fff"/><circle cx="305.9" cy="243.0" r="1.9" fill="#fff"/><circle cx="286.5" cy="230.5" r="1.9" fill="#fff"/><circle cx="280.1" cy="225.2" r="1.9" fill="#fff"/><circle cx="263.9" cy="218.0" r="1.9" fill="#fff"/><circle cx="255.7" cy="209.7" r="1.9" fill="#fff"/><circle cx="222.1" cy="193.5" r="1.9" fill="#fff"/><circle cx="207.9" cy="188.4" r="1.9" fill="#fff"/><circle cx="184.2" cy="178.8" r="1.9" fill="#fff"/><circle cx="167.2" cy="170.1" r="1.9" fill="#fff"/><circle cx="148.5" cy="159.9" r="1.9" fill="#fff"/><circle cx="110.2" cy="159.6" r="1.9" fill="#fff"/><circle cx="92.0" cy="163.8" r="1.9" fill="#fff"/><circle cx="370.0" cy="230.8" r="1.9" fill="#fff"/><circle cx="355.2" cy="255.0" r="1.9" fill="#fff"/><circle cx="229.4" cy="285.8" r="1.9" fill="#fff"/><circle cx="236.2" cy="272.2" r="1.9" fill="#fff"/><circle cx="244.7" cy="259.2" r="1.9" fill="#fff"/><circle cx="241.0" cy="239.1" r="1.9" fill="#fff"/><circle cx="229.6" cy="233.0" r="1.9" fill="#fff"/><circle cx="227.7" cy="219.7" r="1.9" fill="#fff"/><circle cx="234.3" cy="209.2" r="1.9" fill="#fff"/><circle cx="252.1" cy="184.6" r="1.9" fill="#fff"/><circle cx="259.0" cy="173.3" r="1.9" fill="#fff"/><circle cx="261.6" cy="161.2" r="1.9" fill="#fff"/><circle cx="317.2" cy="250.1" r="6.5" fill="#fff" stroke="var(--ink)" stroke-width="2.2"><title>Berri-UQAM (correspondência)</title></circle><circle cx="242.7" cy="202.1" r="6.5" fill="#fff" stroke="var(--ink)" stroke-width="2.2"><title>Jean-Talon (correspondência)</title></circle><circle cx="290.0" cy="313.5" r="6.5" fill="#fff" stroke="var(--ink)" stroke-width="2.2"><title>Lionel-Groulx (correspondência)</title></circle><circle cx="223.3" cy="308.7" r="6.5" fill="#fff" stroke="var(--ink)" stroke-width="2.2"><title>Snowdon (correspondência)</title></circle><text x="246.3" y="390.6" text-anchor="end" class="m-lab">Angrignon</text><text x="340.9" y="92.4" text-anchor="end" class="m-lab">Honoré-Beaugrand</text><text x="136.0" y="256.3" text-anchor="end" class="m-lab">Côte-Vertu</text><text x="92.0" y="149.8" text-anchor="middle" class="m-lab">Montmorency</text><text x="211.3" y="313.7" text-anchor="end" class="m-lab">Snowdon</text><text x="230.7" y="204.1" text-anchor="end" class="m-lab">Jean-Talon</text><text x="278.0" y="329.5" text-anchor="end" class="m-lab">Lionel-Groulx</text><text x="329.2" y="264.1" text-anchor="start" class="m-lab">Berri-UQAM</text><text x="271.6" y="155.2" text-anchor="start" class="m-lab">Saint-Michel</text><text x="370.0" y="216.8" text-anchor="middle" class="m-lab">Longueuil</text></svg><div class="legenda"><span class="lg"><i style="background:#008E4F"></i>Verde</span><span class="lg"><i style="background:#EF8122"></i>Laranja</span><span class="lg"><i style="background:#FFD900" class=am></i>Amarela</span><span class="lg"><i style="background:#0076BE"></i>Azul</span></div>
+    <figcaption>Posição das estações no GTFS da STM; linhas ligadas em linha reta entre estações.</figcaption>
+  </figure>
+</div></div><footer><span>Fonte: docs/equipe.json; dados/derivados/gtfs/metro_sequencias.csv (mapa)</span><span class="pg">dados 2026-10-20 e 2026-10-21 · 1</span></footer><aside class="notes no-print"><p>Apresentar a equipe e o tema em uma frase: medimos a confiabilidade do metrô de Montreal só com dados públicos e simulamos políticas de tolerância a falhas.</p>
+<p>Avisar que todo número da apresentação tem a fonte no rodapé e pode ser refeito por qualquer pessoa.</p>
+<p><b>Tempo:</b> 30 s.</p></aside></section></div></div><div class="frame" id="s2"><div class="frame-in"><section class="slide " data-n="2" aria-label="Slide 2 de 16"><header><div class="eyebrow">A pergunta</div><h2>Quanto o metrô falha, por quê, e o que deixaria a rede mais tolerante a falhas</h2></header><div class="slide-body">
+<div class="cols c-60-40">
+  <div>
+    <ol class="perguntas">
+      <li><b>Quanto cada linha falha</b> e por quanto tempo fica parada? Sob quais condições: hora, clima, eventos?</li>
+      <li><b>As falhas são independentes</b> ou se agrupam? Quanto pesa a causa comum, que para duas linhas ao mesmo tempo?</li>
+      <li><b>Que políticas</b> de tolerância a falhas mais reduzem a indisponibilidade?</li>
+      <li><b>Que nova ligação</b> deixaria a rede mais confiável como sistema?</li>
+    </ol>
+  </div>
+  <div class="caixa">
+    <div class="label">Por que Montreal</div>
+    <ul class="lista">
+      <li>A STM publica cada incidente do metrô em dados abertos (CC BY 4.0).</li>
+      <li>Cada registro tem hora do incidente e da retomada, causa, linha e local.</li>
+      <li>São <b>45.785 incidentes</b>, de 2019-01-01 a 2026-06-30.</li>
+      <li>Também procuramos bases de São Paulo (Metrô SP, ARTESP): nenhuma tinha série de falhas utilizável.</li>
+    </ul>
+  </div>
+</div>
+<div class="faixa">
+  <div><span class="label">Componentes</span> trens (material rodante) e infraestrutura: via, sinalização, energia, portas (equipamentos fixos)</div>
+  <div><span class="label">Redundâncias</span> trens de reserva na garagem (k-de-n fria) e caminhos alternativos entre estações (rota)</div>
+</div></div><footer><span>Fonte: docs/relatorio/relatorio.md §1 e §3.1; fontes/FONTES.md §1 e §3</span><span class="pg">dados 2026-10-20 e 2026-10-21 · 2</span></footer><aside class="notes no-print"><p>As quatro perguntas organizam a apresentação: medir, entender o agrupamento, testar políticas, escolher expansão.</p>
+<p>Por que Montreal: é raro achar uma base pública com hora de início e de retomada, causa, linha e local de cada falha. Também procuramos bases de São Paulo e não havia série de falhas utilizável.</p>
+<p>Fechar com a leitura de sistema tolerante a falhas: os componentes são trens e equipamentos fixos; as redundâncias são a reserva de trens e os caminhos alternativos.</p>
+<p><b>Tempo:</b> 1 min.</p></aside></section></div></div><div class="frame" id="s3"><div class="frame-in"><section class="slide " data-n="3" aria-label="Slide 3 de 16"><header><div class="eyebrow">Antes dos resultados</div><h2>Nenhum número sem fonte: qualquer pessoa pode refazer cada conta</h2></header><div class="slide-body">
+<div class="cards c3">
+  <div class="card"><div class="card-k">1</div><h3>Cópia exata dos dados</h3><p>Duas Releases no GitHub (<code>dados-2026-10-20</code> e <code>dados-2026-10-21</code>), com o SHA-256 de cada arquivo no manifesto.</p></div>
+  <div class="card"><div class="card-k">2</div><h3>Segunda implementação</h3><p><code>verifica_fontes.py</code>, em Python puro e sem usar o pipeline, recalcula <b>25 números</b> publicados direto dos dados brutos. Diferença: <b>zero</b>.</p></div>
+  <div class="card"><div class="card-k">3</div><h3>Publicação bloqueada por erro</h3><p>Cada publicação baixa a Release, confere os hashes, recalcula e roda os testes. Um erro impede o site de ir ao ar.</p></div>
+  <div class="card"><div class="card-k">4</div><h3>Auditoria independente</h3><p>Um agente sem acesso aos scripts tentou refutar os números com código próprio. Nenhuma divergência numérica; as 6 ressalvas de apresentação foram corrigidas.</p></div>
+  <div class="card"><div class="card-k">5</div><h3>Reprodução do zero</h3><p><code>reproduz.yml</code> refaz o pipeline numa máquina limpa e compara com o publicado. <span class="tag">passou em 2026-10-21: 45 arquivos idênticos byte a byte, 8 dentro da tolerância</span></p></div>
+  <div class="card"><div class="card-k">6</div><h3>Decisões com data (SDD)</h3><p>Critério de aceite escrito antes do código. Se o resultado não atende, vira exceção registrada: o critério não é afrouxado.</p></div>
+</div>
+<p class="nota">Verificação na origem: em 2026-10-20, 26 das 27 fontes baixadas de novo vieram idênticas byte a byte; a 27ª (mobilidade do Google, 98 MB) foi conferida pelo tamanho.</p></div><footer><span>Fonte: docs/relatorio/relatorio.md §3.2; fontes/FONTES.md (resultado local, §5); specs/constitution.md; specs/013-publicacao/tasks.md</span><span class="pg">dados 2026-10-20 e 2026-10-21 · 3</span></footer><aside class="notes no-print"><p>Este slide vem antes dos resultados de propósito: a equipe quis que ninguém precisasse confiar em quem fez as contas.</p>
+<p>Destacar o item 2: um segundo programa, escrito à parte, refaz 25 números direto dos dados brutos e chega ao mesmo valor. E o item 3: o site não publica se essa conferência falhar.</p>
+<p>Item 5: a reprodução do zero rodou no GitHub Actions em 2026-10-21. A primeira execução reproduziu todos os resultados e só acusou metadados (commit e tempo de execução gravados nos relatórios); depois da correção, a segunda deu 45 arquivos idênticos byte a byte, 8 dentro da tolerância e nenhum fora.</p>
+<p><b>Tempo:</b> 1 min 30 s.</p></aside></section></div></div><div class="frame" id="s4"><div class="frame-in"><section class="slide " data-n="4" aria-label="Slide 4 de 16"><header><div class="eyebrow">Dados · 2019-01-01 a 2026-06-30</div><h2>45.785 incidentes da STM viram 8.530 falhas técnicas, ligadas a oferta, clima e eventos</h2></header><div class="slide-body">
+<div class="cols c-50-50">
+  <div>
+    <div class="label">Dos incidentes às falhas técnicas</div>
+    <svg viewBox="0 0 520 150" width="520" height="150" role="img" aria-label="Dos incidentes às falhas técnicas"><path d="M0.0,4.0 h396.0 a4,4 0 0 1 4,4 v16.0 a4,4 0 0 1 -4,4 h-396.0 z" fill="var(--bar)"/><text x="410.0" y="23" class="c-val">45.785</text><text x="10" y="22" class="c-in">incidentes registrados</text><path d="M0.0,54.0 h71.3 a4,4 0 0 1 4,4 v16.0 a4,4 0 0 1 -4,4 h-71.3 z" fill="var(--bar)"/><text x="85.3" y="73" class="c-val">8.619</text><text x="151.3" y="73" class="c-lab c-sm">falhas técnicas</text><path d="M0.0,104.0 h70.5 a4,4 0 0 1 4,4 v16.0 a4,4 0 0 1 -4,4 h-70.5 z" fill="var(--accent)"/><text x="84.5" y="123" class="c-val">8.530</text><text x="150.5" y="123" class="c-lab c-sm">falhas técnicas de uma linha só</text></svg>
+    <p class="corpo-sm"><b>3.982</b> de material rodante · <b>4.548</b> de equipamentos fixos</p>
+    <p class="corpo-sm"><i class="chip" style="background:#008E4F"></i>Verde <b>2.826</b> · <i class="chip" style="background:#EF8122"></i>Laranja <b>3.088</b> · <i class="chip am" style="background:#FFD900"></i>Amarela <b>1.146</b> · <i class="chip" style="background:#0076BE"></i>Azul <b>1.470</b></p>
+    <p class="corpo-sm muted">Fora das métricas por linha, mas declaradas: 45 em várias linhas (viram causa comum) e 44 sem linha.</p>
+  </div>
+  <div>
+    <table class="tab">
+      <thead><tr><th>Fonte</th><th>O que entra</th></tr></thead>
+      <tbody>
+        <tr><td><b>Oferta</b><br><span class="muted">GTFS da STM, versão 20261007130000_26N</span></td><td>Trens em viagem às 08:00: 26, 31, 2 e 9. Calibrada por 411,63 milhões de km-carro reais (2019-01 a 2023-09); erro mensal mediano de 0,44%.</td></tr>
+        <tr><td><b>Clima horário</b><br><span class="muted">ECCC, 3 estações</span></td><td>65.717 horas; precipitação em 99,99% das horas de operação.</td></tr>
+        <tr><td><b>Eventos externos</b><br><span class="muted">NHL, Jolpica, imprensa</span></td><td>348 eventos (jogos do Canadiens, GP do Canadá, greves de 2025), cada um com URL e status.</td></tr>
+        <tr><td><b>Rede</b><br><span class="muted">OpenStreetMap, Wikidata</span></td><td>4 linhas e 73 estações, todas casadas; traçado a até 3% do comprimento oficial.</td></tr>
+      </tbody>
+    </table>
+    <p class="nota">Base do modelo de taxa: 226.658 horas-linha com serviço.</p>
+  </div>
+</div></div><footer><span>Fonte: docs/relatorio/relatorio.md §3; fontes/FONTES.md §1; dados/derivados/painel/linhas.json; fontes/verificacao/exposicao.md; fontes/verificacao/validacao_geo.md; fontes/verificacao/modelo_taxa.md</span><span class="pg">dados 2026-10-20 e 2026-10-21 · 4</span></footer><aside class="notes no-print"><p>Falha técnica, aqui, é o incidente que a STM atribui a material rodante (o trem) ou a equipamentos fixos (via, sinalização, energia, portas). Os demais incidentes, de passageiros ou operação, ficam fora dos modelos.</p>
+<p>Cada falha foi ligada à oferta de trens daquela hora, ao clima da hora e aos eventos do dia. É isso que permite medir taxa por trem-hora, e não por hora de relógio.</p>
+<p>Nada foi descartado em silêncio: os 45 eventos multilinha viram causa comum e os 44 sem linha ficam registrados.</p>
+<p><b>Tempo:</b> 1 min.</p></aside></section></div></div><div class="frame" id="s5"><div class="frame-in"><section class="slide " data-n="5" aria-label="Slide 5 de 16"><header><div class="eyebrow">Indicadores por linha · 2019-01 a 2026-06</div><h2>Laranja e Verde falham mais vezes; a Azul é a que fica mais tempo parada</h2></header><div class="slide-body">
+<div class="multiplos">
+  <div><h3>Falhas por dia</h3><p class="sub">falhas técnicas de uma linha</p><svg viewBox="0 0 356 164" width="356" height="164"><line x1="84" y1="0" x2="84" y2="164" class="eixo"/><text x="74" y="27.0" text-anchor="end" class="c-lab">Verde</text><path d="M85.0,11.0 h166.2 a4,4 0 0 1 4,4 v14.0 a4,4 0 0 1 -4,4 h-166.2 z" fill="#008E4F"><title>Verde: 1,03</title></path><text x="263.2" y="28.0" class="c-val">1,03</text><text x="74" y="67.0" text-anchor="end" class="c-lab">Laranja</text><path d="M85.0,51.0 h182.0 a4,4 0 0 1 4,4 v14.0 a4,4 0 0 1 -4,4 h-182.0 z" fill="#EF8122"><title>Laranja: 1,13</title></path><text x="279.0" y="68.0" class="c-val">1,13</text><text x="74" y="107.0" text-anchor="end" class="c-lab">Amarela</text><path d="M85.0,91.0 h65.1 a4,4 0 0 1 4,4 v14.0 a4,4 0 0 1 -4,4 h-65.1 z" fill="#FFD900" stroke="#A38B00" stroke-width="1.25"><title>Amarela: 0,42</title></path><text x="162.1" y="108.0" class="c-val">0,42</text><text x="74" y="147.0" text-anchor="end" class="c-lab">Azul</text><path d="M85.0,131.0 h84.5 a4,4 0 0 1 4,4 v14.0 a4,4 0 0 1 -4,4 h-84.5 z" fill="#0076BE"><title>Azul: 0,54</title></path><text x="181.5" y="148.0" class="c-val">0,54</text></svg></div>
+  <div><h3>MTBF</h3><p class="sub">horas de operação entre falhas</p><svg viewBox="0 0 356 164" width="356" height="164"><line x1="84" y1="0" x2="84" y2="164" class="eixo"/><text x="74" y="27.0" text-anchor="end" class="c-lab">Verde</text><path d="M85.0,11.0 h71.4 a4,4 0 0 1 4,4 v14.0 a4,4 0 0 1 -4,4 h-71.4 z" fill="#008E4F"><title>Verde: 19,38 h</title></path><text x="168.4" y="28.0" class="c-val">19,38 h</text><text x="74" y="67.0" text-anchor="end" class="c-lab">Laranja</text><path d="M85.0,51.0 h65.0 a4,4 0 0 1 4,4 v14.0 a4,4 0 0 1 -4,4 h-65.0 z" fill="#EF8122"><title>Laranja: 17,73 h</title></path><text x="162.0" y="68.0" class="c-val">17,73 h</text><text x="74" y="107.0" text-anchor="end" class="c-lab">Amarela</text><path d="M85.0,91.0 h182.0 a4,4 0 0 1 4,4 v14.0 a4,4 0 0 1 -4,4 h-182.0 z" fill="#FFD900" stroke="#A38B00" stroke-width="1.25"><title>Amarela: 47,78 h</title></path><text x="279.0" y="108.0" class="c-val">47,78 h</text><text x="74" y="147.0" text-anchor="end" class="c-lab">Azul</text><path d="M85.0,131.0 h141.0 a4,4 0 0 1 4,4 v14.0 a4,4 0 0 1 -4,4 h-141.0 z" fill="#0076BE"><title>Azul: 37,25 h</title></path><text x="238.0" y="148.0" class="c-val">37,25 h</text></svg></div>
+  <div><h3>MTTR</h3><p class="sub">minutos até o serviço voltar</p><svg viewBox="0 0 356 164" width="356" height="164"><line x1="84" y1="0" x2="84" y2="164" class="eixo"/><text x="74" y="27.0" text-anchor="end" class="c-lab">Verde</text><path d="M85.0,11.0 h86.6 a4,4 0 0 1 4,4 v14.0 a4,4 0 0 1 -4,4 h-86.6 z" fill="#008E4F"><title>Verde: 4,72 min</title></path><text x="183.6" y="28.0" class="c-val">4,72 min</text><text x="74" y="67.0" text-anchor="end" class="c-lab">Laranja</text><path d="M85.0,51.0 h75.1 a4,4 0 0 1 4,4 v14.0 a4,4 0 0 1 -4,4 h-75.1 z" fill="#EF8122"><title>Laranja: 4,12 min</title></path><text x="172.1" y="68.0" class="c-val">4,12 min</text><text x="74" y="107.0" text-anchor="end" class="c-lab">Amarela</text><path d="M85.0,91.0 h57.4 a4,4 0 0 1 4,4 v14.0 a4,4 0 0 1 -4,4 h-57.4 z" fill="#FFD900" stroke="#A38B00" stroke-width="1.25"><title>Amarela: 3,20 min</title></path><text x="154.4" y="108.0" class="c-val">3,20 min</text><text x="74" y="147.0" text-anchor="end" class="c-lab">Azul</text><path d="M85.0,131.0 h182.0 a4,4 0 0 1 4,4 v14.0 a4,4 0 0 1 -4,4 h-182.0 z" fill="#0076BE"><title>Azul: 9,69 min</title></path><text x="279.0" y="148.0" class="c-val">9,69 min</text></svg></div>
+</div>
+<div class="disp">
+  <div class="disp-t"><div class="label">Disponibilidade</div><p class="sub">A = MTBF / (MTBF + MTTR)</p></div>
+  <div class="tile-l"><i class="chip" style="background:#008E4F"></i><div><div class="tile-v">99,59%</div><div class="tile-s">1.780 min por ano parada</div></div></div><div class="tile-l"><i class="chip" style="background:#EF8122"></i><div><div class="tile-v">99,61%</div><div class="tile-s">1.697 min por ano parada</div></div></div><div class="tile-l"><i class="chip am" style="background:#FFD900"></i><div><div class="tile-v">99,89%</div><div class="tile-s">489 min por ano parada</div></div></div><div class="tile-l"><i class="chip" style="background:#0076BE"></i><div><div class="tile-v">99,57%</div><div class="tile-s">1.900 min por ano parada</div></div></div>
+</div>
+<p class="nota">MTBF em horas de operação (janela de 20 h por dia, 05:00 a 01:00). MTTR é o tempo até o serviço voltar, não o reparo na oficina, e inclui as falhas sem interrupção. O MTTR da Azul é puxado por poucas interrupções de quase 20 h (mediana: 3 min). Rede: 3,1 falhas por dia; MTBF 6,42 h.</p></div><footer><span>Fonte: dados/derivados/painel/linhas.json; definições em docs/relatorio/relatorio.md §2; interrupções longas da Azul: relatório §4.3</span><span class="pg">dados 2026-10-20 e 2026-10-21 · 5</span></footer><aside class="notes no-print"><p>Ler da esquerda para a direita. Laranja e Verde têm mais de uma falha técnica por dia; a Amarela, com 3 estações, tem bem menos.</p>
+<p>O MTTR mostra outra história: a Azul falha menos que Laranja e Verde, mas demora mais para voltar, por causa de poucas interrupções muito longas. A mediana dela é de poucos minutos.</p>
+<p>Por isso a Azul tem a menor disponibilidade das quatro, mesmo com menos falhas. Todas ficam acima de 99,5%: o problema não é cada linha, é a rede, como veremos.</p>
+<p><b>Tempo:</b> 1 min 30 s.</p></aside></section></div></div><div class="frame" id="s6"><div class="frame-in"><section class="slide " data-n="6" aria-label="Slide 6 de 16"><header><div class="eyebrow">O que muda a taxa de falha · binomial negativa com exposição</div><h2>A abertura do serviço multiplica a taxa de falha por 2,6 a 3,6; neve e calor também pesam</h2></header><div class="slide-body">
+<svg viewBox="0 0 1152 328" width="1152" height="328" role="img" aria-label="Multiplicadores da taxa de falha com intervalo de 95%"><text x="0" y="18" class="c-head">Fator</text><text x="290" y="18" class="c-head">Multiplicador da taxa por trem-hora (IC 95%, escala log)</text><circle cx="856" cy="13" r="6" fill="var(--ink)"/><text x="867" y="18" class="c-head2">Material rodante</text><rect x="1012" y="7" width="12" height="12" fill="var(--accent)"/><text x="1030" y="18" class="c-head2">Equip. fixos</text><line x1="312.9" y1="28" x2="312.9" y2="298" class="grade"/><text x="312.9" y="318" text-anchor="middle" class="c-tick">0,5</text><line x1="463.4" y1="28" x2="463.4" y2="298" class="ref"/><text x="463.4" y="318" text-anchor="middle" class="c-tick">1</text><line x1="613.9" y1="28" x2="613.9" y2="298" class="grade"/><text x="613.9" y="318" text-anchor="middle" class="c-tick">2</text><line x1="702.0" y1="28" x2="702.0" y2="298" class="grade"/><text x="702.0" y="318" text-anchor="middle" class="c-tick">3</text><line x1="764.4" y1="28" x2="764.4" y2="298" class="grade"/><text x="764.4" y="318" text-anchor="middle" class="c-tick">4</text><text x="469.4" y="318" class="c-tick">= sem efeito</text><rect x="0" y="34" width="1152" height="44" fill="var(--zebra)"/><text x="0" y="62.0" class="c-lab">Abertura do serviço (5 a 6 h)</text><line x1="649.8" y1="47.0" x2="696.1" y2="47.0" stroke="var(--ink)" stroke-width="2"/><circle cx="674.2" cy="47.0" r="6" fill="var(--ink)" stroke="var(--ink)" stroke-width="2"><title>Material rodante: 2,64 (2,36–2,92)</title></circle><text x="850" y="61.0" class="c-num">2,64 (2,36–2,92)</text><line x1="711.2" y1="65.0" x2="766.0" y2="65.0" stroke="var(--accent)" stroke-width="2"/><rect x="734.9" y="59.0" width="12" height="12" fill="var(--accent)" stroke="var(--accent)" stroke-width="2"><title>Equipamentos fixos: 3,59 (3,13–4,03)</title></rect><text x="1012" y="61.0" class="c-num">3,59 (3,13–4,03)</text><text x="0" y="106.0" class="c-lab">Pico da manhã</text><line x1="508.3" y1="91.0" x2="548.5" y2="91.0" stroke="var(--ink)" stroke-width="2"/><circle cx="528.6" cy="91.0" r="6" fill="var(--ink)" stroke="var(--ink)" stroke-width="2"><title>Material rodante: 1,35 (1,23–1,48)</title></circle><text x="850" y="105.0" class="c-num">1,35 (1,23–1,48)</text><line x1="491.8" y1="109.0" x2="531.8" y2="109.0" stroke="var(--accent)" stroke-width="2"/><rect x="507.6" y="103.0" width="12" height="12" fill="var(--accent)" stroke="var(--accent)" stroke-width="2"><title>Equipamentos fixos: 1,26 (1,14–1,37)</title></rect><text x="1012" y="105.0" class="c-num">1,26 (1,14–1,37)</text><rect x="0" y="122" width="1152" height="44" fill="var(--zebra)"/><text x="0" y="150.0" class="c-lab">Mais de 10 cm de neve no solo</text><line x1="484.1" y1="135.0" x2="574.8" y2="135.0" stroke="var(--ink)" stroke-width="2"/><circle cx="531.8" cy="135.0" r="6" fill="var(--ink)" stroke="var(--ink)" stroke-width="2"><title>Material rodante: 1,37 (1,10–1,67)</title></circle><text x="850" y="149.0" class="c-num">1,37 (1,10–1,67)</text><line x1="484.1" y1="153.0" x2="578.6" y2="153.0" stroke="var(--accent)" stroke-width="2"/><rect x="527.3" y="147.0" width="12" height="12" fill="var(--accent)" stroke="var(--accent)" stroke-width="2"><title>Equipamentos fixos: 1,38 (1,10–1,70)</title></rect><text x="1012" y="149.0" class="c-num">1,38 (1,10–1,70)</text><text x="0" y="194.0" class="c-lab">25 °C ou mais</text><line x1="422.9" y1="179.0" x2="528.6" y2="179.0" stroke="var(--ink)" stroke-width="2"/><circle cx="478.1" cy="179.0" r="6" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"><title>Material rodante: 1,07 (0,83–1,35)</title></circle><text x="850" y="193.0" class="c-num c-fraco">1,07 (0,83–1,35)</text><line x1="518.7" y1="197.0" x2="646.1" y2="197.0" stroke="var(--accent)" stroke-width="2"/><rect x="588.6" y="191.0" width="12" height="12" fill="var(--accent)" stroke="var(--accent)" stroke-width="2"><title>Equipamentos fixos: 1,83 (1,29–2,32)</title></rect><text x="1012" y="193.0" class="c-num">1,83 (1,29–2,32)</text><rect x="0" y="210" width="1152" height="44" fill="var(--zebra)"/><text x="0" y="238.0" class="c-lab">Abaixo de −15 °C</text><line x1="389.0" y1="223.0" x2="510.1" y2="223.0" stroke="var(--ink)" stroke-width="2"/><circle cx="447.6" cy="223.0" r="6" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"><title>Material rodante: 0,93 (0,71–1,24)</title></circle><text x="850" y="237.0" class="c-num c-fraco">0,93 (0,71–1,24)</text><line x1="392.1" y1="241.0" x2="560.0" y2="241.0" stroke="var(--accent)" stroke-width="2"/><rect x="468.0" y="235.0" width="12" height="12" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"><title>Equipamentos fixos: 1,05 (0,72–1,56)</title></rect><text x="1012" y="237.0" class="c-num c-fraco">1,05 (0,72–1,56)</text><text x="0" y="282.0" class="c-lab">Dia de greve (por trem-hora)</text><line x1="337.5" y1="267.0" x2="638.5" y2="267.0" stroke="var(--ink)" stroke-width="2"/><circle cx="497.5" cy="267.0" r="6" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"><title>Material rodante: 1,17 (0,56–2,24)</title></circle><text x="850" y="281.0" class="c-num c-fraco">1,17 (0,56–2,24)</text><line x1="321.4" y1="285.0" x2="582.4" y2="285.0" stroke="var(--accent)" stroke-width="2"/><rect x="480.1" y="279.0" width="12" height="12" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"><title>Equipamentos fixos: 1,11 (0,52–1,73)</title></rect><text x="1012" y="281.0" class="c-num c-fraco">1,11 (0,52–1,73)</text></svg>
+<div class="tri">
+  <p><b>Greve</b> reduz a oferta, mas não muda a taxa por trem-hora: o intervalo contém 1.</p>
+  <p><b>Calor</b> pesa só nos equipamentos fixos (+83%). <b>Frio intenso</b> não tem efeito detectável.</p>
+  <p><b>Binomial negativa vence Poisson</b> nas duas causas (α = 1,83 e 5,47; p &lt; 10⁻³⁰).</p>
+</div>
+<p class="nota">Vazio e em cinza: intervalo de 95% contém 1. Referência: Laranja, entrepico, dia útil, outono, 5 a 15 °C, sem precipitação. IC por bootstrap em blocos semanais.</p></div><footer><span>Fonte: docs/relatorio/relatorio.md §4.1; fontes/verificacao/modelo_taxa.md</span><span class="pg">dados 2026-10-20 e 2026-10-21 · 6</span></footer><aside class="notes no-print"><p>Cada ponto é quanto um fator multiplica a taxa de falha por trem-hora, com o intervalo de 95%. À direita do 1, aumenta; à esquerda, diminui.</p>
+<p>O maior efeito é a abertura do serviço, das 5 às 6 h: a taxa fica 2,6 vezes maior no material rodante e 3,6 vezes nos equipamentos fixos.</p>
+<p>Neve acumulada acima de 10 cm eleva as duas causas em cerca de 37%. Calor de 25 °C ou mais pesa nos equipamentos fixos. O frio intenso, que seria o palpite óbvio em Montreal, não aparece.</p>
+<p>A greve só reduz a oferta: por trem que roda, a taxa não muda de forma detectável.</p>
+<p><b>Tempo:</b> 1 min 30 s.</p></aside></section></div></div><div class="frame" id="s7"><div class="frame-in"><section class="slide " data-n="7" aria-label="Slide 7 de 16"><header><div class="eyebrow">As falhas se agrupam · teste de reescala do tempo</div><h2>Depois de uma falha, a próxima vem mais cedo: o processo não é Poisson</h2></header><div class="slide-body">
+<div class="cols c-60-40">
+  <div>
+    <h3>Forma da Weibull no tempo reescalado</h3>
+    <p class="sub">círculo: material rodante (MR) · quadrado: equipamentos fixos (EF)</p>
+    <svg viewBox="0 0 700 308" width="700" height="308" role="img" aria-label="Forma da Weibull no tempo reescalado por linha e causa"><rect x="114.0" y="36" width="390.2" height="232" fill="var(--accent-soft)"/><text x="122.0" y="52" class="c-acc">forma &lt; 1: agrupamento</text><line x1="169.8" y1="36" x2="169.8" y2="268" class="grade"/><text x="169.8" y="288" text-anchor="middle" class="c-tick">0,4</text><line x1="281.2" y1="36" x2="281.2" y2="268" class="grade"/><text x="281.2" y="288" text-anchor="middle" class="c-tick">0,6</text><line x1="392.8" y1="36" x2="392.8" y2="268" class="grade"/><text x="392.8" y="288" text-anchor="middle" class="c-tick">0,8</text><line x1="504.2" y1="36" x2="504.2" y2="268" class="ref"/><text x="504.2" y="288" text-anchor="middle" class="c-tick">1,0</text><text x="512.2" y="52" class="c-tick">1 = sem memória</text><text x="512.2" y="70" class="c-tick">(Poisson)</text><text x="600" y="22" text-anchor="middle" class="c-head">MR</text><text x="660" y="22" text-anchor="middle" class="c-head">EF</text><text x="100" y="83.0" text-anchor="end" class="c-lab">Verde</text><line x1="371.8" y1="78.0" x2="393.7" y2="78.0" class="grade"/><circle cx="393.7" cy="78.0" r="8" fill="#008E4F" stroke="var(--surface)" stroke-width="2"/><circle cx="393.7" cy="78.0" r="12" fill="transparent"><title>Verde, material rodante: 0,80</title></circle><rect x="364.3" y="70.5" width="15" height="15" fill="#008E4F" stroke="var(--surface)" stroke-width="2"><title>Verde, equipamentos fixos: 0,76</title></rect><text x="600" y="83.0" text-anchor="middle" class="c-num">0,80</text><text x="660" y="83.0" text-anchor="middle" class="c-num">0,76</text><text x="100" y="139.0" text-anchor="end" class="c-lab">Laranja</text><line x1="319.8" y1="134.0" x2="355.7" y2="134.0" class="grade"/><circle cx="355.7" cy="134.0" r="8" fill="#EF8122" stroke="var(--surface)" stroke-width="2"/><circle cx="355.7" cy="134.0" r="12" fill="transparent"><title>Laranja, material rodante: 0,73</title></circle><rect x="312.3" y="126.5" width="15" height="15" fill="#EF8122" stroke="var(--surface)" stroke-width="2"><title>Laranja, equipamentos fixos: 0,67</title></rect><text x="600" y="139.0" text-anchor="middle" class="c-num">0,73</text><text x="660" y="139.0" text-anchor="middle" class="c-num">0,67</text><text x="100" y="195.0" text-anchor="end" class="c-lab">Amarela</text><line x1="191.3" y1="190.0" x2="336.0" y2="190.0" class="grade"/><circle cx="336.0" cy="190.0" r="8" fill="#FFD900" stroke="var(--surface)" stroke-width="2"/><circle cx="336.0" cy="190.0" r="7" fill="none" stroke="#A38B00" stroke-width="1.5"/><circle cx="336.0" cy="190.0" r="12" fill="transparent"><title>Amarela, material rodante: 0,70</title></circle><rect x="183.8" y="182.5" width="15" height="15" fill="#FFD900" stroke="var(--surface)" stroke-width="2"><title>Amarela, equipamentos fixos: 0,44</title></rect><rect x="184.8" y="183.5" width="13" height="13" fill="none" stroke="#A38B00" stroke-width="1.5"/><text x="600" y="195.0" text-anchor="middle" class="c-num">0,70</text><text x="660" y="195.0" text-anchor="middle" class="c-num">0,44</text><text x="100" y="251.0" text-anchor="end" class="c-lab">Azul</text><line x1="312.5" y1="246.0" x2="363.3" y2="246.0" class="grade"/><circle cx="363.3" cy="246.0" r="8" fill="#0076BE" stroke="var(--surface)" stroke-width="2"/><circle cx="363.3" cy="246.0" r="12" fill="transparent"><title>Azul, material rodante: 0,75</title></circle><rect x="305.0" y="238.5" width="15" height="15" fill="#0076BE" stroke="var(--surface)" stroke-width="2"><title>Azul, equipamentos fixos: 0,66</title></rect><text x="600" y="251.0" text-anchor="middle" class="c-num">0,75</text><text x="660" y="251.0" text-anchor="middle" class="c-num">0,66</text></svg>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-v">×1,95</div><div class="stat-l">taxa de material rodante na hora seguinte a uma falha na mesma linha <span class="muted">(IC 1,74–2,18)</span></div></div>
+    <div class="stat"><div class="stat-v">×2,75</div><div class="stat-l">taxa de equipamentos fixos na mesma situação <span class="muted">(IC&#160;2,47–3,07)</span></div></div>
+    <div class="stat"><div class="stat-v">8 de 8</div><div class="stat-l">combinações linha × causa em que o teste de reescala rejeita Poisson (p de 10⁻⁸ a 10⁻⁹⁰)</div></div>
+  </div>
+</div>
+<p class="nota">Com a taxa que muda por hora, clima e oferta, a média reescalada fica entre 0,97 e 1,03: a taxa está calibrada. Mesmo assim a forma fica abaixo de 1. Por isso o simulador usa renovação Weibull no tempo reescalado. A Weibull é a melhor família em 23 de 29 estratos.</p></div><footer><span>Fonte: docs/relatorio/relatorio.md §4.1 e §4.2; fontes/verificacao/distribuicoes.md (teste de reescala); fontes/verificacao/modelo_taxa.md (defasagem)</span><span class="pg">dados 2026-10-20 e 2026-10-21 · 7</span></footer><aside class="notes no-print"><p>Forma da Weibull menor que 1 quer dizer que o risco de nova falha é maior logo depois de uma falha. Todas as oito combinações ficam abaixo de 1; a Amarela nos equipamentos fixos é a mais agrupada.</p>
+<p>A pergunta era se isso era só mistura de condições (pico, inverno). O teste de reescala responde que não: mesmo descontando hora, clima e oferta, sobra agrupamento.</p>
+<p>Em linguagem simples: uma falha na hora anterior dobra a chance de outra no material rodante e quase triplica nos equipamentos fixos. Tratar as falhas como independentes subestima o risco.</p>
+<p><b>Tempo:</b> 1 min 15 s.</p></aside></section></div></div><div class="frame" id="s8"><div class="frame-in"><section class="slide " data-n="8" aria-label="Slide 8 de 16"><header><div class="eyebrow">Causa comum</div><h2>45 eventos param várias linhas ao mesmo tempo, e a Laranja está em 44 deles</h2></header><div class="slide-body">
+<div class="cols c-52-48">
+  <div>
+    <h3>Eventos por grupo de linhas que parou junto</h3>
+    <p class="sub"><i class="sw" style="background:var(--accent)"></i>inclui Verde e Laranja: 31 eventos · <i class="sw" style="background:var(--bar)"></i>demais</p>
+    <svg viewBox="0 0 570 274" width="570" height="274" role="img" aria-label="Eventos de causa comum por grupo de linhas"><line x1="330" y1="0" x2="330" y2="274" class="eixo"/><circle cx="12" cy="23.0" r="8" fill="#008E4F"/><circle cx="34" cy="23.0" r="8" fill="#EF8122"/><circle cx="56" cy="23.0" r="7" fill="none" stroke="var(--rule)" stroke-width="1.5"/><circle cx="78" cy="23.0" r="7" fill="none" stroke="var(--rule)" stroke-width="1.5"/><text x="110" y="28.0" class="c-lab c-sm">Verde + Laranja</text><path d="M331.0,13.0 h186.0 a4,4 0 0 1 4,4 v12.0 a4,4 0 0 1 -4,4 h-186.0 z" fill="var(--accent)"><title>Verde + Laranja: 12 eventos</title></path><text x="529.0" y="29.0" class="c-val">12</text><circle cx="12" cy="61.0" r="7" fill="none" stroke="var(--rule)" stroke-width="1.5"/><circle cx="34" cy="61.0" r="8" fill="#EF8122"/><circle cx="56" cy="61.0" r="7" fill="none" stroke="var(--rule)" stroke-width="1.5"/><circle cx="78" cy="61.0" r="8" fill="#0076BE"/><text x="110" y="66.0" class="c-lab c-sm">Laranja + Azul</text><path d="M331.0,51.0 h154.3 a4,4 0 0 1 4,4 v12.0 a4,4 0 0 1 -4,4 h-154.3 z" fill="var(--bar)"><title>Laranja + Azul: 10 eventos</title></path><text x="497.3" y="67.0" class="c-val">10</text><circle cx="12" cy="99.0" r="8" fill="#008E4F"/><circle cx="34" cy="99.0" r="8" fill="#EF8122"/><circle cx="56" cy="99.0" r="8" fill="#FFD900" stroke="#A38B00" stroke-width="1.25"/><circle cx="78" cy="99.0" r="8" fill="#0076BE"/><text x="110" y="104.0" class="c-lab c-sm">as quatro linhas</text><path d="M331.0,89.0 h154.3 a4,4 0 0 1 4,4 v12.0 a4,4 0 0 1 -4,4 h-154.3 z" fill="var(--accent)"><title>as quatro linhas: 10 eventos</title></path><text x="497.3" y="105.0" class="c-val">10</text><circle cx="12" cy="137.0" r="8" fill="#008E4F"/><circle cx="34" cy="137.0" r="8" fill="#EF8122"/><circle cx="56" cy="137.0" r="8" fill="#FFD900" stroke="#A38B00" stroke-width="1.25"/><circle cx="78" cy="137.0" r="7" fill="none" stroke="var(--rule)" stroke-width="1.5"/><text x="110" y="142.0" class="c-lab c-sm">Verde + Laranja + Amarela</text><path d="M331.0,127.0 h122.7 a4,4 0 0 1 4,4 v12.0 a4,4 0 0 1 -4,4 h-122.7 z" fill="var(--accent)"><title>Verde + Laranja + Amarela: 8 eventos</title></path><text x="465.7" y="143.0" class="c-val">8</text><circle cx="12" cy="175.0" r="7" fill="none" stroke="var(--rule)" stroke-width="1.5"/><circle cx="34" cy="175.0" r="8" fill="#EF8122"/><circle cx="56" cy="175.0" r="8" fill="#FFD900" stroke="#A38B00" stroke-width="1.25"/><circle cx="78" cy="175.0" r="7" fill="none" stroke="var(--rule)" stroke-width="1.5"/><text x="110" y="180.0" class="c-lab c-sm">Laranja + Amarela</text><path d="M331.0,165.0 h43.5 a4,4 0 0 1 4,4 v12.0 a4,4 0 0 1 -4,4 h-43.5 z" fill="var(--bar)"><title>Laranja + Amarela: 3 eventos</title></path><text x="386.5" y="181.0" class="c-val">3</text><circle cx="12" cy="213.0" r="8" fill="#008E4F"/><circle cx="34" cy="213.0" r="8" fill="#EF8122"/><circle cx="56" cy="213.0" r="7" fill="none" stroke="var(--rule)" stroke-width="1.5"/><circle cx="78" cy="213.0" r="8" fill="#0076BE"/><text x="110" y="218.0" class="c-lab c-sm">Verde + Laranja + Azul</text><path d="M331.0,203.0 h11.8 a4,4 0 0 1 4,4 v12.0 a4,4 0 0 1 -4,4 h-11.8 z" fill="var(--accent)"><title>Verde + Laranja + Azul: 1 eventos</title></path><text x="354.8" y="219.0" class="c-val">1</text><circle cx="12" cy="251.0" r="8" fill="#008E4F"/><circle cx="34" cy="251.0" r="7" fill="none" stroke="var(--rule)" stroke-width="1.5"/><circle cx="56" cy="251.0" r="7" fill="none" stroke="var(--rule)" stroke-width="1.5"/><circle cx="78" cy="251.0" r="8" fill="#0076BE"/><text x="110" y="256.0" class="c-lab c-sm">Verde + Azul</text><path d="M331.0,241.0 h11.8 a4,4 0 0 1 4,4 v12.0 a4,4 0 0 1 -4,4 h-11.8 z" fill="var(--bar)"><title>Verde + Azul: 1 eventos</title></path><text x="354.8" y="257.0" class="c-val">1</text></svg>
+    <ul class="lista lista-sm">
+      <li>β da Verde = <b>0,011</b> (IC 0,007–0,015): pouco mais de 1% das falhas, mas cada uma tira as duas rotas do centro de uma vez.</li>
+      <li>Duração média dos 45 eventos: <b>22,4 min</b>.</li>
+    </ul>
+  </div>
+  <div>
+    <figure class="fig-mapa"><svg class="mapa" viewBox="0 0 520 380" width="520" height="380" role="img" aria-label="Mapa das quatro linhas do metrô de Montreal, posições das estações do GTFS"><polyline points="288.3,350.4 303.4,340.2 320.2,328.2 335.7,322.5 342.5,317.2 343.8,298.6 339.1,281.8 323.6,272.5 314.6,257.1 324.3,245.0 331.1,233.9 335.5,227.0 340.7,218.4 345.2,213.2 353.0,204.1 359.3,195.3 365.0,185.1 364.9,165.0 361.3,146.6 366.0,135.8 365.6,121.2 372.6,105.5 372.9,88.0 373.1,71.6 378.5,58.9 383.5,44.3 390.5,29.6" fill="none" stroke="#008E4F" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.28"><title>Linha Verde</title></polyline><polyline points="169.4,205.4 183.6,218.0 201.2,235.1 214.3,247.3 236.1,247.3 243.7,252.1 251.7,267.4 263.7,279.5 287.5,291.7 313.6,284.2 323.6,272.5 328.6,259.4 336.4,246.9 342.5,240.0 348.4,231.8 353.9,222.4 358.5,214.4 353.0,204.1 340.8,196.5 319.9,183.0 313.0,177.3 295.5,169.5 286.7,160.5 272.6,152.3 250.4,143.0 235.1,137.6 209.5,127.2 191.2,117.8 170.9,106.8 129.6,106.5 110.0,111.0" fill="none" stroke="#EF8122" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.28"><title>Linha Laranja</title></polyline><polyline points="410.0,183.3 394.0,209.5 353.0,204.1" fill="none" stroke="#A38B00" stroke-width="9.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.28"/><polyline points="410.0,183.3 394.0,209.5 353.0,204.1" fill="none" stroke="#FFD900" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.28"><title>Linha Amarela</title></polyline><polyline points="251.7,267.4 258.3,242.6 265.6,228.0 274.8,214.0 270.8,192.3 258.5,185.7 256.5,171.3 263.5,160.0 272.6,152.3 282.7,133.4 290.2,121.3 293.0,108.2" fill="none" stroke="#0076BE" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.28"><title>Linha Azul</title></polyline><polyline points="323.6,272.5 314.6,257.1 324.3,245.0 331.1,233.9 335.5,227.0 340.7,218.4 345.2,213.2 353.0,204.1" fill="none" stroke="#008E4F" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><polyline points="323.6,272.5 328.6,259.4 336.4,246.9 342.5,240.0 348.4,231.8 353.9,222.4 358.5,214.4 353.0,204.1" fill="none" stroke="#EF8122" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="288.3" cy="350.4" r="1.9" fill="#fff" opacity="0.5"/><circle cx="303.4" cy="340.2" r="1.9" fill="#fff" opacity="0.5"/><circle cx="320.2" cy="328.2" r="1.9" fill="#fff" opacity="0.5"/><circle cx="335.7" cy="322.5" r="1.9" fill="#fff" opacity="0.5"/><circle cx="342.5" cy="317.2" r="1.9" fill="#fff" opacity="0.5"/><circle cx="343.8" cy="298.6" r="1.9" fill="#fff" opacity="0.5"/><circle cx="339.1" cy="281.8" r="1.9" fill="#fff" opacity="0.5"/><circle cx="314.6" cy="257.1" r="1.9" fill="#fff" opacity="0.5"/><circle cx="324.3" cy="245.0" r="1.9" fill="#fff" opacity="0.5"/><circle cx="331.1" cy="233.9" r="1.9" fill="#fff" opacity="0.5"/><circle cx="335.5" cy="227.0" r="1.9" fill="#fff" opacity="0.5"/><circle cx="340.7" cy="218.4" r="1.9" fill="#fff" opacity="0.5"/><circle cx="345.2" cy="213.2" r="1.9" fill="#fff" opacity="0.5"/><circle cx="359.3" cy="195.3" r="1.9" fill="#fff" opacity="0.5"/><circle cx="365.0" cy="185.1" r="1.9" fill="#fff" opacity="0.5"/><circle cx="364.9" cy="165.0" r="1.9" fill="#fff" opacity="0.5"/><circle cx="361.3" cy="146.6" r="1.9" fill="#fff" opacity="0.5"/><circle cx="366.0" cy="135.8" r="1.9" fill="#fff" opacity="0.5"/><circle cx="365.6" cy="121.2" r="1.9" fill="#fff" opacity="0.5"/><circle cx="372.6" cy="105.5" r="1.9" fill="#fff" opacity="0.5"/><circle cx="372.9" cy="88.0" r="1.9" fill="#fff" opacity="0.5"/><circle cx="373.1" cy="71.6" r="1.9" fill="#fff" opacity="0.5"/><circle cx="378.5" cy="58.9" r="1.9" fill="#fff" opacity="0.5"/><circle cx="383.5" cy="44.3" r="1.9" fill="#fff" opacity="0.5"/><circle cx="390.5" cy="29.6" r="1.9" fill="#fff" opacity="0.5"/><circle cx="169.4" cy="205.4" r="1.9" fill="#fff" opacity="0.5"/><circle cx="183.6" cy="218.0" r="1.9" fill="#fff" opacity="0.5"/><circle cx="201.2" cy="235.1" r="1.9" fill="#fff" opacity="0.5"/><circle cx="214.3" cy="247.3" r="1.9" fill="#fff" opacity="0.5"/><circle cx="236.1" cy="247.3" r="1.9" fill="#fff" opacity="0.5"/><circle cx="243.7" cy="252.1" r="1.9" fill="#fff" opacity="0.5"/><circle cx="263.7" cy="279.5" r="1.9" fill="#fff" opacity="0.5"/><circle cx="287.5" cy="291.7" r="1.9" fill="#fff" opacity="0.5"/><circle cx="313.6" cy="284.2" r="1.9" fill="#fff" opacity="0.5"/><circle cx="328.6" cy="259.4" r="1.9" fill="#fff" opacity="0.5"/><circle cx="336.4" cy="246.9" r="1.9" fill="#fff" opacity="0.5"/><circle cx="342.5" cy="240.0" r="1.9" fill="#fff" opacity="0.5"/><circle cx="348.4" cy="231.8" r="1.9" fill="#fff" opacity="0.5"/><circle cx="353.9" cy="222.4" r="1.9" fill="#fff" opacity="0.5"/><circle cx="358.5" cy="214.4" r="1.9" fill="#fff" opacity="0.5"/><circle cx="340.8" cy="196.5" r="1.9" fill="#fff" opacity="0.5"/><circle cx="319.9" cy="183.0" r="1.9" fill="#fff" opacity="0.5"/><circle cx="313.0" cy="177.3" r="1.9" fill="#fff" opacity="0.5"/><circle cx="295.5" cy="169.5" r="1.9" fill="#fff" opacity="0.5"/><circle cx="286.7" cy="160.5" r="1.9" fill="#fff" opacity="0.5"/><circle cx="250.4" cy="143.0" r="1.9" fill="#fff" opacity="0.5"/><circle cx="235.1" cy="137.6" r="1.9" fill="#fff" opacity="0.5"/><circle cx="209.5" cy="127.2" r="1.9" fill="#fff" opacity="0.5"/><circle cx="191.2" cy="117.8" r="1.9" fill="#fff" opacity="0.5"/><circle cx="170.9" cy="106.8" r="1.9" fill="#fff" opacity="0.5"/><circle cx="129.6" cy="106.5" r="1.9" fill="#fff" opacity="0.5"/><circle cx="110.0" cy="111.0" r="1.9" fill="#fff" opacity="0.5"/><circle cx="410.0" cy="183.3" r="1.9" fill="#fff" opacity="0.5"/><circle cx="394.0" cy="209.5" r="1.9" fill="#fff" opacity="0.5"/><circle cx="258.3" cy="242.6" r="1.9" fill="#fff" opacity="0.5"/><circle cx="265.6" cy="228.0" r="1.9" fill="#fff" opacity="0.5"/><circle cx="274.8" cy="214.0" r="1.9" fill="#fff" opacity="0.5"/><circle cx="270.8" cy="192.3" r="1.9" fill="#fff" opacity="0.5"/><circle cx="258.5" cy="185.7" r="1.9" fill="#fff" opacity="0.5"/><circle cx="256.5" cy="171.3" r="1.9" fill="#fff" opacity="0.5"/><circle cx="263.5" cy="160.0" r="1.9" fill="#fff" opacity="0.5"/><circle cx="282.7" cy="133.4" r="1.9" fill="#fff" opacity="0.5"/><circle cx="290.2" cy="121.3" r="1.9" fill="#fff" opacity="0.5"/><circle cx="293.0" cy="108.2" r="1.9" fill="#fff" opacity="0.5"/><circle cx="353.0" cy="204.1" r="6.5" fill="#fff" stroke="var(--ink)" stroke-width="2.2"><title>Berri-UQAM (correspondência)</title></circle><circle cx="272.6" cy="152.3" r="6.5" fill="#fff" stroke="var(--ink)" stroke-width="2.2"><title>Jean-Talon (correspondência)</title></circle><circle cx="323.6" cy="272.5" r="6.5" fill="#fff" stroke="var(--ink)" stroke-width="2.2"><title>Lionel-Groulx (correspondência)</title></circle><circle cx="251.7" cy="267.4" r="6.5" fill="#fff" stroke="var(--ink)" stroke-width="2.2"><title>Snowdon (correspondência)</title></circle><text x="311.6" y="288.5" text-anchor="end" class="m-lab">Lionel-Groulx</text><text x="365.0" y="218.1" text-anchor="start" class="m-lab">Berri-UQAM</text><text x="239.7" y="272.4" text-anchor="end" class="m-lab m-fraco">Snowdon</text><text x="260.6" y="154.3" text-anchor="end" class="m-lab m-fraco">Jean-Talon</text></svg></figure>
+    <p class="corpo-sm cap-mapa">No centro, Verde e Laranja são o caminho alternativo uma da outra, entre Lionel-Groulx e Berri-UQAM. A redundância supõe falhas independentes; a causa comum quebra essa hipótese.</p>
+  </div>
+</div></div><footer><span>Fonte: fontes/verificacao/distribuicoes.md (grupos e β); fontes/verificacao/politicas.md (44 dos 45); docs/relatorio/relatorio.md §4.2 e §7</span><span class="pg">dados 2026-10-20 e 2026-10-21 · 8</span></footer><aside class="notes no-print"><p>Causa comum é a falha que para mais de uma linha ao mesmo tempo, como energia ou controle compartilhados.</p>
+<p>São 45 eventos em 7 grupos. O mais frequente é Verde e Laranja juntas: 12 eventos só das duas, 31 contando os que pararam três ou quatro linhas. E a Laranja aparece em 44 dos 45.</p>
+<p>Por que isso importa: a redundância de rota supõe que os dois caminhos falham de forma independente. O fator β é de cerca de 1%, parece pouco, mas é exatamente o evento que derruba os dois caminhos do centro juntos.</p>
+<p><b>Tempo:</b> 1 min 15 s.</p></aside></section></div></div><div class="frame" id="s9"><div class="frame-in"><section class="slide " data-n="9" aria-label="Slide 9 de 16"><header><div class="eyebrow">Simulador · eventos discretos no navegador</div><h2>Um simulador da rede, trem a trem, que reproduz o que já sabemos antes de prever</h2></header><div class="slide-body">
+<div class="cols c-50-50">
+  <div>
+    <div class="label">Como funciona</div>
+    <ul class="lista">
+      <li>Motor de eventos discretos em TypeScript. Cada trem segue o horário do GTFS.</li>
+      <li>Falhas sorteadas pela taxa do modelo (hora, clima, oferta, cenário) e pela renovação Weibull.</li>
+      <li>Material rodante para o trem; equipamento fixo bloqueia o trecho nos dois sentidos; causa comum para o grupo de linhas.</li>
+      <li>Monte Carlo em Web Workers: 1.000 dias em cerca de 3 s.</li>
+      <li>Mapa com os trens animados sobre o traçado real. O cenário inteiro, com a semente, fica no link.</li>
+    </ul>
+  </div>
+  <div>
+    <div class="label">Validação</div>
+    <div class="val">
+      <p><b>Sem falhas,</b> reproduz o horário exatamente: 26, 31, 2 e 9 trens às 08:00.</p>
+      <p><b>Reserva k-de-n contra Markov</b> (Laranja, frota completa com 0, 1 e 2 reservas)</p>
+      <table class="tab tab-num"><thead><tr><th></th><th>0</th><th>1</th><th>2</th></tr></thead>
+        <tbody><tr><td>Simulador</td><td>0,674</td><td>0,939</td><td>0,992</td></tr><tr><td>Markov</td><td>0,671</td><td>0,938</td><td>0,992</td></tr></tbody></table>
+      <p><b>Laranja, minutos parados por ano:</b> o intervalo do simulador contém os dois valores do painel.</p>
+      <svg viewBox="0 0 540 118" width="540" height="118" role="img" aria-label="Laranja: minutos parados por ano, simulador contra painel"><line x1="70.0" y1="38" x2="70.0" y2="86" class="grade"/><text x="70.0" y="106" text-anchor="middle" class="c-tick">1.500</text><line x1="170.0" y1="38" x2="170.0" y2="86" class="grade"/><text x="170.0" y="106" text-anchor="middle" class="c-tick">1.600</text><line x1="270.0" y1="38" x2="270.0" y2="86" class="grade"/><text x="270.0" y="106" text-anchor="middle" class="c-tick">1.700</text><line x1="370.0" y1="38" x2="370.0" y2="86" class="grade"/><text x="370.0" y="106" text-anchor="middle" class="c-tick">1.800</text><line x1="470.0" y1="38" x2="470.0" y2="86" class="grade"/><text x="470.0" y="106" text-anchor="middle" class="c-tick">1.900</text><rect x="98.0" y="55" width="353.0" height="18" rx="4" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.2"><title>IC 95% do simulador: 1.528 a 1.881</title></rect><circle cx="274.0" cy="64" r="7" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/><text x="274.0" y="46" text-anchor="middle" class="c-num c-acc-t">simulador 1.704</text><path d="M367.0,56 l7,8 l-7,8 l-7,-8 z" fill="var(--ink)" stroke="var(--surface)" stroke-width="1.5"/><path d="M422.0,56 l7,8 l-7,8 l-7,-8 z" fill="var(--ink)" stroke="var(--surface)" stroke-width="1.5"/><text x="363.0" y="94" text-anchor="end" class="c-sm-t">analítico 1.797</text><text x="432.0" y="50" class="c-sm-t">painel 1.852</text></svg>
+      <p class="corpo-sm muted">1 ou 8 processos dão resultado idêntico.</p>
+    </div>
+  </div>
+</div></div><footer><span>Fonte: docs/relatorio/relatorio.md §4.3; specs/007, 008, 009, 010 e 011 (seções Resultado); fontes/verificacao/politicas.md</span><span class="pg">dados 2026-10-20 e 2026-10-21 · 9</span></footer><aside class="notes no-print"><p>O simulador põe cada trem do horário real na rede e sorteia as falhas com os modelos dos slides anteriores. Roda inteiro no navegador, sem servidor.</p>
+<p>Antes de usá-lo para prever, conferimos que ele reproduz o que já sabemos: o horário sem falhas, o modelo de Markov da reserva de trens e os minutos parados da Laranja calculados de outros dois jeitos.</p>
+<p>Se der tempo, abrir o simulador ao vivo (link no último slide). Hipótese declarada: separação mínima de 90 s entre trens.</p>
+<p><b>Tempo:</b> 1 min 30 s.</p></aside></section></div></div><div class="frame" id="s10"><div class="frame-in"><section class="slide " data-n="10" aria-label="Slide 10 de 16"><header><div class="eyebrow">Políticas de tolerância a falhas · dia útil, reparo de 1 dia</div><h2>Operação degradada é a política que mais reduz minutos parados: −7,8 por dia útil</h2></header><div class="slide-body">
+<table class="tab tab-pol">
+  <thead><tr><th>Política</th><th>Minutos parados a menos por dia útil<br>(soma das 4 linhas, IC 95%)</th><th class="num">Trens-hora<br>perdidos</th><th class="num">Disp. origem-<br>destino (p.p.)</th><th class="num">Frota completa<br>na Laranja (p.p.)</th></tr></thead>
+  <tbody><tr class="dest"><td><b>Operação degradada</b><br><span class="muted">marcha lenta após falha de equipamento fixo</span></td><td><svg viewBox="0 0 250 30" width="250" height="30"><line x1="2" y1="0" x2="2" y2="30" class="eixo"/><path d="M3.0,5.0 h141.1 a4,4 0 0 1 4,4 v12.0 a4,4 0 0 1 -4,4 h-141.1 z" fill="var(--accent)"/><line x1="112.7" y1="15" x2="183.4" y2="15" stroke="var(--ink)" stroke-width="2"/><line x1="112.7" y1="10" x2="112.7" y2="20" stroke="var(--ink)" stroke-width="2"/><line x1="183.4" y1="10" x2="183.4" y2="20" stroke="var(--ink)" stroke-width="2"/><text x="191.4" y="21" class="c-val">−7,8</text></svg><span class="ic">IC −9,7 a −5,9</span></td><td class="num">−16,4</td><td class="num">+0,35</td><td class="num">0</td></tr><tr class=""><td><b>Retirada do trem falho</b><br><span class="muted">só material rodante</span></td><td><svg viewBox="0 0 250 30" width="250" height="30"><line x1="2" y1="0" x2="2" y2="30" class="eixo"/><path d="M3.0,5.0 h16.5 a4,4 0 0 1 4,4 v12.0 a4,4 0 0 1 -4,4 h-16.5 z" fill="var(--bar)"/><line x1="17.9" y1="15" x2="29.0" y2="15" stroke="var(--ink)" stroke-width="2"/><line x1="17.9" y1="10" x2="17.9" y2="20" stroke="var(--ink)" stroke-width="2"/><line x1="29.0" y1="10" x2="29.0" y2="20" stroke="var(--ink)" stroke-width="2"/><text x="37.0" y="21" class="c-val">−1,1</text></svg><span class="ic">IC −1,4 a −0,8</span></td><td class="num">−0,18</td><td class="num">+0,05</td><td class="num">0</td></tr><tr class=""><td><b>Tratamento de causa comum</b><br><span class="muted">redução de 50% (hipótese)</span></td><td><svg viewBox="0 0 250 30" width="250" height="30"><line x1="2" y1="0" x2="2" y2="30" class="eixo"/><path d="M3.0,5.0 h10.9 a4,4 0 0 1 4,4 v12.0 a4,4 0 0 1 -4,4 h-10.9 z" fill="var(--bar)"/><line x1="8.6" y1="15" x2="27.2" y2="15" stroke="var(--ink)" stroke-width="2"/><line x1="8.6" y1="10" x2="8.6" y2="20" stroke="var(--ink)" stroke-width="2"/><line x1="27.2" y1="10" x2="27.2" y2="20" stroke="var(--ink)" stroke-width="2"/><text x="35.2" y="21" class="c-val">−0,8</text></svg><span class="ic">IC −1,3 a −0,3</span></td><td class="num">−0,52</td><td class="num">+0,02</td><td class="num">0</td></tr><tr class=""><td><b>Reserva fria</b><br><span class="muted">2 trens por linha</span></td><td><svg viewBox="0 0 250 30" width="250" height="30"><line x1="2" y1="0" x2="2" y2="30" class="eixo"/><text x="12" y="21" class="c-val c-fraco">0</text></svg></td><td class="num">−0,63</td><td class="num">0</td><td class="num">+32,5</td></tr><tr class=""><td><b>Retorno parcial</b><br><span class="muted">nas pontas de viagem (hipótese)</span></td><td><svg viewBox="0 0 250 30" width="250" height="30"><line x1="2" y1="0" x2="2" y2="30" class="eixo"/><text x="12" y="21" class="c-val c-fraco">0</text></svg></td><td class="num">0</td><td class="num">+0,21</td><td class="num">0</td></tr><tr class=""><td><b>Rota alternativa</b><br><span class="muted">de passageiros</span></td><td><svg viewBox="0 0 250 30" width="250" height="30"><line x1="2" y1="0" x2="2" y2="30" class="eixo"/><text x="12" y="21" class="c-val c-fraco">0</text></svg></td><td class="num">0</td><td class="num">+0,01</td><td class="num">0</td></tr></tbody>
+</table>
+<div class="tri">
+  <p><b>Ataca a causa mais frequente:</b> equipamentos fixos são 4.548 das 8.530 falhas técnicas.</p>
+  <p><b>Reserva fria protege a oferta,</b> não a continuidade. O efeito cresce com o reparo na oficina (hipótese): +32,5 p.p. com 1 dia, +58 p.p. com 4 dias.</p>
+  <p><b>Retorno parcial vale mais que rota alternativa</b> (+0,21 contra +0,01 p.p.): a rede tem poucos caminhos alternativos.</p>
+</div></div><footer><span>Fonte: fontes/verificacao/politicas.md (reparo de 1 e de 4 dias); docs/relatorio/relatorio.md §4.3; specs/008-politicas (Resultado); dados/derivados/painel/linhas.json</span><span class="pg">dados 2026-10-20 e 2026-10-21 · 10</span></footer><aside class="notes no-print"><p>Cada política foi comparada com "nenhuma política" usando as mesmas falhas sorteadas nas duas versões, para isolar o efeito.</p>
+<p>A operação degradada, liberar o trecho em marcha lenta depois de uma falha de equipamento fixo, é a que mais reduz minutos parados e trens-hora perdidos. Faz sentido: ataca a causa mais frequente.</p>
+<p>A reserva fria não muda os minutos parados; ela garante a frota completa no início do dia. Quanto vale depende do tempo de reparo na oficina, que a STM não publica: por isso aparece como hipótese.</p>
+<p>Retorno parcial e rota alternativa só mudam a disponibilidade origem-destino, e pouco, porque há poucos caminhos alternativos.</p>
+<p><b>Tempo:</b> 1 min 30 s.</p></aside></section></div></div><div class="frame" id="s11"><div class="frame-in"><section class="slide " data-n="11" aria-label="Slide 11 de 16"><header><div class="eyebrow">Que linha construir · disponibilidade origem-destino, dia útil</div><h2>A ligação que mais ajuda dá à Azul um caminho que não passa pela Laranja</h2></header><div class="slide-body">
+<div class="cols c-40-60">
+  <div>
+    <figure class="fig-mapa"><svg class="mapa" viewBox="0 0 440 360" width="440" height="360" role="img" aria-label="Mapa das quatro linhas do metrô de Montreal, posições das estações do GTFS"><polyline points="268.6,313.6 281.1,305.1 295.2,295.1 308.1,290.4 313.8,286.0 314.8,270.5 311.0,256.5 298.0,248.8 290.5,235.9 298.6,225.9 304.3,216.6 307.9,210.8 312.3,203.6 316.0,199.3 322.5,191.7 327.7,184.4 332.5,176.0 332.4,159.2 329.4,143.8 333.3,134.8 333.0,122.6 338.8,109.6 339.0,95.0 339.2,81.3 343.7,70.8 347.9,58.6 353.8,46.4" fill="none" stroke="#008E4F" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"><title>Linha Verde</title></polyline><polyline points="169.5,192.8 181.3,203.3 196.0,217.6 206.9,227.7 225.1,227.8 231.4,231.8 238.0,244.5 248.0,254.6 267.9,264.7 289.7,258.5 298.0,248.8 302.1,237.8 308.6,227.4 313.7,221.7 318.7,214.9 323.3,207.0 327.1,200.3 322.5,191.7 312.3,185.4 294.9,174.2 289.1,169.4 274.6,162.9 267.2,155.4 255.5,148.6 237.0,140.8 224.2,136.3 203.0,127.7 187.6,119.9 170.8,110.6 136.3,110.4 120.0,114.1" fill="none" stroke="#EF8122" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><title>Linha Laranja</title></polyline><polyline points="370.0,174.4 356.7,196.2 322.5,191.7" fill="none" stroke="#A38B00" stroke-width="9.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/><polyline points="370.0,174.4 356.7,196.2 322.5,191.7" fill="none" stroke="#FFD900" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"><title>Linha Amarela</title></polyline><polyline points="238.0,244.5 243.6,223.9 249.7,211.7 257.3,200.0 254.0,181.9 243.8,176.4 242.1,164.4 247.9,155.0 255.5,148.6 263.9,132.9 270.2,122.7 272.5,111.9" fill="none" stroke="#0076BE" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><title>Linha Azul</title></polyline><line x1="290.5" y1="235.9" x2="249.7" y2="211.7" stroke="var(--accent)" stroke-width="5" stroke-dasharray="9 6" stroke-linecap="round"><title>Ligação nova Atwater – Université-de-Montréal (hipótese de traçado)</title></line><circle cx="268.6" cy="313.6" r="1.9" fill="#fff"/><circle cx="281.1" cy="305.1" r="1.9" fill="#fff"/><circle cx="295.2" cy="295.1" r="1.9" fill="#fff"/><circle cx="308.1" cy="290.4" r="1.9" fill="#fff"/><circle cx="313.8" cy="286.0" r="1.9" fill="#fff"/><circle cx="314.8" cy="270.5" r="1.9" fill="#fff"/><circle cx="311.0" cy="256.5" r="1.9" fill="#fff"/><circle cx="290.5" cy="235.9" r="1.9" fill="#fff"/><circle cx="298.6" cy="225.9" r="1.9" fill="#fff"/><circle cx="304.3" cy="216.6" r="1.9" fill="#fff"/><circle cx="307.9" cy="210.8" r="1.9" fill="#fff"/><circle cx="312.3" cy="203.6" r="1.9" fill="#fff"/><circle cx="316.0" cy="199.3" r="1.9" fill="#fff"/><circle cx="327.7" cy="184.4" r="1.9" fill="#fff"/><circle cx="332.5" cy="176.0" r="1.9" fill="#fff"/><circle cx="332.4" cy="159.2" r="1.9" fill="#fff"/><circle cx="329.4" cy="143.8" r="1.9" fill="#fff"/><circle cx="333.3" cy="134.8" r="1.9" fill="#fff"/><circle cx="333.0" cy="122.6" r="1.9" fill="#fff"/><circle cx="338.8" cy="109.6" r="1.9" fill="#fff"/><circle cx="339.0" cy="95.0" r="1.9" fill="#fff"/><circle cx="339.2" cy="81.3" r="1.9" fill="#fff"/><circle cx="343.7" cy="70.8" r="1.9" fill="#fff"/><circle cx="347.9" cy="58.6" r="1.9" fill="#fff"/><circle cx="353.8" cy="46.4" r="1.9" fill="#fff"/><circle cx="169.5" cy="192.8" r="1.9" fill="#fff"/><circle cx="181.3" cy="203.3" r="1.9" fill="#fff"/><circle cx="196.0" cy="217.6" r="1.9" fill="#fff"/><circle cx="206.9" cy="227.7" r="1.9" fill="#fff"/><circle cx="225.1" cy="227.8" r="1.9" fill="#fff"/><circle cx="231.4" cy="231.8" r="1.9" fill="#fff"/><circle cx="248.0" cy="254.6" r="1.9" fill="#fff"/><circle cx="267.9" cy="264.7" r="1.9" fill="#fff"/><circle cx="289.7" cy="258.5" r="1.9" fill="#fff"/><circle cx="302.1" cy="237.8" r="1.9" fill="#fff"/><circle cx="308.6" cy="227.4" r="1.9" fill="#fff"/><circle cx="313.7" cy="221.7" r="1.9" fill="#fff"/><circle cx="318.7" cy="214.9" r="1.9" fill="#fff"/><circle cx="323.3" cy="207.0" r="1.9" fill="#fff"/><circle cx="327.1" cy="200.3" r="1.9" fill="#fff"/><circle cx="312.3" cy="185.4" r="1.9" fill="#fff"/><circle cx="294.9" cy="174.2" r="1.9" fill="#fff"/><circle cx="289.1" cy="169.4" r="1.9" fill="#fff"/><circle cx="274.6" cy="162.9" r="1.9" fill="#fff"/><circle cx="267.2" cy="155.4" r="1.9" fill="#fff"/><circle cx="237.0" cy="140.8" r="1.9" fill="#fff"/><circle cx="224.2" cy="136.3" r="1.9" fill="#fff"/><circle cx="203.0" cy="127.7" r="1.9" fill="#fff"/><circle cx="187.6" cy="119.9" r="1.9" fill="#fff"/><circle cx="170.8" cy="110.6" r="1.9" fill="#fff"/><circle cx="136.3" cy="110.4" r="1.9" fill="#fff"/><circle cx="120.0" cy="114.1" r="1.9" fill="#fff"/><circle cx="370.0" cy="174.4" r="1.9" fill="#fff"/><circle cx="356.7" cy="196.2" r="1.9" fill="#fff"/><circle cx="243.6" cy="223.9" r="1.9" fill="#fff"/><circle cx="249.7" cy="211.7" r="1.9" fill="#fff"/><circle cx="257.3" cy="200.0" r="1.9" fill="#fff"/><circle cx="254.0" cy="181.9" r="1.9" fill="#fff"/><circle cx="243.8" cy="176.4" r="1.9" fill="#fff"/><circle cx="242.1" cy="164.4" r="1.9" fill="#fff"/><circle cx="247.9" cy="155.0" r="1.9" fill="#fff"/><circle cx="263.9" cy="132.9" r="1.9" fill="#fff"/><circle cx="270.2" cy="122.7" r="1.9" fill="#fff"/><circle cx="272.5" cy="111.9" r="1.9" fill="#fff"/><circle cx="322.5" cy="191.7" r="6.5" fill="#fff" stroke="var(--ink)" stroke-width="2.2"><title>Berri-UQAM (correspondência)</title></circle><circle cx="255.5" cy="148.6" r="6.5" fill="#fff" stroke="var(--ink)" stroke-width="2.2"><title>Jean-Talon (correspondência)</title></circle><circle cx="298.0" cy="248.8" r="6.5" fill="#fff" stroke="var(--ink)" stroke-width="2.2"><title>Lionel-Groulx (correspondência)</title></circle><circle cx="238.0" cy="244.5" r="6.5" fill="#fff" stroke="var(--ink)" stroke-width="2.2"><title>Snowdon (correspondência)</title></circle><circle cx="290.5" cy="235.9" r="5.5" fill="#fff" stroke="var(--accent)" stroke-width="2.4"/><circle cx="249.7" cy="211.7" r="5.5" fill="#fff" stroke="var(--accent)" stroke-width="2.4"/><text x="226.0" y="249.5" text-anchor="end" class="m-lab">Snowdon</text><text x="243.5" y="150.6" text-anchor="end" class="m-lab">Jean-Talon</text><text x="296.0" y="270.8" text-anchor="middle" class="m-lab">Lionel-Groulx</text><text x="334.5" y="205.7" text-anchor="start" class="m-lab">Berri-UQAM</text><text x="302.5" y="237.9" text-anchor="start" class="m-lab m-acc">Atwater</text><text x="237.7" y="207.7" text-anchor="end" class="m-lab m-acc">Université-de-Montréal</text></svg></figure>
+    <p class="corpo-sm">Hoje a Azul só alcança o resto da rede pela Laranja, em Snowdon e Jean-Talon. Quando a Laranja para, a Azul fica isolada: é o maior ponto único de falha do modelo.</p>
+  </div>
+  <div>
+    <h3>Ganho sobre a rede atual (99,236%), sem retorno parcial</h3>
+    <p class="sub">pontos percentuais; o traçado das candidatas é aproximado</p>
+    <svg viewBox="0 0 640 366" width="640" height="366" role="img" aria-label="Ganho de disponibilidade origem-destino por candidata"><text x="0" y="16" class="c-head">Busca exaustiva (298 ligações até 3 km)</text><line x1="417.1" y1="24" x2="417.1" y2="336" class="ref"/><line x1="337.6" y1="24" x2="337.6" y2="336" class="grade"/><text x="337.6" y="354" text-anchor="middle" class="c-tick">−0,05</text><line x1="496.5" y1="24" x2="496.5" y2="336" class="grade"/><text x="496.5" y="354" text-anchor="middle" class="c-tick">+0,05</text><text x="417.1" y="354" text-anchor="middle" class="c-tick">0</text><text x="568" y="354" class="c-tick">p.p.</text><text x="262" y="48.0" text-anchor="end" class="c-lab c-sm">Atwater – Université-de-Montréal</text><text x="262" y="66.0" text-anchor="end" class="c-tick">ligação direta, 3,6 km</text><path d="M418.1,40.0 h131.0 a4,4 0 0 1 4,4 v12.0 a4,4 0 0 1 -4,4 h-131.0 z" fill="var(--accent)"><title>Atwater – Université-de-Montréal: +0,085 p.p.</title></path><text x="560.1" y="56.0" class="c-val">+0,085</text><text x="0" y="90" class="c-head">Candidatas oficiais e propostas</text><text x="262" y="114.0" text-anchor="end" class="c-lab c-sm">Linha Rosa</text><text x="262" y="132.0" text-anchor="end" class="c-tick">35,4 km</text><path d="M418.1,106.0 h29.0 a4,4 0 0 1 4,4 v12.0 a4,4 0 0 1 -4,4 h-29.0 z" fill="var(--bar)"><title>Linha Rosa: +0,021 p.p.</title></path><text x="458.1" y="122.0" class="c-val">+0,021</text><text x="262" y="154.0" text-anchor="end" class="c-lab c-sm">Rosa + Azul até Anjou</text><text x="262" y="172.0" text-anchor="end" class="c-tick">42,3 km · IC cruza zero</text><path d="M418.1,146.0 h4.4 a0,0 0 0 1 0,0 v20.0 a0,0 0 0 1 0,0 h-4.4 z" fill="var(--bar)"><title>Rosa + Azul até Anjou: +0,003 p.p.</title></path><text x="429.5" y="162.0" class="c-val">+0,003</text><text x="262" y="194.0" text-anchor="end" class="c-lab c-sm">Anel da Laranja (ARTM, 2019)</text><text x="262" y="212.0" text-anchor="end" class="c-tick">9,9 km</text><path d="M418.1,186.0 h1.5 a0,0 0 0 1 0,0 v20.0 a0,0 0 0 1 0,0 h-1.5 z" fill="var(--bar)"><title>Anel da Laranja (ARTM, 2019): +0,0002 p.p.</title></path><text x="425.4" y="202.0" class="c-val">+0,0002</text><text x="262" y="234.0" text-anchor="end" class="c-lab c-sm">Amarela em Longueuil</text><text x="262" y="252.0" text-anchor="end" class="c-tick">7,2 km · ramal</text><path d="M416.1,226.0 h-4.6 a4,4 0 0 0 -4,4 v12.0 a4,4 0 0 0 4,4 h4.6 z" fill="var(--bar)"><title>Amarela em Longueuil: −0,005 p.p.</title></path><text x="425.1" y="242.0" class="c-val">−0,005</text><text x="262" y="274.0" text-anchor="end" class="c-lab c-sm">Laranja até Bois-Franc</text><text x="262" y="292.0" text-anchor="end" class="c-tick">3,0 km · ramal</text><path d="M416.1,266.0 h-51.1 a4,4 0 0 0 -4,4 v12.0 a4,4 0 0 0 4,4 h51.1 z" fill="var(--bar)"><title>Laranja até Bois-Franc: −0,035 p.p.</title></path><text x="425.1" y="282.0" class="c-val">−0,035</text><text x="262" y="314.0" text-anchor="end" class="c-lab c-sm">Azul até Anjou (em obras)</text><text x="262" y="332.0" text-anchor="end" class="c-tick">6,9 km · ramal</text><path d="M416.1,306.0 h-115.6 a4,4 0 0 0 -4,4 v12.0 a4,4 0 0 0 4,4 h115.6 z" fill="var(--bar)"><title>Azul até Anjou (em obras): −0,075 p.p.</title></path><text x="425.1" y="322.0" class="c-val">−0,075</text></svg>
+    <p class="corpo-sm muted">Ramais não criam caminho alternativo e somam trechos que podem falhar. Com retorno parcial (hipótese), a ordem muda: Rosa + Azul +0,053; anel +0,019; Rosa +0,011; ramais 0.</p>
+  </div>
+</div></div><footer><span>Fonte: fontes/verificacao/expansao.md; docs/relatorio/relatorio.md §4.4; specs/014-expansao-rede (Resultado)</span><span class="pg">dados 2026-10-20 e 2026-10-21 · 11</span></footer><aside class="notes no-print"><p>A pergunta foi: que ligação nova deixa a rede mais confiável como sistema? A métrica é a fração do tempo em que cada par de estações atuais tem caminho, ponderada pela oferta.</p>
+<p>Entre as candidatas oficiais, só as que fecham ciclos ganham: a Linha Rosa e o anel da Laranja. Os ramais, inclusive o prolongamento da Azul que já está em obras, ampliam a cobertura, mas não criam redundância; sem retorno parcial, até reduzem a disponibilidade.</p>
+<p>A busca entre 298 ligações possíveis aponta Atwater–Université-de-Montréal, porque dá à Azul um segundo caminho que não depende da Laranja.</p>
+<p>Ressalva: cobertura de bairros novos não entra, porque não há dado de passageiros.</p>
+<p><b>Tempo:</b> 1 min 30 s.</p></aside></section></div></div><div class="frame" id="s12"><div class="frame-in"><section class="slide " data-n="12" aria-label="Slide 12 de 16"><header><div class="eyebrow">Validação contra o histórico · 72 casos linha × mês, 2025-01 a 2026-06</div><h2>A versão pré-registrada não passou: 66,7% de cobertura contra 80% exigidos</h2></header><div class="slide-body">
+<h3>Cobertura do intervalo de predição de 90%</h3>
+<p class="sub">ponto cheio: pré-registrada · ponto vazio: definida depois de ver a versão A</p>
+<svg viewBox="0 0 1152 300" width="1152" height="300" role="img" aria-label="Cobertura do intervalo de predição de 90% por versão do backtest"><rect x="764.0" y="24" width="158.4" height="242" fill="var(--accent-soft)"/><text x="843.2" y="18" text-anchor="middle" class="c-acc">faixa exigida: 80% a 98%</text><line x1="500.0" y1="24" x2="500.0" y2="266" class="grade"/><text x="500.0" y="286" text-anchor="middle" class="c-tick">50%</text><line x1="588.0" y1="24" x2="588.0" y2="266" class="grade"/><text x="588.0" y="286" text-anchor="middle" class="c-tick">60%</text><line x1="676.0" y1="24" x2="676.0" y2="266" class="grade"/><text x="676.0" y="286" text-anchor="middle" class="c-tick">70%</text><line x1="764.0" y1="24" x2="764.0" y2="266" class="grade"/><text x="764.0" y="286" text-anchor="middle" class="c-tick">80%</text><line x1="852.0" y1="24" x2="852.0" y2="266" class="grade"/><text x="852.0" y="286" text-anchor="middle" class="c-tick">90%</text><line x1="940.0" y1="24" x2="940.0" y2="266" class="grade"/><text x="940.0" y="286" text-anchor="middle" class="c-tick">100%</text><text x="970" y="18" class="c-head">Cobertura (IC 95%)</text><text x="0" y="61.0" class="c-lab"><tspan class="c-k">A</tspan><tspan x="26">Treino até 2024-12, efeito do ano de 2024</tspan></text><text x="26" y="81.0" class="c-tick">pré-registrada · resultado oficial</text><line x1="540.5" y1="63.0" x2="740.2" y2="63.0" stroke="var(--ink)" stroke-width="2"/><line x1="540.5" y1="57.0" x2="540.5" y2="69.0" stroke="var(--ink)" stroke-width="2"/><line x1="740.2" y1="57.0" x2="740.2" y2="69.0" stroke="var(--ink)" stroke-width="2"/><circle cx="647.0" cy="63.0" r="8" fill="var(--ink)" stroke="var(--ink)" stroke-width="2.5"><title>A: 66,7% (54,6–77,3)</title></circle><text x="970" y="69.0" class="c-num c-forte">66,7% (54,6–77,3)</text><text x="0" y="119.0" class="c-lab"><tspan class="c-k">B</tspan><tspan x="26">Treino até 2023-09, só exposição medida</tspan></text><text x="26" y="139.0" class="c-tick">pré-registrada</text><line x1="685.7" y1="121.0" x2="852.0" y2="121.0" stroke="var(--ink)" stroke-width="2"/><line x1="685.7" y1="115.0" x2="685.7" y2="127.0" stroke="var(--ink)" stroke-width="2"/><line x1="852.0" y1="115.0" x2="852.0" y2="127.0" stroke="var(--ink)" stroke-width="2"/><circle cx="780.7" cy="121.0" r="8" fill="var(--ink)" stroke="var(--ink)" stroke-width="2.5"><title>B: 81,9% (71,1–90,0)</title></circle><text x="970" y="127.0" class="c-num">81,9% (71,1–90,0)</text><text x="0" y="177.0" class="c-lab"><tspan class="c-k">C</tspan><tspan x="26">Treino até 2024-12, efeito do ano sorteado</tspan></text><text x="26" y="197.0" class="c-tick">definida depois de ver A</text><line x1="713.8" y1="179.0" x2="870.5" y2="179.0" stroke="var(--ink)" stroke-width="2"/><line x1="713.8" y1="173.0" x2="713.8" y2="185.0" stroke="var(--ink)" stroke-width="2"/><line x1="870.5" y1="173.0" x2="870.5" y2="185.0" stroke="var(--ink)" stroke-width="2"/><circle cx="805.4" cy="179.0" r="8" fill="var(--surface)" stroke="var(--ink)" stroke-width="2.5"><title>C: 84,7% (74,3–92,1)</title></circle><text x="970" y="185.0" class="c-num">84,7% (74,3–92,1)</text><text x="0" y="235.0" class="c-lab"><tspan class="c-k">D</tspan><tspan x="26">Regra C em outro período (teste 2023-01 a 2024-06)</tspan></text><text x="26" y="255.0" class="c-tick">definida depois de ver A</text><line x1="772.8" y1="237.0" x2="904.8" y2="237.0" stroke="var(--ink)" stroke-width="2"/><line x1="772.8" y1="231.0" x2="772.8" y2="243.0" stroke="var(--ink)" stroke-width="2"/><line x1="904.8" y1="231.0" x2="904.8" y2="243.0" stroke="var(--ink)" stroke-width="2"/><circle cx="854.6" cy="237.0" r="8" fill="var(--surface)" stroke="var(--ink)" stroke-width="2.5"><title>D: 90,3% (81,0–96,0)</title></circle><text x="970" y="243.0" class="c-num">90,3% (81,0–96,0)</text></svg>
+<div class="tri">
+  <p><b>Por que falhou:</b> 22 dos 24 casos fora ficaram abaixo do intervalo. O modelo superestimou 2025.</p>
+  <p><b>Causa:</b> herdou o efeito de 2024, ano atípico: cerca de 1.000 falhas técnicas no 2º semestre, contra cerca de 500 nos vizinhos.</p>
+  <p><b>Correção testada em outro período</b> (D): 90,3%, PIT compatível com a uniforme (p&#160;=&#160;0,16). O resultado oficial continua sendo o de A.</p>
+</div></div><footer><span>Fonte: fontes/verificacao/backtest.md; specs/012-backtest (Resultado); docs/relatorio/relatorio.md §5</span><span class="pg">dados 2026-10-20 e 2026-10-21 · 12</span></footer><aside class="notes no-print"><p>Este é o slide de que a equipe mais se orgulha, mesmo sendo um resultado negativo.</p>
+<p>Ajustamos o modelo só até 2024 e previmos cada linha e mês de 2025 e 2026. O critério foi escrito antes de ver o teste: o intervalo de 90% deveria conter o observado em 80% a 98% dos casos. Deu 66,7%. Não passou.</p>
+<p>O motivo: o segundo semestre de 2024 teve o dobro de falhas dos semestres vizinhos, e a versão A carregou esse efeito para 2025.</p>
+<p>Não mexemos no critério. Registramos uma regra nova com data e a testamos num período diferente, como a especificação manda: 90,3%. A versão que falhou continua publicada.</p>
+<p><b>Tempo:</b> 1 min 30 s.</p></aside></section></div></div><div class="frame" id="s13"><div class="frame-in"><section class="slide " data-n="13" aria-label="Slide 13 de 16"><header><div class="eyebrow">Decisões tomadas depois de ver os dados</div><h2>Três mudanças feitas depois de ver os dados, todas registradas com data</h2></header><div class="slide-body">
+<div class="cards c3 cards-alto">
+  <div class="card"><h3>Duração das interrupções</h3>
+    <p class="vimos"><span class="label">O que vimos</span>A média observada era maior que a da lognormal: 23% a 29% na Laranja e 26% nos equipamentos fixos da Verde; 3,4 vezes na Azul.</p>
+    <p class="mudou"><span class="label">O que mudou</span>O simulador passou a sortear a duração da amostra observada. Na Laranja, de 1.433 min/ano, fora do esperado, para 1.704, que contém os valores do painel.</p>
+    <p class="onde">specs 006 e 009 · 2026-10-21</p></div>
+  <div class="card"><h3>Causa comum por grupo</h3>
+    <p class="vimos"><span class="label">O que vimos</span>Sorteada por par de linhas, a causa comum contava duas ou três vezes os eventos de 3 ou 4 linhas.</p>
+    <p class="mudou"><span class="label">O que mudou</span>Passou a ser sorteada por grupo: 7 grupos, cada evento entra uma vez só.</p>
+    <p class="onde">spec 006 · 2026-10-21</p></div>
+  <div class="card"><h3>Efeito do ano sorteado</h3>
+    <p class="vimos"><span class="label">O que vimos</span>A versão A herdava o efeito de 2024 e superestimava 2025.</p>
+    <p class="mudou"><span class="label">O que mudou</span>Versão C sorteia o efeito do ano entre 2019 e 2024; retestada em outro período (D).</p>
+    <p class="onde">spec 012 · 2026-10-21</p></div>
+</div>
+<div class="faixa">
+  <div><span class="label">Exceções registradas, sem afrouxar o critério</span>98,83% das durações na faixa oficial (pedido: 99%) · 94,0% das falhas com posição (pedido: 95%) · 4 de 220 meses com erro de exposição acima de 10%</div>
+</div></div><footer><span>Fonte: specs/006, 009 e 012 (Resultado); fontes/verificacao/backtest.md (registro de mudança); docs/relatorio/relatorio.md §3.3 e §4.3</span><span class="pg">dados 2026-10-20 e 2026-10-21 · 13</span></footer><aside class="notes no-print"><p>Mudar o modelo depois de ver os dados é normal; o problema é esconder. Aqui as três mudanças estão registradas com data, e o motivo de cada uma está no repositório.</p>
+<p>As duas primeiras apareceram quando o simulador não batia com o painel: a média das durações estava baixa e a causa comum estava contada em dobro.</p>
+<p>A terceira veio do backtest. Embaixo, as exceções aos critérios: o critério ficou como estava e o resultado aparece como exceção.</p>
+<p><b>Tempo:</b> 1 min.</p></aside></section></div></div><div class="frame" id="s14"><div class="frame-in"><section class="slide " data-n="14" aria-label="Slide 14 de 16"><header><div class="eyebrow">Limitações</div><h2>O que o modelo não sabe, e como isso aparece nos resultados</h2></header><div class="slide-body">
+<table class="tab tab-lim">
+  <thead><tr><th>Limitação</th><th>Como tratamos</th></tr></thead>
+  <tbody>
+    <tr><td><b>Não há passageiros diários</b></td><td>Todas as métricas são ponderadas pela oferta. A cobertura de bairros novos não entra na escolha da expansão.</td></tr>
+    <tr><td><b>Reparo na oficina e aparelhos de mudança de via</b> não são públicos</td><td>Entram como hipóteses ajustáveis, com sensibilidade (reparo de 0,5 a 4 dias). O retorno parcial usa só as pontas de viagem.</td></tr>
+    <tr><td><b>Exposição de outubro de 2023 em diante</b></td><td>Estimada pelo horário: o km real vai até 2023-09. Status "estimado" em cada valor.</td></tr>
+    <tr><td><b>Traçado das candidatas</b></td><td>Aproximação em linha reta entre estações, exceto a Azul até Anjou (em obras no OpenStreetMap).</td></tr>
+    <tr><td><b>Duração registrada</b></td><td>Mede o tempo até o serviço voltar, não o reparo do equipamento.</td></tr>
+    <tr><td><b>Dados incompletos</b></td><td>6% das falhas sem posição (sobretudo subestações); condição do tempo só em 45,8% das horas. Aparecem como falta, nunca como zero.</td></tr>
+  </tbody>
+</table></div><footer><span>Fonte: docs/relatorio/relatorio.md §6; fontes/FONTES.md §6; specs/002 e 003 (Resultado); fontes/verificacao/politicas.md (hipóteses)</span><span class="pg">dados 2026-10-20 e 2026-10-21 · 14</span></footer><aside class="notes no-print"><p>As quatro primeiras são as limitações do relatório. A principal é a falta de passageiros: sem ela, não dá para dizer quantas pessoas cada falha atinge, só quantos trens.</p>
+<p>O que não vem dos dados aparece marcado como hipótese, com análise de sensibilidade, e o simulador mostra o rótulo ao lado do número.</p>
+<p><b>Tempo:</b> 45 s.</p></aside></section></div></div><div class="frame" id="s15"><div class="frame-in"><section class="slide " data-n="15" aria-label="Slide 15 de 16"><header><div class="eyebrow">Conclusões</div><h2>Linhas com 99,5% a 99,9% de disponibilidade num dia útil (simulador), numa rede que depende de poucos pontos</h2></header><div class="slide-body">
+<ol class="conclusoes">
+  <li><h3>As falhas se agrupam e têm causa comum.</h3><p>No tempo, uma falha dobra ou quase triplica a chance de outra na hora seguinte. No espaço, eventos que param Verde e Laranja juntas tiram a única redundância de rota do centro. Tratar as falhas como independentes subestima o risco.</p></li>
+  <li><h3>A política que mais rende ataca os equipamentos fixos.</h3><p>Eles são mais da metade das falhas. A operação degradada reduz mais os minutos parados do que reservar trens; a reserva protege a oferta.</p></li>
+  <li><h3>Uma linha nova vale pelos caminhos alternativos que cria.</h3><p>Ramais ampliam a cobertura, mas não criam redundância. O maior ponto único de falha é a dependência da Azul em relação à Laranja.</p></li>
+</ol>
+<div class="faixa">
+  <div><span class="label">Limite do modelo</span>O efeito de um ano não se transfere para o seguinte: a previsão precisa carregar a incerteza entre anos.</div>
+  <div><span class="label">Próximos passos</span>Pedir à STM passageiros diários, posição das subestações e tempo de reparo; repetir o backtest com o motor TypeScript.</div>
+</div></div><footer><span>Fonte: docs/relatorio/relatorio.md §7; disponibilidade em dia útil: fontes/verificacao/politicas.md</span><span class="pg">dados 2026-10-20 e 2026-10-21 · 15</span></footer><aside class="notes no-print"><p>Três conclusões para a decisão, na ordem das perguntas do início.</p>
+<p>Cada linha, isolada, tem disponibilidade alta. O risco está no sistema: falhas que vêm juntas, eventos que param duas linhas de uma vez e uma linha inteira, a Azul, que depende de outra.</p>
+<p>E o que aprendemos com o backtest: a incerteza entre anos precisa entrar na previsão.</p>
+<p><b>Tempo:</b> 1 min.</p></aside></section></div></div><div class="frame" id="s16"><div class="frame-in"><section class="slide " data-n="16" aria-label="Slide 16 de 16"><header><div class="eyebrow">Confira você mesmo</div><h2>Tudo é público: site, simulador, dados e o comando que refaz as contas</h2></header><div class="slide-body">
+<div class="cols c-55-45">
+  <div>
+    <ul class="links">
+      <li><span class="label">Site</span><a href="https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/">felipe44776-eseg.github.io/confiabilidade-metro-montreal/</a></li>
+      <li><span class="label">Simulador</span><a href="https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/simulador/">felipe44776-eseg.github.io/confiabilidade-metro-montreal/simulador/</a></li>
+      <li><span class="label">Mapa</span><a href="https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/mapa/">felipe44776-eseg.github.io/confiabilidade-metro-montreal/mapa/</a></li>
+      <li><span class="label">Fontes e verificação</span><a href="https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/fontes/">felipe44776-eseg.github.io/confiabilidade-metro-montreal/fontes/</a></li>
+      <li><span class="label">Repositório</span><a href="https://github.com/felipe44776-eseg/confiabilidade-metro-montreal">github.com/felipe44776-eseg/confiabilidade-metro-montreal</a></li>
+    </ul>
+  </div>
+  <div>
+    <div class="label">Refazer as contas, sem confiar na equipe</div>
+    <pre class="cmd">python -I pipeline/verifica_fontes.py \
+  --baixa-release --recalcula</pre>
+    <p class="corpo-sm">Baixa os dados da Release, confere cada SHA-256 e recalcula 25 números com código independente do pipeline. Python 3.11, sem biblioteca extra.</p>
+    <div class="obrigado">Obrigado. Perguntas?</div>
+    <p class="corpo-sm muted">Ana Paula Duanetti · Felipe Marins<br>Lorena Feitosa de Freitas · Sophia Braz</p>
+  </div>
+</div></div><footer><span>Fonte: fontes/FONTES.md (Como conferir sozinho); docs/relatorio/relatorio.md (cabeçalho e apêndice)</span><span class="pg">dados 2026-10-20 e 2026-10-21 · 16</span></footer><aside class="notes no-print"><p>Mostrar que qualquer pessoa da turma pode rodar a verificação. Se houver tempo, abrir o simulador e trocar um cenário ao vivo, por exemplo um dia de neve.</p>
+<p>Abrir para perguntas.</p>
+<p><b>Tempo:</b> 30 s.</p></aside></section></div></div>
+<div id="pos" class="no-print">1 / 16</div>
+<div id="ajuda" class="no-print">→ ← espaço · F tela cheia · N notas</div>
+<div id="painel-notas" class="no-print" aria-live="polite"></div>
+<script>
+(function(){
+  var raiz=document.documentElement, sc=document.scrollingElement||raiz;
+  var frames=[].slice.call(document.querySelectorAll('.frame')), N=frames.length, idx=0;
+  var pos=document.getElementById('pos'), painel=document.getElementById('painel-notas');
+  var verifica=/[?&]check\b/.test(location.search);
+  function ajusta(){
+    if(verifica){raiz.style.setProperty('--s','1');return;}
+    var notas=document.body.classList.contains('com-notas');
+    var h=notas? innerHeight*0.66-14 : innerHeight;
+    var s=Math.min(innerWidth/1280, h/720);
+    raiz.style.setProperty('--s', (s>0? s:1).toFixed(4));
+  }
+  function atual(){ return Math.max(0, Math.min(N-1, Math.round(sc.scrollTop/innerHeight))); }
+  function mostra(i){
+    idx=i; pos.textContent=(i+1)+' / '+N;
+    if(document.body.classList.contains('com-notas')){
+      var a=frames[i].querySelector('aside.notes');
+      painel.innerHTML='<p style="opacity:.6;font-size:14px">Notas · slide '+(i+1)+' de '+N+'</p>'+(a? a.innerHTML:'');
+    }
+    if(history.replaceState) history.replaceState(null,'','#'+(i+1));
+  }
+  function vai(i){ i=Math.max(0,Math.min(N-1,i)); sc.scrollTop=i*innerHeight; mostra(i); }
+  function telaCheia(){
+    if(!document.fullscreenElement){ (raiz.requestFullscreen? raiz.requestFullscreen(): Promise.resolve()).catch(function(){}); }
+    else if(document.exitFullscreen){ document.exitFullscreen(); }
+  }
+  function notas(){ document.body.classList.toggle('com-notas'); ajusta(); vai(idx); }
+  addEventListener('keydown',function(e){
+    if(e.altKey||e.ctrlKey||e.metaKey) return;
+    var k=e.key;
+    if(k==='ArrowRight'||k==='ArrowDown'||k==='PageDown'||(k===' '&&!e.shiftKey)){e.preventDefault();vai(idx+1);}
+    else if(k==='ArrowLeft'||k==='ArrowUp'||k==='PageUp'||(k===' '&&e.shiftKey)){e.preventDefault();vai(idx-1);}
+    else if(k==='Home'){e.preventDefault();vai(0);}
+    else if(k==='End'){e.preventDefault();vai(N-1);}
+    else if(k==='f'||k==='F'){e.preventDefault();telaCheia();}
+    else if(k==='n'||k==='N'){e.preventDefault();notas();}
+  });
+  var t; addEventListener('scroll',function(){clearTimeout(t);t=setTimeout(function(){var i=atual(); if(i!==idx) mostra(i);},90);},{passive:true});
+  addEventListener('resize',function(){ajusta(); vai(idx);});
+  var solo=/[?&]solo=(\d+)/.exec(location.search);
+  if(solo){ frames.forEach(function(f,i){ if(i!==+solo[1]-1) f.style.display='none'; }); }
+  if(/[?&]notas\b/.test(location.search)) document.body.classList.add('com-notas');
+  ajusta();
+  var h=parseInt((location.hash||'').slice(1),10);
+  if(h>=1&&h<=N) vai(h-1); else mostra(0);
+  addEventListener('load',function(){ if(h>=1&&h<=N&&!solo) vai(h-1); });
+  var dica=document.getElementById('ajuda');
+  setTimeout(function(){ dica.style.opacity='0'; }, 6000);
+  if(verifica){
+    var out=[];
+    document.querySelectorAll('.slide').forEach(function(s,i){
+      var r=s.getBoundingClientRect(), lim=r.top+720-42, pior=0, quem='';
+      s.querySelectorAll('header *, .slide-body *').forEach(function(el){
+        if(el.closest('.notes')) return;
+        var b=el.getBoundingClientRect(); if(!b.width&&!b.height) return;
+        var exc=Math.max(b.bottom-lim, b.right-(r.left+1280-36), (r.left+36)-b.left, r.top+20-b.top, 0);
+        if(exc>pior){pior=exc; quem=el.tagName+' "'+(el.textContent||'').trim().slice(0,50)+'"';}
+      });
+      var body=s.querySelector('.slide-body'), bb=body.getBoundingClientRect();
+      out.push('slide '+(i+1)+': '+(pior>0.5? 'EXCEDE '+pior.toFixed(1)+'px '+quem : 'ok')+' | conteudo ate y='+Math.round(maxBottom(s)-r.top));
+    });
+    function maxBottom(s){var m=0; s.querySelectorAll('.slide-body *').forEach(function(el){var b=el.getBoundingClientRect(); if(b.height&&b.bottom>m) m=b.bottom;}); return m;}
+    var ep=document.elementFromPoint(innerWidth/2, innerHeight/2), es=ep&&ep.closest('.slide');
+    out.push('nav: idx='+idx+' scrollTop='+sc.scrollTop+' innerHeight='+innerHeight+' frameTop='+Math.round(frames[idx].getBoundingClientRect().top)+' centro=slide '+(es? es.dataset.n:'nenhum'));
+    var pre=document.createElement('pre'); pre.id='check-out'; pre.textContent=out.join('\n'); document.body.appendChild(pre);
+  }
+})();
+</script>
+</body>
+</html>

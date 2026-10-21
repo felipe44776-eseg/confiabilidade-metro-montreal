@@ -23,6 +23,18 @@ A equipe temia que números calculados com ajuda de IA fossem inventados. Em 202
 - Dado um push para a branch principal, quando a verificação falha, então o site não é publicado.
 - Dada uma fonte que muda na origem (GTFS, OpenStreetMap, clima do ano corrente), quando a verificação semanal roda, então ela avisa da mudança sem quebrar, porque vale a cópia da Release.
 
+## Resultado (2026-10-21)
+
+Script `pipeline/verifica_fontes.py`; manifesto `fontes/fontes_manifesto.json`; documentação `fontes/FONTES.md`; workflows `deploy.yml` e `verifica-fontes.yml`.
+
+| Critério | Resultado |
+|---|---|
+| Clone limpo: arquivos baixados da Release batem com o manifesto | **Atende**: a cada publicação no GitHub Actions, as Releases `dados-2026-10-20` e `dados-2026-10-21` são baixadas e conferidas; 0 problemas |
+| Recálculo independente sem diferença | **Atende**: 25 números recalculados direto dos dados brutos, com código que não importa o pipeline; 0 diferenças |
+| Todo arquivo de dados com editor, licença, URL, SHA-256 e script | **Atende**: 45 fontes primárias e 48 derivados no manifesto; cada derivado aponta para as fontes e o script |
+| Verificação que falha impede a publicação | **Atende**: aconteceu na primeira publicação da fase 0 (fim de linha convertido pelo Windows), e o site não foi publicado até a correção |
+| Mudança na origem vira aviso, não erro | **Atende**: a verificação semanal grava o relatório datado em `fontes/verificacao/online_AAAA-MM-DD.txt` e marca "MUDOU" sem quebrar |
+
 ## Fora de escopo
 
 - Garantir que a STM não corrija dados antigos. Mudança na origem vira aviso e, se for o caso, uma nova Release.

@@ -27,7 +27,7 @@ flowchart LR
 | Ordem de circulação | Ordenação topológica das viagens: em cada trecho vale a ordem de entrada do horário. Viagens curtas (Laranja até Henri-Bourassa) entram na posição certa | `app/src/motor/rede.ts` |
 | Falha de trem (MR) | Sorteia uma viagem entre as que circulam na simulação naquele instante. O trem para onde está e bloqueia o trecho no sentido dele pela duração sorteada (massa em zero p_zero; senão lognormal em minutos) | `app/src/motor/dia.ts` |
 | Falha de equipamento fixo (EF) | Local sorteado de `locais_ef[linha]` pelo peso, ou uniforme ao longo da linha para as falhas sem posição (`locais_ef_sem_posicao`). km → trecho. Bloqueia 1 ou 2 sentidos (`sentidos_bloqueio_ef`) | `app/src/motor/dia.ts` |
-| Causa comum | Evento único por par de linhas, taxa constante por hora de operação na interseção das janelas das duas linhas. Bloqueia as duas linhas inteiras, nos dois sentidos | `app/src/motor/dia.ts` |
+| Causa comum | Evento único por grupo de 2 a 4 linhas (desde 2026-10-21; antes, por par), taxa constante por hora de operação na interseção das janelas das linhas do grupo. Bloqueia todas as linhas do grupo, nos dois sentidos | `app/src/motor/dia.ts` |
 | Registro | Cada evento: hora, linha, viagem, trecho físico, sentido, tipo, fluxo de sorteio, posição do sorteio no fluxo, duração e detalhe. Hash FNV-1a de 32 bits sobre a serialização canônica | `app/src/motor/dia.ts` |
 
 ## Convenção de índices

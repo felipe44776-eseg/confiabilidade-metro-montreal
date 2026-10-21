@@ -246,6 +246,11 @@ def main():
     escreve_relatorio(resultado)
 
 
+def chave(k):
+    """Chave "linha|causa|..." legível numa célula de tabela Markdown (o `|` partiria a célula)."""
+    return k.replace("|", " · ")
+
+
 def escreve_relatorio(r):
     L = ["# Distribuições do tempo entre falhas, do tempo até restabelecer e da causa comum (spec 006)", "",
          f"Gerado por `pipeline/distribuicoes.py`, semente {r['semente']}, bootstrap paramétrico com {r['bootstrap_b']} reamostras. "
@@ -253,20 +258,20 @@ def escreve_relatorio(r):
          "| Estrato (linha, causa, frota, condição) | n | Média (h) | CV | Melhor por AIC | ΔAIC Weibull | ΔAIC exponencial | KS | p KS | AD | p AD |", "|---|---|---|---|---|---|---|---|---|---|---|"]
     for k, v in r["tbf"].items():
         if "herda_de" in v:
-            L.append(f"| {k} | {v['n']} | | | herda de {v['herda_de']} | | | | | | |")
+            L.append(f"| {chave(k)} | {v['n']} | | | herda de {chave(v['herda_de'])} | | | | | | |")
             continue
         a = v["aderencia_melhor"]
-        L.append(f"| {k} | {v['n']} | {v['media_h']} | {v['cv']} | {v['melhor']} | {v['delta_aic']['weibull']} | {v['delta_aic']['exponencial']} | "
+        L.append(f"| {chave(k)} | {v['n']} | {v['media_h']} | {v['cv']} | {v['melhor']} | {v['delta_aic']['weibull']} | {v['delta_aic']['exponencial']} | "
                  f"{a['ks']} | {a['p_ks_bootstrap']} | {a['ad']} | {a['p_ad_bootstrap']} |")
     L += ["", "## Teste de reescala do tempo (o agrupamento é só heterogeneidade?)", "",
           "Com a taxa horária da spec 005, os intervalos reescalados deveriam seguir uma exponencial de média 1 se as falhas fossem um processo de Poisson com taxa variável.", "",
           "| Linha e causa | n | Média reescalada | KS contra Exp(1) | p | Forma da Weibull reescalada | Processo usado no simulador |", "|---|---|---|---|---|---|---|"]
     for k, v in r["reescala"].items():
-        L.append(f"| {k} | {v['n']} | {v['media']} | {v['ks_exp1']} | {v['p_ks']:.2g} | {v['weibull_reescalado']['forma']} | {v['processo_no_simulador']} |")
+        L.append(f"| {chave(k)} | {v['n']} | {v['media']} | {v['ks_exp1']} | {v['p_ks']:.2g} | {v['weibull_reescalado']['forma']} | {v['processo_no_simulador']} |")
     L += ["", "## Tempo até o serviço voltar", "", "| Linha e causa | n | Sem interrupção (IC 95%) | μ log (IC 95%) | σ log | Média (min) | p90 (min) |", "|---|---|---|---|---|---|---|"]
     for k, v in r["ttr"].items():
         ln = v["lognormal_positivos"]
-        L.append(f"| {k} | {v['n']} | {v['p_zero']} ({v['p_zero_ic95'][0]}–{v['p_zero_ic95'][1]}) | {ln['mu_log']} ({ln['mu_log_ic95'][0]}–{ln['mu_log_ic95'][1]}) | "
+        L.append(f"| {chave(k)} | {v['n']} | {v['p_zero']} ({v['p_zero_ic95'][0]}–{v['p_zero_ic95'][1]}) | {ln['mu_log']} ({ln['mu_log_ic95'][0]}–{ln['mu_log_ic95'][1]}) | "
                  f"{ln['sigma_log']} | {v['media_min']} | {v['p90_min']} |")
     a = r["ttr_aft"]
     L += ["", f"Regressão de tempo acelerado (lognormal) nas {a['n']} interrupções com duração positiva: R² {a['r2']}, σ {a['sigma']}. Multiplicadores da duração:", "",

@@ -28,7 +28,7 @@ Script `pipeline/backtest.py`; testes em `pipeline/tests/test_backtest.py`; rela
 |---|---|
 | IP 90% contém o observado em 80% a 98% dos casos linha × mês (treino até 2024-12) | **Exceção**: 66,7% (48 de 72; IC 54,6%–77,3%) na versão A, pré-registrada. 22 dos 24 casos fora ficam abaixo do intervalo: o efeito do ano de 2024, que foi atípico (cerca de 1.000 falhas no 2º semestre, contra cerca de 500 nos vizinhos), superestima 2025 |
 | PIT aproximadamente uniforme, com gráfico | **Exceção na versão A** (KS p = 2,4e-11, concentrado perto de zero); gráficos em `backtest_pit.svg` e `backtest_pit_C.svg` |
-| Minutos parados de 2025 dentro do IC 95% | **Exceção na versão A** (Verde e Amarela acima do observado); nas versões B, C e D, as 4 linhas ficam dentro |
+| Minutos parados de 2025 dentro do IC 95% | **Exceção na versão A** (Verde e Amarela acima do observado); nas versões B e C (2025) e D (2023, primeiro ano do seu teste), as 4 linhas ficam dentro |
 | Greve separada | **Atende**: meses de greve com cobertura própria (A: 56,2%; C: 93,8%) |
 | Onde o modelo falhou, linha a linha | **Atende** |
 | Comparação com o treino só até 2023-09 | **Atende**: versão B, pré-registrada, 81,9% (59 de 72) |

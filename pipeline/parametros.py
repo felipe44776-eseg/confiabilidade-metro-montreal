@@ -7,7 +7,7 @@ Todo número sai como Parametro: valor, ic95, n, unidade, método, fontes, scrip
 """
 import csv
 import json
-import subprocess
+import hashlib
 from collections import defaultdict
 
 import numpy as np
@@ -34,13 +34,16 @@ def amostra(duracoes, origem):
             "script": "pipeline/parametros.py", "status": "ajustado", "origem": origem}
 
 
+SCRIPTS_DO_CONTRATO = ("pipeline/modelo_taxa.py", "pipeline/distribuicoes.py", "pipeline/parametros.py")
+
+
 def commit():
-    try:
-        h = subprocess.run(["git", "rev-parse", "--short", "HEAD"], capture_output=True, text=True, timeout=30).stdout.strip()
-        sujo = subprocess.run(["git", "status", "--porcelain", "pipeline"], capture_output=True, text=True, timeout=30).stdout.strip()
-        return h + ("+alteracoes-locais" if sujo else "")
-    except Exception:
-        return "desconhecido"
+    """Identifica o código que gerou o contrato: SHA-256 dos scripts com fim de linha normalizado.
+    Igual em qualquer máquina e commit com o mesmo código (o hash do git mudava a cada commit e quebrava a reprodução)."""
+    h = hashlib.sha256()
+    for s in SCRIPTS_DO_CONTRATO:
+        h.update(open(s, "rb").read().replace(b"\r\n", b"\n"))
+    return "sha256-scripts:" + h.hexdigest()[:16]
 
 
 def taxa(causa):
@@ -59,6 +62,10 @@ def taxa(causa):
         if nivel == "sem_dado":
             # categoria de dado ausente: controla o ajuste, mas não é um cenário possível (e, com poucas horas,
             # o multiplicador vai a zero). Fica no relatório da spec 005, não no contrato.
+            continue
+        if fator == "greve":
+            # a spec 005 concluiu que a greve atua só pela exposição (IC do multiplicador contém 1); no simulador,
+            # a greve reduz a oferta e não muda a taxa por trem-hora (decisão D42, 2026-10-21)
             continue
         mult[fator][nivel] = P(c["multiplicador"], "ajustado", metodo, FONTES_TAXA, script, c["ic95"], t["n_horas"], "multiplicador da taxa")
     base = {l: P(v["valor"], "ajustado", metodo + f"; condições de referência no ano {t['ano_base']}", FONTES_TAXA, script, v["ic95"],
