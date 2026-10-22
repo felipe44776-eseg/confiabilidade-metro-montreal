@@ -46,4 +46,5 @@ flowchart LR
 |---|---|---|
 | Preparo de três variantes (Rosa, linha desenhada e as duas juntas) | 0,6 a 0,8 s por worker | Node, máquina carregada |
 | Um dia com rota alternativa, rede atual e três variantes | cerca de 1,8 vez o dia só da rede atual | Node, mesma carga nas duas medidas |
-| 200 dias, 4 versões, rota alternativa | 7,4 s (celular) e 24,7 s (notebook) | navegador sem placa de vídeo, 12 workers, com a máquina ocupada por outros programas (CPU em 63% antes de começar) |
+| 200 dias, 4 versões, rota alternativa | 7,4 s (celular) e 24,7 s (notebook) | build local, navegador sem placa de vídeo, 12 workers, com a máquina ocupada por outros programas (CPU em 63% antes de começar) |
+| 1.000 dias, 4 versões, sem rota alternativa | 3,7 s | site publicado (9f167d8), celular, mesmo navegador |

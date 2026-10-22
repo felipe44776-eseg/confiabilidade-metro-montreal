@@ -1313,7 +1313,9 @@ function mostraComparacaoViagem(caixa: HTMLElement, r: Agregado, m: Record<strin
     const tempoTxt = tempo && tempo.ic95[1] < 0 ? ` A viagem também fica ${num(-tempo.media, 1)} min mais curta em média, com as falhas.` : '';
     let t: string;
     const porque = muda ? 'O caminho de sempre passa pela linha nova.' : 'O caminho de sempre não muda: a linha nova vale como caminho alternativo.';
-    if (dd.ic95[0] > 0 && !(x > 0))
+    const nadaMuda = !muda && Math.abs(dd.media) < 1e-12 && dd.meiaLargura < 1e-12;
+    if (nadaMuda) t = `Com ${nomeNaFrase(k)}, nada muda nesta viagem: o caminho de sempre é o mesmo e nenhuma falha da linha nova alcança as linhas dele.`;
+    else if (dd.ic95[0] > 0 && !(x > 0))
       t = `Com ${nomeNaFrase(k)}, a viagem não ficou sem caminho em nenhum dos ${inteiro(r.n)} dias simulados (na rede atual, ${numSig(y)} min por dia; ${fN(nb)} noves). Com mais dias, o tempo sem caminho fica mensurável. ${porque}`;
     else if (dd.ic95[0] > 0)
       t = `Com ${nomeNaFrase(k)}, a viagem fica sem caminho ${numSig(x)} min por dia em vez de ${numSig(y)} (${rz ? textoRazao(rz.media, num) : 'menos'}; de ${fN(nb)} para ${fN(nv)} noves). ${porque}`;

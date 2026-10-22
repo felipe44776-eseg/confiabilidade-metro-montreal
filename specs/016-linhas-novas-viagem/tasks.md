@@ -11,5 +11,6 @@
 - [x] Página: caixas das propostas, desenho pela lista e pelo mapa, comparação pareada, leitura de cada linha nova, hipóteses; coluna de noves e gráfico logarítmico também na rede atual e na aba "Muitos dias".
 - [x] Relatório (`app/relatorios/linhas_novas.relatorio.ts` → `fontes/verificacao/linhas_novas.md`).
 - [x] Conferência no navegador local (celular e notebook): proposta marcada, linha desenhada pela lista e pelo toque no mapa, comparação, sem rolagem lateral e sem erro no console.
-- [ ] Conferência no site publicado.
+- [x] Conferência no site publicado, em tamanho de celular (`fontes/verificacao/linhas_novas_navegador_2026-10-21.json`).
+- [ ] Conferência no site publicado em tamanho de notebook (o teste perdeu a conexão com o navegador por falta de memória da máquina; repetir com a máquina livre).
 - [ ] Pontos de retorno nas linhas novas além das pontas (pergunta em aberto).

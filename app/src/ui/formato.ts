@@ -21,14 +21,21 @@ export function pct(x: number, casas = 2): string {
 }
 
 /** Pontos percentuais com sinal (diferença de duas frações). */
+/** Zero quando o valor arredondado nas casas pedidas é zero: evita "−0,000" de resíduos de ponto flutuante. */
+function semMenosZero(x: number, casas: number): number {
+  return Math.abs(x) < 0.5 * 10 ** -casas ? 0 : x;
+}
+
 export function pp(x: number, casas = 3): string {
   if (!Number.isFinite(x)) return '—';
-  return `${x > 0 ? '+' : ''}${nf(casas, casas).format(x * 100)} pp`;
+  const v = semMenosZero(x * 100, casas);
+  return `${v > 0 ? '+' : ''}${nf(casas, casas).format(v)} pp`;
 }
 
 export function comSinal(x: number, casas = 1): string {
   if (!Number.isFinite(x)) return '—';
-  return `${x > 0 ? '+' : ''}${nf(casas, casas).format(x)}`;
+  const v = semMenosZero(x, casas);
+  return `${v > 0 ? '+' : ''}${nf(casas, casas).format(v)}`;
 }
 
 export function inteiro(x: number): string {

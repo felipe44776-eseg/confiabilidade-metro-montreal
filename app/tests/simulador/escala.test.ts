@@ -2,6 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import { estimativa } from '../../src/mc/rodadas';
 import { noves, novesIC, razaoPareada, textoRazao } from '../../src/ui/escala';
+import { comSinal, pp } from '../../src/ui/formato';
 
 const f = (x: number, c: number) => x.toFixed(c);
 
@@ -58,5 +59,15 @@ describe('razão pareada', () => {
     expect(textoRazao(1.3, f)).toBe('1.3 vez mais');
     expect(textoRazao(1, f)).toBe('igual');
     expect(textoRazao(0, f)).toBe('nenhum minuto');
+  });
+});
+
+describe('sinais na escala', () => {
+  it('resíduo de ponto flutuante não vira "−0,000"', () => {
+    expect(pp(-1e-19, 3)).toBe('0,000 pp');
+    expect(comSinal(-1e-12, 2)).toBe('0,00');
+    expect(pp(-0.0021, 3)).toBe('-0,210 pp');
+    expect(comSinal(0.004, 2)).toBe('0,00');
+    expect(comSinal(0.006, 2)).toBe('+0,01');
   });
 });

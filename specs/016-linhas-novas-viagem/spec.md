@@ -45,6 +45,7 @@ Código em `app/src/motor/linhas_novas.ts` (com mudanças em `viagem.ts`, `dia.t
 | Paralelo nunca piora | **Atende** (teste, 40 dias, com a linha falhando) |
 | Escala: minutos sem caminho, noves, razão com IC, gráfico logarítmico | **Atende**. Ex.: Côte-Vertu → Montmorency com rota alternativa vai de 2,27 para 5,38 noves (6,50 para 0,01 min por dia; razão 0,001) |
 | Mesmo link, mesmos números | **Atende** (teste de rodadas determinísticas e do link) |
+| Conferência no site publicado (commit 9f167d8) | Em tamanho de celular, a viagem padrão com a Rosa e a linha desenhada Angrignon–Snowdon rodou 1.000 dias, 4 versões da rede, em 3,7 s com 12 workers (navegador sem placa de vídeo), sem rolagem lateral e sem erro no console (`fontes/verificacao/linhas_novas_navegador_2026-10-21.json`). O mesmo teste em tamanho de notebook perdeu a conexão com o navegador no meio, com a memória da máquina quase no limite, e não foi repetido; o notebook ficou conferido no build local |
 
 Achados (relatório, dia útil):
 
