@@ -57,7 +57,7 @@ describe('spec 009: Monte Carlo', () => {
     }
   }, LONGO);
 
-  it('Laranja sem redundância: minutos parados por ano contra o painel (1.852 simulado, 1.797 analítico)', () => {
+  it('Laranja sem redundância: minutos parados por ano contra o painel (painel: 1.639 simulado, 1.601 analítico, após a revisão de 2026-11)', () => {
     const rede = carregaRede();
     const p = carregaFixture();
     const N = 1500;
@@ -74,17 +74,19 @@ describe('spec 009: Monte Carlo', () => {
     const total = anualiza(porTipo);
     const soLinha = anualiza(tecnicas);
     const ref = corredor.find((c) => c.cenario === 'so_laranja');
-    expect(ref?.sim_min_ano).toBeCloseTo(1852.34, 1);
-    expect(ref?.min_ano_analitico).toBeCloseTo(1797.04, 1);
+    // v1.1.0: 1.852,34 simulado e 1.797,04 analítico. Revisão de 2026-11 (D55): com a duração pela faixa oficial,
+    // o painel passou a 1.639,36 e 1.601,07; o critério da spec 009 (15% do analítico) não muda.
+    expect(ref?.sim_min_ano).toBeCloseTo(1639.36, 1);
+    expect(ref?.min_ano_analitico).toBeCloseTo(1601.07, 1);
     const contem = (e: Estimativa, x: number) => e.ic95[0] <= x && x <= e.ic95[1];
     console.log(
       `Laranja, minutos parados por ano (${N} rodadas por tipo de dia, semente ${SEMENTE}, calendário ${JSON.stringify(DIAS_POR_TIPO_ANO)}):`,
       `total ${total.media.toFixed(0)} [${total.ic95.map((x) => x.toFixed(0)).join(', ')}]`,
       `só MR+EF ${soLinha.media.toFixed(0)} [${soLinha.ic95.map((x) => x.toFixed(0)).join(', ')}]`,
-      `contém 1852: ${contem(total, 1852.34)}; contém 1797: ${contem(total, 1797.04)}`,
+      `contém 1639: ${contem(total, 1639.36)}; contém 1601: ${contem(total, 1601.07)}`,
     );
-    // critério da spec: o IC contém 1.852 ou 1.797, ou a diferença é explicada no relatório (plan.md da 009)
-    expect(Math.abs(total.media - 1797.04) / 1797.04).toBeLessThan(0.15);
+    // critério da spec: o IC contém o simulado ou o analítico do painel, ou a diferença é explicada no relatório (plan.md da 009)
+    expect(Math.abs(total.media - 1601.07) / 1601.07).toBeLessThan(0.15);
   }, LONGO);
 
   it('rodadas para a meia-largura ficar em 5% da média dos minutos parados de cada linha cabem no teto do modo adaptativo', () => {

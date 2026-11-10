@@ -8,7 +8,7 @@
 //   dentro do trecho. Depois de cada falha, a linha-sentido afetada é recalculada.
 // - Tudo fica no registro: hora, linha, viagem, trecho, sentido, tipo e origem do sorteio.
 
-import type { Contexto, Duracao } from './contexto';
+import type { Contexto, Duracao, LocaisLinha } from './contexto';
 import { reducaoCausaComum } from './contexto';
 import { sorteiaOficina } from './frota';
 import type { Grafo } from './grafo';
@@ -136,7 +136,8 @@ export interface EstadoSentido {
   mexido: boolean;
 }
 
-type Pendente = { tipo: 'MR' | 'EF'; li: number; injetada?: FalhaInjetada } | { tipo: 'CC'; ci: number; injetada?: FalhaInjetada };
+// `fi`: índice da fonte em ctx.fontes (falhas sorteadas); as injetadas não têm fonte
+type Pendente = { tipo: 'MR' | 'EF'; li: number; fi?: number; injetada?: FalhaInjetada } | { tipo: 'CC'; ci: number; injetada?: FalhaInjetada };
 
 /** Simula um dia. Função pura: mesmo contexto, políticas e semente dão o mesmo resultado. */
 export function simulaDia(ctx: Contexto, politicas: Politicas, semente: number, opcoes: OpcoesDia = {}): ResultadoDia {
@@ -222,8 +223,8 @@ export function simulaDia(ctx: Contexto, politicas: Politicas, semente: number, 
   const fila = new Heap<Pendente>();
   if (!cenario.semFalhas) {
     for (const f of ctx.fontes) {
-      const rng = fluxo(f.causa === 'MR' ? 'falhas_mr' : 'falhas_ef', f.li);
-      for (const t of sorteiaInstantes(rng, f.acum, f.renovacao.forma, f.renovacao.escalaNormalizada)) fila.insere(t, { tipo: f.causa, li: f.li });
+      const rng = fluxo(f.fluxoInstantes, f.subInstantes);
+      for (const t of sorteiaInstantes(rng, f.acum, f.renovacao.forma, f.renovacao.escalaNormalizada)) fila.insere(t, { tipo: f.causa, li: f.li, fi: f.fi });
     }
     for (const c of ctx.causaComum) {
       const rng = fluxo('causa_comum', c.ci);
@@ -246,9 +247,6 @@ export function simulaDia(ctx: Contexto, politicas: Politicas, semente: number, 
   const reducaoCC = reducaoCausaComum(ctx, politicas);
 
   const SEM_DURACAO: Duracao = { pZero: 1, mu: 0, sigma: 1 };
-  function duracaoDaFonte(li: number, causa: 'MR' | 'EF'): Duracao {
-    return ctx.fontes.find((f) => f.li === li && f.causa === causa)?.duracao ?? SEM_DURACAO;
-  }
 
   function bloqueia(linha: string, s: Sentido, local: number, b: Bloqueio): void {
     const es = estados[linha][s];
@@ -316,11 +314,12 @@ export function simulaDia(ctx: Contexto, politicas: Politicas, semente: number, 
         g = Math.min(Math.max(inj.trecho ?? 0, 0), n - 2);
         sentidos = inj.sentidos ?? (ctx.sentidosEF === 2 ? [0, 1] : [0]);
       } else {
-        const rd = fluxo('duracoes', ev.li * 2 + 1);
+        const fonte = ctx.fontes[ev.fi as number];
+        const rd = fluxo('duracoes', fonte.subDuracao);
         sorteio = rd.sorteios;
-        dur = sorteiaDuracao(rd, duracaoDaFonte(ev.li, 'EF'));
-        const re = fluxo('escolha', 50 + ev.li);
-        const [km, cod] = sorteiaLocal(ctx, linha, re.uniforme());
+        dur = sorteiaDuracao(rd, fonte.duracao);
+        const re = fluxo('escolha', fonte.subEscolha);
+        const [km, cod] = sorteiaLocal(ctx, linha, re.uniforme(), fonte.locais);
         const uSentido = re.uniforme(); // sempre sorteado
         codigo = cod;
         g = trechoDoKm(ctx, linha, km);
@@ -357,11 +356,12 @@ export function simulaDia(ctx: Contexto, politicas: Politicas, semente: number, 
     let uRetirada = 1;
     if (inj) dur = inj.duracaoS;
     else {
-      const rd = fluxo('duracoes', ev.li * 2);
+      const fonte = ctx.fontes[ev.fi as number];
+      const rd = fluxo('duracoes', fonte.subDuracao);
       sorteio = rd.sorteios;
-      dur = sorteiaDuracao(rd, duracaoDaFonte(ev.li, 'MR'));
-      uEscolha = fluxo('escolha', ev.li).uniforme();
-      uRetirada = fluxo('politicas', ev.li).uniforme();
+      dur = sorteiaDuracao(rd, fonte.duracao);
+      uEscolha = fluxo('escolha', fonte.subEscolha).uniforme();
+      uRetirada = fluxo('politicas', fonte.subPolitica).uniforme();
       fl = 'falhas_mr';
     }
     // trens em circulação agora, na simulação
@@ -620,8 +620,8 @@ function origemDestino(grafo: Grafo, bloqueios: BloqueioOD[], janela: [number, n
 }
 
 /** Sorteia o local da falha de equipamento fixo: [km, código]. */
-function sorteiaLocal(ctx: Contexto, linha: string, u: number): [number, string] {
-  const loc = ctx.locais[linha];
+function sorteiaLocal(ctx: Contexto, linha: string, u: number, daFonte?: LocaisLinha): [number, string] {
+  const loc = daFonte ?? ctx.locais[linha];
   const comPosicao = loc.pesosAcum.length ? loc.pesosAcum[loc.pesosAcum.length - 1] : 0;
   const total = comPosicao + loc.pesoSemPosicao;
   const x = u * total;

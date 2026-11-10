@@ -6,6 +6,7 @@ import type { Grafo } from './grafo';
 import { linhasDoHorario, montaGrafo } from './grafo';
 import { hipotese } from './hipoteses';
 import type { Politicas } from './politicas';
+import type { Fluxo } from './prng';
 import type { HorarioDia, Rede } from './rede';
 import type { Renovacao01 } from './taxas';
 import { renovacaoDe, taxaAcumulada, taxaAcumuladaConstante } from './taxas';
@@ -20,13 +21,36 @@ export interface Duracao {
   amostra?: Float64Array;
 }
 
+/**
+ * Uma fonte de falha de uma linha (spec 019). A família (`causa`) decide o efeito: MR para o trem no sentido, EF
+ * bloqueia um trecho. Cada fonte tem os seus sub-fluxos de sorteio; no contrato v1, as duas fontes de cada linha
+ * (MR e EF) usam os sub-fluxos de antes da revisão, então os números não mudam.
+ */
 export interface FonteFalha {
+  /** Identificador da fonte na linha (contrato v1: a própria família, "MR" ou "EF"). */
+  id: string;
+  /** Posição em ctx.fontes. */
+  fi: number;
   linha: string;
-  li: number; // índice da linha (separa fluxos de sorteio)
-  causa: Causa;
+  li: number; // índice da linha
+  causa: Causa; // família
   acum: Float64Array;
   renovacao: Renovacao01;
   duracao: Duracao;
+  fluxoInstantes: Fluxo;
+  subInstantes: number;
+  subDuracao: number;
+  subEscolha: number;
+  subPolitica: number;
+  /** Locais da fonte; sem eles, os da linha (equipamento fixo). */
+  locais?: LocaisLinha;
+}
+
+/** Sub-fluxos de sorteio do contrato v1, idênticos aos do motor antes da revisão de 2026-11. */
+function subFluxosV1(li: number, causa: Causa): Pick<FonteFalha, 'fluxoInstantes' | 'subInstantes' | 'subDuracao' | 'subEscolha' | 'subPolitica'> {
+  return causa === 'MR'
+    ? { fluxoInstantes: 'falhas_mr', subInstantes: li, subDuracao: li * 2, subEscolha: li, subPolitica: li }
+    : { fluxoInstantes: 'falhas_ef', subInstantes: li, subDuracao: li * 2 + 1, subEscolha: 50 + li, subPolitica: li };
 }
 
 export interface FonteCausaComum {
@@ -82,12 +106,15 @@ export function preparaContexto(rede: Rede, parametros: Parametros, cenario: Cen
   rede.ids.forEach((linha, li) => {
     for (const causa of CAUSAS) {
       fontes.push({
+        id: causa,
+        fi: fontes.length,
         linha,
         li,
         causa,
         acum: taxaAcumulada(parametros, horario, cenario, linha, causa),
         renovacao: renovacaoDe(parametros, linha, causa),
         duracao: duracaoDe(parametros.ttr[`${linha}|${causa}`]),
+        ...subFluxosV1(li, causa),
       });
     }
   });
