@@ -1,6 +1,6 @@
 # 017 — Fontes de falha e durações pela faixa oficial
 
-**Status:** especificada
+**Status:** implementada
 **Fase:** revisão de 2026-11
 **Depende de:** 000, 001
 **Revisa:** 001 (normalização)
@@ -43,6 +43,22 @@ De que parte do sistema vem cada falha técnica (frota do trem ou setor do equip
 - **Gravidade (D58):** dada cada falha, quando normalizada, então recebe a classe pelos limites da STM (menos de 5, 5 a 10, 10 a 30, 30 min ou mais), pela duração final, e a classe pela faixa oficial. As duas contagens aparecem por fonte.
 - **Mesma duração em todo lugar:** dado o painel do site e os números do `FONTES.md`, quando recalculados, então usam a mesma regra de duração do simulador.
 - **Conferência independente (princípio IV):** dada a verificação das fontes, quando roda com `--recalcula`, então refaz com código próprio os minutos por linha pela regra e as contagens por fonte, sem diferença.
+
+## Resultado (2026-11-10)
+
+Código em `pipeline/duracao.py` (regra da faixa e classes), `pipeline/normaliza.py` (fontes, colunas e relatório) e `pipeline/km_real.py` (leitor dos dois formatos do km real). O painel do site (`monta_painel.py`, `analise_confiabilidade.py`) usa a mesma duração. Testes em `pipeline/tests/test_normaliza.py`; relatório [`fontes_e_duracoes.md`](../../fontes/verificacao/fontes_e_duracoes.md).
+
+| Critério | Resultado |
+|---|---|
+| Fonte de cada falha; a soma é o total; contagens mantidas | **Atende**. 9 fontes: `mr73` 2.740, `mpm10` 1.191, `mr_outros` 51, `voie_sintoma_fixo` 969, `voie_sintoma_trem` 788, `aux_trains_sintoma_fixo` 1.534, `aux_trains_sintoma_trem` 695, `aux_stations` 420, `tcpe` 142. A regra dividiu a via e o Service aux trains; aux stations (0 com sintoma de trem) e TCPE (7) ficaram inteiros. Continuam 8.530, 45, 31 e 44 |
+| Frota: causa secundária contra "Type de matériel" | **Atende**: nenhuma discordância (MR-73 = 73 nas 2.761; MPM-10 = 10 nas 1.196; veículos de trabalho e causa genérica = "Non affecté") |
+| Virada de dia marcada | **Atende**: 27 (19 coerentes com a faixa, 8 exceções) |
+| Duração pela faixa oficial | **Atende** (teste: toda exceção fica na própria faixa oficial; as demais mantêm a calculada). As 100 exceções passam de 11.129 a 562 minutos |
+| Peso das exceções em minutos, por linha e família | **Atende** (relatório) |
+| Sensibilidade: calculada, regra, ponto médio | **Atende**: 43.971, 33.404 e 33.476 minutos na rede |
+| Gravidade pela duração e pela faixa oficial | **Atende**: 5 min ou mais em 1.983 falhas pela regra e 1.956 pela faixa oficial |
+| Mesma duração no painel e no simulador | **Atende**: `duracao.py` usado pelos três scripts |
+| Conferência independente | **Atende**: `verifica_fontes.py --recalcula` refaz os minutos por linha e as 9 contagens por fonte com código próprio, 0 diferenças |
 
 ## Fora de escopo
 

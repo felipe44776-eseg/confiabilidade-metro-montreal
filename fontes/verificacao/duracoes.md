@@ -4,11 +4,11 @@ Gerado por `pipeline/parametros.py`. Média das durações positivas observadas 
 
 | Linha e causa | Durações positivas | Média observada (min) | Média da lognormal (min) | Razão |
 |---|---|---|---|---|
-| verde · MR | 1139 | 5,83 | 5,48 | 1,064 |
-| verde · EF | 555 | 12,07 | 9,56 | 1,262 |
-| laranja · MR | 531 | 6,96 | 5,67 | 1,228 |
-| laranja · EF | 786 | 11,48 | 8,89 | 1,291 |
-| amarela · MR | 328 | 4,79 | 4,56 | 1,052 |
-| amarela · EF | 200 | 10,46 | 9,83 | 1,065 |
-| azul · MR | 816 | 5,36 | 5,12 | 1,046 |
-| azul · EF | 190 | 51,97 | 15,36 | 3,384 |
+| verde · MR | 1138 | 5,59 | 5,26 | 1,062 |
+| verde · EF | 551 | 9,69 | 8,26 | 1,173 |
+| laranja · MR | 531 | 6,77 | 5,49 | 1,234 |
+| laranja · EF | 779 | 9,82 | 7,90 | 1,244 |
+| amarela · MR | 327 | 4,73 | 4,49 | 1,053 |
+| amarela · EF | 200 | 9,88 | 9,39 | 1,052 |
+| azul · MR | 816 | 5,22 | 5,00 | 1,043 |
+| azul · EF | 181 | 14,79 | 7,25 | 2,039 |

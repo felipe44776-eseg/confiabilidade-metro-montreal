@@ -27,6 +27,7 @@ MANIFESTO = "fontes/fontes_manifesto.json"
 REPO = "felipe44776-eseg/confiabilidade-metro-montreal"
 RELEASE = "dados-2026-10-20"       # fontes da fase 0
 RELEASE_F1 = "dados-2026-10-21"    # fontes acrescentadas na fase 1 (clima horário, expansão)
+RELEASE_R = "dados-2026-11"        # revisão de 2026-11: km real republicado pela STM em 2026-10-23 (2019-01 a 2026-09)
 B = "dados/brutos"
 D = "dados/derivados"
 ECCC = "https://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=51157&Year={ano}&Month=1&Day=1&time=&timeframe=2&submit=Download+Data"
@@ -67,8 +68,10 @@ FONTES = [
     {"id": "stm_km_reel", "papel": "painel e simulador", "arquivo": f"{B}/stm/km_reel.csv", "distribuicao": "release",
      "url": "https://donneesouvertes.stm.info/fichiers/Kilom%C3%A9trage%20r%C3%A9el.csv",
      "catalogo": ["https://donnees.montreal.ca/dataset/stm-kilometrage-realise-par-les-voitures-de-metro-de-la-stm"],
-     "editor": "STM", "licenca": "CC BY 4.0", "formato": "csv,",
-     "uso": "Exposicao (km-carro) por linha e frota, trens em servico por dia, taxas por km, modelo k-de-n"},
+     "editor": "STM", "licenca": "CC BY 4.0", "formato": "csv;", "release_tag": RELEASE_R,
+     "uso": "Exposicao (km-carro) por linha e frota, trens em servico por dia, taxas por km, modelo k-de-n. "
+            "Versao publicada em 2026-10-23 (2019-01 a 2026-09, separador ponto e virgula); nos 57 meses em comum com a de "
+            "2026-10-20, os km por mes, linha e frota sao iguais"},
     {"id": "stm_km_planifie", "papel": "apoio", "arquivo": f"{B}/stm/km_planifie.csv", "distribuicao": "release",
      "url": "https://donneesouvertes.stm.info/fichiers/Kilom%C3%A9trage%20m%C3%A9tro%20planif%C3%A9.csv",
      "catalogo": ["https://donnees.montreal.ca/dataset/stm-kilometrage-metro-des-periodes-de-service"],
@@ -411,15 +414,75 @@ def recalcula():
         checks.append((f"falhas tecnicas, linha {l}", sum(1 for e in tec if e["Ligne"] == chave), pub[l]["falhas"]))
         checks.append((f"falhas de material rodante, linha {l}",
                        sum(1 for e in tec if e["Ligne"] == chave and e["Cause primaire"] == "Matériel roulant"), pub[l]["falhas_mr"]))
-    km = 0.0
+    # km real: dois formatos publicados pela STM (virgula e "Jour calendaire" ate 2026-10-20; ponto e virgula, "Date"
+    # e milhar com espaco desde 2026-10-23); os numeros publicados usam 2019-01 a 2023-09
+    km, km_frota = 0.0, Counter()
     with open(f"{B}/stm/km_reel.csv", encoding="utf-8-sig", newline="") as f:
-        for r in csv.DictReader(f):
-            if r["Ligne"] in nomes:
+        cab_km = f.readline()
+        f.seek(0)
+        for r in csv.DictReader(f, delimiter=";" if cab_km.count(";") > cab_km.count(",") else ","):
+            dia = r.get("Date") or r.get("Jour calendaire") or ""
+            if r["Ligne"] in nomes and dia <= "2023-09-30":
                 try:
-                    km += float(r["Km voiture"].replace(",", "."))
+                    v = float("".join(r["Km voiture"].split()).replace(",", "."))
                 except ValueError:
-                    pass
+                    continue
+                km += v
+                km_frota[(nomes[r["Ligne"]], {"73": "MR-73", "10": "MPM-10"}.get(r["Type matériel"], "outra"))] += v
     checks.append(("km-carro real 2019-01 a 2023-09 (milhoes)", round(km / 1e6, 2), pub["rede"]["km_carro_milhoes"]))
+    # Spec 017: duracao pela faixa oficial e fonte de cada falha, com codigo proprio
+    if os.path.exists(f"{D}/eventos/eventos_tecnicos.csv"):
+        import hashlib as hl
+        import random as rd
+        faixas = ["02 min et moins", "03 à 04 min", "05 à 09 min", "10 à 14 min", "15 à 19 min", "20 à 24 min", "25 à 29 min", "30 min et plus"]
+        limites = [(0, 2), (3, 4), (5, 9), (10, 14), (15, 19), (20, 24), (25, 29), (30, 10 ** 9)]
+        medio = [1, 3.5, 7, 12, 17, 22, 27]
+        hm = lambda s: int(s.split(":")[0]) * 60 + int(s.split(":")[1])
+        faixa_de = lambda x: next(i for i, (a, b) in enumerate(limites) if a <= x <= b)
+        familia = lambda e: {"Matériel roulant": "MR", "Équipements fixes": "EF"}.get(e["Cause primaire"], "outra")
+        calc = {e["Numero d'incident"]: (hm(e["Heure de reprise"]) - hm(e["Heure de l'incident"])) % 1440 for e in ev}
+        coerentes = {}
+        for e in ev:
+            o = faixas.index(e["Incident en minutes"]) if e["Incident en minutes"] in faixas else None
+            if o is not None and faixa_de(calc[e["Numero d'incident"]]) == o:
+                coerentes.setdefault((familia(e), o), []).append(calc[e["Numero d'incident"]])
+        for v in coerentes.values():
+            v.sort()
+
+        def final(e):
+            c = calc[e["Numero d'incident"]]
+            o = faixas.index(e["Incident en minutes"]) if e["Incident en minutes"] in faixas else None
+            if o is None or abs(faixa_de(c) - o) <= 1:
+                return c
+            p = coerentes.get((familia(e), o)) or coerentes.get(("MR", o), []) + coerentes.get(("EF", o), [])
+            if not p:
+                return medio[o] if o < 7 else c
+            return p[rd.Random(int.from_bytes(hl.sha256(e["Numero d'incident"].encode("utf-8")).digest()[:8], "big")).randrange(len(p))]
+
+        with open(f"{D}/eventos/eventos_tecnicos.csv", encoding="utf-8") as f:
+            norm = list(csv.DictReader(f, delimiter=";"))
+        for chave, l in nomes.items():
+            checks.append((f"minutos parados pela faixa oficial (spec 017), linha {l}", sum(final(e) for e in tec if e["Ligne"] == chave),
+                           sum(int(r["duracao_min"]) for r in norm if r["linha"] == l)))
+        setor = {"Service de la voie": "voie", "Service aux trains": "aux_trains", "Service aux stations": "aux_stations", "Service TCPE": "tcpe"}
+        trem = lambda e: e["Symptome"] == "Matériel roulant"
+        n_setor = Counter((setor.get(e["Cause secondaire"]), trem(e)) for e in tec if e["Cause primaire"] == "Équipements fixes")
+        divide = {s for s in setor.values() if n_setor[(s, True)] >= 400 and n_setor[(s, False)] >= 400}
+        tot_linha = Counter()
+        for (l, _), v in km_frota.items():
+            tot_linha[l] += v
+
+        def fonte(e):
+            l = nomes[e["Ligne"]]
+            if e["Cause primaire"] == "Matériel roulant":
+                f_ = e["Cause secondaire"] if e["Cause secondaire"] in ("MR-73", "MPM-10") else None
+                return {"MR-73": "mr73", "MPM-10": "mpm10"}[f_] if f_ and km_frota[(l, f_)] >= 0.02 * tot_linha[l] else "mr_outros"
+            s = setor.get(e["Cause secondaire"], "ef_outros")
+            return s + ("_sintoma_trem" if trem(e) else "_sintoma_fixo") if s in divide else s
+
+        meu, deles = Counter(fonte(e) for e in tec), Counter(r["fonte"] for r in norm)
+        for k in sorted(set(meu) | set(deles)):
+            checks.append((f"falhas da fonte {k} (spec 017)", meu[k], deles[k]))
     # Base geoespacial (spec 002)
     with open(f"{D}/gtfs/metro_sequencias.csv", encoding="utf-8") as f:
         est_gtfs = sum(1 for r in csv.DictReader(f, delimiter=";") if r["direction_id"] == "0")

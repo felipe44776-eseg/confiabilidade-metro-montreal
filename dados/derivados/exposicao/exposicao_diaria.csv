@@ -5335,7 +5335,7 @@ data_servico;linha;tipo_dia;fator;status;fonte_fator;greve;janelas_com_servico
 2022-08-26;laranja;util;1.0363;medido;km real do dia / km do molde GTFS;0;
 2022-08-26;amarela;util;1.1518;medido;km real do dia / km do molde GTFS;0;
 2022-08-26;azul;util;1.10032;medido;km real do dia / km do molde GTFS;0;
-2022-08-27;verde;sabado;1.04613;medido;km real do dia / km do molde GTFS;0;
+2022-08-27;verde;sabado;1.04616;medido;km real do dia / km do molde GTFS;0;
 2022-08-27;laranja;sabado;1.02493;medido;km real do dia / km do molde GTFS;0;
 2022-08-27;amarela;sabado;1.15666;medido;km real do dia / km do molde GTFS;0;
 2022-08-27;azul;sabado;1.06542;medido;km real do dia / km do molde GTFS;0;

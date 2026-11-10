@@ -39,6 +39,28 @@ Script `pipeline/normaliza.py`; testes em `pipeline/tests/test_normaliza.py`; sa
 | 44 sem linha registrados, fora das métricas por linha | **Atende** |
 | Saída idêntica ao repetir | **Atende** (teste) |
 
+## Revisão de 2026-11 (após a ressegmentação)
+
+*Registrada em 2026-11-10, depois de ver os dados (decisões D55 e D56; spec 017).* Os critérios acima não mudam. O resultado de 98,83% continua sendo a exceção oficial deste critério.
+
+- **O que a revisão viu:**
+  - As 100 exceções são 1,2% das falhas, mas tinham 25,3% dos minutos parados (11.129 de 43.971). Exemplo: 7 registros de 1.140 a 1.170 min em Saint-Michel, outubro de 2024, com faixa oficial "02 min et moins".
+  - O critério media só a contagem e não viu esse peso.
+- **O que mudou:**
+  - Nas exceções, a duração passa a respeitar a faixa oficial: sorteio entre as durações coerentes da mesma faixa e família, com semente pelo número do incidente.
+  - A duração calculada fica em `duracao_calculada_min`.
+  - Cada falha ganha uma fonte (frota ou setor × sintoma) e uma classe de gravidade.
+
+| Número | v1.1.0 | Após a revisão |
+|---|---|---|
+| Minutos parados das falhas técnicas de uma linha | 43.971 | 33.404 |
+| Minutos das 100 exceções | 11.129 | 562 |
+| Duração máxima | 1.170 min (faixa "02 min et moins") | 1.170 min (faixa "30 min et plus", Saint-Michel, 2024-10-04) |
+| Minutos da via na Azul (equipamentos fixos) | 9.874 | 2.677 |
+| Contagens (8.530, 45 de causa comum, 31 Verde e Laranja, 44 sem linha) | — | sem mudança |
+
+Detalhe por linha, família, fonte e gravidade em [`fontes_e_duracoes.md`](../../fontes/verificacao/fontes_e_duracoes.md).
+
 ## Fora de escopo
 - Corrigir ou reinterpretar a causa atribuída pela STM.
 - Localização geográfica dos eventos (spec 002).

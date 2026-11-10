@@ -7,8 +7,12 @@ import pytest
 
 RESUMO = "dados/derivados/exposicao/resumo_exposicao.json"
 pytestmark = pytest.mark.skipif(not os.path.exists(RESUMO), reason="rode pipeline/exposicao.py antes")
-# Exceções aceitas e documentadas na spec 004 (abril de 2020, início da pandemia, e junho de 2019 na Amarela)
-EXCECOES = {("verde", "2020-04"), ("azul", "2020-04"), ("laranja", "2020-04"), ("amarela", "2019-06")}
+# Exceções documentadas na spec 004. Na v1.1.0: abril de 2020 (início da pandemia) nas três linhas grandes e junho de
+# 2019 na Amarela. Revisão de 2026-11: o km real republicado pela STM em 2026-10-23 preencheu o período de exploração
+# de cerca de 80 mil registros que estavam com "#"; a calibração passou de 220 para 228 meses comparados, junho de 2019
+# na Amarela ficou dentro de 10% e maio de 2020 nas três linhas grandes ficou fora.
+EXCECOES = {("verde", "2020-04"), ("azul", "2020-04"), ("laranja", "2020-04"),
+            ("verde", "2020-05"), ("azul", "2020-05"), ("laranja", "2020-05")}
 
 
 @pytest.fixture(scope="module")

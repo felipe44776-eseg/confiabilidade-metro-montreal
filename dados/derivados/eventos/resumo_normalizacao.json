@@ -10,12 +10,54 @@
   "MR": 3982,
   "EF": 4548
  },
+ "por_fonte": {
+  "aux_stations": 420,
+  "aux_trains_sintoma_fixo": 1534,
+  "aux_trains_sintoma_trem": 695,
+  "mpm10": 1191,
+  "mr73": 2740,
+  "mr_outros": 51,
+  "tcpe": 142,
+  "voie_sintoma_fixo": 969,
+  "voie_sintoma_trem": 788
+ },
+ "setores_divididos_pelo_sintoma": [
+  "aux_trains",
+  "voie"
+ ],
  "na_faixa": 8319,
  "na_faixa_ou_vizinha": 8430,
  "pct_na_faixa_ou_vizinha": 0.9883,
  "excecoes": 100,
+ "minutos_total_calculada": 43971,
+ "minutos_total_final": 33404,
+ "minutos_excecoes_calculada": 11129,
+ "minutos_excecoes_final": 562,
+ "virada_de_dia": 27,
+ "por_classe_gravidade": {
+  "10_a_30": 501,
+  "30_ou_mais": 139,
+  "5_a_10": 1343,
+  "menos_de_5": 6547
+ },
+ "por_classe_faixa_oficial": {
+  "10_a_30": 467,
+  "30_ou_mais": 135,
+  "5_a_10": 1354,
+  "menos_de_5": 6574
+ },
  "causa_comum": 45,
  "causa_comum_verde_laranja": 31,
+ "causa_comum_por_fonte": {
+  "aux_stations": 12,
+  "aux_trains_sintoma_fixo": 7,
+  "aux_trains_sintoma_trem": 1,
+  "mpm10": 3,
+  "mr73": 2,
+  "tcpe": 11,
+  "voie_sintoma_fixo": 8,
+  "voie_sintoma_trem": 1
+ },
  "sem_linha": 44,
  "inicio_depois_da_meia_noite": 224,
  "duracao_max_min": 1170

@@ -13,14 +13,16 @@ Gerado por `pipeline/exposicao.py` a partir do GTFS da STM (moldes de dia útil,
 
 ## Erro mensal do km estimado contra o km real
 
-220 meses-linha comparados; 4 acima de 10% (98.2% dentro); erro absoluto mediano de 0.44%.
+228 meses-linha comparados; 6 acima de 10% (97.4% dentro); erro absoluto mediano de 0.42%.
 
 | Linha | Mês | Erro |
 |---|---|---|
-| verde | 2020-04 | +17.2% |
-| azul | 2020-04 | +15.9% |
-| laranja | 2020-04 | +15.7% |
-| amarela | 2019-06 | -10.8% |
+| verde | 2020-04 | +17.6% |
+| azul | 2020-04 | +16.2% |
+| laranja | 2020-04 | +16.1% |
+| verde | 2020-05 | -11.7% |
+| azul | 2020-05 | -11.1% |
+| laranja | 2020-05 | -10.8% |
 
 Exceção registrada: abril de 2020 (primeiro mês da pandemia, com oferta cortada no meio do mês) nas três linhas grandes e junho de 2019 na Amarela. O critério não foi afrouxado.
 
@@ -28,7 +30,7 @@ Exceção registrada: abril de 2020 (primeiro mês da pandemia, com oferta corta
 
 | Frota | Registros | km-carro |
 |---|---|---|
-| MPM-10 | 342.261 | 294.258.032,7 |
+| MPM-10 | 342.240 | 294.258.034,4 |
 | MR-63 | 22 | 15,7 |
 | MR-73 | 217.266 | 117.373.473,9 |
 

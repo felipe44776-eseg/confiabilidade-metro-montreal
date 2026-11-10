@@ -10,6 +10,12 @@ import sys
 from collections import defaultdict
 from datetime import date, timedelta
 
+import os  # noqa: E402
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import duracao as du  # noqa: E402
+import km_real  # noqa: E402
+
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 D = "dados/brutos"
@@ -38,17 +44,16 @@ painel = defaultdict(lambda: defaultdict(float))
 with open(f"{D}/stm/incidents_metro.csv", encoding="utf-8-sig", newline="") as f:
     linhas = list(csv.reader(f, delimiter=";"))
 cab = linhas[1]
-for r in linhas[2:]:
-    if len(r) < len(cab) or not r[0].strip():
-        continue
-    r = dict(zip(cab, (c.strip() for c in r)))
+registros = [dict(zip(cab, (c.strip() for c in r))) for r in linhas[2:] if len(r) >= len(cab) and r[0].strip()]
+finais = du.calcula(registros)  # duração pela faixa oficial quando a calculada a contradiz (spec 017, D55)
+for r in registros:
     linha = LINHAS.get(r["Ligne"])
     if not linha:
         continue
     chave = (r["Jour calendaire"], linha)
     p = painel[chave]
     p["incidentes_total"] += 1
-    dur = (minutos(r["Heure de reprise"]) - minutos(r["Heure de l'incident"])) % 1440
+    dur = finais[r["Numero d'incident"]]["duracao_min"]
     causa = r["Cause primaire"]
     if causa == "Matériel roulant":
         p["falhas_material_rodante"] += 1
@@ -64,18 +69,17 @@ for r in linhas[2:]:
         p["incidentes_clientela"] += 1
 
 # Exposicao real: km-carro por dia e linha (2019-01 a 2023-09), separado por frota.
-with open(f"{D}/stm/km_reel.csv", encoding="utf-8-sig", newline="") as f:
-    for r in csv.DictReader(f):
-        linha = LINHAS.get(r["Ligne"])
-        km = num(r["Km voiture"])
-        if not linha or km is None:
-            continue
-        p = painel[(r["Jour calendaire"], linha)]
-        p["km_carro_real"] += km
-        if r["Type matériel"] == "73":
-            p["km_carro_mr73"] += km
-        elif r["Type matériel"] == "10":
-            p["km_carro_mpm10"] += km
+for r in km_real.registros(f"{D}/stm/km_reel.csv", ate=km_real.FIM_V1):
+    linha = LINHAS.get(r["ligne"])
+    km = r["km"]
+    if not linha or km is None:
+        continue
+    p = painel[(r["data"], linha)]
+    p["km_carro_real"] += km
+    if r["tipo_materiel"] == "73":
+        p["km_carro_mr73"] += km
+    elif r["tipo_materiel"] == "10":
+        p["km_carro_mpm10"] += km
 
 # Exposicao planejada e calendario operacional da propria STM.
 tipo_dia = {}

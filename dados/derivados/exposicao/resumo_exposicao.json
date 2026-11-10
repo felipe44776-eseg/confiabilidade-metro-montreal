@@ -1,12 +1,12 @@
 {
  "km_carro_total_milhoes": 411.6315,
  "km_carro_por_frota": {
-  "MPM-10": 294258032.7,
+  "MPM-10": 294258034.4,
   "MR-63": 15.7,
   "MR-73": 117373473.9
  },
  "registros_por_frota": {
-  "MPM-10": 342261,
+  "MPM-10": 342240,
   "MR-63": 22,
   "MR-73": 217266
  },
@@ -23,30 +23,40 @@
   "amarela": 2,
   "azul": 9
  },
- "meses_comparados": 220,
- "meses_com_erro_acima_de_10pct": 4,
- "pct_meses_dentro": 0.9818,
- "erro_abs_mediano": 0.0044,
+ "meses_comparados": 228,
+ "meses_com_erro_acima_de_10pct": 6,
+ "pct_meses_dentro": 0.9737,
+ "erro_abs_mediano": 0.0042,
  "piores_meses": [
   {
    "linha": "verde",
    "mes": "2020-04",
-   "erro": 0.1721
+   "erro": 0.1757
   },
   {
    "linha": "azul",
    "mes": "2020-04",
-   "erro": 0.1587
+   "erro": 0.1622
   },
   {
    "linha": "laranja",
    "mes": "2020-04",
-   "erro": 0.1565
+   "erro": 0.1606
   },
   {
-   "linha": "amarela",
-   "mes": "2019-06",
-   "erro": -0.1075
+   "linha": "verde",
+   "mes": "2020-05",
+   "erro": -0.1173
+  },
+  {
+   "linha": "azul",
+   "mes": "2020-05",
+   "erro": -0.1105
+  },
+  {
+   "linha": "laranja",
+   "mes": "2020-05",
+   "erro": -0.1077
   }
  ],
  "dias_medidos": 6936,

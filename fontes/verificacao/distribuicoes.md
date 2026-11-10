@@ -57,34 +57,34 @@ Com a taxa horária da spec 005, os intervalos reescalados deveriam seguir uma e
 
 | Linha e causa | n | Sem interrupção (IC 95%) | μ log (IC 95%) | σ log | Média (min) | p90 (min) |
 |---|---|---|---|---|---|---|
-| verde · MR | 1502 | 0.2417 (0.2207–0.264) | 1.4358 (1.3935–1.4791) | 0.7292 | 4.424 | 9.0 |
-| verde · EF | 1324 | 0.5808 (0.554–0.6071) | 1.6909 (1.6146–1.7793) | 1.0646 | 5.058 | 9.0 |
-| laranja · MR | 917 | 0.4209 (0.3894–0.4532) | 1.3539 (1.2841–1.4188) | 0.8724 | 4.028 | 7.0 |
-| laranja · EF | 2171 | 0.638 (0.6175–0.6579) | 1.6798 (1.607–1.7506) | 1.0056 | 4.157 | 7.0 |
-| amarela · MR | 544 | 0.3971 (0.3568–0.4388) | 1.2771 (1.2028–1.3591) | 0.692 | 2.89 | 6.0 |
-| amarela · EF | 602 | 0.6678 (0.6292–0.7042) | 1.837 (1.7151–1.9546) | 0.9468 | 3.477 | 8.0 |
-| azul · MR | 1019 | 0.1992 (0.1758–0.2248) | 1.3891 (1.3428–1.428) | 0.699 | 4.289 | 9.0 |
-| azul · EF | 451 | 0.5787 (0.5327–0.6234) | 1.701 (1.509–1.9108) | 1.4356 | 21.894 | 8.0 |
+| verde · MR | 1502 | 0.2423 (0.2213–0.2647) | 1.411 (1.3777–1.4508) | 0.7063 | 4.233 | 9.0 |
+| verde · EF | 1324 | 0.5838 (0.5571–0.6101) | 1.6246 (1.5495–1.7047) | 0.9864 | 4.032 | 9.0 |
+| laranja · MR | 917 | 0.4209 (0.3894–0.4532) | 1.3366 (1.2728–1.3961) | 0.8554 | 3.921 | 7.0 |
+| laranja · EF | 2171 | 0.6412 (0.6208–0.6611) | 1.6257 (1.5674–1.6987) | 0.9389 | 3.526 | 7.0 |
+| amarela · MR | 544 | 0.3989 (0.3586–0.4406) | 1.2678 (1.2012–1.3282) | 0.6849 | 2.844 | 6.0 |
+| amarela · EF | 602 | 0.6678 (0.6292–0.7042) | 1.8188 (1.6978–1.9215) | 0.918 | 3.282 | 8.0 |
+| azul · MR | 1019 | 0.1992 (0.1758–0.2248) | 1.3769 (1.3346–1.4191) | 0.6833 | 4.179 | 9.0 |
+| azul · EF | 451 | 0.5987 (0.5528–0.6429) | 1.4703 (1.3347–1.6325) | 1.0112 | 5.936 | 6.0 |
 
-Regressão de tempo acelerado (lognormal) nas 4545 interrupções com duração positiva: R² 0.2319, σ 0.789. Multiplicadores da duração:
+Regressão de tempo acelerado (lognormal) nas 4523 interrupções com duração positiva: R² 0.2519, σ 0.7232. Multiplicadores da duração:
 
 | Termo | Multiplicador | IC 95% |
 |---|---|---|
-| const | 3.0786 | 2.7505–3.4458 |
-| linha_azul | 0.971 | 0.8925–1.0565 |
-| linha_laranja | 0.9727 | 0.8892–1.064 |
-| linha_verde | 0.9797 | 0.9058–1.0596 |
-| sec_MR-73 | 1.211 | 1.1149–1.3154 |
-| sec_Service TCPE | 1.6112 | 1.3584–1.9111 |
-| sec_Service aux trains | 1.311 | 1.2076–1.4233 |
-| sec_Service de la voie | 2.3034 | 2.121–2.5014 |
-| sec_outra | 3.0884 | 2.4894–3.8315 |
-| faixa_entrepico | 0.9462 | 0.8782–1.0194 |
-| faixa_fim | 0.9369 | 0.8226–1.0672 |
-| faixa_noite | 0.9812 | 0.896–1.0746 |
-| faixa_pico_manha | 0.9086 | 0.8408–0.9818 |
-| faixa_pico_tarde | 1.0008 | 0.919–1.09 |
-| evacuacao | 2.9214 | 2.727–3.1297 |
+| const | 2.8781 | 2.5952–3.1918 |
+| linha_azul | 0.9233 | 0.8544–0.9977 |
+| linha_laranja | 0.972 | 0.8951–1.0555 |
+| linha_verde | 0.9521 | 0.886–1.0232 |
+| sec_MR-73 | 1.2429 | 1.1521–1.3409 |
+| sec_Service TCPE | 1.5643 | 1.3369–1.8305 |
+| sec_Service aux trains | 1.2729 | 1.1804–1.3727 |
+| sec_Service de la voie | 2.1942 | 2.034–2.3669 |
+| sec_outra | 2.4991 | 2.0365–3.0668 |
+| faixa_entrepico | 1.0182 | 0.9506–1.0906 |
+| faixa_fim | 1.0018 | 0.8888–1.1293 |
+| faixa_noite | 1.0512 | 0.9667–1.143 |
+| faixa_pico_manha | 0.9641 | 0.8977–1.0354 |
+| faixa_pico_tarde | 1.06 | 0.98–1.1467 |
+| evacuacao | 2.92 | 2.7413–3.1103 |
 
 ## Causa comum: fator β por par
 
@@ -94,14 +94,14 @@ Um evento que para três ou quatro linhas conta em todos os pares que ele conté
 |---|---|---|---|---|---|
 | verde-laranja | 31 | 0.01085 (0.00738–0.01537) | 0.00994 (0.00676–0.01408) | 5.66e-04 (3.85e-04–8.04e-04) | 24.26 |
 | verde-amarela | 18 | 0.00633 (0.00376–0.00998) | 0.01546 (0.00919–0.02433) | 3.29e-04 (1.95e-04–5.19e-04) | 25.44 |
-| verde-azul | 12 | 0.00423 (0.00219–0.00737) | 0.0081 (0.00419–0.0141) | 2.19e-04 (1.13e-04–3.83e-04) | 21.25 |
+| verde-azul | 12 | 0.00423 (0.00219–0.00737) | 0.0081 (0.00419–0.0141) | 2.19e-04 (1.13e-04–3.83e-04) | 20.67 |
 | laranja-amarela | 21 | 0.00675 (0.00419–0.01031) | 0.01799 (0.01117–0.02738) | 3.83e-04 (2.37e-04–5.86e-04) | 22.19 |
 | laranja-azul | 21 | 0.00675 (0.00419–0.01031) | 0.01408 (0.00874–0.02145) | 3.83e-04 (2.37e-04–5.86e-04) | 22.95 |
 | amarela-azul | 10 | 0.00865 (0.00416–0.01585) | 0.00676 (0.00324–0.01239) | 1.83e-04 (8.76e-05–3.36e-04) | 17.4 |
 
 ## Causa comum: grupos usados pelo simulador
 
-Cada evento entra uma vez só, no grupo exato de linhas que parou. A duração vem dos 45 eventos juntos: sem interrupção 0.2444 (IC 0.1424–0.3867), lognormal com μ log 2.6219 e σ log 1.3912, média 22.42 min.
+Cada evento entra uma vez só, no grupo exato de linhas que parou. A duração vem dos 45 eventos juntos: sem interrupção 0.2444 (IC 0.1424–0.3867), lognormal com μ log 2.5922 e σ log 1.4069, média 22.27 min.
 
 | Grupo de linhas | Eventos | Taxa por hora de operação (IC 95%) | Duração média no grupo (min) |
 |---|---|---|---|
@@ -110,5 +110,5 @@ Cada evento entra uma vez só, no grupo exato de linhas que parou. A duração v
 | amarela-laranja-verde | 8 | 1.46e-04 (6.31e-05–2.88e-04) | 35.5 |
 | azul-laranja | 10 | 1.83e-04 (8.76e-05–3.36e-04) | 23.8 |
 | azul-laranja-verde | 1 | 1.83e-05 (4.60e-07–1.02e-04) | 70.0 |
-| azul-verde | 1 | 1.83e-05 (4.60e-07–1.02e-04) | 11.0 |
+| azul-verde | 1 | 1.83e-05 (4.60e-07–1.02e-04) | 4.0 |
 | laranja-verde | 12 | 2.19e-04 (1.13e-04–3.83e-04) | 18.67 |

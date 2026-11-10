@@ -16,9 +16,13 @@ import io
 import json
 import os
 import statistics
+import sys
 import zipfile
 from collections import defaultdict
 from datetime import date, timedelta
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import km_real  # noqa: E402
 
 GTFS = "dados/brutos/gtfs/gtfs_stm_mdb-2126_latest.zip"
 KM_REEL = "dados/brutos/stm/km_reel.csv"
@@ -110,20 +114,19 @@ def main():
     real, periodo_dia = defaultdict(float), {}
     km_frota, reg_tipo, km_tipo = defaultdict(float), defaultdict(int), defaultdict(float)
     periodos_vistos = defaultdict(lambda: defaultdict(float))
-    with open(KM_REEL, encoding="utf-8-sig", newline="") as f:
-        for r in csv.DictReader(f):
-            l = LIGNE.get(r["Ligne"])
-            if not l:
-                continue
-            km = float(r["Km voiture"].replace(",", "."))
-            real[(r["Jour calendaire"], l)] += km / VAGOES[l]
-            frota = FROTA.get(r["Type matériel"], "tipo " + r["Type matériel"])
-            km_frota[(l, r["Jour calendaire"][:7], frota)] += km
-            reg_tipo[frota] += 1
-            km_tipo[frota] += km
-            p = r["Période exploitation"]
-            if p not in ("#", ""):
-                periodos_vistos[r["Jour calendaire"]][p[:3]] += km
+    for r in km_real.registros(KM_REEL, ate=FIM_KM.isoformat()):
+        l = LIGNE.get(r["ligne"])
+        if not l or r["km"] is None:
+            continue
+        km = r["km"]
+        real[(r["data"], l)] += km / VAGOES[l]
+        frota = FROTA.get(r["tipo_materiel"], "tipo " + r["tipo_materiel"])
+        km_frota[(l, r["data"][:7], frota)] += km
+        reg_tipo[frota] += 1
+        km_tipo[frota] += km
+        p = r["periodo"]
+        if p not in ("#", ""):
+            periodos_vistos[r["data"]][p[:3]] += km
     for d, ps in periodos_vistos.items():
         periodo_dia[d] = max(ps, key=ps.get)
 

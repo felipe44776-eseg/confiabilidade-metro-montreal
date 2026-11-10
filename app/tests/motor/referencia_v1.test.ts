@@ -14,7 +14,7 @@ import type { Politicas } from '../../src/motor/politicas';
 import { NENHUMA_POLITICA } from '../../src/motor/politicas';
 import type { Cenario, Parametros, TipoDia } from '../../src/motor/tipos';
 import { avaliadoresViagem, rodaViagem } from '../../src/motor/viagem';
-import { carregaFixture, carregaParametrosReais, carregaRede, temParametrosReais } from './apoio';
+import { CAMINHO_PARAMETROS_REAIS, carregaFixture, carregaParametrosReais, carregaRede, temParametrosReais } from './apoio';
 
 const ARQUIVO = resolve(__dirname, '../fixtures/referencia_v1.json');
 const GRAVA = process.env.GRAVA_REFERENCIA === '1';
@@ -33,9 +33,13 @@ function condicoesExtremas(p: Parametros): Record<string, string> {
   return Object.fromEntries(Object.entries(p.taxas.MR.multiplicadores).map(([f, niveis]) => [f, Object.keys(niveis).at(-1) as string]));
 }
 
+/** Hash do parametros.json real: os casos com ele só valem enquanto o arquivo for o mesmo da gravação. */
+function shaReais(): string {
+  return temParametrosReais ? createHash('sha256').update(readFileSync(CAMINHO_PARAMETROS_REAIS)).digest('hex').slice(0, 24) : '';
+}
+
 function conjuntos(): { nome: string; p: Parametros }[] {
   const c = [{ nome: 'fixture', p: carregaFixture() }];
-  // os parâmetros reais só valem para a referência enquanto estiverem no contrato v1
   if (temParametrosReais) {
     const p = carregaParametrosReais();
     if (p.versao === 1) c.push({ nome: 'reais', p });
@@ -80,13 +84,14 @@ describe('referência do motor antes da revisão (spec 019, passo 1)', () => {
     () => {
       const atual = calcula();
       if (GRAVA || !existsSync(ARQUIVO)) {
-        writeFileSync(ARQUIVO, JSON.stringify(atual, null, 1) + '\n');
+        writeFileSync(ARQUIVO, JSON.stringify({ parametros_reais_sha: shaReais(), ...atual }, null, 1) + '\n');
         return;
       }
       const ref = JSON.parse(readFileSync(ARQUIVO, 'utf8')) as Record<string, string>;
-      // só compara o que a referência tem: os parâmetros reais podem não existir num clone sem o pipeline
-      const chaves = Object.keys(ref).filter((k) => k in atual);
-      expect(chaves.length).toBeGreaterThan(0);
+      // a fixture vale sempre; os parâmetros reais só se o arquivo for o mesmo da gravação (o pipeline pode tê-lo refeito)
+      const reaisIguais = ref.parametros_reais_sha === shaReais();
+      const chaves = Object.keys(ref).filter((k) => k !== 'parametros_reais_sha' && k in atual && (reaisIguais || !k.includes('|reais')));
+      expect(chaves.filter((k) => k.includes('|fixture')).length).toBe(99);
       for (const k of chaves) expect(atual[k], k).toBe(ref[k]);
     },
     LONGO,

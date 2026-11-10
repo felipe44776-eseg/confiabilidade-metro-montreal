@@ -21,6 +21,12 @@ import sys
 from collections import Counter, defaultdict
 from datetime import date, datetime, timedelta
 
+import os  # noqa: E402
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import duracao as du  # noqa: E402
+import km_real  # noqa: E402
+
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 BRUTOS = "dados/brutos"
@@ -71,14 +77,13 @@ with open(f"{BRUTOS}/stm/incidents_metro.csv", encoding="utf-8-sig", newline="")
     bruto = list(csv.reader(f, delimiter=";"))
 cab = bruto[1]
 eventos, multi, sem_linha = [], [], []
-for row in bruto[2:]:
-    if len(row) < len(cab) or not row[0].strip():
-        continue
-    e = dict(zip(cab, (c.strip() for c in row)))
+brutos = [dict(zip(cab, (c.strip() for c in row))) for row in bruto[2:] if len(row) >= len(cab) and row[0].strip()]
+finais = du.calcula(brutos)  # duração pela faixa oficial quando a calculada a contradiz (spec 017, D55)
+for e in brutos:
     dia = date.fromisoformat(e["Jour calendaire"])
-    m0, m1 = minutos(e["Heure de l'incident"]), minutos(e["Heure de reprise"])
+    m0 = minutos(e["Heure de l'incident"])
     ev = {
-        "dia": dia, "min": m0, "op": op_min(dia, m0), "dur": (m1 - m0) % 1440,
+        "dia": dia, "min": m0, "op": op_min(dia, m0), "dur": finais[e["Numero d'incident"]]["duracao_min"],
         "causa": TEC.get(e["Cause primaire"]), "causa_txt": e["Cause primaire"],
         "frota": e["Cause secondaire"] if e["Cause secondaire"] in ("MR-73", "MPM-10") else None,
         "local": e["Code de lieu"], "veiculo": e["Véhicule"] if e["Véhicule"] not in ("#", "") else None,
@@ -104,20 +109,19 @@ km_ano_frota = defaultdict(float)
 km_mes = defaultdict(float)
 km_linha = defaultdict(float)
 comp_dia = defaultdict(set)
-with open(f"{BRUTOS}/stm/km_reel.csv", encoding="utf-8-sig", newline="") as f:
-    for row in csv.DictReader(f):
-        l = LINHAS.get(row["Ligne"])
-        km = num(row["Km voiture"])
-        if not l or km is None:
-            continue
-        dia = row["Jour calendaire"]
-        km_dia_linha[(dia, l)] += km
-        km_linha[l] += km
-        frota = {"73": "MR-73", "10": "MPM-10"}.get(row["Type matériel"])
-        if frota:
-            km_ano_frota[(dia[:4], frota)] += km
-        km_mes[(dia[:7], l)] += km
-        comp_dia[(dia, l)].add(row["Composition du train"])
+for row in km_real.registros(f"{BRUTOS}/stm/km_reel.csv", ate=km_real.FIM_V1):
+    l = LINHAS.get(row["ligne"])
+    km = row["km"]
+    if not l or km is None:
+        continue
+    dia = row["data"]
+    km_dia_linha[(dia, l)] += km
+    km_linha[l] += km
+    frota = {"73": "MR-73", "10": "MPM-10"}.get(row["tipo_materiel"])
+    if frota:
+        km_ano_frota[(dia[:4], frota)] += km
+    km_mes[(dia[:7], l)] += km
+    comp_dia[(dia, l)].add(row["composicao"])
 
 # ---------------------------------------------------------------- clima e mobilidade
 clima = {}
