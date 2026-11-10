@@ -51,5 +51,9 @@ Spec-Driven Development: a especificação é a fonte de verdade; o código é d
 | 014 | [Expansão da rede: que linha construir](014-expansao-rede/spec.md) | F4 |
 | 015 | [Confiabilidade de uma viagem: de uma estação a outra](015-viagem/spec.md) | F4 |
 | 016 | [Linhas novas numa viagem e escala para confiabilidade alta](016-linhas-novas-viagem/spec.md) | F4 |
+| 017 | [Fontes de falha e durações pela faixa oficial](017-fontes-e-duracoes/spec.md) | revisão de 2026-11 |
+| 018 | [Taxa, renovação e duração por fonte de falha](018-taxa-por-fonte/spec.md) | revisão de 2026-11 |
+| 019 | [Simulador com várias fontes de falha por linha](019-motor-n-fontes/spec.md) | revisão de 2026-11 |
+| 020 | [Revalidação dos parâmetros e revisão dos números publicados](020-revalidacao/spec.md) | revisão de 2026-11 |
 
 Decisões de arquitetura ficam em [`../docs/decisoes/`](../docs/decisoes/).

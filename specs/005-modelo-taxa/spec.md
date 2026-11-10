@@ -4,6 +4,8 @@
 **Fase:** F2 (semanas 3 a 5)
 **Depende de:** 001, 003, 004
 
+> **Revisão em andamento (2026-11-10, decisões D55 a D61).** A ressegmentação das falhas por frota e por setor dos equipamentos fixos e a regra nova de duração vão mudar números desta spec (spec 018). Os resultados abaixo são os da versão v1.1.0, que continua publicada em `/versoes/v1.1.0/`; os novos entram numa seção "Revisão de 2026-11 (após a ressegmentação)", ao lado dos originais, que não se apagam.
+
 ## Pergunta de engenharia
 Quanto a taxa de falha de cada linha muda com a hora do dia, o clima, a frota e os eventos, medida por unidade de exposição? O número que responde é o multiplicador de cada fator, com intervalo de confiança de 95%.
 

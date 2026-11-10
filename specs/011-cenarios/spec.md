@@ -4,6 +4,8 @@
 **Fase:** F4 (semanas 6 a 8)
 **Depende de:** 005, 006, 008, 009
 
+> **Revisão em andamento (2026-11-10, decisões D55 a D61).** A ressegmentação das falhas por frota e por setor dos equipamentos fixos e a regra nova de duração vão mudar números desta spec (spec 019). Os resultados abaixo são os da versão v1.1.0, que continua publicada em `/versoes/v1.1.0/`; os novos entram numa seção "Revisão de 2026-11 (após a ressegmentação)", ao lado dos originais, que não se apagam.
+
 ## Pergunta de engenharia
 A equipe consegue mudar clima, eventos, frota e políticas, rodar o cenário e compartilhá-lo de forma que outra pessoa obtenha exatamente os mesmos números? O número que responde é a igualdade dos resultados de um mesmo link aberto em dois computadores.
 

@@ -5,6 +5,8 @@
 **Depende de:** 002, 006, 007, 009
 **Origem:** pedido da equipe em 2026-10-21
 
+> **Revisão em andamento (2026-11-10, decisões D55 a D61).** A ressegmentação das falhas por frota e por setor dos equipamentos fixos e a regra nova de duração vão mudar números desta spec (specs 019 e 020). Os resultados abaixo são os da versão v1.1.0, que continua publicada em `/versoes/v1.1.0/`; os novos entram numa seção "Revisão de 2026-11 (após a ressegmentação)", ao lado dos originais, que não se apagam.
+
 ## Pergunta de engenharia
 
 Entre as ligações que podem ser construídas, qual aumenta mais a confiabilidade da rede como sistema? O número que responde é o ganho de disponibilidade por par origem-destino (ponderada pela oferta) e a redução dos minutos de par interrompido por ano, com intervalo de 95%, também dividido pelo km construído.

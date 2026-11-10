@@ -4,6 +4,8 @@
 **Fase:** F3 (semanas 4 a 7)
 **Depende de:** 006, 007
 
+> **Revisão em andamento (2026-11-10, decisões D55 a D61).** A ressegmentação das falhas por frota e por setor dos equipamentos fixos e a regra nova de duração vão mudar números desta spec (specs 019 e 020). Os resultados abaixo são os da versão v1.1.0, que continua publicada em `/versoes/v1.1.0/`; os novos entram numa seção "Revisão de 2026-11 (após a ressegmentação)", ao lado dos originais, que não se apagam.
+
 ## Pergunta de engenharia
 Com quantas rodadas a estimativa de disponibilidade fica precisa, e a simulação reproduz os números já validados no painel? O número que responde é a meia-largura do intervalo de 95% em relação à média.
 

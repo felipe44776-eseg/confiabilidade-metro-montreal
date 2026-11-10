@@ -5,6 +5,8 @@
 **Depende de:** 007, 009, 014, 015
 **Origem:** pedido da equipe em 2026-10-21 ("testar construções de linha: alocar novas linhas para ver como alguns caminhos aumentam de confiabilidade; e uma escala que pegue pequenas variações, porque a confiabilidade é alta e fica tudo muito próximo")
 
+> **Revisão em andamento (2026-11-10, decisões D55 a D61).** A ressegmentação das falhas por frota e por setor dos equipamentos fixos e a regra nova de duração vão mudar números desta spec (specs 019 e 020). Os resultados abaixo são os da versão v1.1.0, que continua publicada em `/versoes/v1.1.0/`; os novos entram numa seção "Revisão de 2026-11 (após a ressegmentação)", ao lado dos originais, que não se apagam.
+
 ## Pergunta de engenharia
 
 Para uma viagem de A a B, quanto a construção de uma linha (proposta oficial ou desenhada pela equipe) muda a confiabilidade dessa viagem, e como mostrar a diferença entre valores que passam todos de 99%?

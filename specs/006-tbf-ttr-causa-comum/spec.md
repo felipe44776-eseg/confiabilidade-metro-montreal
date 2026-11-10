@@ -4,6 +4,8 @@
 **Fase:** F2 (semanas 3 a 5)
 **Depende de:** 001, 005
 
+> **Revisão em andamento (2026-11-10, decisões D55 a D61).** A ressegmentação das falhas por frota e por setor dos equipamentos fixos e a regra nova de duração vão mudar números desta spec (spec 018). Os resultados abaixo são os da versão v1.1.0, que continua publicada em `/versoes/v1.1.0/`; os novos entram numa seção "Revisão de 2026-11 (após a ressegmentação)", ao lado dos originais, que não se apagam.
+
 ## Pergunta de engenharia
 Que distribuição descreve o tempo entre falhas e o tempo até o serviço voltar, por linha, causa, frota e condição? E o agrupamento das falhas (Weibull com β < 1) vem de heterogeneidade das condições ou de um mecanismo próprio? O número que responde é o resultado do teste de reescala do tempo.
 

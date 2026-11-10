@@ -4,6 +4,8 @@
 **Fase:** F5 (semanas 8 e 9)
 **Depende de:** 005, 006, 007, 009
 
+> **Revisão em andamento (2026-11-10, decisões D55 a D61).** A ressegmentação das falhas por frota e por setor dos equipamentos fixos e a regra nova de duração vão mudar números desta spec (spec 020). Os resultados abaixo são os da versão v1.1.0, que continua publicada em `/versoes/v1.1.0/`; os novos entram numa seção "Revisão de 2026-11 (após a ressegmentação)", ao lado dos originais, que não se apagam.
+
 ## Pergunta de engenharia
 O modelo ajustado só com 2019 a 2024 consegue prever o que aconteceu de janeiro de 2025 a junho de 2026? O número que responde é a cobertura do intervalo de predição de 90% por linha e mês.
 

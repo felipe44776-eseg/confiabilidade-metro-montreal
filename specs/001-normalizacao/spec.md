@@ -4,6 +4,8 @@
 **Fase:** F1 (semanas 2 e 3)
 **Depende de:** 000
 
+> **Revisão em andamento (2026-11-10, decisões D55 a D61).** A ressegmentação das falhas por frota e por setor dos equipamentos fixos e a regra nova de duração vão mudar números desta spec (spec 017). Os resultados abaixo são os da versão v1.1.0, que continua publicada em `/versoes/v1.1.0/`; os novos entram numa seção "Revisão de 2026-11 (após a ressegmentação)", ao lado dos originais, que não se apagam.
+
 ## Pergunta de engenharia
 Conseguimos transformar cada incidente técnico num evento com início e fim absolutos, classe de causa e linha, sem perder nenhum? O número que responde é a parcela dos 8.530 eventos técnicos resolvidos sem ambiguidade.
 

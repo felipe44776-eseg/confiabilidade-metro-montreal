@@ -4,6 +4,8 @@
 **Fase:** F4 (semanas 6 a 8)
 **Depende de:** 006, 007, 009
 
+> **Revisão em andamento (2026-11-10, decisões D55 a D61).** A ressegmentação das falhas por frota e por setor dos equipamentos fixos e a regra nova de duração vão mudar números desta spec (specs 019 e 020). Os resultados abaixo são os da versão v1.1.0, que continua publicada em `/versoes/v1.1.0/`; os novos entram numa seção "Revisão de 2026-11 (após a ressegmentação)", ao lado dos originais, que não se apagam.
+
 ## Pergunta de engenharia
 Que política de tolerância a falhas reduz mais os trens-hora perdidos e os minutos de interrupção, separando falha de trem e falha de equipamento fixo? O número que responde é a diferença de cada política contra "nenhuma política", com intervalo de 95%.
 

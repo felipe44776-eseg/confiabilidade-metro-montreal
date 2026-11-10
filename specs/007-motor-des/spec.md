@@ -4,6 +4,8 @@
 **Fase:** F3 (semanas 4 a 7)
 **Depende de:** 002, 004
 
+> **Revisão em andamento (2026-11-10, decisões D55 a D61).** A ressegmentação das falhas por frota e por setor dos equipamentos fixos e a regra nova de duração vão mudar números desta spec (spec 019). Os resultados abaixo são os da versão v1.1.0, que continua publicada em `/versoes/v1.1.0/`; os novos entram numa seção "Revisão de 2026-11 (após a ressegmentação)", ao lado dos originais, que não se apagam.
+
 ## Pergunta de engenharia
 Um modelo da rede, trem a trem, reproduz a operação real sem falhas e permite injetar falhas que se propagam como na prática? O número que responde é o desvio entre a operação simulada sem falhas e o horário publicado.
 

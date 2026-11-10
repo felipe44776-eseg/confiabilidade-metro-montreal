@@ -38,7 +38,7 @@ Formato de cada item: **Decisão** · **Por quê** · **Alternativas** · **Cons
 
 - **Decisão:** cada parte do projeto tem `spec.md` (pergunta, critérios de aceite mensuráveis, sem tecnologia), `plan.md` e `tasks.md`, no formato do GitHub Spec Kit, e uma constituição com 16 princípios.
 - **Por quê:** separar o que se quer medir de como medir, e impedir que o critério mude depois do resultado.
-- **Consequência:** 15 specs; critério não atendido vira "implementada com exceções", nunca critério afrouxado.
+- **Consequência:** 15 specs; critério não atendido vira "implementada com exceções", nunca critério afrouxado. *Atualizado em 2026-11-10:* 21 specs (000 a 020), com as 017 a 020 da revisão de 2026-11 (D55 a D61).
 - **Registro:** `specs/README.md`, `specs/constitution.md`.
 
 ### D05 — Site estático e simulação no navegador
@@ -349,3 +349,66 @@ Formato de cada item: **Decisão** · **Por quê** · **Alternativas** · **Cons
 - **Como:** `app/src/ui/escala.ts` (noves, razão pareada; testes em `app/tests/simulador/escala.test.ts`); `graficoPontosLog` em `app/src/ui/graficos.ts`. O gráfico usa pontos, não barras: barra em escala logarítmica engana, porque não começa no zero; o zero fica na borda esquerda, com marcador vazado. A covariância da razão sai da variância da diferença pareada, que o agregador já calcula, sem guardar os dias.
 - **Alternativas consideradas:** eixo em porcentagem com zoom perto de 100% (rejeitada: muda de escala a cada resultado e ainda espreme as diferenças de ordem de grandeza); "minutos por ano" (rejeitada na viagem: um ano de um tipo de dia só não existe; a aba "Muitos dias" já soma o ano pelo calendário).
 - **Registro:** `specs/016-linhas-novas-viagem/spec.md` (critério "Escala").
+
+## Revisão de 2026-11: ressegmentação por frota e setor e revalidação dos parâmetros
+
+Origem: perguntas da reunião de 2026-10-27 (bitola, fabricantes, via ou trem, tipo de falha, sistemas separados, Birnbaum) e pedido de 2026-11-10 para validar se os parâmetros do treino e da simulação ainda se mantêm. Antes de qualquer mudança, a versão anterior foi congelada como `v1.1.0` (`/versoes/v1.1.0/`). Os números revistos aparecem marcados "após a revisão" ao lado dos originais.
+
+### D55 — Duração pela faixa oficial da STM quando a calculada a contradiz
+
+- **Decisão:** quando a duração calculada pelos horários cai fora da faixa oficial "Incident en minutes" e da faixa vizinha, ela é sorteada, com semente fixa pelo número do incidente, entre as durações coerentes da mesma faixa e da mesma família (trem ou fixo), zeros incluídos. Na faixa "30 min et plus" vale a calculada. A calculada continua guardada.
+- **Por quê (depois de ver):** a revalidação de 2026-11-10 mostrou que essas exceções são 1,2% das falhas (100 de 8.530) e 25% dos minutos (11.129 de 43.971).
+  - Exemplo: 7 falhas de cerca de 19 h em Saint-Michel, em outubro de 2024, com faixa oficial "02 min et moins". Na amostra de durações do simulador, elas levavam a média da Azul em equipamentos fixos a 21,9 min por falha, contra 6,0 pela faixa.
+  - O backtest da versão A previu 2.962 min/ano parados na Azul, contra 708 observados.
+  - O critério da spec 001 olhava só a contagem.
+- **Alternativas consideradas:** ponto médio da faixa (fica como sensibilidade: transformava 29 exceções da faixa "02 min et moins" em 1 min e mexia na massa em zero); excluir as 100 (rejeitada: perde as longas verdadeiras); manter (rejeitada: a Azul continuaria inflada).
+- **Registro:** `specs/017-fontes-e-duracoes/`; `pipeline/duracao.py`.
+
+### D56 — Fontes de falha: frota no trem, setor × sintoma no equipamento fixo
+
+- **Decisão:**
+  - **Trem:** `mr73`, `mpm10` e `mr_outros` (veículos de trabalho, causa genérica e frota com parcela abaixo de 2% do km da linha).
+  - **Fixo:** cada setor da STM (Service de la voie, Service aux trains, Service aux stations, Service TCPE) se divide pelo sintoma (atribuído na hora a material rodante ou não) quando as duas partes têm 400 falhas ou mais na rede. Abaixo disso, fica inteiro.
+  - Nomes pelas etiquetas da STM até a resposta do e-mail; "controle de trens" e "energia" aparecem como dedução.
+- **Por quê (depois de ver):**
+  - Na Verde, com o mesmo trilho, o MR-73 falha 8,1 vezes mais por km-carro que o MPM-10.
+  - O EF mistura setores com horários diferentes: 30% das falhas do TCPE são às 5 h.
+  - O surto de 2024 é só da via com sintoma de trem, com 516 falhas de quase zero minuto nos terminais.
+  - A mesma regra vale para todos os setores, para não escolher caso a caso. Pelas contagens, ela divide a via e o Service aux trains.
+- **Alternativas consideradas:** manter MR/EF (rejeitada: a frota fica escondida no efeito da linha); um setor por fonte sem o sintoma (rejeitada: o surto de 2024 contaminaria a via inteira); dividir só a via (rejeitada: escolha caso a caso depois de ver).
+- **Registro:** specs 017 e 018.
+
+### D57 — Exposição do material rodante pela parcela diária da frota
+
+- **Decisão:** o material rodante é um modelo só, empilhado por frota, com deslocamento log(trens-hora × parcela diária da frota na linha), frota × linha e clima comum.
+  - A parcela vem do km real por frota. Onde faltar medida, a parcela da Verde é deduzida das falhas rotuladas por frota (status "deduzido").
+  - O equipamento fixo continua com trens-hora (D17).
+- **Por quê:** a frota explica boa parte do efeito de linha do MR (Amarela ×5,05, Azul ×3,74, Verde ×2,11 contra a Laranja). Na Verde, o MPM-10 foi de 39% a 79% dos km. Carro-hora não muda o ajuste, porque o número de carros por trem é fixo por linha e a linha absorve.
+- **Alternativas consideradas:** uma regressão por frota (rejeitada: a referência laranja não existe no MR-73 e a razão entre frotas sairia sem IC pareado); horas de serviço para o fixo (fica como sensibilidade).
+- **Registro:** spec 018.
+
+### D58 — Classes de gravidade pelos limites da STM
+
+- **Decisão:** cada falha recebe a classe menos de 5, 5 a 10, 10 a 30 ou 30 min ou mais. No simulador, a classe sai da própria amostra de durações de cada fonte; a página e os relatórios mostram minutos e falhas por classe.
+- **Por quê:** a reunião perguntou pelo "tipo de falha, grave, média". A STM não tem escala oficial, mas o indicador dela só conta interrupções de 5 min ou mais (metadados do conjunto). Os avisos aos usuários começam em 10 min e o ônibus substituto em 30 min.
+- **Registro:** specs 017 e 019.
+
+### D59 — Contrato de parâmetros v2 e simulador com N fontes
+
+- **Decisão:** o `parametros.json` passa a ter a lista de fontes por linha, e o motor lê essa lista no lugar do par MR/EF.
+  - O motor é reorganizado em dois passos. O primeiro sem mudar nenhum número, provado por uma referência gravada antes (`app/tests/fixtures/referencia_v1.json`). O segundo com os parâmetros novos, fluxos de sorteio pelo nome da linha e da fonte, políticas por efeito e métricas por fonte e gravidade.
+  - Falta de duração ou de renovação passa a ser erro.
+- **Por quê:** separar a mudança de estrutura da mudança de parâmetros permite atribuir cada diferença de resultado à sua causa.
+- **Registro:** spec 019.
+
+### D60 — Protocolo da revisão: versão anterior congelada e revisão no lugar
+
+- **Decisão:** antes de qualquer mudança, a versão publicada foi congelada (etiqueta `v1.1.0` no commit e793bba, Release com o zip do site, servida em `/versoes/v1.1.0/`). As specs atingidas ganham uma nota de revisão em andamento e, depois, a seção "Revisão de 2026-11 (após a ressegmentação)", com antes e depois. O resultado original não se apaga. Uma tabela gerada lista cada número que mudou.
+- **Por quê:** pedido da equipe em 2026-11-10: "pode revisar tudo, só avisa que foi após a revisão para termos no histórico do projeto".
+- **Registro:** spec 020; `fontes/verificacao/revisao_2026-11.md`.
+
+### D61 — Teste fora da amostra pré-registrado
+
+- **Decisão:** os modelos v1.1.0 e novo são congelados, com os vetores do bootstrap, as formas e as durações, e o protocolo de avaliação fica fixado em código (`pipeline/preregistro.py`). Isso é commitado antes de qualquer download de incidentes posteriores a 2026-06-30. O avaliador roda quando houver 3 meses novos.
+- **Por quê:** a ressegmentação é feita depois de ver os dados, e o backtest de 2025–2026 já é conhecido. Só meses ainda não publicados testam de verdade. Em 2026-11-10, o CSV de incidentes da STM não tinha mudado desde 2026-09-14.
+- **Registro:** spec 020; `fontes/verificacao/preregistro/`.

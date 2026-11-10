@@ -4,6 +4,8 @@
 **Fase:** F1 (semanas 2 e 3)
 **Depende de:** 000, 001, 002
 
+> **Revisão em andamento (2026-11-10, decisões D55 a D61).** A ressegmentação das falhas por frota e por setor dos equipamentos fixos e a regra nova de duração vão mudar números desta spec (spec 018). Os resultados abaixo são os da versão v1.1.0, que continua publicada em `/versoes/v1.1.0/`; os novos entram numa seção "Revisão de 2026-11 (após a ressegmentação)", ao lado dos originais, que não se apagam.
+
 ## Pergunta de engenharia
 Quanto serviço cada linha ofereceu em cada hora, para que a taxa de falha seja medida por exposição e não por tempo de calendário? O número que responde é o erro mensal da exposição estimada contra o km real.
 
