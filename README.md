@@ -14,7 +14,8 @@ Projeto da disciplina Sistemas Tolerantes a Falhas (Engenharia de Produção, ES
 | Especificações (SDD) | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/specs/ |
 | Simulador | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/simulador/ |
 | Relatório do trabalho | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/relatorio/ |
-| Apresentação | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/apresentacao/ |
+| Apresentação executiva (para a turma) | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/apresentacao/ |
+| Apresentação interna (para a equipe: tudo o que foi feito) | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/apresentacao/interna.html |
 | Registro de decisões | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/decisoes/ |
 | Guia do simulador | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/docs/guia/ |
 | Arquitetura e manutenção | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/docs/arquitetura/ |
@@ -27,7 +28,8 @@ Projeto da disciplina Sistemas Tolerantes a Falhas (Engenharia de Produção, ES
 | Documento | Para quem | Arquivo |
 |---|---|---|
 | Relatório acadêmico | professor e turma | [`docs/relatorio/relatorio.md`](docs/relatorio/relatorio.md) |
-| Apresentação (deck HTML) | apresentação em aula | [`docs/apresentacao/index.html`](docs/apresentacao/index.html) |
+| Apresentação executiva (deck HTML e PDF) | a turma, em aula | [`docs/apresentacao/index.html`](docs/apresentacao/index.html) |
+| Apresentação interna (deck HTML e PDF) | a equipe: o projeto inteiro, com roteiro e perguntas prováveis | [`docs/apresentacao/interna.html`](docs/apresentacao/interna.html) |
 | Registro de decisões, com motivo e alternativas | quem quer saber por que | [`docs/decisoes/registro_de_decisoes.md`](docs/decisoes/registro_de_decisoes.md) |
 | Guia do simulador | quem vai usar a página | [`docs/guia_simulador.md`](docs/guia_simulador.md) |
 | Arquitetura e manutenção | quem vai mexer no código | [`docs/arquitetura.md`](docs/arquitetura.md) |
@@ -89,6 +91,7 @@ Os ajustes com bootstrap levam tempo: `modelo_taxa` cerca de 80 minutos (famíli
 
 - **Código e textos escritos pela equipe:** licença MIT ([`LICENSE`](LICENSE)). Os dados abaixo não mudam de licença por estarem aqui: cada um segue a da sua fonte.
 - **Artigos de referência:** só o da RESS está no repositório (CC BY 4.0); os da IEEE ficam fora (`dados/manuais/LEIAME.md`).
+- **Identidade visual das apresentações:** o logo da ESEG é marca da instituição, fora da licença MIT, usado só para identificar o trabalho da disciplina. A fonte Public Sans segue a SIL Open Font License (`docs/apresentacao/marca/LEIAME.md`).
 - **Incidentes, quilometragem e GTFS:** Société de transport de Montréal (STM), dados abertos, CC BY 4.0.
 - **Clima:** Environment and Climate Change Canada, Licença de Governo Aberto do Canadá.
 - **Traçado das linhas:** © colaboradores do OpenStreetMap, ODbL. O arquivo derivado `dados/derivados/geo/linhas.geojson` também é ODbL.

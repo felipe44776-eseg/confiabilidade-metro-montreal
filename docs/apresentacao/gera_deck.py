@@ -1,11 +1,24 @@
-# Gera docs/apresentacao/index.html (deck autocontido). Uso, da raiz: python -I docs/apresentacao/gera_deck.py
-# Le linhas.json e metro_sequencias.csv direto do repositorio; os demais numeros
-# foram copiados dos arquivos citados no rodape de cada slide.
-# PDF: Chrome -> Imprimir -> Salvar como PDF, margens "Nenhuma", graficos de plano de fundo ligados.
-import csv, json, math, os, re, sys
+# Gera os dois decks autocontidos, na identidade visual da ESEG (docs/apresentacao/marca/LEIAME.md):
+#   docs/apresentacao/index.html    executiva, para a turma
+#   docs/apresentacao/interna.html  interna e detalhada, para a equipe: tudo o que foi feito desde 2026-10-20
+# Uso, da raiz: python -I docs/apresentacao/gera_deck.py
+# Os números vêm dos JSON gerados pelo pipeline (e da etiqueta v1.1.0, para o antes e depois); cada slide cita a fonte no rodapé.
+# PDF: Chrome sem janela, --print-to-pdf (página 1280 x 720, sem margens).
+import base64, csv, json, math, os, re, sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # raiz do repositorio
-OUT = os.path.join(REPO, "docs", "apresentacao", "index.html")
+DIR = os.path.join(REPO, "docs", "apresentacao")
+OUT_EXEC = os.path.join(DIR, "index.html")
+OUT_INT = os.path.join(DIR, "interna.html")
+_MARCA = os.path.join(DIR, "marca")
+LOGO_BRANCO = open(os.path.join(_MARCA, "eseg-logo-branco.svg"), encoding="utf-8").read()
+LOGO_MARINHO = open(os.path.join(_MARCA, "eseg-logo-marinho.svg"), encoding="utf-8").read()
+FONTE_B64 = base64.b64encode(open(os.path.join(_MARCA, "public-sans-latin-wght.woff2"), "rb").read()).decode("ascii")
+
+def logo(svg, altura, classe=""):
+    """Logo da ESEG (89 x 64) na altura pedida, com texto alternativo."""
+    w = round(89 * altura / 64, 1)
+    return svg.replace('width="89" height="64"', f'width="{w}" height="{altura}" class="logo {classe}" role="img" aria-label="Faculdade ESEG, Grupo Etapa"', 1)
 _MAN = json.load(open(os.path.join(REPO, "fontes", "fontes_manifesto.json"), encoding="utf-8"))
 _REL = [r.replace("dados-", "") for r in _MAN.get("releases", [_MAN["release"]])]
 VERSAO_DADOS = (", ".join(_REL[:-1]) + " e " + _REL[-1]) if len(_REL) > 1 else _REL[0]  # versão dos dados (spec 013)
@@ -528,20 +541,24 @@ por_linha = " · ".join(f'{chip(l)}{NOME[l]} <b>{br(L[l]["falhas"])}</b>' for l 
 R = L["rede"]
 assert R["falhas"] == 8530 and R["falhas_mr"] == 3982 and R["falhas_ef"] == 4548
 
-SLIDES = []
+SLIDES = []  # registro de todos os slides; cada deck escolhe os seus no fim
 
 def slide(eyebrow, titulo, corpo, fonte, notas, classe=""):
-    SLIDES.append(dict(eyebrow=eyebrow, titulo=titulo, corpo=corpo, fonte=fonte, notas=notas, classe=classe))
+    s = dict(eyebrow=eyebrow, titulo=titulo, corpo=corpo, fonte=fonte, notas=notas, classe=classe)
+    SLIDES.append(s)
+    return s
 
-# 1 ---------------------------------------------------------------
-slide("", "", f"""
+def capa(lede, rotulo, notas):
+    """Capa em marinho, com o logo da ESEG e o mapa das quatro linhas."""
+    return slide("", "", f"""
 <div class="capa">
   <div class="capa-txt">
-    <div class="eyebrow">Sistemas Tolerantes a Falhas · Engenharia de Produção · ESEG · 2026</div>
+    {logo(LOGO_BRANCO, 76)}
+    <div class="eyebrow">Sistemas Tolerantes a Falhas · Engenharia de Produção · 2026</div>
     <h1>Confiabilidade e tolerância a falhas do metrô de Montreal</h1>
-    <p class="lede">Dados públicos, modelos e simulação</p>
+    <p class="lede">{lede}</p>
     <div class="equipe">
-      <div class="label">Equipe</div>
+      <div class="label">{rotulo}</div>
       <p>Ana Paula Duanetti · Felipe Marins<br>Lorena Feitosa de Freitas · Sophia Braz</p>
     </div>
     <p class="url">felipe44776-eseg.github.io/confiabilidade-metro-montreal</p>
@@ -549,11 +566,16 @@ slide("", "", f"""
   <figure class="capa-mapa">{mapa_titulo}{legenda_linhas()}
     <figcaption>Posição das estações no GTFS da STM; linhas ligadas em linha reta entre estações.</figcaption>
   </figure>
-</div>""",
-"docs/equipe.json; dados/derivados/gtfs/metro_sequencias.csv (mapa)",
-"""<p>Apresentar a equipe e o tema em uma frase: medimos a confiabilidade do metrô de Montreal só com dados públicos e simulamos políticas de tolerância a falhas.</p>
-<p>Avisar que todo número da apresentação tem a fonte no rodapé e pode ser refeito por qualquer pessoa.</p>
-<p><b>Tempo:</b> 30 s.</p>""", "capa-slide")
+</div>""", "docs/equipe.json; dados/derivados/gtfs/metro_sequencias.csv (mapa)", notas, "capa-slide escuro")
+
+def divisor(n, titulo, sub, notas=""):
+    """Divisória de parte, em marinho (só no deck interno)."""
+    return slide("", "", f"""
+<div class="div-in">
+  <div class="div-n">{n:02d}</div>
+  <h1>{titulo}</h1>
+  <p class="lede">{sub}</p>
+</div>""", "", notas or f"<p>Abertura da parte {n}: {esc(titulo)}.</p>", "divisor escuro")
 
 # 2 ---------------------------------------------------------------
 slide("A pergunta", "Quanto o metrô falha, por quê, e o que deixaria a rede mais tolerante a falhas", """
@@ -954,15 +976,21 @@ slide("Confira você mesmo", "Tudo é público: site, simulador, dados e o coman
 
 # ---------------------------------------------------------------- CSS / JS
 CSS = r"""
+/* Identidade da ESEG: cores e fonte do site eseg.edu.br (docs/apresentacao/marca/LEIAME.md).
+   Public Sans: SIL Open Font License 1.1, The Public Sans Project Authors (github.com/uswds/public-sans). */
+@font-face{font-family:"Public Sans";font-style:normal;font-weight:100 900;font-display:block;
+  src:url(data:font/woff2;base64,__FONTE__) format("woff2")}
 :root{
   --slide-w:1280px; --slide-h:720px; --s:1;
-  --page:#E6E7EA; --surface:#FBFBFA; --zebra:#F3F3F1;
-  --ink:#15181C; --ink-2:#3F454D; --muted:#5F666E; --rule:#D3D7DC; --rule-2:#E7E9EC;
-  --accent:#4A3A8C; --accent-soft:#ECE9F5; --bar:#7B828B;
+  --navy:#08223D; --turq:#00A1B8; --ouro:#F1B634;
+  --page:#E5E6E7; --surface:#FFFFFF; --zebra:#FAFAFA;
+  --ink:#0F1322; --ink-2:#333643; --muted:#474A56; --rule:#C2C3C7; --rule-2:#E5E6E7;
+  --accent:#00A1B8; --accent-soft:rgba(0,161,184,.13); --accent-text:#08223D; --bar:#999BA1;
+  --ouro-soft:rgba(241,182,52,.30);
 }
 *{box-sizing:border-box}
 html{scroll-snap-type:y mandatory;background:var(--page)}
-body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Roboto,Arial,sans-serif;color:var(--ink);
+body{margin:0;font-family:"Public Sans","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Roboto,Arial,sans-serif;color:var(--ink);
   -webkit-print-color-adjust:exact;print-color-adjust:exact;-webkit-font-smoothing:antialiased}
 .frame{height:100vh;display:flex;align-items:center;justify-content:center;scroll-snap-align:start;overflow:hidden}
 .frame-in{width:calc(var(--slide-w) * var(--s));height:calc(var(--slide-h) * var(--s));flex:none}
@@ -970,16 +998,33 @@ body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Ro
   background:var(--surface);transform:scale(var(--s));transform-origin:0 0;box-shadow:0 2px 20px rgba(20,24,28,.16);
   padding:40px 64px 0}
 .slide > header{flex:none;margin-bottom:22px}
-.slide > header::before{content:"";display:block;width:56px;height:4px;margin-bottom:16px;
-  background:linear-gradient(90deg,#008E4F 0 25%,#EF8122 25% 50%,#FFD900 50% 75%,#0076BE 75%)}
-.eyebrow{font-size:14px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
-h1{font-size:50px;line-height:1.08;font-weight:700;letter-spacing:-.01em;margin:0 0 14px}
-h2{font-size:33px;line-height:1.16;font-weight:650;letter-spacing:-.005em;margin:0;max-width:1120px;text-wrap:balance}
-h3{font-size:19px;font-weight:650;margin:0 0 2px}
+.slide > header::before{content:"";display:block;width:64px;height:4px;margin-bottom:16px;
+  background:linear-gradient(90deg,var(--turq) 0 72%,var(--ouro) 72%)}
+.eyebrow{font-size:14px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+h1{font-size:50px;line-height:1.08;font-weight:700;letter-spacing:-.015em;margin:0 0 14px;color:var(--navy)}
+h2{font-size:32px;line-height:1.16;font-weight:600;letter-spacing:-.01em;margin:0;max-width:1120px;text-wrap:balance;color:var(--navy)}
+h3{font-size:19px;font-weight:600;margin:0 0 2px;color:var(--navy)}
 .slide-body{flex:1;min-height:0;padding-bottom:50px;position:relative}
 .slide > footer{position:absolute;left:64px;right:64px;bottom:0;height:40px;border-top:1px solid var(--rule);
   display:flex;align-items:center;justify-content:space-between;gap:24px;font-size:11.5px;color:var(--muted)}
-.slide > footer .pg{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap;flex:none}
+.slide > footer .pg{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap;flex:none;display:flex;align-items:center;gap:12px}
+.slide > footer .logo{display:block}
+/* slides escuros: capa e divisórias */
+.escuro{background:var(--navy);color:#fff}
+.escuro h1{color:#fff}
+.escuro .eyebrow{color:var(--turq)}
+.escuro .lede{color:rgba(255,255,255,.82)}
+.escuro .label{color:var(--turq)}
+.escuro > footer{border-top-color:rgba(255,255,255,.22);color:rgba(255,255,255,.62)}
+.escuro .legenda{color:rgba(255,255,255,.85)}
+.escuro figcaption{color:rgba(255,255,255,.62)}
+.escuro .m-lab{fill:#fff;stroke:var(--navy)}
+.divisor{justify-content:center}
+.div-in{display:flex;flex-direction:column;justify-content:center;height:100%;padding:0 0 40px 0}
+.div-in::before{content:"";display:block;width:84px;height:6px;margin-bottom:26px;background:linear-gradient(90deg,var(--turq) 0 72%,var(--ouro) 72%)}
+.div-n{font-size:88px;font-weight:700;line-height:1;color:var(--turq);margin-bottom:18px;font-variant-numeric:tabular-nums}
+.div-in h1{font-size:54px;max-width:1000px}
+.div-in .lede{max-width:980px;font-size:24px;line-height:1.4}
 .label{display:block;font-size:13px;font-weight:650;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
 .sub{font-size:15px;color:var(--muted);margin:0 0 10px}
 .muted{color:var(--muted)}
@@ -1000,7 +1045,7 @@ b{font-weight:650}
 .perguntas{margin:0;padding:0;list-style:none;counter-reset:q}
 .perguntas li{counter-increment:q;position:relative;padding:0 0 0 58px;margin:0 0 22px;font-size:21px;line-height:1.38}
 .perguntas li::before{content:counter(q);position:absolute;left:0;top:-2px;width:38px;height:38px;border-radius:50%;
-  border:2px solid var(--accent);color:var(--accent);font-weight:700;font-size:19px;display:flex;align-items:center;justify-content:center}
+  border:2px solid var(--accent);color:var(--accent-text);font-weight:700;font-size:19px;display:flex;align-items:center;justify-content:center}
 .faixa{display:flex;gap:40px;border-top:1px solid var(--rule);padding-top:14px;margin-top:20px;font-size:16.5px;line-height:1.4}
 .faixa > div{flex:1}
 .faixa .label{margin-bottom:4px}
@@ -1013,11 +1058,11 @@ b{font-weight:650}
 .card{border:1px solid var(--rule);border-radius:10px;padding:18px 20px 16px;background:#fff;position:relative}
 .card h3{margin-bottom:6px}
 .card p{font-size:16px;line-height:1.42;margin:0}
-.card-k{position:absolute;top:16px;right:18px;font-size:14px;font-weight:700;color:var(--accent)}
-.tag{display:inline-block;margin-top:6px;font-size:13px;font-weight:600;color:var(--accent);background:var(--accent-soft);border-radius:4px;padding:2px 8px}
+.card-k{position:absolute;top:16px;right:18px;font-size:14px;font-weight:700;color:var(--accent-text)}
+.tag{display:inline-block;margin-top:6px;font-size:13px;font-weight:600;color:var(--navy);background:var(--ouro-soft);border-radius:4px;padding:2px 8px}
 .cards-alto .card p{margin-bottom:12px}
 .cards-alto .label{margin-bottom:2px;font-size:12px}
-.cards-alto .onde{font-size:13.5px;color:var(--accent);font-weight:600;margin:0}
+.cards-alto .onde{font-size:13.5px;color:var(--accent-text);font-weight:600;margin:0}
 .tab{border-collapse:collapse;width:100%;font-size:16px;line-height:1.38}
 .tab th{text-align:left;font-size:13px;font-weight:650;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
   border-bottom:1.5px solid var(--ink-2);padding:6px 10px 6px 0}
@@ -1031,8 +1076,9 @@ b{font-weight:650}
 .tab-pol td:nth-child(2){white-space:nowrap}
 .tab-pol svg{vertical-align:middle}
 .tab-pol .ic{font-size:13.5px;color:var(--muted);margin-left:2px;font-variant-numeric:tabular-nums}
-.tab-pol tr.dest td:first-child b{color:var(--accent)}
-.tab-lim td{padding:11px 16px 11px 0;font-size:17.5px}
+.tab-pol tr.dest td:first-child b{color:var(--accent-text)}
+.tab-pol tr.dest td{background:var(--accent-soft)}
+.tab-lim td{padding:10px 16px 10px 0;font-size:16.5px}
 .tab-lim td:first-child{width:38%}
 .tri{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:14px}
 .tri p{margin:0;font-size:16.5px;line-height:1.42;border-left:3px solid var(--accent);padding-left:14px}
@@ -1054,16 +1100,18 @@ b{font-weight:650}
 .legenda .lg{display:inline-flex;align-items:center;gap:7px}
 .legenda i{display:inline-block;width:22px;height:7px;border-radius:4px}
 .stats{display:flex;flex-direction:column;gap:22px;padding-top:6px}
-.stat-v{font-size:46px;font-weight:650;line-height:1;color:var(--accent)}
+.stat-v{font-size:46px;font-weight:650;line-height:1;color:var(--accent-text)}
 .stat-l{font-size:17px;line-height:1.38;margin-top:6px}
 .val p{font-size:17px;line-height:1.4;margin:0 0 6px}
-.capa-slide{padding-top:64px}
+.capa-slide{padding-top:48px}
 .capa{display:grid;grid-template-columns:1fr 470px;gap:36px;height:100%}
-.capa-txt{display:flex;flex-direction:column;justify-content:center;padding-bottom:70px}
-.capa-txt::before{content:"";display:block;width:84px;height:6px;margin-bottom:26px;
-  background:linear-gradient(90deg,#008E4F 0 25%,#EF8122 25% 50%,#FFD900 50% 75%,#0076BE 75%)}
+.capa-txt{display:flex;flex-direction:column;justify-content:center;padding-bottom:60px}
+.capa-txt .logo{margin-bottom:34px}
+.capa-txt h1{font-size:48px}
+.capa-txt .lede{margin-bottom:34px}
 .equipe p{font-size:21px;line-height:1.45;margin:0}
-.url{font-size:16px;color:var(--muted);margin:34px 0 0}
+.url{font-size:16px;color:rgba(255,255,255,.7);margin:30px 0 0}
+.capa-slide .m-lab{font-size:13.5px}
 .capa-mapa{margin:0;align-self:center}
 figure{margin:0}
 figcaption{font-size:12.5px;color:var(--muted);margin-top:6px}
@@ -1072,14 +1120,84 @@ figcaption{font-size:12.5px;color:var(--muted);margin-top:6px}
 .links li{padding:12px 0;border-bottom:1px solid var(--rule);font-size:17px}
 .links .label{margin-bottom:2px}
 .links a{color:var(--ink);text-decoration:none;border-bottom:1.5px solid var(--accent)}
-.cmd{font-family:"Cascadia Mono",Consolas,Menlo,monospace;font-size:17px;line-height:1.45;background:#15181C;color:#F2F2F0;
+.cmd{font-family:"Cascadia Mono",Consolas,Menlo,monospace;font-size:17px;line-height:1.45;background:var(--navy);color:#F2F2F0;
   border-radius:8px;padding:16px 20px;margin:0}
 .obrigado{font-size:34px;font-weight:650;margin-top:34px}
 .conclusoes{margin:0;padding:0;list-style:none;counter-reset:c;display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
 .conclusoes li{counter-increment:c;border-top:4px solid var(--accent);padding-top:14px}
-.conclusoes li::before{content:counter(c);display:block;font-size:40px;font-weight:700;color:var(--accent);line-height:1;margin-bottom:10px}
+.conclusoes li::before{content:counter(c);display:block;font-size:40px;font-weight:700;color:var(--accent-text);line-height:1;margin-bottom:10px}
 .conclusoes h3{font-size:21px;line-height:1.25;margin-bottom:8px}
 .conclusoes p{font-size:17px;line-height:1.42;margin:0}
+/* deck interno */
+.nw{white-space:nowrap}
+.corpo{font-size:18px;line-height:1.45;margin:0}
+.agenda{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px 48px}
+.agenda li{display:grid;grid-template-columns:62px 1fr auto;column-gap:14px;padding:16px 0;border-bottom:1px solid var(--rule-2)}
+.ag-n{grid-column:1;grid-row:1/3;font-size:36px;font-weight:700;color:var(--turq);line-height:1;font-variant-numeric:tabular-nums}
+.ag-t{grid-column:2;grid-row:1;font-size:21px;font-weight:600;color:var(--navy)}
+.ag-s{grid-column:2/4;grid-row:2;font-size:15px;color:var(--muted);line-height:1.35;margin-top:4px}
+.ag-p{grid-column:3;grid-row:1;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;align-self:center}
+.tl{display:grid;grid-template-columns:repeat(7,1fr);gap:16px;position:relative}
+.tl::before{content:"";position:absolute;left:0;right:0;top:35px;height:3px;background:var(--rule)}
+.tl-d{font-size:15px;font-weight:700;color:var(--navy);height:24px;white-space:nowrap}
+.tl-p{display:block;width:18px;height:18px;border-radius:50%;background:var(--turq);border:3px solid #fff;box-shadow:0 0 0 1px var(--turq);position:relative;margin:4px 0 16px}
+.tl-ouro .tl-p{background:var(--ouro);box-shadow:0 0 0 1px #C8901A}
+.tl-n h3{font-size:19px;margin-bottom:8px}
+.tl-n p{font-size:15px;line-height:1.42;margin:0 0 10px}
+.tl-n .onde{font-size:13px;font-weight:600;color:var(--accent-text)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:44px 28px}
+.kpi{border-top:4px solid var(--turq);padding-top:12px}
+.kpi:nth-child(4n+1){border-top-color:var(--navy)}
+.kpi-v{font-size:46px;font-weight:700;color:var(--navy);line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.kpi-l{font-size:15.5px;line-height:1.38;margin-top:8px;color:var(--ink-2)}
+.passos{margin:0;padding:0;list-style:none;counter-reset:p}
+.passos li{counter-increment:p;position:relative;padding:0 0 0 44px;margin:0 0 14px;font-size:18px;line-height:1.4}
+.passos li::before{content:counter(p);position:absolute;left:0;top:0;width:28px;height:28px;border-radius:6px;background:var(--navy);color:#fff;
+  font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center}
+.passos-sm li{font-size:16px;margin-bottom:8px;padding-left:40px}
+.specs{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
+.spec{border:1px solid var(--rule);border-radius:8px;padding:9px 10px 10px;background:#fff;min-height:112px;display:flex;flex-direction:column}
+.spec-rev{border:2px solid var(--ouro)}
+.spec-n{font-weight:700;color:var(--navy);font-size:16px;font-variant-numeric:tabular-nums}
+.spec-t{font-size:13.5px;line-height:1.3;margin:3px 0 8px;flex:1}
+.st{align-self:flex-start;font-size:11.5px;font-weight:600;border-radius:4px;padding:2px 7px}
+.st-ok{background:var(--navy);color:#fff}
+.st-exc{background:var(--ouro-soft);color:var(--navy)}
+.fluxo{display:flex;align-items:stretch;margin-bottom:34px}
+.fx{flex:1;border:1px solid var(--rule);border-radius:10px;padding:16px 16px 18px;background:#fff}
+.fx p{margin:0;font-size:16.5px;line-height:1.42}
+.fx .label{margin-bottom:5px;color:var(--navy)}
+.fx-dest{border:2px solid var(--turq)}
+.fx-ver{background:var(--navy);border-color:var(--navy);color:#fff}
+.fx-ver .label{color:var(--turq)}
+.fx-ver code{background:rgba(255,255,255,.14);color:#fff}
+.seta{flex:none;width:34px;display:flex;align-items:center;justify-content:center;color:var(--turq);font-size:26px;font-weight:700}
+.tab-num2{font-size:17.5px}
+.tab-num2 td{padding:11px 12px 11px 0}
+.tab-num2 .num{white-space:nowrap}
+.tab-dif{font-size:15px;line-height:1.3}
+.tab-dif td{padding:6px 12px 6px 0}
+.tab-dif td:first-child,.tab-dif td:last-child{white-space:nowrap;color:var(--muted)}
+.tab-ad{font-size:15.5px}
+.tab-ad td{padding:7px 14px 7px 0}
+.tab-rot{font-size:14.5px;line-height:1.3}
+.tab-rot td{padding:5px 12px 5px 0}
+.qa{display:grid;grid-template-columns:1fr 1fr;gap:40px 44px}
+.qa-i{border-left:4px solid var(--turq);padding-left:18px}
+.qa-i h3{font-size:21px;line-height:1.3;margin-bottom:10px}
+.qa-i p{font-size:18.5px;line-height:1.48;margin:0}
+/* resumo executivo */
+.resposta{border-left:6px solid var(--ouro);padding:4px 0 0 26px}
+.r-item{display:grid;grid-template-columns:262px 1fr;gap:16px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--rule-2)}
+.r-v{font-size:52px;font-weight:700;color:var(--navy);line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em;white-space:nowrap}
+.kpis-ex .kpi-v{font-size:42px}
+.r-v span{font-size:22px;font-weight:600;letter-spacing:0}
+.r-v2{font-size:40px}
+.r-t{font-size:17.5px;line-height:1.4}
+.achados{margin:0;padding:0;list-style:none;counter-reset:a}
+.achados li{counter-increment:a;position:relative;padding:0 0 0 46px;margin:0 0 16px;font-size:17.5px;line-height:1.4}
+.achados li::before{content:counter(a);position:absolute;left:0;top:-1px;width:30px;height:30px;border-radius:50%;background:var(--navy);
+  color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center}
 /* graficos */
 svg text{font-family:inherit}
 .c-lab{font-size:16px;fill:var(--ink)}
@@ -1091,25 +1209,25 @@ svg text{font-family:inherit}
 .c-head{font-size:13px;font-weight:650;letter-spacing:.05em;text-transform:uppercase;fill:var(--muted)}
 .c-head2{font-size:14px;font-weight:650;fill:var(--ink-2)}
 .c-tick{font-size:13px;fill:var(--muted);font-variant-numeric:tabular-nums}
-.c-acc{font-size:14px;font-weight:600;fill:var(--accent)}
-.c-acc-t{fill:var(--accent);font-weight:650}
+.c-acc{font-size:14px;font-weight:600;fill:var(--accent-text)}
+.c-acc-t{fill:var(--accent-text);font-weight:650}
 .c-sm-t{font-size:14px;fill:var(--ink-2)}
 .c-in{font-size:15px;fill:#fff;font-weight:600}
-.c-k{font-weight:700;fill:var(--accent)}
+.c-k{font-weight:700;fill:var(--accent-text)}
 .grade{stroke:var(--rule-2);stroke-width:1}
 .eixo{stroke:var(--rule);stroke-width:1}
 .ref{stroke:var(--ink-2);stroke-width:1.25}
 .m-lab{font-size:13.5px;fill:var(--ink);font-weight:600;paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round}
 .m-fraco{fill:var(--muted);font-weight:500}
-.m-acc{fill:var(--accent);font-weight:700}
+.m-acc{fill:var(--accent-text);font-weight:700}
 /* tela */
 .notes{display:none}
-#pos{position:fixed;right:16px;top:10px;font:600 13px/1 "Segoe UI",system-ui,sans-serif;color:#fff;background:rgba(21,24,28,.72);
+#pos{position:fixed;right:16px;top:10px;font:600 13px/1 "Public Sans","Segoe UI",system-ui,sans-serif;color:#fff;background:rgba(8,34,61,.82);
   padding:7px 10px;border-radius:6px;z-index:10;font-variant-numeric:tabular-nums}
-#ajuda{position:fixed;left:16px;top:10px;font:600 12px/1 "Segoe UI",system-ui,sans-serif;color:#fff;background:rgba(21,24,28,.72);
+#ajuda{position:fixed;left:16px;top:10px;font:600 12px/1 "Public Sans","Segoe UI",system-ui,sans-serif;color:#fff;background:rgba(8,34,61,.82);
   padding:7px 10px;border-radius:6px;z-index:10;transition:opacity .8s}
-#painel-notas{display:none;position:fixed;left:0;right:0;bottom:0;height:34vh;overflow:auto;background:#15181C;color:#F2F2F0;
-  font:18px/1.5 "Segoe UI",system-ui,sans-serif;padding:16px 28px 40px;z-index:9}
+#painel-notas{display:none;position:fixed;left:0;right:0;bottom:0;height:34vh;overflow:auto;background:var(--navy);color:#F2F2F0;
+  font:18px/1.5 "Public Sans","Segoe UI",system-ui,sans-serif;padding:16px 28px 40px;z-index:9}
 #painel-notas p{margin:0 0 8px;max-width:1100px}
 body.com-notas #painel-notas{display:block}
 body.com-notas .frame{align-items:flex-start;padding-top:10px}
@@ -1196,17 +1314,20 @@ JS = r"""
 })();
 """
 
-def monta():
+def monta(slides, out, titulo):
     partes = []
-    N = len(SLIDES)
-    for i, s in enumerate(SLIDES, 1):
+    N = len(slides)
+    for i, s in enumerate(slides, 1):
         cab = ""
         if s["titulo"]:
             cab = f'<header><div class="eyebrow">{s["eyebrow"]}</div><h2>{s["titulo"]}</h2></header>'
+        escuro = "escuro" in s["classe"]
+        marca = "" if "capa-slide" in s["classe"] else logo(LOGO_BRANCO if escuro else LOGO_MARINHO, 24)
+        fonte = f'Fonte: {s["fonte"]}' if s["fonte"] else ""
         partes.append(
             f'<div class="frame" id="s{i}"><div class="frame-in"><section class="slide {s["classe"]}" data-n="{i}" aria-label="Slide {i} de {N}">'
             f'{cab}<div class="slide-body">{s["corpo"]}</div>'
-            f'<footer><span>Fonte: {s["fonte"]}</span><span class="pg">dados {VERSAO_DADOS} · {i}</span></footer>'
+            f'<footer><span>{fonte}</span><span class="pg">dados {VERSAO_DADOS} · {i}{marca}</span></footer>'
             f'<aside class="notes no-print">{s["notas"]}</aside>'
             f'</section></div></div>')
     html = f"""<!doctype html>
@@ -1215,8 +1336,8 @@ def monta():
 <meta charset="utf-8">
 <link rel="icon" href="data:,">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Confiabilidade e tolerância a falhas do metrô de Montreal · apresentação</title>
-<style>{CSS}</style>
+<title>{titulo}</title>
+<style>{CSS.replace("__FONTE__", FONTE_B64)}</style>
 </head>
 <body>
 {"".join(partes)}
@@ -1227,9 +1348,559 @@ def monta():
 </body>
 </html>
 """
-    os.makedirs(os.path.dirname(OUT), exist_ok=True)
-    with open(OUT, "w", encoding="utf-8", newline="\n") as f:
+    with open(out, "w", encoding="utf-8", newline="\n") as f:
         f.write(html)
-    print(f"{N} slides -> {OUT} ({len(html.encode('utf-8')) / 1024:.0f} KB)")
+    print(f"{N} slides -> {os.path.relpath(out, REPO)} ({len(html.encode('utf-8')) / 1024:.0f} KB)")
 
-monta()
+def pega(prefixo):
+    """Slide do registro pelo começo do sobretítulo (falha se não houver exatamente um)."""
+    achados = [s for s in SLIDES if s["eyebrow"].startswith(prefixo)]
+    assert len(achados) == 1, (prefixo, len(achados))
+    return achados[0]
+
+# ================================================================ deck executivo (turma)
+_ATW = _MELHOR["ganho"]
+_RAZ = _CAND["rosa_2017+azul_anjou"]["ganho"]
+def _pp(g, d=3):
+    return br(100 * g, d)
+CAPA_EXEC = capa("Qual ligação nova deixa a rede mais tolerante a falhas: dados públicos, modelos e simulação", "Equipe",
+"""<p>Apresentar a equipe e o tema em uma frase: medimos a confiabilidade do metrô de Montreal só com dados públicos e simulamos a rede para descobrir que ligação nova mais ajuda.</p>
+<p>Avisar que todo número tem a fonte no rodapé e pode ser refeito por qualquer pessoa.</p>
+<p><b>Tempo:</b> 20 s.</p>""")
+
+RESUMO = slide("Resumo · a resposta antes dos detalhes",
+    "A ligação Atwater–Université-de-Montréal é a que mais melhora a rede; entre as propostas oficiais, a Rosa com a Azul até Anjou", f"""
+<div class="cols c-55-45">
+  <div class="resposta">
+    <div class="label">A resposta</div>
+    <div class="r-item"><div class="r-v">+{_pp(_ATW["media"])}<span> p.p.</span></div>
+      <div class="r-t"><b>Atwater (Verde) – Université-de-Montréal (Azul)</b>, ligação direta de {br(_MELHOR["km"], 1)} km. IC 95% de +{_pp(_ATW["ic95"][0])} a +{_pp(_ATW["ic95"][1])}.</div></div>
+    <div class="r-item"><div class="r-v r-v2">+{_pp(_RAZ["media"])}<span> p.p.</span></div>
+      <div class="r-t"><b>Linha Rosa com a Azul até Anjou</b>, a melhor das propostas oficiais. IC 95% de +{_pp(_RAZ["ic95"][0])} a +{_pp(_RAZ["ic95"][1])}.</div></div>
+    <p class="corpo-sm muted">Ganho na disponibilidade dos deslocamentos entre estações num dia útil, ponderada pela oferta de trens. A rede atual tem {br(DISP_OD_ATUAL, 3)}%. Não há dado público de passageiros: o ganho é medido em pares de estações com caminho, não em pessoas.</p>
+  </div>
+  <div>
+    <div class="label">Por quê</div>
+    <ol class="achados">
+      <li><b>A Azul depende da Laranja.</b> Ela só alcança o resto da rede em Snowdon e Jean-Talon: quando a Laranja para, a Azul fica isolada. É o maior ponto único de falha do modelo.</li>
+      <li><b>As falhas não são independentes.</b> Elas vêm em rajadas, e 45 eventos param várias linhas juntas; a Laranja está em 44.</li>
+      <li><b>A política que mais rende é a operação degradada</b>, em marcha lenta depois de uma falha de equipamento fixo: −{br(_OD, 1)} minutos parados por dia útil.</li>
+    </ol>
+  </div>
+</div>
+<div class="faixa">
+  <div><span class="label">Por que confiar</span>{N_RECALC} números refeitos por um segundo programa, com zero diferença. A validação pré-registrada não passou e continua publicada.</div>
+  <div><span class="label">Versão</span>Números após a revisão de 2026-11 (v1.2.0). A versão anterior continua no ar em /versoes/v1.1.0/.</div>
+</div>""",
+"dados/derivados/simulador/expansao.json e politicas.json; docs/relatorio/relatorio.md (Resumo e §7); fontes/verificacao/expansao.md",
+f"""<p>Começar pela resposta: o objetivo do trabalho era dizer que linha melhor resolve a movimentação das pessoas na rede, do ponto de vista de falhas.</p>
+<p>A melhor ligação nova é Atwater–Université-de-Montréal: +{_pp(_ATW["media"])} ponto percentual na disponibilidade dos deslocamentos. Parece pouco, mas é quase o dobro da melhor proposta oficial, a Rosa com a Azul até Anjou (+{_pp(_RAZ["media"])}).</p>
+<p>O motivo é estrutural: hoje a Azul só chega ao resto da rede passando pela Laranja.</p>
+<p>Ressalva que precisa ser dita: sem dado de passageiros, medimos pares de estações com caminho, ponderados pela oferta de trens, e não pessoas.</p>
+<p><b>Tempo:</b> 1 min 15 s.</p>""")
+
+CONFIANCA = slide("Confiança e limites", "Por que confiar nos números, e o que o modelo não sabe", f"""
+<div class="kpis kpis-ex">
+  <div class="kpi"><div class="kpi-v">{N_RECALC}</div><div class="kpi-l">números refeitos por um segundo programa a cada publicação: zero diferença</div></div>
+  <div class="kpi"><div class="kpi-v">{br(VERSOES[0][3], 1)}%</div><div class="kpi-l">cobertura da validação pré-registrada contra 2025 e 2026, com 80% exigidos: não passou e continua publicada</div></div>
+  <div class="kpi"><div class="kpi-v">{br(VERSOES[3][3], 1)}%</div><div class="kpi-l">cobertura da regra corrigida, testada em outro período</div></div>
+  <div class="kpi"><div class="kpi-v">{REV_NO_IC} de {N_COMP}</div><div class="kpi-l">médias do simulador, por linha e família, dentro do intervalo do observado em 2025</div></div>
+</div>
+<div class="cols c-50-50" style="margin-top:26px">
+  <div>
+    <div class="label">Por que confiar</div>
+    <ul class="lista lista-sm">
+      <li><b>Cópia exata dos dados</b> em três Releases do GitHub, com o SHA-256 de cada arquivo.</li>
+      <li><b>O site não é publicado</b> se a conferência ou os testes falham.</li>
+      <li><b>Critério escrito antes</b> de ver o resultado: o que não passa vira exceção, e o critério não muda.</li>
+    </ul>
+  </div>
+  <div>
+    <div class="label">O que o modelo não sabe</div>
+    <ul class="lista lista-sm">
+      <li><b>Passageiros por dia:</b> não são públicos. Tudo é ponderado pela oferta de trens.</li>
+      <li><b>Tempo de reparo na oficina:</b> hipótese, com sensibilidade de 0,5 a 4 dias.</li>
+      <li><b>Setores "Service aux trains" e "TCPE":</b> sem definição pública; "energia" é dedução nossa.</li>
+      <li><b>Traçado das candidatas:</b> aproximado em linha reta entre estações.</li>
+    </ul>
+  </div>
+</div>""",
+"fontes/FONTES.md; fontes/verificacao/backtest.md e revalidacao.md; specs/012 e 020; docs/relatorio/relatorio.md §5 e §6",
+f"""<p>Dois lados da mesma moeda. À esquerda, o que faz o número ser confiável: dados com hash, um segundo programa que refaz as contas e uma validação com critério escrito antes.</p>
+<p>A validação pré-registrada não passou ({br(VERSOES[0][3], 1)}% contra 80%): 2024 teve um tipo de registro nos terminais que inflou as falhas, e o modelo levou isso para 2025. Não mexemos no critério; testamos a regra nova em outro período.</p>
+<p>À direita, o que fica fora. A principal limitação é não ter passageiros.</p>
+<p><b>Tempo:</b> 1 min.</p>""")
+
+EXECUTIVA = [CAPA_EXEC, RESUMO, pega("A pergunta"), pega("Indicadores por linha"), pega("O que muda a taxa"),
+             pega("As falhas se agrupam"), pega("Causa comum"), pega("Simulador · eventos"), pega("Políticas"),
+             pega("Que linha construir"), CONFIANCA, pega("Conclusões"), pega("Confira")]
+monta(EXECUTIVA, OUT_EXEC, "Confiabilidade do metrô de Montreal · apresentação executiva")
+
+# ================================================================ deck interno (equipe): tudo o que foi feito
+import subprocess
+def _git(*a):
+    return subprocess.run(["git", *a], cwd=REPO, capture_output=True, check=True, timeout=60).stdout.decode("utf-8").strip()
+
+def _ler(*partes):
+    return open(os.path.join(REPO, *partes), encoding="utf-8").read()
+
+CURTO = {"000": "Proveniência", "001": "Normalização dos incidentes", "002": "Base geoespacial", "003": "Clima e eventos",
+         "004": "Exposição (trens-hora)", "005": "Taxa de falha", "006": "Tempo entre falhas, duração e causa comum",
+         "007": "Motor de eventos discretos", "008": "Políticas", "009": "Monte Carlo e métricas", "010": "Mapa com trens",
+         "011": "Cenários", "012": "Backtest", "013": "Publicação", "014": "Expansão da rede", "015": "Viagem de A a B",
+         "016": "Linhas novas na viagem", "017": "Fontes e durações", "018": "Taxa por fonte", "019": "Motor com N fontes",
+         "020": "Revalidação"}
+SPECS = []  # (número, nome curto, status) lidos de specs/*/spec.md
+for d in sorted(os.listdir(os.path.join(REPO, "specs"))):
+    if re.match(r"\d{3}-", d) and os.path.exists(os.path.join(REPO, "specs", d, "spec.md")):
+        st = re.search(r"\*\*Status:\*\* *(.+)", _ler("specs", d, "spec.md")).group(1).strip()
+        SPECS.append((d[:3], CURTO[d[:3]], st))
+assert [s[0] for s in SPECS] == sorted(CURTO), "specs mudaram: revisar CURTO"
+N_IMPL = sum(s[2] == "implementada" for s in SPECS)
+N_EXC = sum(s[2] == "implementada com exceções" for s in SPECS)
+assert N_IMPL + N_EXC == len(SPECS)
+REG = _ler("docs", "decisoes", "registro_de_decisoes.md")
+N_DEC = len(re.findall(r"^### D\d\d ", REG, re.M))
+CRITICAS = []  # (data, achados, médios, corrigidos) de fontes/verificacao/critica_*.md
+for f in sorted(os.listdir(os.path.join(REPO, "fontes", "verificacao"))):
+    if f.startswith("critica_"):
+        m = re.search(r"(\d+) achados(?: novos)?: (\d+) altos?, (\d+) médios?, (\d+) baixos?\. (\d+) corrigidos", _ler("fontes", "verificacao", f))
+        CRITICAS.append((f[8:18], int(m.group(1)), int(m.group(2)), int(m.group(3)), int(m.group(5))))
+assert len(CRITICAS) == 4 and sum(c[2] for c in CRITICAS) == 0
+VERS = [(t, _git("rev-list", "-n", "1", t)[:7]) for t in ("v1.0.0", "v1.1.0", "v1.2.0")]
+N_FONTES = len(_MAN["fontes"])
+N_PYTEST = int(re.search(r"# (\d+) testes em", _ler("docs", "arquitetura.md")).group(1))
+POL_V1 = _json_v1("dados/derivados/simulador/politicas.json")
+EXP_V1 = _json_v1("dados/derivados/simulador/expansao.json")
+_RAZ_V1 = next(c for c in EXP_V1["candidatas"]["sem_retorno_parcial"] if c["id"] == "rosa_2017+azul_anjou")["ganho"]["media"]
+_VG = _ler("fontes", "verificacao", "viagem.md").split("## Angrignon → Saint-Michel", 1)[1]
+VG_PROD = re.search(r"\| Produto dos trechos \(série\) \| ([\d,]+%)", _VG).group(1)
+VG_SIM = re.search(r"\| Viagem inteira, simulada \| ([\d,]+%) \(([\d,]+%) a ([\d,]+%)\)", _VG).groups()
+VG_DIAS = re.search(r"\| Dias com ao menos uma interrupção no caminho \| ([\d,]+%)", _VG).group(1)
+_LN = _ler("fontes", "verificacao", "linhas_novas.md").split("## Atwater", 1)[1]
+LN_PROG = re.search(r"\| Tempo programado do caminho \(min\) \| ([\d,]+) \| ([\d,]+) \|", _LN).groups()
+LN_SEM = re.search(r"\| Tempo sem caminho \(min por dia\) \| ([\d,]+) \([^)]*\) \| ([\d,]+) \(", _LN).groups()
+LN_NOVES = re.search(r"\| Noves[^|]*\| ([\d,]+) \([^)]*\) \| ([\d,]+) \(", _LN).groups()
+SPEC19 = _ler("specs", "019-motor-n-fontes", "spec.md")
+assert "0,1576" in SPEC19 and "0,1563" in SPEC19 and "20.000 dias úteis" in SPEC19 and "198 casos" in SPEC19
+
+CAPA_INT = capa('Apresentação interna: tudo o que fizemos, de <span class="nw">2026-10-20</span> a <span class="nw">2026-11-11</span>', "Equipe",
+"""<p>Este deck é para nós quatro: conta o projeto inteiro, na ordem em que foi feito, com o porquê de cada escolha.</p>
+<p>No fim há o roteiro da apresentação executiva para a turma e as perguntas que podem aparecer, com resposta.</p>""")
+
+AGENDA = slide("Roteiro", "Oito partes, na ordem em que o trabalho aconteceu", "", "este deck",
+"""<p>Usar como índice. Cada parte abre com uma divisória azul-marinho; o número do slide está no rodapé.</p>""")
+
+LINHA_TEMPO = slide("Linha do tempo · 2026-10-20 a 2026-11-11", "Do tema à entrega em 23 dias, com uma revisão grande no meio", f"""
+<div class="tl">
+  <div class="tl-n"><div class="tl-d">até 10-20</div><i class="tl-p"></i><h3>Tema</h3>
+    <p>Comparamos São Paulo e redes europeias. Montreal publica cada incidente com início, fim, causa, linha e local.</p><p class="onde">D01</p></div>
+  <div class="tl-n"><div class="tl-d">10-20</div><i class="tl-p"></i><h3>Fundação</h3>
+    <p>Painel no ar, monorepo SDD, specs 000 a 013 escritas, dados numa Release com hash. O 1º deploy foi bloqueado: o Windows mudou o fim de linha e os hashes.</p><p class="onde">F0 · D02 a D12</p></div>
+  <div class="tl-n tl-ouro"><div class="tl-d">10-21</div><i class="tl-p"></i><h3>Tudo num dia</h3>
+    <p>Dados, modelos, simulador, backtest e publicação (F1 a F6); <b>v1.0.0</b>; relatório e deck; três rodadas de crítica; reprodução do zero sem diferença. À noite, specs 015 e 016.</p><p class="onde">D13 a D54</p></div>
+  <div class="tl-n"><div class="tl-d">10-23 e 10-27</div><i class="tl-p"></i><h3>Perguntas novas</h3>
+    <p>A STM republica o km real até 2026-09. Na reunião, perguntas sobre frota, via ou trem e sistemas separados.</p><p class="onde">specs 004 e 017</p></div>
+  <div class="tl-n"><div class="tl-d">11-01</div><i class="tl-p"></i><h3>Reprodução quebra</h3>
+    <p>A execução agendada do <code>reproduz.yml</code> falha: a API da NHL mudou a resposta.</p><p class="onde">D65</p></div>
+  <div class="tl-n"><div class="tl-d">11-10</div><i class="tl-p"></i><h3>Revisão</h3>
+    <p>v1.1.0 congelada antes de mexer; specs 017 a 020; duração pela faixa oficial; falhas por frota e setor. Erro da greve achado no meio da rodada.</p><p class="onde">D55 a D63</p></div>
+  <div class="tl-n tl-ouro"><div class="tl-d">11-11</div><i class="tl-p"></i><h3>Entrega</h3>
+    <p>4ª crítica ({CRITICAS[-1][1]} achados); resposta ao objetivo no relatório; licença MIT; <b>v1.2.0</b> congelada.</p><p class="onde">D64 a D66</p></div>
+</div>
+<p class="nota">Entre 10-26 e 11-09, a verificação semanal conferiu as fontes na origem toda segunda-feira e gravou um relatório datado no repositório.</p>""",
+"git log e etiquetas (git tag); docs/decisoes/registro_de_decisoes.md; fontes/verificacao/online_*.txt",
+"""<p>A linha do tempo mostra o ritmo: a primeira versão completa saiu em dois dias, e a maior parte do tempo depois disso foi para conferir, revisar e corrigir.</p>
+<p>Dois marcos em dourado: a v1.0.0 (10-21), primeira versão inteira, e a v1.2.0 (11-11), a versão de entrega.</p>
+<p>O ponto de virada foi a reunião de 10-27: as perguntas sobre frota e sistemas levaram à revisão de 11-10.</p>""")
+
+EM_NUMEROS = slide("O projeto em números", "Uma pergunta só, e cada número conferido mais de uma vez", f"""
+<div class="kpis">
+  <div class="kpi"><div class="kpi-v">{len(SPECS)}</div><div class="kpi-l">specs, cada uma com pergunta e critério escritos antes: {N_IMPL} implementadas e {N_EXC} com exceção registrada</div></div>
+  <div class="kpi"><div class="kpi-v">{N_DEC}</div><div class="kpi-l">decisões com data, motivo e alternativas, no registro de decisões</div></div>
+  <div class="kpi"><div class="kpi-v">{N_FONTES}</div><div class="kpi-l">fontes no manifesto, cada arquivo com SHA-256</div></div>
+  <div class="kpi"><div class="kpi-v">{N_RECALC}</div><div class="kpi-l">números refeitos por um segundo programa, a cada publicação: zero diferença</div></div>
+  <div class="kpi"><div class="kpi-v">{len(CRITICAS)}</div><div class="kpi-l">rodadas do agente crítico, com {sum(c[1] for c in CRITICAS)} achados; nenhum de gravidade alta</div></div>
+  <div class="kpi"><div class="kpi-v">{len(VERS)}</div><div class="kpi-l">versões congeladas e no ar: {", ".join(t for t, _ in VERS)}</div></div>
+  <div class="kpi"><div class="kpi-v">{N_PYTEST}</div><div class="kpi-l">testes do pipeline em Python, além dos testes do simulador em TypeScript</div></div>
+  <div class="kpi"><div class="kpi-v">{br(45785)}</div><div class="kpi-l">incidentes da STM lidos, de 2019-01 a 2026-06, que viraram {br(R["falhas"])} falhas técnicas</div></div>
+</div>""",
+"specs/*/spec.md (status); docs/decisoes/registro_de_decisoes.md; fontes/fontes_manifesto.json; fontes/verificacao/critica_*.md; git tag; docs/arquitetura.md; linhas.json",
+"""<p>O tema cabe numa frase, mas quase todo número passou por mais de uma conferência.</p>
+<p>As exceções são critérios que não foram atingidos e ficaram registrados como estão: não mudamos o critério para passar.</p>""")
+
+METODO = slide("Como trabalhamos · SDD (desenvolvimento guiado por especificação)", "Critério escrito antes do código; o que não passa vira exceção, não critério novo", f"""
+<div class="cols c-50-50">
+  <div>
+    <div class="label">O ciclo de cada parte</div>
+    <ol class="passos">
+      <li><b>Pergunta de engenharia</b> e o número que a responde.</li>
+      <li><b>Critérios de aceite</b> escritos antes de ver o resultado.</li>
+      <li><b>Código e testes</b>: o critério vira teste sempre que dá.</li>
+      <li><b>Resultado na própria spec</b>: atende, ou exceção com o motivo.</li>
+      <li><b>Decisão registrada</b> (Dxx) quando há escolha: por quê, alternativas e consequência.</li>
+    </ol>
+  </div>
+  <div>
+    <div class="label">Princípios que mais pesaram</div>
+    <ul class="lista lista-sm">
+      <li><b>Todo número é rastreável</b> à fonte, ao hash, ao script e ao commit.</li>
+      <li><b>Fato, dedução e hipótese separados</b>: cada parâmetro leva um status.</li>
+      <li><b>Duas implementações</b> para os números-chave.</li>
+      <li><b>Dado ausente nunca vira zero.</b></li>
+      <li><b>Critério não se ajusta ao resultado.</b></li>
+      <li><b>A simulação reproduz o que sabemos antes de prever.</b></li>
+      <li><b>Publicar exige verificação verde.</b></li>
+    </ul>
+  </div>
+</div>
+<p class="nota">Por que assim: a equipe temia números "alucinados" por IA. A resposta foi a D03 (proveniência verificável antes de qualquer modelo) e a D04 (SDD).</p>""",
+"specs/constitution.md (16 princípios); specs/README.md; docs/decisoes/registro_de_decisoes.md (D03 e D04)",
+"""<p>SDD quer dizer que cada parte do projeto começa por um documento com a pergunta e o critério de aceite, antes de qualquer código.</p>
+<p>O efeito prático aparece no backtest: o critério era 80% de cobertura, deu 66,7%, e ficou registrado como exceção. Sem o critério escrito antes, seria tentador ajustar.</p>""")
+
+SPECS_SL = slide(f"As {len(SPECS)} specs", f"{N_IMPL} atendem a todos os critérios; {N_EXC} têm exceção registrada", f"""
+<div class="specs">{"".join(f'<div class="spec{" spec-rev" if int(n) >= 17 else ""}"><div class="spec-n">{n}</div><div class="spec-t">{esc(nome)}</div><span class="st {"st-ok" if st == "implementada" else "st-exc"}">{"atende" if st == "implementada" else "com exceção"}</span></div>' for n, nome, st in SPECS)}</div>
+<div class="faixa">
+  <div><span class="label">Fases</span>F0 a F6 em 10-20 e 10-21 (000 a 014); 015 e 016 na noite de 10-21; 017 a 020 na revisão de 2026-11 (borda dourada).</div>
+  <div><span class="label">Exceções principais</span>001: 98,83% das durações na faixa (pedido 99%) · 002: 94,0% com posição (pedido 95%) · 012: backtest 66,7% (pedido 80%) · 013: reprodução não refeita após a revisão.</div>
+</div>""",
+"specs/*/spec.md (linha Status e seção Resultado)",
+"""<p>Cada quadrado é uma spec, com o status que está escrito nela. "Com exceção" quer dizer que um critério não foi atingido e o motivo está na própria spec.</p>
+<p>Vale lembrar: exceção não é defeito escondido. É o critério original preservado, com o resultado ao lado.</p>""")
+
+NORMALIZA = slide("Dados · decisões de tratamento", "Como 45.785 incidentes viraram uma tabela de falhas com hora, duração, local e exposição", f"""
+<div class="cards c3 cards-alto">
+  <div class="card"><h3>O que é falha técnica</h3><p>Causa primária "Matériel roulant" (trem) ou "Équipements fixes" (via, sinalização, energia, portas). Mais de uma linha vira causa comum; sem linha fica registrado, fora das métricas.</p><p class="onde">D13</p></div>
+  <div class="card"><h3>Horas e duração</h3><p>Janela de 20 h (05:00 a 01:00). 24:xx e 25:xx são do dia seguinte. Na revisão, quando a duração calculada contradiz a faixa oficial da STM, vale a faixa.</p><p class="onde">D12 · D14 · D55</p></div>
+  <div class="card"><h3>Exposição</h3><p>Trens em viagem por hora no horário do GTFS, calibrados pelo km real de cada dia. Na revisão, o km republicado cobre até 2026-09 e nada mais é estimado.</p><p class="onde">D17 · spec 004</p></div>
+  <div class="card"><h3>Clima</h3><p>Três estações do ECCC: precipitação de McTavish, com o aeroporto de reserva; temperatura e condição da 51157. Condição ausente fica vazia, nunca "seco".</p><p class="onde">D15</p></div>
+  <div class="card"><h3>Eventos externos</h3><p>Jogos do Canadiens (API da NHL, verificado), GP do Canadá e greves de 2025 (não verificados), cada um com URL e status.</p><p class="onde">D16</p></div>
+  <div class="card"><h3>Mapa e local</h3><p>Traçado do OpenStreetMap (não do GTFS); estações casadas com o Wikidata. Códigos de local <code>xSyy</code> deduzidos como a plataforma da 2ª linha.</p><p class="onde">D10 · D11 · spec 002</p></div>
+</div>""",
+"docs/decisoes/registro_de_decisoes.md (D10 a D17 e D55); specs/001 a 004",
+"""<p>Cada cartão é uma decisão de tratamento dos dados, com o número dela no registro.</p>
+<p>A regra geral: nada some em silêncio. O que não entra numa métrica fica registrado com o motivo, e o dado que falta aparece como falta.</p>""")
+
+ARQ = slide("Simulador · arquitetura", "Python prepara os números; o navegador simula; um segundo programa confere tudo antes de publicar", f"""
+<div class="fluxo">
+  <div class="fx"><div class="label">1 · Fontes públicas</div><p>STM (incidentes, km real, GTFS), ECCC, NHL, OpenStreetMap, Wikidata</p></div><div class="seta">→</div>
+  <div class="fx"><div class="label">2 · Releases</div><p>Cópia exata no GitHub, SHA-256 de cada arquivo no manifesto</p></div><div class="seta">→</div>
+  <div class="fx"><div class="label">3 · Pipeline Python</div><p>Normalização, exposição, clima, modelo da taxa, distribuições, backtest</p></div><div class="seta">→</div>
+  <div class="fx fx-dest"><div class="label">4 · Contrato</div><p><code>parametros.json</code> v2, validado por esquema, com o hash do código que o gerou</p></div>
+</div>
+<div class="fluxo">
+  <div class="fx"><div class="label">5 · Motor TypeScript</div><p>Eventos discretos: cada trem do horário, {len(TF["fontes"])} fontes de falha por linha, bloqueio por trecho</p></div><div class="seta">→</div>
+  <div class="fx"><div class="label">6 · Monte Carlo</div><p>Web Workers; mesmo resultado com 1 ou 8 processos (sorteio por fluxo)</p></div><div class="seta">→</div>
+  <div class="fx"><div class="label">7 · Site estático</div><p>Painel (d3), mapa com trens (MapLibre, WebGL), simulador, relatórios</p></div><div class="seta">←</div>
+  <div class="fx fx-ver"><div class="label">Conferência</div><p><code>verifica_fontes.py</code> refaz {N_RECALC} números sem usar o pipeline; o deploy para se divergir</p></div>
+</div>
+<p class="nota">Tudo roda no navegador, sem servidor nem conta. O link guarda o cenário inteiro, com a semente: quem abre o mesmo link vê os mesmos números.</p>""",
+"docs/arquitetura.md; contratos/parametros.schema.json; specs 007, 009, 011 e 013; dados/derivados/modelos/taxa_fontes.json",
+"""<p>A divisão de trabalho entre linguagens: Python para estatística, TypeScript para simular no navegador. O contrato entre os dois é um único arquivo JSON validado por esquema.</p>
+<p>Ao lado do caminho principal, um segundo programa, escrito à parte, refaz os números-chave direto dos dados brutos. Se der diferença, o site não é publicado.</p>""")
+
+VIAGEM = slide("Simulador · viagem de uma estação a outra · specs 015 e 016", "Na viagem, a ligação nova troca três linhas por uma e corta o tempo sem caminho", f"""
+<div class="cols c-50-50">
+  <div>
+    <h3>Angrignon → Saint-Michel (Verde, Laranja, Azul)</h3>
+    <p class="sub">dia útil, 1.000 dias simulados</p>
+    <table class="tab tab-num2"><tbody>
+      <tr><td>Produto das três linhas, como se falhassem de forma independente</td><td class="num">{VG_PROD}</td></tr>
+      <tr><td>Viagem inteira, simulada (IC 95%)</td><td class="num"><b>{VG_SIM[0]}</b> ({VG_SIM[1]} a {VG_SIM[2]})</td></tr>
+      <tr><td>Dias com ao menos uma interrupção no caminho</td><td class="num">{VG_DIAS}</td></tr>
+    </tbody></table>
+    <p class="corpo-sm">Em série, a viagem é quase o produto dos trechos: a confiabilidade de um caminho cai a cada linha a mais.</p>
+  </div>
+  <div>
+    <h3>Atwater → Université-de-Montréal</h3>
+    <p class="sub">rede atual contra a rede com a ligação nova</p>
+    <table class="tab tab-num2"><thead><tr><th></th><th class="num">hoje</th><th class="num">com a ligação</th></tr></thead><tbody>
+      <tr><td>Tempo programado do caminho (min)</td><td class="num">{LN_PROG[0]}</td><td class="num"><b>{LN_PROG[1]}</b></td></tr>
+      <tr><td>Tempo sem caminho (min por dia)</td><td class="num">{LN_SEM[0]}</td><td class="num"><b>{LN_SEM[1]}</b></td></tr>
+      <tr><td>Noves (−log₁₀ da indisponibilidade)</td><td class="num">{LN_NOVES[0]}</td><td class="num"><b>{LN_NOVES[1]}</b></td></tr>
+    </tbody></table>
+    <p class="corpo-sm">Perto de 100%, a disponibilidade esconde as diferenças; por isso a escala em noves (99% são 2 noves, 99,9% são 3).</p>
+  </div>
+</div>""",
+"fontes/verificacao/viagem.md e linhas_novas.md; specs/015 e 016; D52 a D54",
+"""<p>Duas perguntas que vieram depois da v1.0.0: como se comporta uma viagem que usa várias linhas, e quanto uma linha nova muda essa viagem.</p>
+<p>O caso de Atwater a Université-de-Montréal mostra o efeito da ligação recomendada do ponto de vista de quem viaja: menos linhas no caminho e muito menos tempo sem caminho.</p>""")
+
+PUBLICACAO = slide("Publicação · GitHub Pages e Actions", "O site só vai ao ar se a conferência passar, e cada versão fica guardada", f"""
+<div class="cols c-55-45">
+  <div>
+    <div class="label">A cada push na main (deploy.yml)</div>
+    <ol class="passos passos-sm">
+      <li>Baixa as Releases de dados e confere o SHA-256 de cada arquivo.</li>
+      <li>Recalcula {N_RECALC} números com <code>verifica_fontes.py</code>, sem usar o pipeline.</li>
+      <li>Roda os testes do pipeline (pytest) e do simulador (vitest).</li>
+      <li>Monta o site e inclui cada versão congelada em <code>/versoes/</code>.</li>
+      <li>Qualquer erro impede a publicação.</li>
+    </ol>
+    <p class="corpo-sm"><b>Toda segunda-feira</b> (<code>verifica-fontes.yml</code>): confere as fontes na origem; mudança vira aviso e relatório datado. <b>Reprodução do zero</b> (<code>reproduz.yml</code>): última com sucesso no commit a7f0594, 48 arquivos idênticos e 5 na tolerância; não refeita depois da revisão (D65).</p>
+  </div>
+  <div>
+    <div class="label">Versões congeladas</div>
+    <table class="tab"><thead><tr><th>Versão</th><th>Commit</th><th>O que guarda</th></tr></thead><tbody>
+      <tr><td><b>{VERS[0][0]}</b></td><td><code>{VERS[0][1]}</code></td><td>primeira versão inteira (10-21)</td></tr>
+      <tr><td><b>{VERS[1][0]}</b></td><td><code>{VERS[1][1]}</code></td><td>números antes da revisão de 2026-11</td></tr>
+      <tr><td><b>{VERS[2][0]}</b></td><td><code>{VERS[2][1]}</code></td><td>versão de entrega (11-11)</td></tr>
+    </tbody></table>
+    <p class="corpo-sm muted">Cada uma tem uma Release com o zip do site e fica em /versoes/&lt;versão&gt;/.</p>
+  </div>
+</div>""",
+".github/workflows/; specs/013-publicacao (Resultado e revisão); git tag; docs/decisoes/registro_de_decisoes.md (D36, D37, D65, D66)",
+"""<p>O site é montado pelo GitHub Actions. O passo que importa é o 2: um programa independente refaz os números a partir dos dados brutos, e qualquer diferença bloqueia a publicação.</p>
+<p>As versões congeladas permitem comparar: a v1.1.0 guarda os números de antes da revisão, e a v1.2.0 é a entregue.</p>""")
+
+_EX_CRIT = {"2026-10-21": "O simulador aplicava à greve um multiplicador que a spec 005 mandava não usar (D42)",
+            "2026-10-21_": "4 das 13 correções da 1ª rodada estavam incompletas (D44, D45)",
+            "2026-10-21__": "O teste de fps media uma aba oculta: \"60 fps\" falso (D46 a D48)",
+            "2026-11-11": "O rodapé do PDF riscava notas; /versoes/v1.1.0/ dava 404 antes do deploy (D64)"}
+_lc = []
+for i, (data, n, alt, med, cor) in enumerate(CRITICAS):
+    chave = data + "_" * (i if data == "2026-10-21" else 0)
+    _lc.append(f'<tr><td><b>R{i + 1}</b> · {data}</td><td class="num">{n}</td><td class="num">{med}</td><td class="num">{cor}</td><td>{esc(_EX_CRIT[chave])}</td></tr>')
+CRITICAS_SL = slide("Revisão crítica · agente critico-stf", f"Quatro rodadas de crítica, {sum(c[1] for c in CRITICAS)} achados, e só o que foi reproduzido virou correção", f"""
+<table class="tab"><thead><tr><th>Rodada</th><th class="num">Achados</th><th class="num">Médios</th><th class="num">Corrigidos pelo agente</th><th>Exemplo do que pegou</th></tr></thead>
+<tbody>{"".join(_lc)}</tbody></table>
+<div class="faixa">
+  <div><span class="label">Como o agente trabalha</span>Roda todos os testes, confere cada número dos documentos contra o arquivo que o gerou, procura defeitos no pipeline, no motor e no site, e grava um relatório datado.</div>
+  <div><span class="label">O que ele não faz</span>Não corrige sem reproduzir o defeito. O que não foi reproduzido fica como proposta, e a equipe decide.</div>
+</div>
+<p class="nota">Nenhum achado de gravidade alta em nenhuma rodada. As propostas aceitas viraram decisões no registro.</p>""",
+"fontes/verificacao/critica_2026-10-21.md, _rodada2, _rodada3 e critica_2026-11-11.md; .claude/agents/critico-stf.md; D41 a D48 e D64",
+"""<p>O agente crítico é um revisor automático que tenta derrubar os números. Ele roda antes de cada entrega.</p>
+<p>A coluna "corrigidos" conta só o que o próprio agente corrigiu depois de reproduzir o defeito. As propostas foram decididas pela equipe e aplicadas na sessão principal.</p>""")
+
+DIFICULDADES = slide("O que deu errado, e como resolvemos", "Os problemas que mais custaram, cada um com a decisão que o resolveu", """
+<table class="tab tab-dif"><thead><tr><th>Quando</th><th>Problema</th><th>Como resolvemos</th><th>Onde</th></tr></thead><tbody>
+  <tr><td>10-20</td><td>O 1º deploy foi bloqueado: o Windows trocou o fim de linha dos CSV e os hashes divergiram</td><td>Bytes exatos por <code>.gitattributes</code></td><td>D08</td></tr>
+  <tr><td>10-20</td><td>O servidor da STM recusou o download do GTFS</td><td>Espelho do Mobility Database, com hash</td><td>D09</td></tr>
+  <tr><td>10-21</td><td>A causa comum era contada duas ou três vezes nos eventos de 3 ou 4 linhas</td><td>Sorteio por grupo de linhas</td><td>D24</td></tr>
+  <tr><td>10-21</td><td>A lognormal subestimava a duração média (3,4 vezes na Azul)</td><td>Duração sorteada da amostra observada</td><td>D25</td></tr>
+  <tr><td>10-21</td><td>Dois ajustes com bootstrap caíram por falta de memória</td><td>Um ajuste de cada vez, coleta de lixo após cada ajuste, a mesma reamostra repetida</td><td>D40</td></tr>
+  <tr><td>10-21</td><td>O teste de fluidez media uma aba oculta</td><td>Aba em primeiro plano no teste de navegador</td><td>D46 · D48</td></tr>
+  <tr><td>11-10</td><td>Seis interrupções de quase 20 h em Saint-Michel registradas como "2 min ou menos"</td><td>Vale a faixa oficial quando a calculada a contradiz</td><td>D55</td></tr>
+  <tr><td>11-10</td><td>A greve contada duas vezes na exposição: multiplicador de 1,17 para 1,73</td><td>Rodada parada, exposição corrigida e refeita</td><td>D63</td></tr>
+  <tr><td>11-01</td><td>A API da NHL mudou e a reprodução do zero quebrou</td><td>Exceção registrada; agenda mensal desligada</td><td>D65</td></tr>
+</tbody></table>""",
+"docs/decisoes/registro_de_decisoes.md (D08, D09, D24, D25, D40, D46, D48, D55, D63, D65)",
+"""<p>Os erros mais úteis de contar são o de Saint-Michel e o da greve: os dois foram achados porque um número não batia com outro, e os dois estão registrados com data.</p>
+<p>Se alguém da turma perguntar o que deu errado, esta é a lista.</p>""", "compacto")
+
+_F9 = [("mr73", "MR-73", "trem"), ("mpm10", "MPM-10", "trem"), ("mr_outros", "outros trens", "trem"),
+       ("voie_sintoma_trem", "via, sintoma de trem", "fixo"), ("voie_sintoma_fixo", "via, sintoma fixo", "fixo"),
+       ("aux_trains_sintoma_trem", "Service aux trains, sintoma de trem", "fixo"), ("aux_trains_sintoma_fixo", "Service aux trains, sintoma fixo", "fixo"),
+       ("aux_stations", "Service aux stations", "fixo"), ("tcpe", "TCPE (energia, por dedução)", "fixo")]
+assert sorted(k for k, _, _ in _F9) == sorted(NORM["por_fonte"]) and sum(NORM["por_fonte"].values()) == R["falhas"]
+def barras_fontes():
+    w = 620; lx = 270; bw_max = 280; rh = 34; bh = 20; top = 4
+    vmax = max(NORM["por_fonte"].values()); h = top + rh * len(_F9) + 8
+    o = [f'<svg viewBox="0 0 {w} {h}" width="{w}" height="{h}" role="img" aria-label="Falhas técnicas por fonte">']
+    o.append(f'<line x1="{lx}" y1="0" x2="{lx}" y2="{h}" class="eixo"/>')
+    for i, (k, nome, fam) in enumerate(_F9):
+        v = NORM["por_fonte"][k]; yc = top + i * rh + rh / 2 + (6 if fam == "fixo" else 0)
+        cor = "var(--navy)" if fam == "trem" else "var(--accent)"
+        o.append(f'<text x="{lx - 10}" y="{yc + 5:.1f}" text-anchor="end" class="c-lab c-sm">{esc(nome)}</text>')
+        o.append(barra_h(lx + 1, yc - bh / 2, bw_max * v / vmax, bh, cor).replace("/>", f"><title>{esc(nome)}: {v}</title></path>"))
+        o.append(f'<text x="{lx + 1 + bw_max * v / vmax + 8:.1f}" y="{yc + 6:.1f}" class="c-val">{br(v)}</text>')
+    o.append("</svg>")
+    return "".join(o)
+FONTES9 = slide("Revisão de 2026-11 · da reunião às fontes de falha", f"Os dados da STM já separavam a frota e o setor: {len(_F9)} fontes no lugar de duas causas", f"""
+<div class="cols c-52-48">
+  <div>
+    <h3>Falhas técnicas de uma linha, por fonte</h3>
+    <p class="sub"><i class="sw" style="background:var(--navy)"></i>trem: para o trem no sentido · <i class="sw" style="background:var(--accent)"></i>equipamento fixo: bloqueia o trecho</p>
+    {barras_fontes()}
+  </div>
+  <div>
+    <div class="label">Regras escritas antes de ajustar (D56)</div>
+    <ul class="lista lista-sm">
+      <li><b>Frota pelo campo da STM</b> ("Cause secondaire"), conferida com o tipo de material.</li>
+      <li><b>Setor dividido pelo sintoma</b> quando cada parte tem 400 falhas ou mais; senão fica inteiro.</li>
+      <li><b>Modelo próprio</b> só com 400 falhas ou mais; abaixo disso, modelo reduzido.</li>
+      <li><b>Nomes da STM mantidos</b>: "Service aux trains" e "TCPE" não têm definição pública; "energia" é dedução nossa.</li>
+    </ul>
+    <p class="corpo-sm">Origem: na reunião de 2026-10-27 vieram perguntas sobre fabricantes, via ou trem e sistemas separados.</p>
+  </div>
+</div>""",
+"dados/derivados/eventos/resumo_normalizacao.json (por_fonte); specs/017 e 018; docs/decisoes/registro_de_decisoes.md (D56)",
+f"""<p>Antes da revisão, o modelo tinha duas causas por linha: trem e equipamento fixo. Os dados da STM permitiam separar mais.</p>
+<p>A soma das {len(_F9)} fontes é exatamente o total de {br(R["falhas"])} falhas técnicas de uma linha; nenhuma falha mudou de lugar, só ganhou rótulo.</p>
+<p>As regras de divisão foram escritas antes de ajustar os modelos, para não escolher a divisão pelo resultado.</p>""")
+
+PROTOCOLO = slide("Revisão de 2026-11 · protocolo", "Antes de mexer, congelamos a versão anterior e escrevemos as previsões", """
+<div class="cols c-55-45">
+  <div>
+    <ol class="passos">
+      <li><b>Congelar a v1.1.0</b>, com etiqueta e o site guardado em /versoes/v1.1.0/.</li>
+      <li><b>Gravar a referência do motor</b>: depois de trocar a estrutura, os 198 casos de referência saíram idênticos.</li>
+      <li><b>Pré-registrar as previsões</b> (v1 e v2) para os meses que a STM ainda vai publicar, com commit antes de qualquer download.</li>
+      <li><b>Escrever as specs 017 a 020</b> e as regras de divisão antes de ajustar.</li>
+      <li><b>Refazer tudo no lugar</b>, marcando como "após a revisão" o que mudou depois de ver os dados.</li>
+      <li><b>Comparar antes e depois</b> por script, número a número.</li>
+    </ol>
+  </div>
+  <div>
+    <div class="caixa">
+      <div class="label">O erro achado no meio (D63)</div>
+      <p class="corpo-sm">Na rodada da noite de 11-10, o multiplicador da greve no material rodante subiu de 1,17 para 1,73 (nos equipamentos fixos, de 1,11 para 1,66).</p>
+      <p class="corpo-sm">Causa: com o km de 2025 medido, a exposição já descontava a greve, e o código descontava de novo.</p>
+      <p class="corpo-sm">A rodada foi parada, a exposição corrigida e tudo refeito. A greve voltou a não ter efeito detectável por trem-hora.</p>
+    </div>
+  </div>
+</div>""",
+"docs/decisoes/registro_de_decisoes.md (D60, D61, D63); specs/019 (referência do motor) e 020; fontes/verificacao/preregistro/",
+"""<p>O protocolo existe para que a revisão não vire ajuste ao gosto do resultado: a versão anterior fica guardada, as previsões ficam congeladas antes dos dados existirem e as regras são escritas antes.</p>
+<p>O caso da greve mostra por que conferir no meio: um número estranho parou a rodada.</p>""")
+
+_DV1 = {l: POL_V1["disponibilidade_dia_util"][l]["media"] * 100 for l in ORDEM}
+_DV2 = {l: POL["disponibilidade_dia_util"][l]["media"] * 100 for l in ORDEM}
+_AD = [
+    ("Minutos parados das falhas técnicas, total", br(NORM["minutos_total_calculada"]), br(NORM["minutos_total_final"]), "duração pela faixa oficial (D55)"),
+    ("Minutos parados por ano, rede (painel)", br(L_V1["rede"]["min_fora_ano"]), br(L["rede"]["min_fora_ano"]), "idem"),
+    ("MTTR da Azul (min)", br(L_V1["azul"]["mttr_min"], 2), br(L["azul"]["mttr_min"], 2), "seis registros de Saint-Michel"),
+    ("Disponibilidade da Azul, dia útil (simulador)", br(_DV1["azul"], 2) + "%", br(_DV2["azul"], 2) + "%", "idem"),
+    ("β Verde–Laranja", br(BETA_VL_V1["beta_a"], 3) + " (todas)", br(BETA_VL_EF["beta_a"], 3) + " (fixas)", "denominador da família (spec 018)"),
+    ("Operação degradada, min por dia útil", "−" + br(_OD_V1, 1), "−" + br(_OD, 1), "menos interrupções longas de EF"),
+    ("Disponibilidade origem-destino da rede atual", br(EXP_V1["rede_atual"]["dispOD"]["media"] * 100, 3) + "%", br(DISP_OD_ATUAL, 3) + "%", "idem"),
+    ("Ganho de Atwater–Université-de-Montréal", "+" + _pp(EXP_V1["busca_exaustiva"]["por_ganho"][0]["ganho"]["media"]), "+" + _pp(_ATW["media"]), "continua a melhor ligação"),
+    ("Ganho da Rosa com a Azul até Anjou", sn(100 * _RAZ_V1, 3), "+" + _pp(_RAZ["media"]), "passa à frente da Rosa sozinha"),
+    ("Simulador contra 2025: médias dentro do IC", f"{V1_NO_IC} de {N_COMP}", f"{REV_NO_IC} de {N_COMP}", "spec 020"),
+]
+ANTES_DEPOIS = slide("Revisão de 2026-11 · antes e depois", "Os números mudaram; a resposta e as três conclusões ficaram", f"""
+<table class="tab tab-ad"><thead><tr><th>Número</th><th class="num">v1.1.0 (antes)</th><th class="num">v1.2.0 (depois)</th><th>Por quê</th></tr></thead>
+<tbody>{"".join(f'<tr><td>{a}</td><td class="num">{b}</td><td class="num"><b>{c}</b></td><td class="muted">{d}</td></tr>' for a, b, c, d in _AD)}</tbody></table>""",
+"fontes/verificacao/revisao_2026-11.md; os JSON citados nos slides anteriores, no disco e na etiqueta v1.1.0",
+"""<p>A tabela completa, com todos os números que mudaram, é gerada por script em revisao_2026-11.md.</p>
+<p>O ponto a destacar: a ligação recomendada e as três conclusões não mudaram. Mudou o tamanho dos efeitos.</p>""", "compacto")
+
+SOMA = slide("Revisão de 2026-11 · a soma das fontes", "A Azul parecia 9% abaixo nos equipamentos fixos; com dias suficientes, era acaso", """
+<div class="cols c-50-50">
+  <div>
+    <div class="label">A pergunta</div>
+    <p class="corpo">Com as falhas divididas em fontes, o simulador ainda gera, por linha e família, o total que os parâmetros mandam? Numa crítica, a Azul nos equipamentos fixos apareceu 9% abaixo.</p>
+    <div class="label" style="margin-top:22px">O teste</div>
+    <ul class="lista lista-sm">
+      <li>20.000 dias úteis com os parâmetros reais (<code>soma_fontes.test.ts</code>).</li>
+      <li>Intervalo pela variância observada entre os dias: as falhas vêm agrupadas, e o intervalo de Poisson fica estreito demais.</li>
+      <li>Cada uma das fontes conferida sozinha, com 200 mil sorteios.</li>
+    </ul>
+  </div>
+  <div>
+    <div class="stats">
+      <div class="stat"><div class="stat-v">8 de 8</div><div class="stat-l">combinações linha × família dentro do IC 95% do esperado</div></div>
+      <div class="stat"><div class="stat-v">0,1576</div><div class="stat-l">falhas por dia simuladas na Azul, equipamentos fixos, contra 0,1563 esperadas</div></div>
+      <div class="stat"><div class="stat-v">1 − 0,95⁸</div><div class="stat-l">= 34% de chance de pelo menos uma das 8 cair fora por acaso: um caso fora num lote pequeno não é defeito</div></div>
+    </div>
+  </div>
+</div>
+<p class="nota">O número de dias foi escolhido depois de ver dois lotes de 10.000 dias, e isso está escrito no teste e na spec 019. O teste roda em toda publicação.</p>""",
+"specs/019-motor-n-fontes (Resultado, soma das fontes); app/tests/motor/soma_fontes.test.ts; D66",
+"""<p>Este foi o item 7 da lista de conferência final. A suspeita era de defeito no motor; o teste mostrou que não.</p>
+<p>Lição: com 8 comparações a 95%, a chance de ao menos uma cair fora por acaso é de um terço. Um caso fora não basta para dizer que há defeito.</p>""")
+
+FECHAMENTO = slide("Fechamento · D65 e D66 · 2026-11-11", "Como fechamos a entrega", f"""
+<div class="cards c3 cards-alto">
+  <div class="card"><h3>A resposta ao objetivo</h3><p>"A linha que melhor resolve a movimentação das pessoas": o relatório agora diz o nome. Atwater–Université-de-Montréal (+{_pp(_ATW["media"])} p.p.); entre as oficiais, a Rosa com a Azul até Anjou (+{_pp(_RAZ["media"])}).</p><p class="onde">D66 · relatório §7</p></div>
+  <div class="card"><h3>Sem pedido à STM</h3><p>O e-mail com as dúvidas sobre os dados não foi enviado. As perguntas viraram limitações declaradas no relatório.</p><p class="onde">D65</p></div>
+  <div class="card"><h3>Reprodução do zero</h3><p>Vale até o commit a7f0594 (48 idênticos, 5 na tolerância). Depois da revisão não foi refeita: exceção registrada na spec 013.</p><p class="onde">D65 · spec 013</p></div>
+  <div class="card"><h3>Licença MIT</h3><p>Código e textos da equipe sob MIT. Os dados seguem a licença de cada fonte; os artigos da IEEE ficam fora do repositório.</p><p class="onde">D66 · LICENSE</p></div>
+  <div class="card"><h3>v1.2.0 congelada</h3><p>Etiqueta no commit de entrega ({VERS[2][1]}) e Release com o zip do site, servida em /versoes/v1.2.0/.</p><p class="onde">D66 · spec 013</p></div>
+  <div class="card"><h3>Navegador</h3><p>Basta funcionar no Chrome do notebook da equipe. Firefox, Safari e celular físico ficam fora desta entrega.</p><p class="onde">D66 · spec 010</p></div>
+</div>""",
+"docs/decisoes/registro_de_decisoes.md (D65 e D66); README.md; LICENSE; specs 010 e 013",
+"""<p>As decisões do último dia. A mais importante é a primeira: o objetivo do trabalho pede o nome de uma linha, e o relatório agora o diz.</p>
+<p>O resto é escopo: o que fica de fora desta entrega está registrado como exceção, com o motivo.</p>""")
+
+PENDENCIAS = slide("O que fica aberto", "Pendências registradas, nenhuma bloqueia a entrega", """
+<table class="tab"><thead><tr><th>Spec</th><th>Pendência</th><th>Por que ficou</th></tr></thead><tbody>
+  <tr><td>010</td><td>Abrir o site no Chrome do notebook e olhar o contador de quadros (pico, 300×)</td><td>Única conferência que só a equipe faz</td></tr>
+  <tr><td>020</td><td>Avaliar as previsões pré-registradas contra os meses novos</td><td>Espera a STM publicar 3 meses depois de 2026-06</td></tr>
+  <tr><td>019</td><td>Fator diário comum por família; dispersão por mês</td><td>Somar fontes independentes agrupa menos que o observado</td></tr>
+  <tr><td>018</td><td>Horas de serviço como medida de exposição (sensibilidade)</td><td>Fora do escopo da revisão</td></tr>
+  <tr><td>012</td><td>Backtest com o motor TypeScript</td><td>Hoje o backtest roda no Python</td></tr>
+  <tr><td>003</td><td>Datas do GP do Canadá numa segunda fonte</td><td>Status "não verificado"</td></tr>
+  <tr><td>021 e 022</td><td>Importância de cada componente (Birnbaum) e cenário 2031 (frota nova e Azul até Anjou)</td><td>Próxima rodada, por decisão da equipe</td></tr>
+</tbody></table>""",
+"specs/*/tasks.md (tarefas abertas); docs/decisoes/registro_de_decisoes.md (D60, D66)",
+"""<p>Nada aqui impede a entrega: são extensões ou conferências que dependem de dado que ainda não existe.</p>
+<p>A única que depende de nós é a primeira: abrir o simulador no Chrome e olhar o contador de quadros por segundo.</p>""")
+
+def _seg(notas):
+    m = re.search(r"Tempo:</b> *(?:(\d+) min)? *(?:(\d+) s)?", notas)
+    return (int(m.group(1) or 0) * 60 + int(m.group(2) or 0)) if m else 0
+def _mmss(s):
+    return f"{s} s" if s < 60 else (f"{s // 60} min {s % 60:02d} s" if s % 60 else f"{s // 60} min")
+def _assunto(s):
+    """Assunto do slide: o começo do sobretítulo, ou o título."""
+    return (s["eyebrow"].split(" · ")[0] or "Capa") if s["eyebrow"] else "Capa"
+_TEMPOS = [_seg(s["notas"]) for s in EXECUTIVA]
+assert all(_TEMPOS), "slide da executiva sem tempo nas notas"
+ROTEIRO_EXEC = slide("Para a apresentação à turma", f"A executiva tem {len(EXECUTIVA)} slides e cerca de {round(sum(_TEMPOS) / 60)} minutos", f"""
+<div class="cols c-60-40">
+  <table class="tab tab-rot"><thead><tr><th class="num">#</th><th>Assunto</th><th class="num">Tempo</th><th class="num">Acumulado</th></tr></thead><tbody>
+  {"".join(f'<tr><td class="num">{i}</td><td>{_assunto(s)}</td><td class="num">{_mmss(t)}</td><td class="num muted">{_mmss(sum(_TEMPOS[:i]))}</td></tr>' for i, (s, t) in enumerate(zip(EXECUTIVA, _TEMPOS), 1))}
+  </tbody></table>
+  <div>
+    <div class="label">Como usar</div>
+    <ul class="lista lista-sm">
+      <li><b>Endereço:</b> /apresentacao/ no site (este deck interno fica em /apresentacao/interna.html).</li>
+      <li><b>Teclas:</b> setas ou espaço para andar, F para tela cheia, N para as notas de cada slide.</li>
+      <li><b>PDF</b> ao lado do HTML, para levar num pendrive.</li>
+      <li><b>Se sobrar tempo:</b> abrir o simulador e trocar o cenário ao vivo, por exemplo um dia de neve.</li>
+      <li><b>Tempos</b> vêm das notas de cada slide; a divisão de quem fala é da equipe.</li>
+    </ul>
+  </div>
+</div>""",
+"docs/apresentacao/index.html (notas de cada slide)",
+"""<p>Os tempos somam as notas de cada slide da executiva. Dá para dividir em blocos: abertura e resposta (1 e 2), medição e modelos (3 a 7), simulador e escolhas (8 a 10), confiança e conclusões (11 a 13).</p>""", "compacto")
+
+_TX = TAXA
+QA = [
+    ("Por que Montreal, e não São Paulo?", "Metrô, CPTM e ViaQuatro só publicam PDF, e a API Direto dos Trens exige token. A STM publica cada incidente de 2019 a 2026, com início, retomada, causa, linha e local, sob CC BY 4.0 (D01)."),
+    ("Por que binomial negativa, e não Poisson?", f"A variância das contagens por hora passa da média: α = {br(_TX['MR']['alpha_nb'], 2)} no material rodante e {br(_TX['EF']['alpha_nb'], 2)} nos equipamentos fixos. O teste rejeita Poisson com p &lt; 10⁻³⁰ (D19)."),
+    ("O que é o β da causa comum?", f"A fração das falhas de uma linha que derruba outra junto. Verde com Laranja, nas falhas de equipamento fixo: {br(BETA_VL_EF['beta_a'], 3)}. É pouco, mas é o evento que tira os dois caminhos do centro ao mesmo tempo."),
+    ("Se a validação não passou, por que confiar?", f"O critério foi escrito antes e não mudou. A falha tem causa conhecida (o registro de 2024 nos terminais), a regra nova passou em outro período ({br(VERSOES[3][3], 1)}%) e o simulador revisto reproduz {REV_NO_IC} de {N_COMP} médias de 2025."),
+    ("Por que Atwater–Université-de-Montréal, se ninguém propôs essa ligação?", f"Ela saiu de uma busca entre {N_LIGACOES} ligações diretas de até 3 km. É hipótese de traçado, não projeto: o valor dela é mostrar o ponto fraco, a Azul presa à Laranja."),
+    ("+0,063 ponto percentual não é pouco?", f"A rede já tem {br(DISP_OD_ATUAL, 1)}% de disponibilidade, e o ganho é quase o dobro da melhor proposta oficial. Na viagem de Atwater a Université-de-Montréal, o tempo sem caminho cai de {LN_SEM[0]} para {LN_SEM[1]} min por dia."),
+    ("Vocês usaram IA? Como sabem que os números não foram inventados?", f"Sim: o Claude Code ajudou no código e nos textos, e um agente crítico revisou o trabalho em {len(CRITICAS)} rodadas. Por isso nenhum número vale sem fonte com hash, script e um segundo programa que o refaz."),
+    ("Por que a Azul mudou tanto na revisão?", f"Seis registros de Saint-Michel, em outubro de 2024, tinham quase 20 h pelos horários e \"2 min ou menos\" pela faixa oficial. Com a faixa (D55), o MTTR da Azul cai de {br(L_V1['azul']['mttr_min'], 2)} para {br(L['azul']['mttr_min'], 2)} min."),
+]
+def _qa(itens):
+    return '<div class="qa">' + "".join(f'<div class="qa-i"><h3>{q}</h3><p>{r}</p></div>' for q, r in itens) + "</div>"
+QA1 = slide("Para a apresentação · perguntas prováveis (1 de 2)", "Dados e modelos", _qa(QA[:4]),
+            "docs/decisoes/registro_de_decisoes.md; taxa_MR.json e taxa_EF.json; distribuicoes.json; backtest.json; revalidacao.json",
+            "<p>Respostas curtas para as perguntas mais prováveis. Cada uma cita a decisão ou o arquivo de onde vem.</p>")
+QA2 = slide("Para a apresentação · perguntas prováveis (2 de 2)", "Resposta, confiança e revisão", _qa(QA[4:]),
+            "expansao.json; fontes/verificacao/linhas_novas.md; critica_*.md; linhas.json (e na v1.1.0)",
+            "<p>A pergunta sobre IA é provável. A resposta honesta é sim, e o projeto foi desenhado para não depender de confiar em quem fez as contas, humano ou IA.</p>")
+
+INTERNA = [CAPA_INT, AGENDA, LINHA_TEMPO, EM_NUMEROS,
+           divisor(1, "Como começamos", "O tema, a pergunta e o método"), pega("A pergunta"), METODO, SPECS_SL,
+           divisor(2, "Dados", "Das fontes públicas a uma tabela de falhas que qualquer pessoa pode refazer"),
+           pega("Antes dos resultados"), pega("Dados · 2019"), NORMALIZA, pega("Indicadores por linha"),
+           divisor(3, "Modelos", "Taxa de falha, agrupamento no tempo e causa comum"),
+           pega("O que muda a taxa"), pega("As falhas se agrupam"), pega("Causa comum"),
+           divisor(4, "Simulador", "A rede trem a trem, no navegador, para comparar políticas e linhas novas"),
+           ARQ, pega("Simulador · eventos"), pega("Políticas"), VIAGEM, pega("Que linha construir"),
+           divisor(5, "Validação", "Prever o que o modelo não viu, com o critério escrito antes"),
+           pega("Validação contra o histórico"), pega("Decisões tomadas depois"),
+           divisor(6, "Publicação e crítica", "Site público, conferência automática e quatro rodadas de revisão"),
+           PUBLICACAO, CRITICAS_SL, DIFICULDADES,
+           divisor(7, "Revisão de 2026-11", "Falhas por frota e por setor, durações pela faixa oficial e tudo refeito"),
+           FONTES9, PROTOCOLO, pega("Revisão de 2026-11 · ressegmentação"), ANTES_DEPOIS, SOMA,
+           divisor(8, "Fechamento", "A resposta, as conclusões, o que fica aberto e a apresentação para a turma"),
+           RESUMO, pega("Conclusões"), pega("Limitações"), FECHAMENTO, PENDENCIAS, ROTEIRO_EXEC, QA1, QA2, pega("Confira")]
+_AG = []
+for i, s in enumerate(INTERNA, 1):
+    if "divisor" in s["classe"]:
+        n = re.search(r'div-n">(\d+)', s["corpo"]).group(1)
+        t = re.search(r"<h1>(.*?)</h1>", s["corpo"]).group(1)
+        sub = re.search(r'lede">(.*?)</p>', s["corpo"]).group(1)
+        _AG.append(f'<li><span class="ag-n">{n}</span><span class="ag-t">{t}</span><span class="ag-s">{sub}</span><span class="ag-p">slide {i}</span></li>')
+assert len(_AG) == 8
+AGENDA["corpo"] = '<ol class="agenda">' + "".join(_AG) + "</ol>"
+monta(INTERNA, OUT_INT, "Confiabilidade do metrô de Montreal · apresentação interna da equipe")

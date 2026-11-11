@@ -3,3 +3,4 @@
 dados/** -text
 fontes/fontes_manifesto.json -text
 painel/vendor/** -text
+docs/apresentacao/marca/** -text

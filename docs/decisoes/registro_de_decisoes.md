@@ -473,3 +473,19 @@ Origem: perguntas da reunião de 2026-10-27 (bitola, fabricantes, via ou trem, t
   - Os 9% abaixo da Azul nos equipamentos fixos, vistos na crítica de 2026-11-11, eram acaso de amostra, e não defeito.
   - Em 20.000 dias, as 8 combinações linha × família ficam dentro do IC 95%, e a Azul dá z = 0,40.
 - **Registro:** specs 010, 013 e 019; README; relatório.
+
+### D67 — Duas apresentações na identidade visual da ESEG
+
+- **Decisão (da equipe, 2026-11-11, depois da v1.2.0):** o `gera_deck.py` passa a gerar dois decks, os dois na identidade visual da ESEG.
+  - **Executiva**, para a turma (`/apresentacao/`, 13 slides, cerca de 15 minutos): começa pela resposta e mantém só os resultados.
+  - **Interna**, para a equipe (`/apresentacao/interna.html`, 46 slides): conta tudo o que foi feito desde 2026-10-20 em oito partes. Inclui a linha do tempo, as 21 specs, a arquitetura, as quatro rodadas de crítica, o que deu errado, a revisão de 2026-11 com o antes e depois, o roteiro da executiva e as perguntas prováveis com resposta.
+- **Identidade:**
+  - **Cores e fonte:** as do kit do site eseg.edu.br (marinho `#08223D`, turquesa `#00A1B8`, ouro `#F1B634`, cinzas e Public Sans).
+  - **Logo:** baixado do próprio site. Arquivos, hashes e licenças em `docs/apresentacao/marca/LEIAME.md`.
+  - **Contraste:** a turquesa sobre branco não passa de 3:1, então o texto de destaque fica em marinho.
+- **Números:** os novos são lidos dos arquivos gerados (specs, registro, críticas, etiquetas, `viagem.md`, `linhas_novas.md`, JSON da v1.1.0), com asserções que param o script se algo mudar. Nenhum número de modelo mudou.
+- **Alternativas:** manter o deck único de 17 slides; usar a paleta do manual de TG (`#000653`), que é para documentos impressos e não para tela.
+- **Consequência:**
+  - O logo da ESEG é marca da instituição e fica fora da licença MIT. A Public Sans segue a SIL Open Font License.
+  - A v1.2.0 congelada guarda o deck anterior; os decks novos estão no site principal.
+- **Registro:** `docs/apresentacao/gera_deck.py`, `docs/apresentacao/marca/`, README.
