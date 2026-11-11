@@ -6,7 +6,7 @@
 - [x] Consumidores: expansão e linhas novas pela soma da família; tabela por fonte na aba Parâmetros; aviso e link para a v1.1.0 em links sem versão.
 - [x] Testes: `fontes_v2.test.ts` (fontes, soma, sorteio estável, contagens por fonte e classe, erro sem duração ou renovação).
 - [x] Relatórios do app (políticas, expansão, viagem, linhas novas e revalidação) regenerados com o v2 em 2026-11-11 (spec 020).
-- [x] Conferência da página no navegador (2026-11-11, site montado localmente da branch): celular e notebook sem rolagem lateral, WebGL, sem erro no console, 1.000 dias em 1,5 e 1,7 s; aviso do link antigo com o link para a v1.1.0; tabela por fonte na aba Parâmetros (`fontes/verificacao/navegador_2026-11-11.json`). Falta repetir no site publicado depois do merge.
+- [x] Conferência da página no navegador (2026-11-11, site montado localmente da branch): celular e notebook sem rolagem lateral, WebGL, sem erro no console, 1.000 dias em 1,5 e 1,7 s; aviso do link antigo com o link para a v1.1.0; tabela por fonte na aba Parâmetros (`fontes/verificacao/navegador_2026-11-11.json`). No site publicado (deploy de 5a665a4), o mesmo: 1.000 dias em 1,4 e 1,8 s, sem erro, aviso do link antigo e `/versoes/v1.1.0/simulador/` respondendo.
 - [ ] Fator diário comum por família nos equipamentos fixos (critério de dispersão: Verde abaixo do IC em 2025), com a variância estimada fora do ano de validação.
 - [ ] Dispersão por mês, além da diária.
 - [ ] Critério "Soma das fontes" com o contrato v2 real: simular muitos dias e comparar as falhas por linha × família com o esperado (a revisão crítica de 2026-11-11 achou a Azul EF 9% abaixo em 7.000 dias; as outras 19 combinações dentro).

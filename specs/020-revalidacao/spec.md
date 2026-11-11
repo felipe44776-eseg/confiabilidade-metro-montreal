@@ -62,7 +62,7 @@ Relatórios: [`revalidacao.md`](../../fontes/verificacao/revalidacao.md) (simula
 
 | Critério | Resultado |
 |---|---|
-| Versão anterior acessível | **Atende**: etiqueta `v1.1.0` no commit e793bba, Release com o zip do site, servida em `/versoes/v1.1.0/` |
+| Versão anterior acessível | **Atende**: etiqueta `v1.1.0` no commit e793bba, Release com o zip do site, servida em `/versoes/v1.1.0/` (conferido no site publicado em 2026-11-11, depois do deploy de 5a665a4) |
 | Pré-registro antes de qualquer download de incidentes novos | **Atende**: v1 commitado em 4fe203d (2026-11-10); v2 congelado e commitado em 2026-11-11, com os 100 primeiros vetores do bootstrap de cada modelo (`modelo_v2.json`). O avaliador recusa rodar sem o arquivo ou com menos de 3 meses novos |
 | Teste fora da amostra (3 meses novos) | **Pendente**: em 2026-11-10 o CSV de incidentes da STM não tinha mudado desde 2026-09-14 |
 | Backtest refeito, marcado como posterior | **Atende**: A 65,3%, B 84,7%, C 87,5%, D 90,3% (oficial da v1.1.0: 66,7%, 81,9%, 84,7%, 90,3%). Por família, a versão A falha nos equipamentos fixos (65,3%) e não no material rodante (87,5%). Detalhe na spec 012 |
