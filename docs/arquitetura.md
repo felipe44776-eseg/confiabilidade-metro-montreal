@@ -119,7 +119,7 @@ Todos rodam a cada publicação. Um teste novo para cada critério de aceite nov
 |---|---|---|
 | `deploy.yml` | push na `main` | Baixa as Releases, confere hashes, recalcula, roda pytest e vitest, monta e publica; erro impede a publicação; inclui as versões congeladas em `/versoes/` |
 | `verifica-fontes.yml` | toda segunda-feira | Baixa cada fonte da origem e grava o relatório datado; mudança é aviso |
-| `reproduz.yml` | todo dia 1 e sob pedido | Refaz tudo do zero e compara com os publicados (`compara_derivados.py`) |
+| `reproduz.yml` | só sob pedido (agenda mensal desligada em 2026-11-11, D65) | Refaz tudo do zero e compara com os publicados (`compara_derivados.py`); não refeito depois da revisão de 2026-11 |
 
 **Antes de qualquer push:** conta `felipe44776-eseg` (`GH_CONFIG_DIR=~/.config/gh-esg`) e e-mail da ESEG. Depois de regerar qualquer arquivo em `dados/derivados/`: `python -I pipeline/verifica_fontes.py --gera-manifesto`.
 

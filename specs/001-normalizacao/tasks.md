@@ -8,4 +8,4 @@
 - [x] Conferência com a faixa oficial: 8.430 de 8.530 (98,83%) na faixa ou na vizinha; 100 exceções em `excecoes.csv`.
 - [x] Reprodutibilidade: duas execuções seguidas dão arquivos idênticos (teste automatizado).
 - [x] Recálculo independente em `verifica_fontes.py`: 8.530 eventos e 224 iniciados depois da meia-noite.
-- [ ] Responder às perguntas em aberto (durações zero; códigos de linha compostos) com a STM, se ela responder ao pedido de acesso.
+- [ ] Responder às perguntas em aberto (durações zero; códigos de linha compostos) com a STM, se ela responder ao pedido de acesso. Sem pedido nesta entrega (D65): as perguntas ficam em aberto.

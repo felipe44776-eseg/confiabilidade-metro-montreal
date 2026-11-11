@@ -66,7 +66,7 @@ Só falhas técnicas e causa comum (o indicador da STM conta todas as causas, in
 
 ### Por ano: dados abertos contra o publicado
 
-Incidentes de 5 min ou mais pela faixa oficial ("Incident en minutes") do CSV de incidentes, por ano civil, divididos pelo km-carro do km real no mesmo ano. A STM não publica a regra de contagem do indicador; a diferença que sobra fica declarada como exceção da spec 020 e é uma das perguntas do pedido à STM.
+Incidentes de 5 min ou mais pela faixa oficial ("Incident en minutes") do CSV de incidentes, por ano civil, divididos pelo km-carro do km real no mesmo ano. A STM não publica a regra de contagem do indicador; a diferença que sobra fica declarada como exceção da spec 020, sem explicação da STM (D65).
 
 | Ano | Km-carro (milhões) | Dados abertos, todas as causas | Dados abertos, só técnicas | Publicado pela STM | Dados abertos ÷ publicado |
 |---|---|---|---|---|---|

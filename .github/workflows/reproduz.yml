@@ -1,10 +1,10 @@
 # Refaz o pipeline inteiro numa máquina limpa e compara os derivados com os publicados (spec 013).
-# Pesado (cerca de 1 a 2 horas por causa dos bootstraps): roda todo dia 1 e quando pedido, não a cada push.
+# Pesado (cerca de 1 a 2 horas por causa dos bootstraps): só quando pedido, não a cada push.
+# A agenda mensal foi desligada em 2026-11-11 (D65): a execução de 2026-11-01 falhou na integridade dos JSON
+# da NHL baixados da origem, e a reprodução não será refeita depois da revisão de 2026-11.
 name: Reproduzir o pipeline
 
 on:
-  schedule:
-    - cron: "41 6 1 * *"
   workflow_dispatch:
 
 permissions:

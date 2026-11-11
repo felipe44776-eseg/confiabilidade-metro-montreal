@@ -48,7 +48,7 @@ Depois da ressegmentação, os parâmetros ajustados e o simulador preveem o que
     - **artefato de registro:** fontes homogêneas (p ≥ 0,01), ou um ano em que pelo menos metade das fontes tem o IC 95% inteiro acima ou inteiro abaixo da própria proporção no período todo;
     - **inconclusiva:** nenhum dos dois padrões. Se os dois aparecerem, a leitura diz isso.
     - `mr_outros` (51 falhas) fica fora das comparações. O salto de 2024 da via com sintoma de trem já é conhecido (D56) e conta como salto de uma fonte só.
-    - "Controle de trens" é dedução até a STM responder o que é o Service aux trains.
+    - "Controle de trens" é dedução até a STM responder o que é o Service aux trains. Sem o pedido (D65), a dedução fica.
   - **Escopo e vocabulário:** o relatório e o guia dizem que:
     - o que se mede é confiabilidade e disponibilidade do serviço diante de falhas de rotina, não resiliência a desastres nem segurança (estado inseguro);
     - os minutos de pares sem caminho são a área de perda da curva de resiliência;

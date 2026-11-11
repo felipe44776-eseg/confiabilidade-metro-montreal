@@ -63,7 +63,7 @@ Código em `pipeline/duracao.py` (regra da faixa e classes), `pipeline/normaliza
 ## Fora de escopo
 
 - Modelos de taxa e de duração por fonte: spec 018.
-- Significado definitivo de "Service aux trains" e "Service TCPE": pedido à STM (ccia@stm.info). Até a resposta, as fontes usam as etiquetas da STM, e "controle de trens" e "energia" aparecem como dedução.
+- Significado definitivo de "Service aux trains" e "Service TCPE": a STM não publica a definição, e o pedido a ccia@stm.info foi cancelado em 2026-11-11 (D65). As fontes usam as etiquetas da STM, e "controle de trens" e "energia" aparecem como dedução.
 
 ## Riscos e dependências
 

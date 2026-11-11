@@ -1,6 +1,6 @@
 # 013 — Publicação, verificação periódica e novas versões de dados
 
-**Status:** implementada
+**Status:** implementada com exceções
 **Fase:** F6 (semana 10 em diante)
 **Depende de:** 000 e todas as anteriores
 
@@ -33,6 +33,18 @@ Workflows em `.github/workflows/` (`deploy.yml`, `verifica-fontes.yml`, `reprodu
 | Pipeline refeito do zero numa máquina limpa bate com os publicados, com tolerância declarada | **Atende**: execução 39546898051 do `reproduz.yml` (Release e origem baixadas, pipeline e relatórios do simulador refeitos, comparação com tolerância de 1e-9, e 1e-3 nos modelos com bootstrap): 45 arquivos derivados idênticos byte a byte, 8 dentro da tolerância (os modelos com bootstrap e otimização) e 0 fora. No commit ba19e74, depois das revisões críticas e com o hash do código também comparado, a execução 39556506384 deu 48 idênticos, 5 dentro da tolerância e 0 fora. No commit a7f0594, com o comparador que também acusa arquivo a mais (D47), a execução 39609801611 deu 48 idênticos, 5 dentro da tolerância e 0 fora, faltando ou sobrando. A 1ª execução (39542896386) já reproduziu todos os resultados e só acusou 3 metadados (commit e tempo de execução gravados nos relatórios, contagem de meses do clima), corrigidos no comparador e no script |
 | Versão final congelada com etiqueta e site acessível | **Mecanismo atende; versão de entrega pendente**: a `v1.0.0` (etiqueta no commit 6196ad2, Release com o zip do site) é servida em `/versoes/v1.0.0/` e prova o caminho. Ela é anterior às correções D41 a D46, então não é a versão final. Congelar a versão de entrega no fim do semestre (v1.x) segue aberto em `tasks.md` (achado 16 da crítica de 2026-10-21, rodada 3) |
 | Rodapé com versão dos dados e link para as fontes | **Atende** |
+
+## Revisão de 2026-11 (após a ressegmentação)
+
+*Registrada em 2026-11-11 (D65).* Os critérios acima não mudam.
+
+- **Reprodução do zero: exceção para os números revistos.**
+  - O "Atende" vale até o código da a7f0594, a última execução com sucesso (39609801611, 2026-10-21).
+  - A execução agendada de 2026-11-01 (41312932829) falhou antes do pipeline, na integridade dos JSON da NHL baixados da origem, porque a API mudou a resposta.
+  - A equipe decidiu não refazer a reprodução depois da revisão. A agenda mensal foi desligada, e o workflow continua disparável à mão.
+  - Os números revistos ficam conferidos pelo deploy (integridade das Releases, 38 números recalculados com código próprio, pytest e vitest) e pela crítica de 2026-11-11, que refez os scripts rápidos e conferiu os hashes contra o manifesto. Os modelos com bootstrap só foram rodados na máquina local.
+- **Versão congelada:** a v1.1.0 (etiqueta no e793bba) é servida em `/versoes/v1.1.0/` e guarda os números de antes da revisão. A versão de entrega segue aberta em `tasks.md`.
+- **Data do snapshot:** a Release `dados-2026-11` (km real republicado) entrou no rodapé com as anteriores.
 
 ## Fora de escopo
 - Dados em tempo real da STM: exigem chave de API e servidor (decisão em docs/decisoes/0001-hospedagem-github-pages.md).

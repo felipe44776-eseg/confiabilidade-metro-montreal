@@ -593,14 +593,14 @@ slide("Antes dos resultados", "Nenhum número sem fonte: qualquer pessoa pode re
   <div class="card"><div class="card-k">2</div><h3>Segunda implementação</h3><p><code>verifica_fontes.py</code>, em Python puro e sem usar o pipeline, recalcula <b>{N_RECALC} números</b> publicados direto dos dados brutos. Diferença: <b>zero</b>.</p></div>
   <div class="card"><div class="card-k">3</div><h3>Publicação bloqueada por erro</h3><p>Cada publicação baixa a Release, confere os hashes, recalcula e roda os testes. Um erro impede o site de ir ao ar.</p></div>
   <div class="card"><div class="card-k">4</div><h3>Auditoria independente</h3><p>Um agente sem acesso aos scripts tentou refutar os números com código próprio. Nenhuma divergência numérica; as 6 ressalvas de apresentação foram corrigidas.</p></div>
-  <div class="card"><div class="card-k">5</div><h3>Reprodução do zero</h3><p><code>reproduz.yml</code> refaz o pipeline numa máquina limpa e compara com o publicado. <span class="tag">passou em 2026-10-21 (commit ba19e74): 48 arquivos idênticos byte a byte, 5 dentro da tolerância, 0 fora</span></p></div>
+  <div class="card"><div class="card-k">5</div><h3>Reprodução do zero</h3><p><code>reproduz.yml</code> refaz o pipeline numa máquina limpa e compara com o publicado. <span class="tag">passou em 2026-10-21 (commit a7f0594): 48 idênticos, 5 na tolerância, 0 fora; não refeita após a revisão de 2026-11</span></p></div>
   <div class="card"><div class="card-k">6</div><h3>Decisões com data (SDD)</h3><p>Critério de aceite escrito antes do código. Se o resultado não atende, vira exceção registrada: o critério não é afrouxado.</p></div>
 </div>
 <p class="nota">Verificação na origem: em 2026-10-20, 26 das 27 fontes baixadas de novo vieram idênticas byte a byte; a 27ª (mobilidade do Google, 98 MB) foi conferida pelo tamanho.</p>""",
 "docs/relatorio/relatorio.md §3.2; fontes/FONTES.md (resultado local, §5); specs/constitution.md; specs/013-publicacao/spec.md (Resultado) e tasks.md",
 f"""<p>Este slide vem antes dos resultados de propósito: a equipe quis que ninguém precisasse confiar em quem fez as contas.</p>
 <p>Destacar o item 2: um segundo programa, escrito à parte, refaz {N_RECALC} números direto dos dados brutos e chega ao mesmo valor. E o item 3: o site não publica se essa conferência falhar.</p>
-<p>Item 5: a reprodução do zero rodou no GitHub Actions em 2026-10-21. A primeira execução reproduziu todos os resultados e só acusou metadados (commit e tempo de execução gravados nos relatórios); depois da correção, a segunda deu 45 arquivos idênticos byte a byte, 8 dentro da tolerância e nenhum fora. No commit ba19e74, com o hash do código também comparado, a execução 39556506384 deu 48 idênticos, 5 dentro da tolerância e 0 fora.</p>
+<p>Item 5: a reprodução do zero rodou no GitHub Actions em 2026-10-21. A primeira execução reproduziu todos os resultados e só acusou metadados (commit e tempo de execução gravados nos relatórios); depois da correção, a segunda deu 45 arquivos idênticos byte a byte, 8 dentro da tolerância e nenhum fora. No commit ba19e74, com o hash do código também comparado, a execução 39556506384 deu 48 idênticos, 5 dentro da tolerância e 0 fora; a última, no a7f0594 (39609801611), deu o mesmo. Depois da revisão de 2026-11 a reprodução não foi refeita: a execução agendada de 2026-11-01 falhou na integridade dos JSON da NHL baixados da origem, e a equipe desligou a agenda (D65). Os números revistos ficam conferidos pelo deploy, que recalcula 38 números com código próprio e roda os testes.</p>
 <p><b>Tempo:</b> 1 min 30 s.</p>""")
 
 # 4 ---------------------------------------------------------------
@@ -869,7 +869,7 @@ slide("Revisão de 2026-11 · ressegmentação por frota e setor", "Separar a fr
     <p class="onde">spec 018 · D56 e D57</p></div>
   <div class="card"><h3>O surto de 2024 é de registro</h3>
     <p class="vimos"><span class="label">O que vimos</span>De maio a dezembro de 2024, 516 falhas de via com sintoma de trem, 472 de zero minuto, quase todas nos terminais; em 2025, 52.</p>
-    <p class="mudou"><span class="label">O que mudou</span>Viram uma fonte própria, e a pergunta foi para o pedido à STM. A lição da spec 012 (o efeito de um ano não passa para o seguinte) ganha a causa.</p>
+    <p class="mudou"><span class="label">O que mudou</span>Viram uma fonte própria; por que a STM os registra assim fica em aberto. A lição da spec 012 (o efeito de um ano não passa para o seguinte) ganha a causa.</p>
     <p class="onde">specs 017 e 018 · D56</p></div>
   <div class="card"><h3>Causa comum por família</h3>
     <p class="vimos"><span class="label">O que vimos</span>40 dos 45 eventos de causa comum são de equipamento fixo, mas o β dividia por todas as falhas.</p>
@@ -893,7 +893,7 @@ slide("Limitações", "O que o modelo não sabe, e como isso aparece nos resulta
   <tbody>
     <tr><td><b>Não há passageiros diários</b></td><td>Todas as métricas são ponderadas pela oferta. A cobertura de bairros novos não entra na escolha da expansão.</td></tr>
     <tr><td><b>Reparo na oficina e aparelhos de mudança de via</b> não são públicos</td><td>Entram como hipóteses ajustáveis, com sensibilidade (reparo de 0,5 a 4 dias). O retorno parcial usa só as pontas de viagem.</td></tr>
-    <tr><td><b>Setores sem definição pública</b></td><td>"Service aux trains" e "Service TCPE" ficam com o nome da STM; "controle de trens" e "energia" são dedução, que está no pedido à STM.</td></tr>
+    <tr><td><b>Setores sem definição pública</b></td><td>"Service aux trains" e "Service TCPE" ficam com o nome da STM; "controle de trens" e "energia" são dedução, sem confirmação da STM.</td></tr>
     <tr><td><b>Exposição depois de 2023-09</b></td><td><span class="tag">após a revisão</span> Deixou de ser estimada: o km real republicado pela STM cobre o período todo no modelo e no simulador.</td></tr>
     <tr><td><b>Traçado das candidatas</b></td><td>Aproximação em linha reta entre estações, exceto a Azul até Anjou (em obras no OpenStreetMap).</td></tr>
     <tr><td><b>Duração registrada</b></td><td>Mede o tempo até o serviço voltar, não o reparo do equipamento. Horários e faixa oficial às vezes se contradizem: vale a faixa nas 100 exceções (D55).</td></tr>

@@ -208,7 +208,7 @@ O metrô de Montreal tem disponibilidade alta em cada linha (99,7% a 99,9% do te
 
 A validação mostrou o limite do modelo: o efeito de um ano não se transfere para o seguinte, e a previsão precisa carregar a incerteza entre anos. As decisões tomadas depois de ver os dados estão registradas com data, e a versão que falhou continua publicada.
 
-Próximos passos: conferir o simulador num navegador comum e no celular, pedir à STM os dados que faltam (passageiros diários, posição das subestações, tempo de reparo na oficina) e repetir o backtest com o motor TypeScript, como segunda implementação. Depois da revisão de 2026-11: um fator diário comum por família nos equipamentos fixos, para o simulador agrupar as falhas como o observado; avaliar os pré-registros quando a STM publicar os meses novos; e as specs 021 (importância de cada componente) e 022 (cenário de 2031).
+Próximos passos: conferir o simulador num navegador comum e no celular, pedir à STM os dados que faltam (passageiros diários, posição das subestações, tempo de reparo na oficina) e o significado do "Service aux trains" e do "Service TCPE" (nenhum pedido foi feito nesta entrega, D65), e repetir o backtest com o motor TypeScript, como segunda implementação. Depois da revisão de 2026-11: um fator diário comum por família nos equipamentos fixos, para o simulador agrupar as falhas como o observado; avaliar os pré-registros quando a STM publicar os meses novos; e as specs 021 (importância de cada componente) e 022 (cenário de 2031).
 
 ## 8. Revisão de 2026-11 (após a ressegmentação)
 

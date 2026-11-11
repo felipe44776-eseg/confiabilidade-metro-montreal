@@ -231,7 +231,7 @@ Formato de cada item: **Decisão** · **Por quê** · **Alternativas** · **Cons
 
 - **Decisão:** um workflow mensal (`reproduz.yml`) baixa as Releases e as fontes de origem, refaz o pipeline e os relatórios do simulador numa máquina limpa e compara com os publicados: tolerância relativa de 1e-9, e de 1e-3 nos modelos com bootstrap e otimização. Commit e tempo de execução gravados nos relatórios eram ignorados; desde a D45, só o tempo é ignorado, e o hash do código (`codigo_commit`, D43) é comparado.
 - **Por quê (depois de ver):** a primeira execução reproduziu todos os resultados e só acusou esses metadados e uma contagem de meses que olhava uma pasta ausente no CI.
-- **Resultado:** a segunda execução passou: 45 arquivos derivados idênticos byte a byte, 8 dentro da tolerância e 0 fora. No commit ba19e74, com o hash do código também comparado (D45): 48 idênticos, 5 na tolerância e 0 fora. No commit a7f0594, com o comparador que também acusa arquivo a mais (D47): 48 idênticos, 5 na tolerância e 0 fora, faltando ou sobrando.
+- **Resultado:** a segunda execução passou: 45 arquivos derivados idênticos byte a byte, 8 dentro da tolerância e 0 fora. No commit ba19e74, com o hash do código também comparado (D45): 48 idênticos, 5 na tolerância e 0 fora. No commit a7f0594, com o comparador que também acusa arquivo a mais (D47): 48 idênticos, 5 na tolerância e 0 fora, faltando ou sobrando. Agenda mensal desligada e reprodução não refeita depois da revisão de 2026-11 (D65).
 
 ### D37 — Versão congelada servida com a própria base
 
@@ -369,7 +369,7 @@ Origem: perguntas da reunião de 2026-10-27 (bitola, fabricantes, via ou trem, t
 - **Decisão:**
   - **Trem:** `mr73`, `mpm10` e `mr_outros` (veículos de trabalho, causa genérica e frota com parcela abaixo de 2% do km da linha).
   - **Fixo:** cada setor da STM (Service de la voie, Service aux trains, Service aux stations, Service TCPE) se divide pelo sintoma (atribuído na hora a material rodante ou não) quando as duas partes têm 400 falhas ou mais na rede. Abaixo disso, fica inteiro.
-  - Nomes pelas etiquetas da STM até a resposta do e-mail; "controle de trens" e "energia" aparecem como dedução.
+  - Nomes pelas etiquetas da STM até a resposta do e-mail (o e-mail foi cancelado na D65, e as etiquetas ficam); "controle de trens" e "energia" aparecem como dedução.
 - **Por quê (depois de ver):**
   - Na Verde, com o mesmo trilho, o MR-73 falha 8,1 vezes mais por km-carro que o MPM-10.
   - O EF mistura setores com horários diferentes: 30% das falhas do TCPE são às 5 h.
@@ -442,3 +442,19 @@ Origem: perguntas da reunião de 2026-10-27 (bitola, fabricantes, via ou trem, t
 - **Depois, na mesma noite (propostas da crítica que cabiam sem refazer modelos):** o `revisao_2026-11.md` ganhou a expansão (spec 014) e a nota sobre viagem e linhas novas; o `fontes_e_duracoes.md` passou a contar a via com sintoma de trem por mês e por local em 2024 (antes, só no texto); o `exposicao.md` diz que os 100 dias-linha estimados são os de greve; o `distribuicoes.md` descreve as duas regras de herança; a D57 ganhou a marca "depois de ver" e a mudança ao implementar; relatório e guia dizem que o km real até 2026-06 vale para o modelo e o simulador, não para o painel; o slide de limitações separa a exposição dos setores. Como três desses textos estão em scripts do contrato, o `parametros.json` e os relatórios do app foram refeitos: só o código do contrato e os tempos de execução mudaram.
 - **Por quê (depois de ver):** achados da revisão crítica de 2026-11-11, cada um conferido contra o arquivo gerado.
 - **Registro:** `fontes/verificacao/critica_2026-11-11.md`.
+
+### D65 — Sem pedido à STM e sem nova reprodução do zero nesta entrega
+
+- **Decisão (da equipe, 2026-11-11):**
+  - O e-mail à STM (ccia@stm.info) não será enviado.
+    - As perguntas ficam como limitação declarada: o que são o "Service aux trains" e o "Service TCPE", os registros de terminal de 2024, Saint-Michel em outubro de 2024 e a diferença de 11% a 15% no indicador de 5 min.
+    - As fontes continuam com as etiquetas da STM, e "controle de trens" e "energia" continuam como dedução.
+    - Os pedidos opcionais de acesso à informação (subestações, km depois de 2023-09, passageiros diários) também não serão feitos.
+  - A reprodução do zero (`reproduz.yml`) não será refeita depois da revisão de 2026-11.
+    - A última execução com sucesso é a 39609801611, no commit a7f0594 (2026-10-21).
+    - A execução agendada de 2026-11-01 (41312932829) falhou na integridade dos JSON da NHL baixados da origem, porque a API mudou a resposta.
+    - A agenda mensal foi desligada; o workflow continua disparável à mão.
+- **Por quê:** não há prazo para a resposta da STM antes da entrega. Consertar a integridade da NHL e rodar o pipeline completo no CI (de 1 a 2 horas) não muda nenhum número publicado.
+- **O que continua valendo:** a publicação confere a integridade das Releases, recalcula 38 números com código próprio e roda o pytest e o vitest antes de cada deploy. A crítica de 2026-11-11 refez os scripts rápidos e conferiu os hashes contra o manifesto.
+- **Consequência:** o critério de reprodução da spec 013 fica atendido só até o código da a7f0594. A spec passa a "implementada com exceções", e o deck e o README dizem isso. Dois comentários em scripts do contrato (`parametros.py` e `distribuicoes.py`) ainda falam da resposta da STM. Ficam como estão, porque mudar o texto muda o código do contrato (`codigo_commit`) e obriga a refazer o `parametros.json`.
+- **Registro:** specs 001, 013, 017 e 020; README, arquitetura, relatório e deck.

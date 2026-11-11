@@ -67,7 +67,7 @@ python -I pipeline/verifica_fontes.py --baixa-release --recalcula
 
 ## Reproduzir tudo
 
-Requisitos: Python 3.11 e Node 22. O workflow `.github/workflows/reproduz.yml` faz o mesmo numa máquina limpa e compara o resultado com os arquivos publicados.
+Requisitos: Python 3.11 e Node 22. O workflow `.github/workflows/reproduz.yml` faz o mesmo numa máquina limpa e compara o resultado com os arquivos publicados. Ele só roda quando disparado à mão: a última execução com sucesso é a do commit a7f0594 (2026-10-21), e a de 2026-11-01 falhou porque a API da NHL mudou a resposta (D65). Depois da revisão de 2026-11, a reprodução não foi refeita.
 
 ```bash
 python -I pipeline/verifica_fontes.py --baixa-release --baixa-origem --completo   # dados brutos com hashes conferidos
