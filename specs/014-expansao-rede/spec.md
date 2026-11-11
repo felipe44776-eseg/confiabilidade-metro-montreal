@@ -49,7 +49,7 @@ Resposta à pergunta (dia útil, métrica de pares de estações atuais ponderad
 
 - **O que mudou na entrada:**
   - nas 100 falhas em que a duração calculada contradiz a faixa oficial da STM, vale a faixa (D55; minutos das falhas técnicas de 43.971 para 33.404). Das 7 interrupções de quase 20 h em Saint-Michel (outubro de 2024), as 6 com faixa oficial "02 min et moins" saem da amostra de durações da Azul; fica a de 1.170 min, de faixa "30 min et plus" (spec 001);
-  - as taxas vêm de 9 fontes (3 frotas no trem, 6 setor × sintoma no equipamento fixo; D56), ajustadas com a exposição medida até 2026-06 (D57, spec 018). O `parametros.json` passa de `sha256-scripts:70cf9c002aa2ba0a` para `sha256-scripts:d2a89e7803552929`.
+  - as taxas vêm de 9 fontes (3 frotas no trem, 6 setor × sintoma no equipamento fixo; D56), ajustadas com a exposição medida até 2026-06 (D57, spec 018). O `parametros.json` passa de `sha256-scripts:70cf9c002aa2ba0a` para `sha256-scripts:489914bafbbe991e`.
 - **O que mudou no método:**
   - cada trecho, da rede atual ou da candidata, recebe por família (trem e fixo) a soma das taxas das fontes da linha e a duração média das fontes ponderada pela taxa de cada uma (`familiaNaLinha` e `duracaoMediaMistura`; spec 019). Com os parâmetros da v1.1.0, a avaliação de expansão sai idêntica à referência gravada antes da mudança (spec 019): as diferenças abaixo vêm dos parâmetros;
   - *verificação exata (D62):* num grafo de três estações, com a linha A–M–B, a ligação nova A–B e trechos fora com probabilidade 0,01, 0,01 e 0,02, o método de estados com 200 mil amostras dá a indisponibilidade sem e com a ligação e o ganho a menos de 4 erros-padrão da enumeração dos 8 estados. O teste (`app/tests/motor/expansao.test.ts`) passou.

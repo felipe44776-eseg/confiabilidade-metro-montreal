@@ -133,7 +133,7 @@ O evento conta na família da sua fonte (trem ou fixo), e o β divide pelas falh
 
 ## Renovação e duração por linha × fonte (spec 018)
 
-Forma da Weibull no tempo reescalado pela taxa da fonte (spec 018) e duração (sem interrupção e média quando para). Estrato com menos de 30 falhas herda da mesma fonte na rede (coluna de origem).
+Forma da Weibull no tempo reescalado pela taxa da fonte (spec 018) e duração (sem interrupção e média quando para). Herda da mesma fonte na rede (colunas de origem): a renovação, o estrato com menos de 30 intervalos; a duração, o estrato com menos de 30 durações positivas.
 
 | Linha · fonte | Falhas | Forma (IC 95%) | Origem da renovação | Sem interrupção (IC 95%) | Média quando para (min) | Origem da duração |
 |---|---|---|---|---|---|---|

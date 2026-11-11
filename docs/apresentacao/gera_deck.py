@@ -359,7 +359,8 @@ def _pol(chave, nome, sub):  # politicas.json, reparo de 1,0 dia
     m = p["minutos_rede"]
     th = p["trens_hora"]["media"]
     return (nome, sub, (-m["media"], -m["ic95"][1], -m["ic95"][0]), sn(th, 1 if abs(th) >= 10 else 2),
-            sn(p["disp_od_pp"]["media"], 2), sn(p["frota_completa_laranja_pp"]["media"], 1), chave == "operacaoDegradada")
+            sn(p["disp_od_pp"]["media"], 2 if abs(p["disp_od_pp"]["media"]) >= 0.01 or p["disp_od_pp"]["media"] == 0 else 3),
+            sn(p["frota_completa_laranja_pp"]["media"], 1), chave == "operacaoDegradada")
 
 POLITICAS = [_pol(*x) for x in (
     ("operacaoDegradada", "Operação degradada", "marcha lenta após falha de equipamento fixo"),
@@ -661,14 +662,14 @@ slide("O que muda a taxa de falha · binomial negativa com exposição", f"A abe
 {floresta()}
 <div class="tri">
   <p><b>Greve</b> reduz a oferta, mas não muda a taxa por trem-hora: o intervalo contém 1. <span class="tag">após a revisão</span> Com o km de 2025 medido, a exposição dos dias de greve precisou de correção (D63).</p>
-  <p><b>Calor</b> pesa só nos equipamentos fixos (+{br(100 * (_CALOR[2][0] - 1))}%), e vem da via. <b>Frio intenso</b> não tem efeito detectável.</p>
+  <p><b>Calor</b> pesa só nos equipamentos fixos (+{br(100 * (_CALOR[2][0] - 1))}%), e vem sobretudo da via. <b>Frio intenso</b> não tem efeito detectável.</p>
   <p><b>Binomial negativa vence Poisson</b> nas duas causas (α = {br(TAXA["MR"]["alpha_nb"], 2)} e {br(TAXA["EF"]["alpha_nb"], 2)}; p &lt; 10⁻³⁰).</p>
 </div>
 <p class="nota">Vazio e em cinza: intervalo de 95% contém 1. Referência: Laranja, entrepico, dia útil, outono, 5 a 15 °C, sem precipitação. IC por bootstrap em blocos semanais (B = {TAXA["MR"]["bootstrap_b"]}).</p>""",
 "relatório §4.1; fontes/verificacao/modelo_taxa.md e taxa_por_fonte.md; dados/derivados/modelos/taxa_MR.json e taxa_EF.json",
 f"""<p>Cada ponto é quanto um fator multiplica a taxa de falha por trem-hora, com o intervalo de 95%. À direita do 1, aumenta; à esquerda, diminui.</p>
 <p>O maior efeito é a abertura do serviço, das 5 às 6 h: a taxa fica {br(_AB[1][0], 1)} vezes maior no material rodante e {br(_AB[2][0], 1)} vezes nos equipamentos fixos. Por fonte, a abertura eleva todas; na energia (TCPE), a taxa fica {br(_TCPE_AB, 1)} vezes maior, o que lemos como falha ao energizar a rede.</p>
-<p>Neve acumulada acima de 10 cm eleva as duas causas em cerca de {br(100 * (_NEVE[1][0] - 1))}%. Calor de 25 °C ou mais pesa nos equipamentos fixos, e por fonte ele vem da via. O frio intenso, que seria o palpite óbvio em Montreal, não aparece.</p>
+<p>Neve acumulada acima de 10 cm eleva as duas causas em cerca de {br(100 * (_NEVE[1][0] - 1))}%. Calor de 25 °C ou mais pesa nos equipamentos fixos, e por fonte ele vem sobretudo da via. O frio intenso, que seria o palpite óbvio em Montreal, não aparece.</p>
 <p>A greve só reduz a oferta: por trem que roda, a taxa não muda de forma detectável.</p>
 <p>Após a revisão, com a exposição medida em todo o período, os multiplicadores por família mudam só na segunda casa decimal.</p>
 <p><b>Tempo:</b> 1 min 30 s.</p>""")
@@ -784,7 +785,7 @@ f"""<p>Cada política foi comparada com "nenhuma política" usando as mesmas fal
 <p>A operação degradada, liberar o trecho em marcha lenta depois de uma falha de equipamento fixo, é a que mais reduz minutos parados e trens-hora perdidos. Faz sentido: ataca a causa mais frequente. Após a revisão, o ganho ficou menor (−{br(_OD, 1)} contra −{br(_OD_V1, 1)}), porque parte das interrupções longas de equipamento fixo eram registros com a duração contraditória.</p>
 <p>A reserva fria não muda os minutos parados; ela garante a frota completa no início do dia. Quanto vale depende do tempo de reparo na oficina, que a STM não publica: por isso aparece como hipótese.</p>
 <p>Retorno parcial e rota alternativa só mudam a disponibilidade origem-destino, e pouco, porque há poucos caminhos alternativos.</p>
-<p><b>Tempo:</b> 1 min 30 s.</p>""")
+<p><b>Tempo:</b> 1 min 30 s.</p>""", "compacto")
 
 # 11 --------------------------------------------------------------
 slide("Que linha construir · disponibilidade origem-destino, dia útil", "A ligação que mais ajuda dá à Azul um caminho que não passa pela Laranja", f"""
@@ -817,13 +818,13 @@ slide("Validação contra o histórico · 72 casos linha × mês, 2025-01 a 2026
   <p><b>Causa:</b> herdou o efeito de 2024, ano atípico: cerca de 1.000 falhas técnicas no 2º semestre, contra cerca de 500 nos vizinhos.</p>
   <p><b>Correção testada em outro período</b> (D): 90,3%, PIT compatível com a uniforme (p&#160;=&#160;0,16). O resultado oficial continua sendo o de A.</p>
 </div>
-<p class="nota"><span class="tag">pós-hoc</span> Refeito com os dados revistos: A {br(POS_HOC["A"][0], 1)}%, C {br(POS_HOC["C"][0], 1)}%, D {br(POS_HOC["D"][0], 1)}%. A A falha nos equipamentos fixos ({br(_BT_FAM["A"]["EF"], 1)}%), não no material rodante ({br(_BT_FAM["A"]["MR"], 1)}%).</p>""",
+<p class="nota"><span class="tag">pós-hoc</span> Refeito com os dados revistos: A {br(POS_HOC["A"][0], 1)}%, C {br(POS_HOC["C"][0], 1)}%, D {br(POS_HOC["D"][0], 1)}%. A versão A falha nos equipamentos fixos ({br(_BT_FAM["A"]["EF"], 1)}%), não no material rodante ({br(_BT_FAM["A"]["MR"], 1)}%).</p>""",
 "fontes/verificacao/backtest.md; specs/012-backtest (Resultado); docs/relatorio/relatorio.md §5",
 """<p>Este é o slide de que a equipe mais se orgulha, mesmo sendo um resultado negativo.</p>
 <p>Ajustamos o modelo só até 2024 e previmos cada linha e mês de 2025 e 2026. O critério foi escrito antes de ver o teste: o intervalo de 90% deveria conter o observado em 80% a 98% dos casos. Deu 66,7%. Não passou.</p>
 <p>O motivo: o segundo semestre de 2024 teve o dobro de falhas dos semestres vizinhos, e a versão A carregou esse efeito para 2025.</p>
 <p>Não mexemos no critério. Registramos uma regra nova com data e a testamos num período diferente, como a especificação manda: 90,3%. A versão que falhou continua publicada.</p>
-<p><b>Tempo:</b> 1 min 30 s.</p>""")
+<p><b>Tempo:</b> 1 min 30 s.</p>""", "compacto")
 
 # 13 --------------------------------------------------------------
 slide("Decisões tomadas depois de ver os dados · 2026-10-21", "Três mudanças feitas depois de ver os dados, todas registradas com data", """
@@ -892,7 +893,8 @@ slide("Limitações", "O que o modelo não sabe, e como isso aparece nos resulta
   <tbody>
     <tr><td><b>Não há passageiros diários</b></td><td>Todas as métricas são ponderadas pela oferta. A cobertura de bairros novos não entra na escolha da expansão.</td></tr>
     <tr><td><b>Reparo na oficina e aparelhos de mudança de via</b> não são públicos</td><td>Entram como hipóteses ajustáveis, com sensibilidade (reparo de 0,5 a 4 dias). O retorno parcial usa só as pontas de viagem.</td></tr>
-    <tr><td><b>Setores sem definição pública</b></td><td>"Service aux trains" e "Service TCPE" ficam com o nome da STM; "controle de trens" e "energia" são dedução, que está no pedido à STM. <span class="tag">após a revisão</span> A exposição depois de 2023-09 deixou de ser estimada: o km real republicado cobre tudo.</td></tr>
+    <tr><td><b>Setores sem definição pública</b></td><td>"Service aux trains" e "Service TCPE" ficam com o nome da STM; "controle de trens" e "energia" são dedução, que está no pedido à STM.</td></tr>
+    <tr><td><b>Exposição depois de 2023-09</b></td><td><span class="tag">após a revisão</span> Deixou de ser estimada: o km real republicado pela STM cobre o período todo no modelo e no simulador.</td></tr>
     <tr><td><b>Traçado das candidatas</b></td><td>Aproximação em linha reta entre estações, exceto a Azul até Anjou (em obras no OpenStreetMap).</td></tr>
     <tr><td><b>Duração registrada</b></td><td>Mede o tempo até o serviço voltar, não o reparo do equipamento. Horários e faixa oficial às vezes se contradizem: vale a faixa nas 100 exceções (D55).</td></tr>
     <tr><td><b>Dados incompletos</b></td><td>6% das falhas sem posição (sobretudo subestações); condição do tempo só em 45,8% das horas de operação. Aparecem como falta, nunca como zero.</td></tr>
@@ -1034,6 +1036,7 @@ b{font-weight:650}
 .tab-lim td:first-child{width:38%}
 .tri{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:14px}
 .tri p{margin:0;font-size:16.5px;line-height:1.42;border-left:3px solid var(--accent);padding-left:14px}
+.compacto > header{margin-bottom:12px}.compacto .tri{margin-top:8px}.compacto .nota{margin-top:6px}
 .multiplos{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
 .multiplos h3{font-size:21px}
 .disp{display:grid;grid-template-columns:1.05fr repeat(4,1fr);gap:18px;align-items:center;margin-top:18px;

@@ -17,7 +17,7 @@ Depois da ressegmentação, os parâmetros ajustados e o simulador preveem o que
   - 516 falhas de via de quase zero minuto nos terminais, de maio a dezembro de 2024;
   - durações de cerca de 19 h que contradizem a faixa oficial (spec 017).
 - O CSV de incidentes da STM não mudou desde o retrato (2026-06-30). Um teste de verdade fora da amostra precisa esperar os meses seguintes, e por isso o modelo é congelado antes.
-- O indicador da STM "incidents de 5 minutes et plus par million de km" (km-carro) dá de 11% a 15% a mais que a contagem nos dados abertos (2019: 10,6 contra 9,09).
+- O indicador da STM "incidents de 5 minutes et plus par million de km" (km-carro) fica acima da contagem nos dados abertos, que dá de 85% a 89% do publicado (2019: 9,09 contra 10,6; `revalidacao.md`). *Corrigido em 2026-11-11 pela revisão crítica:* o texto dizia "11% a 15% a mais", que é quanto os dados abertos ficam abaixo do publicado, e não quanto o publicado fica acima.
 
 ## Critérios de aceite
 
@@ -67,14 +67,14 @@ Relatórios: [`revalidacao.md`](../../fontes/verificacao/revalidacao.md) (simula
 | Teste fora da amostra (3 meses novos) | **Pendente**: em 2026-11-10 o CSV de incidentes da STM não tinha mudado desde 2026-09-14 |
 | Backtest refeito, marcado como posterior | **Atende**: A 65,3%, B 84,7%, C 87,5%, D 90,3% (oficial da v1.1.0: 66,7%, 81,9%, 84,7%, 90,3%). Por família, a versão A falha nos equipamentos fixos (65,3%) e não no material rodante (87,5%). Detalhe na spec 012 |
 | Monte Carlo contra o histórico: médias anuais por linha × família dentro do IC 95% do observado em 2025 em pelo menos 90% das comparações | **Exceção**: 25 de 28 (89,3%), contra 21 de 28 da v1.1.0. Fora: equipamentos fixos da Amarela, falhas (40,5 simuladas contra 19 observadas; a média de 2019 a 2025 é 82,6) e minutos (143 contra 44), e minutos de causa comum da Azul (48 contra 2). Em 2025, a Amarela teve o menor número de falhas fixas da série, e o modelo não tem efeito de linha × ano. A tolerância de 15% da spec 009 fica em 12 de 28 |
-| Dispersão (critério da spec 019) | **Exceção**: 9 de 12 dentro do IC por blocos (v1.1.0: 11 de 12); abaixo, os equipamentos fixos da Verde (1,06 contra 1,14–1,47). Ver a spec 019 |
+| Dispersão (critério da spec 019) | **Exceção**: 9 de 12 dentro do IC por blocos (v1.1.0: 11 de 12); abaixo, os equipamentos fixos da Verde (1,06 contra 1,14–1,47); acima, a Amarela no material rodante (1,36 contra 0,93–1,29) e nos equipamentos fixos (1,64 contra 0,93–1,35). Ver a spec 019 |
 | Indicador da STM | **Exceção declarada**: os dados abertos dão de 85% a 89% do indicador publicado de 5 min ou mais por milhão de km-carro, todos os anos de 2019 a 2025 (2025: 9,89 contra 11,66). A STM não publica a regra de contagem; a pergunta está no pedido da equipe à STM. Só falhas técnicas: 2,46 nos dados abertos de 2025 e 2,61 no simulado |
-| Antes e depois | **Atende**: `revisao_2026-11.md`, gerado por `pipeline/compara_versoes.py` dos arquivos das duas versões |
+| Antes e depois | **Atende**: `revisao_2026-11.md`, gerado por `pipeline/compara_versoes.py` dos arquivos das duas versões, com o motivo de cada bloco (normalização, exposição, painel, modelos, distribuições, backtest, políticas e expansão). Viagem e linhas novas não têm JSON: o antes e depois delas está nas specs 015 e 016 (achado 1 da revisão crítica, corrigido em 2026-11-11) |
 | Specs e documentos marcados | **Atende**: seção "Revisão de 2026-11 (após a ressegmentação)" nas specs 001, 004 a 009, 011, 012 e 014 a 016; relatório, apresentação, painel, guia, arquitetura, README, FONTES e dicionário com o aviso e o link para a v1.1.0 |
 | Verificação exata do método de estados (D62) | **Atende**: a menos de 4 erros-padrão da enumeração dos 8 estados, sem e com a ligação (`app/tests/motor/expansao.test.ts`) |
 | Massa em zero por fonte e ano (D62), leitura fixada antes | **Inconclusiva**: as fontes diferem (p < 0,0001), mas o padrão não é o de parada segura com rearme (o MR-73 tem a menor proporção, 25%) nem o de mudança de registro (nenhum ano com salto comum). A via com sintoma de trem sobe de 17% (2019) para 98% (2025) e o MPM-10 de 21% para 66%, cada uma por conta própria |
 | Escopo e vocabulário | **Atende** no relatório e no guia |
-| Revisão crítica | Ver `fontes/verificacao/critica_2026-11-11.md` |
+| Revisão crítica | **Atende com propostas abertas**: 28 achados (0 altos, 4 médios), corrigidos os confirmados (D64) e as propostas de texto baratas; ficam abertas a soma das fontes com o contrato v2 (Azul EF 9% abaixo do esperado em 7.000 dias), a referência v1 com os parâmetros da v1.1.0 versionados e números ainda digitados no deck (`fontes/verificacao/critica_2026-11-11.md`) |
 
 *Mudança registrada em 2026-11-10, depois de ver (D63):* a exposição dos dias de greve. Ver a spec 018.
 

@@ -46,7 +46,7 @@ Script `pipeline/exposicao.py`; testes em `pipeline/tests/test_exposicao.py`; re
 - **O que mudou no método:**
   - a exposição passa a ser medida até 2026-06-30, o fim dos incidentes;
   - *depois de ver (D63):* os 25 dias de greve ficam com o fator típico da linha e do tipo de dia (status "estimado"), nas horas com serviço. O km real deles inclui serviço fora das faixas, que o modelo não representa, e usá-lo com a fração da hora contava a redução duas vezes;
-  - a parcela de cada frota passa a ser medida por dia (`frota_diaria.csv`), para o modelo empilhado por frota da spec 018. Na v1.1.0, depois de 2023-09 ela era suposta igual à dos últimos 12 meses medidos (2022-10 a 2023-09). Na Verde em 2025, a parcela suposta de MPM-10 era 72,8%; a medida é 85,4% (`frota_por_linha` do contrato);
+  - a parcela de cada frota passa a ser medida por dia (`frota_diaria.csv`), para o modelo empilhado por frota da spec 018. Na v1.1.0, depois de 2023-09 ela era suposta igual à dos últimos 12 meses medidos (2022-10 a 2023-09). Na Verde em 2025, a parcela suposta de MPM-10 era 72,8%; a medida é 85,3% (0,852579 em `frota_por_linha` do contrato);
   - os fatores de calibração por linha e período de exploração mudam com os períodos preenchidos, e a lista de meses acima de 10% muda.
 
 | Número | v1.1.0 | Após a revisão |

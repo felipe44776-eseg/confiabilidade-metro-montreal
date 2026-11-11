@@ -42,7 +42,7 @@ Achados (reparo de 1 dia): a operação degradada é a política que mais reduz 
 
 *Registrada em 2026-11-11 (decisões D55, D56, D57 e D59; specs 019 e 020).* Os critérios acima não mudam, e o resultado de 2026-10-21 continua sendo o da v1.1.0.
 
-- **O que mudou na entrada:** o `parametros.json` passa ao contrato v2 (`sha256-scripts:d2a89e7803552929`; v1.1.0: `70cf9c002aa2ba0a`):
+- **O que mudou na entrada:** o `parametros.json` passa ao contrato v2 (`sha256-scripts:489914bafbbe991e`; v1.1.0: `70cf9c002aa2ba0a`):
   - 9 fontes por linha, 3 de trem e 6 de equipamento fixo (D56, D59);
   - taxa-base do ano 2025 por fonte, com a exposição medida até 2026-06 (D57, spec 018);
   - nas 100 falhas em que a duração calculada contradiz a faixa oficial, vale a faixa (D55). Os minutos das falhas técnicas caem de 43.971 para 33.404.

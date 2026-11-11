@@ -126,6 +126,25 @@ def main():
                 yield p, o
         fa, fd = dict(folhas(a)), dict(folhas(d))
         L += linhas_tabela("Simulador: políticas e Monte Carlo (specs 008 e 009)", [(k, fa[k], fd.get(k)) for k in fa if not k.endswith(("semente", "rodadas_por_politica", "rodadas_por_tipo_dia"))], 3)
+    # expansão da rede (spec 014): ganhos em pontos percentuais
+    a, d = le("dados/derivados/simulador/expansao.json", ANTES), le("dados/derivados/simulador/expansao.json")
+    if a and d:
+        pp = lambda x: None if x is None else 100 * x
+        pares = [("rede atual · disponibilidade origem-destino (%)", pp(a["rede_atual"]["dispOD"]["media"]), pp(d["rede_atual"]["dispOD"]["media"]))]
+        for regime in ("sem_retorno_parcial", "com_retorno_parcial"):
+            ga = {c["id"]: c["ganho"]["media"] for c in a["candidatas"][regime]}
+            for c in d["candidatas"][regime]:
+                pares.append((f"{c['id']} · ganho {regime.replace('_', ' ')} (p.p.)", pp(ga.get(c["id"])), pp(c["ganho"]["media"])))
+        ma, md = a["busca_exaustiva"]["por_ganho"][0], d["busca_exaustiva"]["por_ganho"][0]
+        pares.append((f"melhor ligação da busca ({md['nome']}) · ganho (p.p.)", pp(ma["ganho"]["media"]) if ma["id"] == md["id"] else None, pp(md["ganho"]["media"])))
+        for va, vd in zip(a["validacao_contra_camada_diaria"], d["validacao_contra_camada_diaria"]):
+            pares.append((f"{vd['linha']} · diferença entre o método de estados e a camada diária (p.p.)", va["dif_pp"], vd["dif_pp"]))
+        L += linhas_tabela("Expansão da rede (spec 014)", pares, 4,
+                           "Ganho de disponibilidade origem-destino de cada candidata, pareado com a rede atual, no dia útil.")
+    L += ["## Viagem e linhas novas (specs 015 e 016)", "",
+          "Os relatórios `viagem.md` e `linhas_novas.md` não têm arquivo JSON; o antes e o depois deles está nas seções \"Revisão de 2026-11\" das specs 015 e 016. "
+          "Os números novos da revisão, sem equivalente na v1.1.0 (modelos por fonte, um ano de fora, revalidação contra 2025, pré-registro v2), estão em "
+          "`taxa_por_fonte.md`, `fora_da_amostra.md`, `revalidacao.md` e nas specs 018 a 020.", ""]
     open(SAIDA, "w", encoding="utf-8", newline="\n").write("\n".join(L) + "\n")
     print("gravado", SAIDA)
 

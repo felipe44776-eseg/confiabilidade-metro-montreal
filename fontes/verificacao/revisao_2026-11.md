@@ -557,3 +557,28 @@ Mesmas versões e regras da spec 012; mudam os dados de entrada (durações pela
 | politicas.0.5.tratamentoCausaComum.minutos_CC.media | -0,790 | -0,784 | -0,7% |
 | politicas.0.5.tratamentoCausaComum.minutos_CC.dp | 13,167 | 13,155 | -0,1% |
 
+## Expansão da rede (spec 014)
+
+Ganho de disponibilidade origem-destino de cada candidata, pareado com a rede atual, no dia útil.
+
+| Número | v1.1.0 | Após a revisão | Variação |
+|---|---|---|---|
+| rede atual · disponibilidade origem-destino (%) | 99,2360 | 99,4248 | +0,2% |
+| rosa_2017+azul_anjou · ganho sem retorno parcial (p.p.) | 0,0028 | 0,0361 | +1180,5% |
+| rosa_2017 · ganho sem retorno parcial (p.p.) | 0,0208 | 0,0165 | -20,4% |
+| amarela_longueuil · ganho sem retorno parcial (p.p.) | -0,0054 | -0,0053 | -2,0% |
+| laranja_bois_franc · ganho sem retorno parcial (p.p.) | -0,0347 | -0,0288 | -16,8% |
+| azul_anjou · ganho sem retorno parcial (p.p.) | -0,0753 | -0,0323 | -57,2% |
+| rosa_2017+azul_anjou · ganho com retorno parcial (p.p.) | 0,0528 | 0,0381 | -27,8% |
+| laranja_anel_artm_2019 · ganho com retorno parcial (p.p.) | 0,0186 | 0,0211 | +13,4% |
+| rosa_2017 · ganho com retorno parcial (p.p.) | 0,0112 | 0,0084 | -25,3% |
+| melhor ligação da busca (Atwater – Université De Montreal) · ganho (p.p.) | 0,0850 | 0,0629 | -26,0% |
+| verde · diferença entre o método de estados e a camada diária (p.p.) | 0,0201 | -0,0129 | -164,0% |
+| laranja · diferença entre o método de estados e a camada diária (p.p.) | -0,0092 | -0,0630 | +584,9% |
+| amarela · diferença entre o método de estados e a camada diária (p.p.) | 0,0103 | -0,0183 | -277,6% |
+| azul · diferença entre o método de estados e a camada diária (p.p.) | -0,0955 | -0,0254 | -73,4% |
+
+## Viagem e linhas novas (specs 015 e 016)
+
+Os relatórios `viagem.md` e `linhas_novas.md` não têm arquivo JSON; o antes e o depois deles está nas seções "Revisão de 2026-11" das specs 015 e 016. Os números novos da revisão, sem equivalente na v1.1.0 (modelos por fonte, um ano de fora, revalidação contra 2025, pré-registro v2), estão em `taxa_por_fonte.md`, `fora_da_amostra.md`, `revalidacao.md` e nas specs 018 a 020.
+

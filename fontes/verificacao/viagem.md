@@ -1,6 +1,6 @@
 # Confiabilidade de uma viagem (spec 015)
 
-Gerado por `app/relatorios/viagem.relatorio.ts` com o `parametros.json` real (código sha256-scripts:a0ff551bd3d56c35). Cenário padrão (dia útil, condições de referência do modelo), 1.000 dias por viagem, semente 20261021: os mesmos dias da aba "Muitos dias" com essa semente. Média e intervalo de 95%.
+Gerado por `app/relatorios/viagem.relatorio.ts` com o `parametros.json` real (código sha256-scripts:489914bafbbe991e). Cenário padrão (dia útil, condições de referência do modelo), 1.000 dias por viagem, semente 20261021: os mesmos dias da aba "Muitos dias" com essa semente. Média e intervalo de 95%.
 
 Disponibilidade: fração da janela de serviço da rede em que o caminho existe, a partir dos bloqueios do dia no grafo das estações (o mesmo método da disponibilidade origem-destino da spec 009). "Produto" é o valor em série, multiplicando as disponibilidades dos trechos como se as linhas falhassem de forma independente. Atraso: saídas a cada 10 minutos; para cada uma, a chegada mais cedo com os trens simulados do dia contra a mesma saída num dia sem falhas.
 
@@ -112,4 +112,4 @@ Caminho de sempre: Verde de Atwater a Berri-Uqam.
 - O atraso médio é puxado pelas poucas saídas que pegam uma interrupção longa: a amostra de durações da STM tem paradas de horas.
 - Não entram ônibus de substituição, caminhada até a plataforma nem lotação.
 
-Tempo de execução nesta máquina: 0,8 min (um processo).
+Tempo de execução nesta máquina: 0,7 min (um processo).

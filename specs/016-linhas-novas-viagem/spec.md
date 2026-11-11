@@ -62,7 +62,7 @@ Achados (relatório, dia útil):
 
 - **O que mudou na entrada:** o mesmo da spec 015. A duração segue a faixa oficial da STM quando a calculada a contradiz (D55; minutos das falhas técnicas de 43.971 para 33.404, sem as interrupções de quase 20 h da Azul em Saint-Michel), e a taxa de cada linha vem de 9 fontes, por frota e setor, com o ano-base 2025 e a exposição medida (specs 017 e 018).
 - **O que mudou no método:** a linha nova herda a taxa por km pela soma das fontes de cada família (trem e fixo) da linha de que herda (spec 019). As hipóteses do relatório (traçado, km, 36 km/h, partidas, causa comum, retorno parcial) não mudam. Com os parâmetros da v1.1.0, as viagens com linhas novas da referência saem idênticas (198 casos, spec 019): as diferenças abaixo vêm dos parâmetros.
-- **Relatório:** [`linhas_novas.md`](../../fontes/verificacao/linhas_novas.md) refeito em 2026-11-11 (código `sha256-scripts:d2a89e7803552929`), com os mesmos casos, os mesmos 1.000 dias e a mesma semente.
+- **Relatório:** [`linhas_novas.md`](../../fontes/verificacao/linhas_novas.md) refeito em 2026-11-11 (código `sha256-scripts:489914bafbbe991e`), com os mesmos casos, os mesmos 1.000 dias e a mesma semente.
 
 | Número | v1.1.0 | Após a revisão |
 |---|---|---|

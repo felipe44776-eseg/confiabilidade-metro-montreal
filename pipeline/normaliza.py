@@ -199,6 +199,18 @@ def relatorio(tecnicos, comum, divididos, brutos_uma_linha):
           "### Falhas de 300 minutos ou mais depois da regra", "", "| Incidente | Linha | Fonte | Início | Minutos | Faixa oficial | Local |", "|---|---|---|---|---|---|---|"]
     for r in sorted((r for r in tecnicos if r["duracao_min"] >= 300), key=lambda r: -r["duracao_min"]):
         L.append(f"| {r['id']} | {r['linha']} | `{r['fonte']}` | {r['inicio_local']} | {n(r['duracao_min'])} | {r['faixa_oficial']} | {r['local_codigo']} |")
+    # O surto de 2024 (spec 017, D56): falhas de via com sintoma de material rodante, por mês e por local
+    v24 = [r for r in tecnicos if r["fonte"] == "voie_sintoma_trem" and r["data_servico"][:4] == "2024"]
+    por_ano = Counter(r["data_servico"][:4] for r in tecnicos if r["fonte"] == "voie_sintoma_trem")
+    L += ["", "## Via com sintoma de trem em 2024", "",
+          f"Falhas da fonte `voie_sintoma_trem` por ano: " + ", ".join(f"{a}: {n(c)}" for a, c in sorted(por_ano.items())) + ". "
+          f"Em 2024: {n(len(v24))}, das quais {n(sum(1 for r in v24 if r['duracao_min'] == 0))} com duração zero.", "",
+          "| Mês de 2024 | Falhas | Com duração zero |", "|---|---|---|"]
+    for m, c in sorted(Counter(r["data_servico"][:7] for r in v24).items()):
+        L.append(f"| {m} | {n(c)} | {n(sum(1 for r in v24 if r['data_servico'][:7] == m and r['duracao_min'] == 0))} |")
+    L += ["", "| Local (código da STM) | Falhas em 2024 |", "|---|---|"]
+    for loc, c in Counter(r["local_codigo"] for r in v24).most_common(8):
+        L.append(f"| {loc} | {n(c)} |")
     L += ["", "## Gravidade (D58)", "", "Classes pelos limites da STM: o indicador conta 5 min ou mais; aviso aos usuários acima de 10 min; ônibus substituto acima de 30 min.", "",
           "| Fonte | " + " | ".join(ORDEM_CLASSES) + " | 5 min ou mais (pela regra) | 5 min ou mais (faixa oficial) |", "|---|" + "---|" * 6]
     for f in fontes:

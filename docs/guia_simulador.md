@@ -93,7 +93,7 @@ Todos os números do modelo: valor, intervalo de 95%, status (ajustado, deduzido
 - Um trem por trecho e por sentido; os trens seguem viagens individuais do horário (o GTFS não tem blocos de trem).
 - O retorno parcial só acontece nas pontas de viagem do horário: a posição dos aparelhos de mudança de via não é pública.
 - O tempo de reparo na oficina não é publicado pela STM.
-- Fechamentos planejados e quedas de energia não têm série própria.
+- Fechamentos planejados e quedas de energia da rede elétrica externa (Hydro-Québec) não têm série própria; as falhas de energia do próprio metrô entram pela fonte TCPE (dedução).
 
 ## Para conferir no seu computador
 

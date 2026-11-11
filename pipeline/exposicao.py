@@ -306,7 +306,7 @@ def escreve_relatorio(r):
         L.append(f"| {fr} | {br(r['registros_por_frota'][fr], 0)} | {br(km)} |")
     L += ["", f"Total: {br(r['km_carro_total_milhoes'], 2)} milhões de km-carro. O total menos MR-73 e MPM-10 dá {br(r['total_menos_mr73_e_mpm10_km'], 2)} km, "
               f"que são os {r['registros_por_frota'].get('MR-63', 0)} registros do material tipo 63.", "",
-          "## Status", "", f"- {r['dias_medidos']} dias-linha com fator medido (km real) e {r['dias_estimados']} estimados (sem km real no dia).",
+          "## Status", "", f"- {r['dias_medidos']} dias-linha com fator medido (km real) e {r['dias_estimados']} estimados (dias de greve, com o fator típico pela D63, ou sem km real no dia).",
           f"- {r['dias_de_greve']} dias de greve em 2025: a exposição de cada hora é multiplicada pela fração da hora com serviço, com o fator "
           "típico da linha e do tipo de dia (D63). O km real desses dias é de "
           f"{br(r['greve_km_real_sobre_molde_das_faixas']['min'], 2)} a {br(r['greve_km_real_sobre_molde_das_faixas']['max'], 2)} vezes o km do horário "

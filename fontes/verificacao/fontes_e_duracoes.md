@@ -65,6 +65,32 @@ Retomada no dia civil seguinte: 27 falhas, 19 coerentes com a faixa (cruzam a me
 | T12042406 | laranja | `voie_sintoma_fixo` | 2024-04-12T10:27 | 880 | 30 min et plus | INTER.JARRY/CREMAZIE |
 | T03102413 | azul | `voie_sintoma_fixo` | 2024-10-03T19:19 | 341 | 30 min et plus | STATION ST-MICHEL |
 
+## Via com sintoma de trem em 2024
+
+Falhas da fonte `voie_sintoma_trem` por ano: 2019: 6, 2020: 12, 2021: 11, 2022: 34, 2023: 139, 2024: 516, 2025: 52, 2026: 18. Em 2024: 516, das quais 472 com duração zero.
+
+| Mês de 2024 | Falhas | Com duração zero |
+|---|---|---|
+| 2024-05 | 51 | 48 |
+| 2024-06 | 22 | 20 |
+| 2024-07 | 35 | 31 |
+| 2024-08 | 120 | 111 |
+| 2024-09 | 175 | 152 |
+| 2024-10 | 69 | 66 |
+| 2024-11 | 27 | 27 |
+| 2024-12 | 17 | 17 |
+
+| Local (código da STM) | Falhas em 2024 |
+|---|---|
+| STATION MONTMORENCY | 185 |
+| 4S50 | 150 |
+| STAT. LONGUEUIL-UNIVERSITE-DE-SHERBROOKE | 72 |
+| STATION ANGRIGNON | 34 |
+| 5S32 | 23 |
+| STATION ST-MICHEL | 20 |
+| STATION HONORE-BEAUGRAND | 9 |
+| INTER.BERRI-UQAM/ILE-STE-HELENE | 7 |
+
 ## Gravidade (D58)
 
 Classes pelos limites da STM: o indicador conta 5 min ou mais; aviso aos usuários acima de 10 min; ônibus substituto acima de 30 min.

@@ -53,7 +53,7 @@ Achado: quando a mesma linha aparece em dois trechos (Côte-Vertu → Montmorenc
   - nas 100 falhas em que a duração calculada contradiz a faixa oficial da STM, vale a faixa (D55). Os minutos das falhas técnicas vão de 43.971 para 33.404, e saem da amostra de durações as interrupções de quase 20 h da Azul em Saint-Michel (outubro de 2024);
   - a taxa de cada linha vem de 9 fontes, por frota e setor, com o ano-base 2025 e a exposição medida (specs 017 e 018).
 - **O que mudou no método:** nada nesta spec. O motor sorteia a lista de fontes (spec 019); com os parâmetros da v1.1.0, ele reproduz byte a byte os 198 casos da referência anterior. As diferenças abaixo vêm dos parâmetros.
-- **Relatório:** [`viagem.md`](../../fontes/verificacao/viagem.md) refeito em 2026-11-11 (código `sha256-scripts:d2a89e7803552929`), com o mesmo cenário, os mesmos 1.000 dias e a mesma semente.
+- **Relatório:** [`viagem.md`](../../fontes/verificacao/viagem.md) refeito em 2026-11-11 (código `sha256-scripts:489914bafbbe991e`), com o mesmo cenário, os mesmos 1.000 dias e a mesma semente.
 
 Números de Angrignon → Saint-Michel, salvo quando a linha nomeia outra viagem.
 

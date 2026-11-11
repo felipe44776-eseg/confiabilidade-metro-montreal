@@ -1,0 +1,798 @@
+{
+ "data": "2026-11-11",
+ "site": "local: _site montado da branch revisao-2026-11 (commit aabbef5 + documentos), servido em 127.0.0.1 no caminho /confiabilidade-metro-montreal/",
+ "script": "publicacao/testa_navegador.py (Chrome sem janela, WebGL por software)",
+ "link_antigo": {
+  "url": "#d=util&m=10&s=20261021&r=200 (sem v=2)",
+  "aviso_com_link_para_v1.1.0": true
+ },
+ "aba_parametros_tabela_por_fonte": true,
+ "celular": {
+  "scrollWidth": 390,
+  "clientWidth": 390,
+  "elementosAlemDaLargura": 0,
+  "temMapa": true,
+  "webgl2": true,
+  "visibilidade": "visible",
+  "textoMC": "1.000 dias em 1,5 s com 12 worker(s); semente 20261021.",
+  "amostraTexto": "← Painel de confiabilidade\nSimulador de tolerância a falhas\n\nCada rodada é um dia de operação. As falhas são sorteadas dos modelos ajustados aos incidentes da STM de 2019 a junho de 2026, e os trens seguem o horário real (GTFS). Mude o cenário no painel do cenário; o link da página guarda tudo, incl",
+  "fps_parado": {
+   "quadros_por_s": 61,
+   "contador_da_pagina": "parado",
+   "relogio": "07:30",
+   "visibilidade": "visible"
+  },
+  "por_velocidade": {
+   "300": {
+    "quadros_por_s": 45,
+    "contador_da_pagina": "16 fps",
+    "relogio": "07:52",
+    "visibilidade": "visible",
+    "thread_ocupada_ms_por_s": 184.4
+   },
+   "3600": {
+    "quadros_por_s": 31,
+    "contador_da_pagina": "14 fps",
+    "relogio": "11:40",
+    "visibilidade": "visible",
+    "thread_ocupada_ms_por_s": 92.3
+   },
+   "36000": {
+    "quadros_por_s": 45,
+    "contador_da_pagina": "60 fps",
+    "relogio": "20:23",
+    "visibilidade": "visible",
+    "thread_ocupada_ms_por_s": 159.5
+   },
+   "86400": {
+    "quadros_por_s": 37,
+    "contador_da_pagina": "42 fps",
+    "relogio": "12:11",
+    "visibilidade": "visible",
+    "thread_ocupada_ms_por_s": 164.3
+   }
+  },
+  "fps_tocando_300x": {
+   "quadros_por_s": 45,
+   "contador_da_pagina": "16 fps",
+   "relogio": "07:52",
+   "visibilidade": "visible",
+   "thread_ocupada_ms_por_s": 184.4
+  },
+  "a_1_dia_por_s": {
+   "pulsos_em_6_s": 11,
+   "dias_avancados": 6,
+   "eventos_na_lista": 4,
+   "primeiro_evento": " Dia 13 · 13:49 · Azul · material rodante · 2 min parada",
+   "placar": "No mapa: 13 dia(s) completo(s) deste cenário, 26 falhas sorteadas, 2,00 por dia (esperado: 2,87). Com mais dias, a média se aproxima do esperado.",
+   "marcas_na_barra": 6
+  },
+  "cenario_aplicado": {
+   "antes": "Falhas esperadas por dia neste cenário: 2,87 (cenário padrão: 2,87; ×1,00). Por linha:  Verde 0,88 ·",
+   "depois": "Falhas esperadas por dia neste cenário: 2,88 (cenário padrão: 2,87; ×1,00). Por linha:  Verde 0,96 ·",
+   "mudados": [
+    "Condição: chuva congelante",
+    "Neve no solo: mais de 10 cm"
+   ],
+   "quando": "aplicado às 01:50:39; o dia no mapa foi sorteado de novo com este cenário",
+   "peso_neve_antes": "Peso: 1 (referência).",
+   "peso_neve_depois": "Peso: MR ×1,37 (1,09–1,67) · EF ×1,37 (1,09–1,69)."
+  },
+  "peso_das_variaveis": {
+   "resumo": "Cada variável pesa como um multiplicador da taxa de falha por trem em circulação, estimado dos incidentes da STM por regressão binomial negativa, com todas as v",
+   "passos": 6,
+   "faixas_na_tabela": 6,
+   "resumo_do_ajuste_carregou": true,
+   "pesos": {
+    "p-tipo": "Peso: 1 (referência). O tipo de dia também troca o horário (quantos trens circulam).",
+    "c-estacao": "Estação do ano no modelo: outono; peso: 1 (referência).",
+    "p-temp": "Peso: 1 (referência).",
+    "p-precip": "Peso: 1 (referência).",
+    "p-cond": "Peso: MR ×0,89 (0,54–1,40) · EF ×0,69 (0,28–0,99).",
+    "p-neve": "Peso: MR ×1,37 (1,09–1,67) · EF ×1,37 (1,09–1,69).",
+    "p-jogo": "Se marcado, peso das 18h às 23h: MR ×1,26 (1,01–1,59) · EF ×0,91 (0,65–1,15).",
+    "p-gp": "Se marcado, peso: MR ×1,10 (0,55–1,53) · EF ×0,70 (0,32–1,24).",
+    "p-feriado": "Se marcado, peso: MR ×0,89 (0,60–1,23) · EF ×1,09 (0,64–1,60).",
+    "p-greve": "Sem peso na taxa: o multiplicador medido foi MR ×1,16 (0,55–2,23) · EF ×1,10 (0,52–1,72), com intervalo que contém 1, e a greve entra só pelo horário, com menos trens (decisão D42)."
+   }
+  },
+  "viagem_de_a_a_b": {
+   "rota": "Caminho de sempre (o mais rápido sem falhas, dia útil)\n Verde, sentido Honoré-Beaugrand: Angrignon → Berri-Uqam (14 trechos, 21 min)\nBaldeação em Berri-Uqam: 4 min (hipótese tempo_transferencia_min)\n Laranja, sentido Montmorency: Berri-Uqam → Jean-Talon (6 trechos, 7 min)\nBaldeação em Jean-Talon: 4 min (hipótese tempo_transferencia_min)\n Azul, sentido Saint-Michel: Jean-Talon → Saint-Michel (3 trechos, 4 min)\n\nTempo de percurso: 40 min (percurso mediano do horário mais as baldeações, sem a espera na plataforma). Saídas simuladas: a cada 10 min, das 05:30 às 00:10 (113 por dia). Rota alternativa desligada: a pessoa usa só este caminho e espera a linha voltar.",
+   "status": "1.000 dias em 2,6 s com 12 worker(s); semente 20261021.",
+   "tabelas": [
+    [
+     [
+      "Verde: Angrignon → Berri-Uqam",
+      "99,686% (99,636%–99,737%)",
+      "3,76 (3,15–4,36)",
+      "2,50 (2,44–2,58)"
+     ],
+     [
+      "Laranja: Berri-Uqam → Jean-Talon",
+      "99,652% (99,599%–99,705%)",
+      "4,17 (3,54–4,80)",
+      "2,46 (2,40–2,53)"
+     ],
+     [
+      "Azul: Jean-Talon → Saint-Michel",
+      "99,776% (99,710%–99,842%)",
+      "2,68 (1,89–3,48)",
+      "2,65 (2,54–2,80)"
+     ],
+     [
+      "Produto dos trechos (em série, se as linhas falhassem de forma independente)",
+      "99,12%",
+      "10,6",
+      "2,05"
+     ],
+     [
+      "Viagem inteira (simulada)",
+      "99,145% (99,051%–99,239%)",
+      "10,2 (9,1–11,4)",
+      "2,07 (2,02–2,12)"
+     ]
+    ],
+    [
+     [
+      "Verde (trecho 1)",
+      "3,8",
+      "3,2 a 4,4"
+     ],
+     [
+      "Laranja (trecho 2)",
+      "4,2",
+      "3,5 a 4,8"
+     ],
+     [
+      "Azul (trecho 3)",
+      "2,7",
+      "1,9 a 3,5"
+     ],
+     [
+      "Viagem inteira",
+      "10",
+      "9,1 a 11"
+     ]
+    ],
+    [
+     [
+      "Chance de chegar mais de 5 min depois do programado",
+      "0,48% (0,37%–0,59%)"
+     ],
+     [
+      "Chance de chegar mais de 15 min depois do programado",
+      "0,194% (0,114%–0,274%)"
+     ],
+     [
+      "Chance de chegar mais de 60 min depois do programado",
+      "0,063% (0,008%–0,118%)"
+     ],
+     [
+      "Chance de não chegar até o fim do serviço",
+      "0,0018% (0,0000%–0,0042%)"
+     ],
+     [
+      "Atraso médio por viagem (minutos)",
+      "0,16 (0,05–0,26)"
+     ],
+     [
+      "Tempo médio da saída à chegada, com a espera na plataforma (minutos)",
+      "48,34 (48,24–48,44)"
+     ]
+    ],
+    [
+     [
+      "05:00–06:00",
+      "0,40%",
+      "0,11% a 0,69%"
+     ],
+     [
+      "06:00–07:00",
+      "0,60%",
+      "0,30% a 0,90%"
+     ],
+     [
+      "07:00–08:00",
+      "0,30%",
+      "0,13% a 0,47%"
+     ],
+     [
+      "08:00–09:00",
+      "0,63%",
+      "0,35% a 0,92%"
+     ],
+     [
+      "09:00–10:00",
+      "1,10%",
+      "0,64% a 1,56%"
+     ],
+     [
+      "10:00–11:00",
+      "0,42%",
+      "0,12% a 0,72%"
+     ],
+     [
+      "11:00–12:00",
+      "0,37%",
+      "0,06% a 0,67%"
+     ],
+     [
+      "12:00–13:00",
+      "0,57%",
+      "0,20% a 0,93%"
+     ],
+     [
+      "13:00–14:00",
+      "0,38%",
+      "0,11% a 0,66%"
+     ],
+     [
+      "14:00–15:00",
+      "0,23%",
+      "0,05% a 0,41%"
+     ],
+     [
+      "15:00–16:00",
+      "0,28%",
+      "0,05% a 0,52%"
+     ],
+     [
+      "16:00–17:00",
+      "0,35%",
+      "0,05% a 0,65%"
+     ],
+     [
+      "17:00–18:00",
+      "0,67%",
+      "0,31% a 1,03%"
+     ],
+     [
+      "18:00–19:00",
+      "0,68%",
+      "0,27% a 1,10%"
+     ],
+     [
+      "19:00–20:00",
+      "0,70%",
+      "0,31% a 1,09%"
+     ],
+     [
+      "20:00–21:00",
+      "0,40%",
+      "0,19% a 0,61%"
+     ],
+     [
+      "21:00–22:00",
+      "0,42%",
+      "0,16% a 0,67%"
+     ],
+     [
+      "22:00–23:00",
+      "0,47%",
+      "0,13% a 0,80%"
+     ],
+     [
+      "23:00–00:00",
+      "0,15%",
+      "0,02% a 0,28%"
+     ],
+     [
+      "00:00–01:00",
+      "0,25%",
+      "0,00% a 0,51%"
+     ]
+    ]
+   ],
+   "barras_por_hora": 24,
+   "leitura": [
+    "Cenário desta rodada: dia útil, outubro, 5 a 15 °C, precipitação nenhuma, chuva congelante, neve no solo mais de 10 cm; políticas: nenhuma. Os dias são os mesmos da aba \"Muitos dias\" (semente 20261021).",
+    "O produto dos trechos (99,12%) cai dentro do intervalo do simulado: as linhas do caminho falham quase de forma independente, e a viagem se comporta como um sistema em série. Em 77,6% (75,0%–80,2%) dos dias houve ao menos uma interrupção no caminho."
+   ],
+   "segundos_ate_o_resultado": 3,
+   "scrollWidth": 390,
+   "clientWidth": 390,
+   "elementosAlemDaLargura": 0
+  },
+  "linhas_novas_na_viagem": {
+   "hash": "#d=util&m=10&t=5a15&p=0&c=chuva_congelante&n=acima_10&ev=000&gr=0&pol=000000&s=20261021&r=1000&dia=17&vo=STATION_M118&vd=STATION_M556&ln=rosa_2017&ld=STATION_M118%7ESTATION_M236&v=2",
+   "rota": "Caminho de sempre (o mais rápido sem falhas, dia útil)\n Verde, sentido Honoré-Beaugrand: Angrignon → Berri-Uqam (14 trechos, 21 min)\nBaldeação em Berri-Uqam: 4 min (hipótese tempo_transferencia_min)\n Laranja, sentido Montmorency: Berri-Uqam → Jean-Talon (6 trechos, 7 min)\nBaldeação em Jean-Talon: 4 min (hipótese tempo_transferencia_min)\n Azul, sentido Saint-Michel: Jean-Talon → Saint-Michel (3 trechos, 4 min)\n\nTempo de percurso: 40 min (percurso mediano do horário mais as baldeações, sem a espera na plataforma). Saídas simuladas: a cada 10 min, das 05:30 às 00:10 (113 por dia). Rota alternativa desligada: a pessoa usa só este caminho e espera a linha voltar.\n\nCom as linhas novas\nLinha Rosa (proposta de 2017): o caminho de sempre não muda (40 min); sem a rota alternativa, a linha nova só pesa pelas falhas que causa nas linhas do caminho.\nLinha desenhada 1 (Angrignon – Snowdon): o caminho de sempre passa a ser Linha desenhada 1 (Angrignon – Snowdon) até Snowdon, Azul até Saint-Michel (27 min, -13 min).\nTodas as linhas novas juntas: o caminho de sempre passa a ser Linha desenhada 1 (Angrignon – Snowdon) até Snowdon, Azul até Saint-Michel (27 min, -13 min).",
+   "status": "1.000 dias em 3,8 s com 12 worker(s); semente 20261021; 4 versões da rede medidas em cada dia.",
+   "tabelas": [
+    [
+     [
+      "Rede atual",
+      "40 min",
+      "99,145% (99,051%–99,239%)",
+      "10,2 (9,1–11,4)",
+      "2,07 (2,02–2,12)",
+      "1",
+      "0,48% (0,37%–0,59%)",
+      "48,34 (48,24–48,44)"
+     ],
+     [
+      "Linha Rosa (proposta de 2017)",
+      "40 min",
+      "99,145% (99,051%–99,239%)",
+      "10,2 (9,1–11,4)",
+      "2,07 (2,02–2,12)",
+      "1,00 (1,00–1,00)",
+      "0,48% (0,37%–0,59%)",
+      "48,34 (48,24–48,44)"
+     ],
+     [
+      "Linha desenhada 1 (Angrignon – Snowdon)",
+      "27 min (caminho novo)",
+      "99,60% (99,42%–99,78%)",
+      "4,8 (2,6–7,0)",
+      "2,40 (2,24–2,66)",
+      "0,47 (0,26–0,67)",
+      "0,41% (0,22%–0,60%)",
+      "35,67 (35,56–35,78)"
+     ],
+     [
+      "Todas as linhas novas juntas",
+      "27 min (caminho novo)",
+      "99,60% (99,42%–99,78%)",
+      "4,8 (2,6–7,0)",
+      "2,40 (2,24–2,66)",
+      "0,47 (0,26–0,67)",
+      "0,41% (0,22%–0,60%)",
+      "35,67 (35,56–35,78)"
+     ]
+    ],
+    [
+     [
+      "Rede atual",
+      "10",
+      "9,1 a 11"
+     ],
+     [
+      "Linha Rosa (proposta …",
+      "10",
+      "9,1 a 11"
+     ],
+     [
+      "Linha desenhada 1 (An…",
+      "4,8",
+      "2,6 a 7,0"
+     ],
+     [
+      "Todas as linhas novas…",
+      "4,8",
+      "2,6 a 7,0"
+     ]
+    ],
+    [
+     [
+      "Linha Rosa (proposta de 2017)",
+      "0,0 pp (0,0 pp a 0,0 pp)",
+      "0,0 (0,0 a 0,0)",
+      "0,0 pp (0,0 pp a 0,0 pp)",
+      "0,0 (0,0 a 0,0)",
+      "0,0 (0,0 a 0,0)"
+     ],
+     [
+      "Linha desenhada 1 (Angrignon – Snowdon)",
+      "+0,45 pp (+0,27 pp a +0,64 pp)",
+      "-5,4 (-7,6 a -3,3)",
+      "-0,07 pp (-0,26 pp a +0,13 pp)",
+      "-0,045 (-0,083 a -0,006)",
+      "-12,668 (-12,706 a -12,629)"
+     ],
+     [
+      "Todas as linhas novas juntas",
+      "+0,45 pp (+0,27 pp a +0,64 pp)",
+      "-5,4 (-7,6 a -3,3)",
+      "-0,07 pp (-0,26 pp a +0,13 pp)",
+      "-0,045 (-0,083 a -0,006)",
+      "-12,668 (-12,706 a -12,629)"
+     ]
+    ]
+   ],
+   "leituras": [
+    "Com Linha Rosa (proposta de 2017), nada muda nesta viagem: o caminho de sempre é o mesmo e nenhuma falha da linha nova alcança as linhas dele. Sem a rota alternativa, a linha nova só conta se entrar no caminho de sempre; ligue a política \"Rota alternativa de passageiros\" no painel para ver o efeito em paralelo.",
+    "Com Linha desenhada 1 (Angrignon – Snowdon), a viagem fica sem caminho 4,8 min por dia em vez de 10 (2,1 vezes menos; de 2,07 para 2,40 noves). O caminho de sempre passa pela linha nova. A viagem também fica 12,7 min mais curta em média, com as falhas.",
+    "Com todas as linhas novas juntas, a viagem fica sem caminho 4,8 min por dia em vez de 10 (2,1 vezes menos; de 2,07 para 2,40 noves). O caminho de sempre passa pela linha nova. A viagem também fica 12,7 min mais curta em média, com as falhas."
+   ],
+   "pontos_escala_log": 8,
+   "segundos_ate_o_resultado": 4.3,
+   "scrollWidth": 390,
+   "clientWidth": 390
+  },
+  "erros_console": []
+ },
+ "notebook": {
+  "scrollWidth": 1351,
+  "clientWidth": 1351,
+  "elementosAlemDaLargura": 0,
+  "temMapa": true,
+  "webgl2": true,
+  "visibilidade": "visible",
+  "textoMC": "1.000 dias em 1,7 s com 12 worker(s); semente 20261021.",
+  "amostraTexto": "← Painel de confiabilidade\nSimulador de tolerância a falhas\n\nCada rodada é um dia de operação. As falhas são sorteadas dos modelos ajustados aos incidentes da STM de 2019 a junho de 2026, e os trens seguem o horário real (GTFS). Mude o cenário no painel do cenário; o link da página guarda tudo, incl",
+  "fps_parado": {
+   "quadros_por_s": 60,
+   "contador_da_pagina": "parado",
+   "relogio": "07:30",
+   "visibilidade": "visible"
+  },
+  "por_velocidade": {
+   "300": {
+    "quadros_por_s": 30,
+    "contador_da_pagina": "28 fps",
+    "relogio": "07:55",
+    "visibilidade": "visible",
+    "thread_ocupada_ms_por_s": 239.1
+   },
+   "3600": {
+    "quadros_por_s": 28,
+    "contador_da_pagina": "28 fps",
+    "relogio": "12:58",
+    "visibilidade": "visible",
+    "thread_ocupada_ms_por_s": 191.9
+   },
+   "36000": {
+    "quadros_por_s": 26,
+    "contador_da_pagina": "26 fps",
+    "relogio": "05:43",
+    "visibilidade": "visible",
+    "thread_ocupada_ms_por_s": 233.7
+   },
+   "86400": {
+    "quadros_por_s": 25,
+    "contador_da_pagina": "25 fps",
+    "relogio": "18:59",
+    "visibilidade": "visible",
+    "thread_ocupada_ms_por_s": 243.5
+   }
+  },
+  "fps_tocando_300x": {
+   "quadros_por_s": 30,
+   "contador_da_pagina": "28 fps",
+   "relogio": "07:55",
+   "visibilidade": "visible",
+   "thread_ocupada_ms_por_s": 239.1
+  },
+  "a_1_dia_por_s": {
+   "pulsos_em_6_s": 18,
+   "dias_avancados": 7,
+   "eventos_na_lista": 4,
+   "primeiro_evento": " Dia 15 · 10:30 · Laranja · equipamento fixo · sem interrupção",
+   "placar": "No mapa: 15 dia(s) completo(s) deste cenário, 38 falhas sorteadas, 2,53 por dia (esperado: 2,87). Com mais dias, a média se aproxima do esperado.",
+   "marcas_na_barra": 1
+  },
+  "cenario_aplicado": {
+   "antes": "Falhas esperadas por dia neste cenário: 2,87 (cenário padrão: 2,87; ×1,00). Por linha:  Verde 0,88 ·",
+   "depois": "Falhas esperadas por dia neste cenário: 2,88 (cenário padrão: 2,87; ×1,00). Por linha:  Verde 0,96 ·",
+   "mudados": [
+    "Condição: chuva congelante",
+    "Neve no solo: mais de 10 cm"
+   ],
+   "quando": "aplicado às 01:52:21; o dia no mapa foi sorteado de novo com este cenário",
+   "peso_neve_antes": "Peso: 1 (referência).",
+   "peso_neve_depois": "Peso: MR ×1,37 (1,09–1,67) · EF ×1,37 (1,09–1,69)."
+  },
+  "peso_das_variaveis": {
+   "resumo": "Cada variável pesa como um multiplicador da taxa de falha por trem em circulação, estimado dos incidentes da STM por regressão binomial negativa, com todas as v",
+   "passos": 6,
+   "faixas_na_tabela": 6,
+   "resumo_do_ajuste_carregou": true,
+   "pesos": {
+    "p-tipo": "Peso: 1 (referência). O tipo de dia também troca o horário (quantos trens circulam).",
+    "c-estacao": "Estação do ano no modelo: outono; peso: 1 (referência).",
+    "p-temp": "Peso: 1 (referência).",
+    "p-precip": "Peso: 1 (referência).",
+    "p-cond": "Peso: MR ×0,89 (0,54–1,40) · EF ×0,69 (0,28–0,99).",
+    "p-neve": "Peso: MR ×1,37 (1,09–1,67) · EF ×1,37 (1,09–1,69).",
+    "p-jogo": "Se marcado, peso das 18h às 23h: MR ×1,26 (1,01–1,59) · EF ×0,91 (0,65–1,15).",
+    "p-gp": "Se marcado, peso: MR ×1,10 (0,55–1,53) · EF ×0,70 (0,32–1,24).",
+    "p-feriado": "Se marcado, peso: MR ×0,89 (0,60–1,23) · EF ×1,09 (0,64–1,60).",
+    "p-greve": "Sem peso na taxa: o multiplicador medido foi MR ×1,16 (0,55–2,23) · EF ×1,10 (0,52–1,72), com intervalo que contém 1, e a greve entra só pelo horário, com menos trens (decisão D42)."
+   }
+  },
+  "viagem_de_a_a_b": {
+   "rota": "Caminho de sempre (o mais rápido sem falhas, dia útil)\n Verde, sentido Honoré-Beaugrand: Angrignon → Berri-Uqam (14 trechos, 21 min)\nBaldeação em Berri-Uqam: 4 min (hipótese tempo_transferencia_min)\n Laranja, sentido Montmorency: Berri-Uqam → Jean-Talon (6 trechos, 7 min)\nBaldeação em Jean-Talon: 4 min (hipótese tempo_transferencia_min)\n Azul, sentido Saint-Michel: Jean-Talon → Saint-Michel (3 trechos, 4 min)\n\nTempo de percurso: 40 min (percurso mediano do horário mais as baldeações, sem a espera na plataforma). Saídas simuladas: a cada 10 min, das 05:30 às 00:10 (113 por dia). Rota alternativa desligada: a pessoa usa só este caminho e espera a linha voltar.",
+   "status": "1.000 dias em 2,9 s com 12 worker(s); semente 20261021.",
+   "tabelas": [
+    [
+     [
+      "Verde: Angrignon → Berri-Uqam",
+      "99,686% (99,636%–99,737%)",
+      "3,76 (3,15–4,36)",
+      "2,50 (2,44–2,58)"
+     ],
+     [
+      "Laranja: Berri-Uqam → Jean-Talon",
+      "99,652% (99,599%–99,705%)",
+      "4,17 (3,54–4,80)",
+      "2,46 (2,40–2,53)"
+     ],
+     [
+      "Azul: Jean-Talon → Saint-Michel",
+      "99,776% (99,710%–99,842%)",
+      "2,68 (1,89–3,48)",
+      "2,65 (2,54–2,80)"
+     ],
+     [
+      "Produto dos trechos (em série, se as linhas falhassem de forma independente)",
+      "99,12%",
+      "10,6",
+      "2,05"
+     ],
+     [
+      "Viagem inteira (simulada)",
+      "99,145% (99,051%–99,239%)",
+      "10,2 (9,1–11,4)",
+      "2,07 (2,02–2,12)"
+     ]
+    ],
+    [
+     [
+      "Verde (trecho 1)",
+      "3,8",
+      "3,2 a 4,4"
+     ],
+     [
+      "Laranja (trecho 2)",
+      "4,2",
+      "3,5 a 4,8"
+     ],
+     [
+      "Azul (trecho 3)",
+      "2,7",
+      "1,9 a 3,5"
+     ],
+     [
+      "Viagem inteira",
+      "10",
+      "9,1 a 11"
+     ]
+    ],
+    [
+     [
+      "Chance de chegar mais de 5 min depois do programado",
+      "0,48% (0,37%–0,59%)"
+     ],
+     [
+      "Chance de chegar mais de 15 min depois do programado",
+      "0,194% (0,114%–0,274%)"
+     ],
+     [
+      "Chance de chegar mais de 60 min depois do programado",
+      "0,063% (0,008%–0,118%)"
+     ],
+     [
+      "Chance de não chegar até o fim do serviço",
+      "0,0018% (0,0000%–0,0042%)"
+     ],
+     [
+      "Atraso médio por viagem (minutos)",
+      "0,16 (0,05–0,26)"
+     ],
+     [
+      "Tempo médio da saída à chegada, com a espera na plataforma (minutos)",
+      "48,34 (48,24–48,44)"
+     ]
+    ],
+    [
+     [
+      "05:00–06:00",
+      "0,40%",
+      "0,11% a 0,69%"
+     ],
+     [
+      "06:00–07:00",
+      "0,60%",
+      "0,30% a 0,90%"
+     ],
+     [
+      "07:00–08:00",
+      "0,30%",
+      "0,13% a 0,47%"
+     ],
+     [
+      "08:00–09:00",
+      "0,63%",
+      "0,35% a 0,92%"
+     ],
+     [
+      "09:00–10:00",
+      "1,10%",
+      "0,64% a 1,56%"
+     ],
+     [
+      "10:00–11:00",
+      "0,42%",
+      "0,12% a 0,72%"
+     ],
+     [
+      "11:00–12:00",
+      "0,37%",
+      "0,06% a 0,67%"
+     ],
+     [
+      "12:00–13:00",
+      "0,57%",
+      "0,20% a 0,93%"
+     ],
+     [
+      "13:00–14:00",
+      "0,38%",
+      "0,11% a 0,66%"
+     ],
+     [
+      "14:00–15:00",
+      "0,23%",
+      "0,05% a 0,41%"
+     ],
+     [
+      "15:00–16:00",
+      "0,28%",
+      "0,05% a 0,52%"
+     ],
+     [
+      "16:00–17:00",
+      "0,35%",
+      "0,05% a 0,65%"
+     ],
+     [
+      "17:00–18:00",
+      "0,67%",
+      "0,31% a 1,03%"
+     ],
+     [
+      "18:00–19:00",
+      "0,68%",
+      "0,27% a 1,10%"
+     ],
+     [
+      "19:00–20:00",
+      "0,70%",
+      "0,31% a 1,09%"
+     ],
+     [
+      "20:00–21:00",
+      "0,40%",
+      "0,19% a 0,61%"
+     ],
+     [
+      "21:00–22:00",
+      "0,42%",
+      "0,16% a 0,67%"
+     ],
+     [
+      "22:00–23:00",
+      "0,47%",
+      "0,13% a 0,80%"
+     ],
+     [
+      "23:00–00:00",
+      "0,15%",
+      "0,02% a 0,28%"
+     ],
+     [
+      "00:00–01:00",
+      "0,25%",
+      "0,00% a 0,51%"
+     ]
+    ]
+   ],
+   "barras_por_hora": 24,
+   "leitura": [
+    "Cenário desta rodada: dia útil, outubro, 5 a 15 °C, precipitação nenhuma, chuva congelante, neve no solo mais de 10 cm; políticas: nenhuma. Os dias são os mesmos da aba \"Muitos dias\" (semente 20261021).",
+    "O produto dos trechos (99,12%) cai dentro do intervalo do simulado: as linhas do caminho falham quase de forma independente, e a viagem se comporta como um sistema em série. Em 77,6% (75,0%–80,2%) dos dias houve ao menos uma interrupção no caminho."
+   ],
+   "segundos_ate_o_resultado": 3.3,
+   "scrollWidth": 1351,
+   "clientWidth": 1351,
+   "elementosAlemDaLargura": 0
+  },
+  "linhas_novas_na_viagem": {
+   "hash": "#d=util&m=10&t=5a15&p=0&c=chuva_congelante&n=acima_10&ev=000&gr=0&pol=000000&s=20261021&r=1000&dia=20&vo=STATION_M118&vd=STATION_M556&ln=rosa_2017&ld=STATION_M118%7ESTATION_M236&v=2",
+   "rota": "Caminho de sempre (o mais rápido sem falhas, dia útil)\n Verde, sentido Honoré-Beaugrand: Angrignon → Berri-Uqam (14 trechos, 21 min)\nBaldeação em Berri-Uqam: 4 min (hipótese tempo_transferencia_min)\n Laranja, sentido Montmorency: Berri-Uqam → Jean-Talon (6 trechos, 7 min)\nBaldeação em Jean-Talon: 4 min (hipótese tempo_transferencia_min)\n Azul, sentido Saint-Michel: Jean-Talon → Saint-Michel (3 trechos, 4 min)\n\nTempo de percurso: 40 min (percurso mediano do horário mais as baldeações, sem a espera na plataforma). Saídas simuladas: a cada 10 min, das 05:30 às 00:10 (113 por dia). Rota alternativa desligada: a pessoa usa só este caminho e espera a linha voltar.\n\nCom as linhas novas\nLinha Rosa (proposta de 2017): o caminho de sempre não muda (40 min); sem a rota alternativa, a linha nova só pesa pelas falhas que causa nas linhas do caminho.\nLinha desenhada 1 (Angrignon – Snowdon): o caminho de sempre passa a ser Linha desenhada 1 (Angrignon – Snowdon) até Snowdon, Azul até Saint-Michel (27 min, -13 min).\nTodas as linhas novas juntas: o caminho de sempre passa a ser Linha desenhada 1 (Angrignon – Snowdon) até Snowdon, Azul até Saint-Michel (27 min, -13 min).",
+   "status": "1.000 dias em 4,6 s com 12 worker(s); semente 20261021; 4 versões da rede medidas em cada dia.",
+   "tabelas": [
+    [
+     [
+      "Rede atual",
+      "40 min",
+      "99,145% (99,051%–99,239%)",
+      "10,2 (9,1–11,4)",
+      "2,07 (2,02–2,12)",
+      "1",
+      "0,48% (0,37%–0,59%)",
+      "48,34 (48,24–48,44)"
+     ],
+     [
+      "Linha Rosa (proposta de 2017)",
+      "40 min",
+      "99,145% (99,051%–99,239%)",
+      "10,2 (9,1–11,4)",
+      "2,07 (2,02–2,12)",
+      "1,00 (1,00–1,00)",
+      "0,48% (0,37%–0,59%)",
+      "48,34 (48,24–48,44)"
+     ],
+     [
+      "Linha desenhada 1 (Angrignon – Snowdon)",
+      "27 min (caminho novo)",
+      "99,60% (99,42%–99,78%)",
+      "4,8 (2,6–7,0)",
+      "2,40 (2,24–2,66)",
+      "0,47 (0,26–0,67)",
+      "0,41% (0,22%–0,60%)",
+      "35,67 (35,56–35,78)"
+     ],
+     [
+      "Todas as linhas novas juntas",
+      "27 min (caminho novo)",
+      "99,60% (99,42%–99,78%)",
+      "4,8 (2,6–7,0)",
+      "2,40 (2,24–2,66)",
+      "0,47 (0,26–0,67)",
+      "0,41% (0,22%–0,60%)",
+      "35,67 (35,56–35,78)"
+     ]
+    ],
+    [
+     [
+      "Rede atual",
+      "10",
+      "9,1 a 11"
+     ],
+     [
+      "Linha Rosa (proposta …",
+      "10",
+      "9,1 a 11"
+     ],
+     [
+      "Linha desenhada 1 (An…",
+      "4,8",
+      "2,6 a 7,0"
+     ],
+     [
+      "Todas as linhas novas…",
+      "4,8",
+      "2,6 a 7,0"
+     ]
+    ],
+    [
+     [
+      "Linha Rosa (proposta de 2017)",
+      "0,0 pp (0,0 pp a 0,0 pp)",
+      "0,0 (0,0 a 0,0)",
+      "0,0 pp (0,0 pp a 0,0 pp)",
+      "0,0 (0,0 a 0,0)",
+      "0,0 (0,0 a 0,0)"
+     ],
+     [
+      "Linha desenhada 1 (Angrignon – Snowdon)",
+      "+0,45 pp (+0,27 pp a +0,64 pp)",
+      "-5,4 (-7,6 a -3,3)",
+      "-0,07 pp (-0,26 pp a +0,13 pp)",
+      "-0,045 (-0,083 a -0,006)",
+      "-12,668 (-12,706 a -12,629)"
+     ],
+     [
+      "Todas as linhas novas juntas",
+      "+0,45 pp (+0,27 pp a +0,64 pp)",
+      "-5,4 (-7,6 a -3,3)",
+      "-0,07 pp (-0,26 pp a +0,13 pp)",
+      "-0,045 (-0,083 a -0,006)",
+      "-12,668 (-12,706 a -12,629)"
+     ]
+    ]
+   ],
+   "leituras": [
+    "Com Linha Rosa (proposta de 2017), nada muda nesta viagem: o caminho de sempre é o mesmo e nenhuma falha da linha nova alcança as linhas dele. Sem a rota alternativa, a linha nova só conta se entrar no caminho de sempre; ligue a política \"Rota alternativa de passageiros\" no painel para ver o efeito em paralelo.",
+    "Com Linha desenhada 1 (Angrignon – Snowdon), a viagem fica sem caminho 4,8 min por dia em vez de 10 (2,1 vezes menos; de 2,07 para 2,40 noves). O caminho de sempre passa pela linha nova. A viagem também fica 12,7 min mais curta em média, com as falhas.",
+    "Com todas as linhas novas juntas, a viagem fica sem caminho 4,8 min por dia em vez de 10 (2,1 vezes menos; de 2,07 para 2,40 noves). O caminho de sempre passa pela linha nova. A viagem também fica 12,7 min mais curta em média, com as falhas."
+   ],
+   "pontos_escala_log": 8,
+   "segundos_ate_o_resultado": 5.1,
+   "scrollWidth": 1351,
+   "clientWidth": 1351
+  },
+  "erros_console": []
+ }
+}

@@ -48,7 +48,7 @@ Script `pipeline/distribuicoes.py`; contrato montado por `pipeline/parametros.py
   - a taxa da spec 005, que reescala o tempo, usa a exposição medida até 2026-06 (spec 004);
   - o início das falhas não muda, então o tempo entre falhas é o mesmo.
 - **O que mudou no método:**
-  - *depois de ver (D56):* cada falha ganha uma de 9 fontes (frota no material rodante; setor × sintoma no equipamento fixo). A renovação, no tempo reescalado pela taxa da fonte (spec 018), e a duração passam a ser ajustadas por linha × fonte, em 32 estratos. Estrato com menos de 30 falhas herda da mesma fonte na rede: 7 na renovação e 15 na duração. O simulador usa esses estratos (contrato v2);
+  - *depois de ver (D56):* cada falha ganha uma de 9 fontes (frota no material rodante; setor × sintoma no equipamento fixo). A renovação, no tempo reescalado pela taxa da fonte (spec 018), e a duração passam a ser ajustadas por linha × fonte, em 32 estratos. Estrato com menos de 30 intervalos (na renovação) ou com menos de 30 durações positivas (na duração, `distribuicoes.py`) herda da mesma fonte na rede: 7 na renovação e 15 na duração. O simulador usa esses estratos (contrato v2);
   - os ajustes por linha × família (MR e EF) continuam, com o mesmo método;
   - o β da causa comum ganha o denominador da família (trem ou fixo) de cada evento, porque 40 dos 45 eventos são de equipamento fixo;
   - entra a massa em zero por fonte e ano (D62, spec 020), com a leitura fixada antes de calcular.

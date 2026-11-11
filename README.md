@@ -19,6 +19,7 @@ Projeto da disciplina Sistemas Tolerantes a Falhas (Engenharia de Produção, ES
 | Guia do simulador | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/docs/guia/ |
 | Arquitetura e manutenção | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/docs/arquitetura/ |
 | Versão congelada v1.0.0 | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/versoes/v1.0.0/ |
+| Versão congelada v1.1.0 (antes da revisão de 2026-11) | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/versoes/v1.1.0/ |
 
 ## Documentação
 

@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-11-11T04:41:10+00:00",
+ "gerado_em": "2026-11-11T05:21:52+00:00",
  "release": "dados-2026-10-20",
  "releases": [
   "dados-2026-10-20",
@@ -1775,7 +1775,7 @@
    ],
    "script": "pipeline/parametros.py",
    "bytes": 500354,
-   "sha256": "22bf797b7b0a0bf809513f09f74f19414f32c58ff4de20489aba91a941d46cbd"
+   "sha256": "695125757938e64436db8545ad43595bfeb2d90a2107bbc04dcf606c942dd5cd"
   },
   {
    "arquivo": "dados/derivados/simulador/candidatas.json",
@@ -1820,7 +1820,7 @@
    ],
    "script": "app/relatorios/politicas.relatorio.ts",
    "bytes": 48600,
-   "sha256": "60bde9ace8fb3651bcacf2296bfbfde52cbc6ac062650c8bfa78400958ae197e"
+   "sha256": "d9cc72a934c66bb11fe76bd25ddc12df50f9b605d60865b9e4b048912a4b3129"
   },
   {
    "arquivo": "dados/derivados/simulador/expansao.json",
@@ -1832,7 +1832,7 @@
    ],
    "script": "app/relatorios/expansao.relatorio.ts",
    "bytes": 60664,
-   "sha256": "aebc09979c6bf6b95d93e1dfddaae18df632d07a607a23776d4fb7e4d02995eb"
+   "sha256": "06630f125a5449a2a0fb95868d73b85ee7a18b4655246b1671cd23841abed06f"
   },
   {
    "arquivo": "dados/derivados/modelos/fora_da_amostra.json",

@@ -426,8 +426,8 @@ def relatorio_por_fonte(r):
         L.append(f"| {k.replace('|', ' · ')} | {v['eventos']} | {n(v['beta_a'])} ({n(v['beta_a_ic95'][0])}–{n(v['beta_a_ic95'][1])}) | "
                  f"{n(v['beta_b'])} ({n(v['beta_b_ic95'][0])}–{n(v['beta_b_ic95'][1])}) |")
     L += ["", "## Renovação e duração por linha × fonte (spec 018)", "",
-          f"Forma da Weibull no tempo reescalado pela taxa da fonte (spec 018) e duração (sem interrupção e média quando para). Estrato com menos de {MIN_ESTRATO} falhas "
-          "herda da mesma fonte na rede (coluna de origem).", "",
+          f"Forma da Weibull no tempo reescalado pela taxa da fonte (spec 018) e duração (sem interrupção e média quando para). Herda da mesma fonte na rede "
+          f"(colunas de origem): a renovação, o estrato com menos de {MIN_ESTRATO} intervalos; a duração, o estrato com menos de {MIN_ESTRATO} durações positivas.", "",
           "| Linha · fonte | Falhas | Forma (IC 95%) | Origem da renovação | Sem interrupção (IC 95%) | Média quando para (min) | Origem da duração |", "|---|---|---|---|---|---|---|"]
     for k, v in r["reescala_fonte"].items():
         t = r["ttr_fonte"].get(k, {})

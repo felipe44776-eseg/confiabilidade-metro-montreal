@@ -104,8 +104,8 @@ Mudar o formato exige mudar o esquema em `contratos/`, o `parametros.py`, os tip
 ## Testes
 
 ```bash
-python -m pytest pipeline/tests -q                  # 55 testes: critérios das specs 001 a 006, 012 e 013
-cd app && npm test                                  # 87 testes: motor e interface
+python -m pytest pipeline/tests -q                  # 69 testes em 2026-11-11: critérios das specs 001 a 006, 012, 013, 017, 018 e 020
+cd app && npm test                                  # 140 testes em 2026-11-11: motor e interface
 python -I pipeline/verifica_fontes.py --recalcula   # 38 números recalculados direto dos brutos (25 até a v1.1.0)
 ```
 

@@ -1,7 +1,7 @@
 {
  "semente": 20261021,
  "amostras": 200000,
- "codigo_parametros": "sha256-scripts:a0ff551bd3d56c35",
+ "codigo_parametros": "sha256-scripts:489914bafbbe991e",
  "rede_atual": {
   "dispOD": {
    "media": 0.9942481546366199,

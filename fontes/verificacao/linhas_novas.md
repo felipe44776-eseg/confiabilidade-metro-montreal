@@ -1,6 +1,6 @@
 # Linhas novas numa viagem (spec 016)
 
-Gerado por `app/relatorios/linhas_novas.relatorio.ts` com o `parametros.json` real (código sha256-scripts:a0ff551bd3d56c35). Cenário padrão (dia útil, condições de referência do modelo), 1.000 dias por caso, semente 20261021: os mesmos dias da aba "Muitos dias" com essa semente. Média e intervalo de 95%.
+Gerado por `app/relatorios/linhas_novas.relatorio.ts` com o `parametros.json` real (código sha256-scripts:489914bafbbe991e). Cenário padrão (dia útil, condições de referência do modelo), 1.000 dias por caso, semente 20261021: os mesmos dias da aba "Muitos dias" com essa semente. Média e intervalo de 95%.
 
 Cada dia é simulado uma vez e medido duas vezes: na rede atual e na rede com a linha nova. A linha nova tem falhas e trens próprios, num fluxo de sorteio separado; as falhas da rede atual são as mesmas nas duas medidas. Por isso a diferença tem intervalo pareado, mais estreito que o de cada valor.
 
@@ -25,7 +25,7 @@ A melhor ligação nova da busca da spec 014 (a Azul hoje só se liga à rede pe
 | Tempo médio da saída à chegada, com as falhas (min) | 27,5 (27,4 a 27,6) | 8,3 (8,3 a 8,3) | -19,15 (-19,24 a -19,07) |
 | Falhas da linha nova por dia | | 0,175 (0,149 a 0,201) | |
 
-3,2 s para 1.000 dias nesta máquina (um processo). Hipóteses: Linha desenhada 1 (Atwater – Université De Montreal): traçado livre; km = linha reta × 1.2; velocidade comercial dos trechos novos: 36 km/h; Linha desenhada 1 (Atwater – Université De Montreal): taxas por km da média da rede, durações das linhas atuais, com peso pela taxa; partidas por hora da linha verde, espaçadas por igual; trens das linhas novas seguem o horário depois de cada interrupção, sem fila; causa comum: a linha nova é independente das linhas atuais; sem retorno parcial: um trecho parado para a linha inteira, inclusive o prolongamento.
+3,1 s para 1.000 dias nesta máquina (um processo). Hipóteses: Linha desenhada 1 (Atwater – Université De Montreal): traçado livre; km = linha reta × 1.2; velocidade comercial dos trechos novos: 36 km/h; Linha desenhada 1 (Atwater – Université De Montreal): taxas por km da média da rede, durações das linhas atuais, com peso pela taxa; partidas por hora da linha verde, espaçadas por igual; trens das linhas novas seguem o horário depois de cada interrupção, sem fila; causa comum: a linha nova é independente das linhas atuais; sem retorno parcial: um trecho parado para a linha inteira, inclusive o prolongamento.
 
 ### sem rota alternativa; linha nova divide a causa comum com as linhas em que encosta
 
@@ -42,7 +42,7 @@ A melhor ligação nova da busca da spec 014 (a Azul hoje só se liga à rede pe
 | Tempo médio da saída à chegada, com as falhas (min) | 27,5 (27,4 a 27,6) | 8,4 (8,3 a 8,4) | -19,14 (-19,23 a -19,06) |
 | Falhas da linha nova por dia | | 0,175 (0,149 a 0,201) | |
 
-2,8 s para 1.000 dias nesta máquina (um processo). Hipóteses: Linha desenhada 1 (Atwater – Université De Montreal): traçado livre; km = linha reta × 1.2; velocidade comercial dos trechos novos: 36 km/h; Linha desenhada 1 (Atwater – Université De Montreal): taxas por km da média da rede, durações das linhas atuais, com peso pela taxa; partidas por hora da linha verde, espaçadas por igual; trens das linhas novas seguem o horário depois de cada interrupção, sem fila; causa comum: a linha nova para junto com as linhas em que encosta; sem retorno parcial: um trecho parado para a linha inteira, inclusive o prolongamento.
+2,7 s para 1.000 dias nesta máquina (um processo). Hipóteses: Linha desenhada 1 (Atwater – Université De Montreal): traçado livre; km = linha reta × 1.2; velocidade comercial dos trechos novos: 36 km/h; Linha desenhada 1 (Atwater – Université De Montreal): taxas por km da média da rede, durações das linhas atuais, com peso pela taxa; partidas por hora da linha verde, espaçadas por igual; trens das linhas novas seguem o horário depois de cada interrupção, sem fila; causa comum: a linha nova para junto com as linhas em que encosta; sem retorno parcial: um trecho parado para a linha inteira, inclusive o prolongamento.
 
 ### com rota alternativa; linha nova independente
 
@@ -59,7 +59,7 @@ A melhor ligação nova da busca da spec 014 (a Azul hoje só se liga à rede pe
 | Tempo médio da saída à chegada, com as falhas (min) | 27,5 (27,4 a 27,5) | 8,3 (8,3 a 8,3) | -19,12 (-19,20 a -19,03) |
 | Falhas da linha nova por dia | | 0,175 (0,149 a 0,201) | |
 
-7,6 s para 1.000 dias nesta máquina (um processo). Hipóteses: Linha desenhada 1 (Atwater – Université De Montreal): traçado livre; km = linha reta × 1.2; velocidade comercial dos trechos novos: 36 km/h; Linha desenhada 1 (Atwater – Université De Montreal): taxas por km da média da rede, durações das linhas atuais, com peso pela taxa; partidas por hora da linha verde, espaçadas por igual; trens das linhas novas seguem o horário depois de cada interrupção, sem fila; causa comum: a linha nova é independente das linhas atuais; sem retorno parcial: um trecho parado para a linha inteira, inclusive o prolongamento.
+7,5 s para 1.000 dias nesta máquina (um processo). Hipóteses: Linha desenhada 1 (Atwater – Université De Montreal): traçado livre; km = linha reta × 1.2; velocidade comercial dos trechos novos: 36 km/h; Linha desenhada 1 (Atwater – Université De Montreal): taxas por km da média da rede, durações das linhas atuais, com peso pela taxa; partidas por hora da linha verde, espaçadas por igual; trens das linhas novas seguem o horário depois de cada interrupção, sem fila; causa comum: a linha nova é independente das linhas atuais; sem retorno parcial: um trecho parado para a linha inteira, inclusive o prolongamento.
 
 ### com rota alternativa; linha nova divide a causa comum com as linhas em que encosta
 
@@ -76,7 +76,7 @@ A melhor ligação nova da busca da spec 014 (a Azul hoje só se liga à rede pe
 | Tempo médio da saída à chegada, com as falhas (min) | 27,5 (27,4 a 27,5) | 8,3 (8,3 a 8,4) | -19,11 (-19,19 a -19,02) |
 | Falhas da linha nova por dia | | 0,175 (0,149 a 0,201) | |
 
-7,5 s para 1.000 dias nesta máquina (um processo). Hipóteses: Linha desenhada 1 (Atwater – Université De Montreal): traçado livre; km = linha reta × 1.2; velocidade comercial dos trechos novos: 36 km/h; Linha desenhada 1 (Atwater – Université De Montreal): taxas por km da média da rede, durações das linhas atuais, com peso pela taxa; partidas por hora da linha verde, espaçadas por igual; trens das linhas novas seguem o horário depois de cada interrupção, sem fila; causa comum: a linha nova para junto com as linhas em que encosta; sem retorno parcial: um trecho parado para a linha inteira, inclusive o prolongamento.
+7,6 s para 1.000 dias nesta máquina (um processo). Hipóteses: Linha desenhada 1 (Atwater – Université De Montreal): traçado livre; km = linha reta × 1.2; velocidade comercial dos trechos novos: 36 km/h; Linha desenhada 1 (Atwater – Université De Montreal): taxas por km da média da rede, durações das linhas atuais, com peso pela taxa; partidas por hora da linha verde, espaçadas por igual; trens das linhas novas seguem o horário depois de cada interrupção, sem fila; causa comum: a linha nova para junto com as linhas em que encosta; sem retorno parcial: um trecho parado para a linha inteira, inclusive o prolongamento.
 
 ## Côte-Vertu → Montmorency, com o anel da Laranja (ARTM, 2019)
 
@@ -114,7 +114,7 @@ Hoje a viagem dá a volta pela Laranja inteira; o anel liga as duas pontas por L
 | Tempo médio da saída à chegada, com as falhas (min) | 48,7 (48,7 a 48,7) | 19,2 (19,2 a 19,2) | -29,54 (-29,57 a -29,51) |
 | Falhas da linha nova por dia | | 0,361 (0,322 a 0,400) | |
 
-8,4 s para 1.000 dias nesta máquina (um processo). Hipóteses: Anel da Laranja (ARTM, 2019): traçado hipótese de traçado (https://web.archive.org/web/20191010182703/https://montrealgazette.com/news/local-news/completing-montreal-metros-orange-line-loop-will-cost-an-estimated-4-3b); km = linha reta × 1.2; velocidade comercial dos trechos novos: 36 km/h; Anel da Laranja (ARTM, 2019): taxas por km da linha laranja, durações da linha laranja; partidas por hora da linha laranja, espaçadas por igual; trens das linhas novas seguem o horário depois de cada interrupção, sem fila; causa comum: a linha nova é independente das linhas atuais; sem retorno parcial: um trecho parado para a linha inteira, inclusive o prolongamento.
+8,2 s para 1.000 dias nesta máquina (um processo). Hipóteses: Anel da Laranja (ARTM, 2019): traçado hipótese de traçado (https://web.archive.org/web/20191010182703/https://montrealgazette.com/news/local-news/completing-montreal-metros-orange-line-loop-will-cost-an-estimated-4-3b); km = linha reta × 1.2; velocidade comercial dos trechos novos: 36 km/h; Anel da Laranja (ARTM, 2019): taxas por km da linha laranja, durações da linha laranja; partidas por hora da linha laranja, espaçadas por igual; trens das linhas novas seguem o horário depois de cada interrupção, sem fila; causa comum: a linha nova é independente das linhas atuais; sem retorno parcial: um trecho parado para a linha inteira, inclusive o prolongamento.
 
 ## Vendôme → Place-des-Arts, com a Linha Rosa (proposta de 2017)
 
@@ -190,7 +190,7 @@ A ligação troca três linhas em série (Verde, Laranja, Azul) por duas (a liga
 | Tempo médio da saída à chegada, com as falhas (min) | 47,0 (46,9 a 47,1) | 35,7 (35,5 a 35,8) | -11,39 (-11,41 a -11,37) |
 | Falhas da linha nova por dia | | 0,267 (0,235 a 0,299) | |
 
-8,5 s para 1.000 dias nesta máquina (um processo). Hipóteses: Linha desenhada 1 (Angrignon – Snowdon): traçado livre; km = linha reta × 1.2; velocidade comercial dos trechos novos: 36 km/h; Linha desenhada 1 (Angrignon – Snowdon): taxas por km da média da rede, durações das linhas atuais, com peso pela taxa; partidas por hora da linha laranja, espaçadas por igual; trens das linhas novas seguem o horário depois de cada interrupção, sem fila; causa comum: a linha nova é independente das linhas atuais; sem retorno parcial: um trecho parado para a linha inteira, inclusive o prolongamento.
+8,6 s para 1.000 dias nesta máquina (um processo). Hipóteses: Linha desenhada 1 (Angrignon – Snowdon): traçado livre; km = linha reta × 1.2; velocidade comercial dos trechos novos: 36 km/h; Linha desenhada 1 (Angrignon – Snowdon): taxas por km da média da rede, durações das linhas atuais, com peso pela taxa; partidas por hora da linha laranja, espaçadas por igual; trens das linhas novas seguem o horário depois de cada interrupção, sem fila; causa comum: a linha nova é independente das linhas atuais; sem retorno parcial: um trecho parado para a linha inteira, inclusive o prolongamento.
 
 ## Snowdon → Saint-Michel, com o prolongamento da Azul até Anjou
 
@@ -211,7 +211,7 @@ A viagem não usa o trecho novo. Sem retorno parcial, uma falha no prolongamento
 | Tempo médio da saída à chegada, com as falhas (min) | 19,0 (18,9 a 19,1) | 19,1 (18,9 a 19,2) | +0,03 (+0,02 a +0,04) |
 | Falhas da linha nova por dia | | 0,340 (0,301 a 0,379) | |
 
-2,5 s para 1.000 dias nesta máquina (um processo). Hipóteses: Prolongamento da Azul até Anjou: traçado em obras (OSM) (https://montreal.ca/communiques-de-presse/les-femmes-et-les-communautes-seront-honorees-sur-le-futur-troncon-de-la-ligne-bleue); km = linha reta × 1.2; velocidade comercial dos trechos novos: 36 km/h; azul: o trecho novo falha com as taxas por km e as durações observadas da própria linha, e as viagens do horário seguem por ele; trens das linhas novas seguem o horário depois de cada interrupção, sem fila; causa comum: a linha nova é independente das linhas atuais; sem retorno parcial: um trecho parado para a linha inteira, inclusive o prolongamento.
+2,4 s para 1.000 dias nesta máquina (um processo). Hipóteses: Prolongamento da Azul até Anjou: traçado em obras (OSM) (https://montreal.ca/communiques-de-presse/les-femmes-et-les-communautes-seront-honorees-sur-le-futur-troncon-de-la-ligne-bleue); km = linha reta × 1.2; velocidade comercial dos trechos novos: 36 km/h; azul: o trecho novo falha com as taxas por km e as durações observadas da própria linha, e as viagens do horário seguem por ele; trens das linhas novas seguem o horário depois de cada interrupção, sem fila; causa comum: a linha nova é independente das linhas atuais; sem retorno parcial: um trecho parado para a linha inteira, inclusive o prolongamento.
 
 ### sem rota alternativa; com retorno parcial
 
@@ -228,7 +228,7 @@ A viagem não usa o trecho novo. Sem retorno parcial, uma falha no prolongamento
 | Tempo médio da saída à chegada, com as falhas (min) | 19,0 (18,9 a 19,1) | 19,0 (18,9 a 19,1) | 0,00 (0,00 a 0,00) |
 | Falhas da linha nova por dia | | 0,340 (0,301 a 0,379) | |
 
-2,5 s para 1.000 dias nesta máquina (um processo). Hipóteses: Prolongamento da Azul até Anjou: traçado em obras (OSM) (https://montreal.ca/communiques-de-presse/les-femmes-et-les-communautes-seront-honorees-sur-le-futur-troncon-de-la-ligne-bleue); km = linha reta × 1.2; velocidade comercial dos trechos novos: 36 km/h; azul: o trecho novo falha com as taxas por km e as durações observadas da própria linha, e as viagens do horário seguem por ele; trens das linhas novas seguem o horário depois de cada interrupção, sem fila; causa comum: a linha nova é independente das linhas atuais; retorno parcial ligado (pontas de viagem do horário e os terminais antigos).
+2,4 s para 1.000 dias nesta máquina (um processo). Hipóteses: Prolongamento da Azul até Anjou: traçado em obras (OSM) (https://montreal.ca/communiques-de-presse/les-femmes-et-les-communautes-seront-honorees-sur-le-futur-troncon-de-la-ligne-bleue); km = linha reta × 1.2; velocidade comercial dos trechos novos: 36 km/h; azul: o trecho novo falha com as taxas por km e as durações observadas da própria linha, e as viagens do horário seguem por ele; trens das linhas novas seguem o horário depois de cada interrupção, sem fila; causa comum: a linha nova é independente das linhas atuais; retorno parcial ligado (pontas de viagem do horário e os terminais antigos).
 
 ## Como ler
 

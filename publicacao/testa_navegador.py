@@ -236,9 +236,12 @@ try:
                 textos_erro.append(p["entry"].get("text", "")[:200] + " " + p["entry"].get("url", ""))
             else:
                 textos_erro.append(" ".join(str(a.get("value", a.get("description", ""))) for a in p.get("args", []))[:200])
-        shot = cmd("Page.captureScreenshot", format="png")
-        open(os.path.join(SAIDA, f"site_{nome}.png"), "wb").write(base64.b64decode(shot["data"]))
         medidas["erros_console"] = textos_erro
+        try:  # a captura final às vezes estoura o tempo depois das capturas de página inteira; o resultado sai mesmo assim
+            shot = cmd("Page.captureScreenshot", format="png")
+            open(os.path.join(SAIDA, f"site_{nome}.png"), "wb").write(base64.b64decode(shot["data"]))
+        except Exception as ex:  # noqa: BLE001
+            medidas["captura_final"] = f"não gravada: {type(ex).__name__}"
         resultado[nome] = medidas
     open(os.path.join(SAIDA, "resultado.json"), "w", encoding="utf-8").write(json.dumps(resultado, ensure_ascii=False, indent=1))
     print("ok")

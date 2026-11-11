@@ -1,10 +1,10 @@
 # Políticas de tolerância a falhas e Monte Carlo (specs 008 e 009)
 
-Gerado por `app/relatorios/politicas.relatorio.ts` com o motor do simulador e o `parametros.json` real (sha256-scripts:a0ff551bd3d56c35), semente 20261021. Intervalos de 95% pela aproximação normal; diferenças pareadas com números aleatórios comuns (as mesmas falhas nas duas variantes).
+Gerado por `app/relatorios/politicas.relatorio.ts` com o motor do simulador e o `parametros.json` real (sha256-scripts:489914bafbbe991e), semente 20261021. Intervalos de 95% pela aproximação normal; diferenças pareadas com números aleatórios comuns (as mesmas falhas nas duas variantes).
 
 ## Minutos de interrupção por ano, sem políticas (spec 009)
 
-4000 dias simulados por tipo de dia (útil, sábado, domingo), somados pelo calendário de 251, 52 e 62 dias. Tempo: 9,0 s para 12000 dias numa thread.
+4000 dias simulados por tipo de dia (útil, sábado, domingo), somados pelo calendário de 251, 52 e 62 dias. Tempo: 9,1 s para 12000 dias numa thread.
 
 | Linha | Minutos por ano (IC 95%) | Disponibilidade no dia útil | Rodadas para 5% de precisão no dia útil | Meia-largura com 50.000 dias (% da média) |
 |---|---|---|---|---|

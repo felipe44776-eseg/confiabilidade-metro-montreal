@@ -38,6 +38,6 @@ Total: 666,57 milhões de km-carro. O total menos MR-73 e MPM-10 dá 21,90 km, q
 
 ## Status
 
-- 10852 dias-linha com fator medido (km real) e 100 estimados (sem km real no dia).
+- 10852 dias-linha com fator medido (km real) e 100 estimados (dias de greve, com o fator típico pela D63, ou sem km real no dia).
 - 25 dias de greve em 2025: a exposição de cada hora é multiplicada pela fração da hora com serviço, com o fator típico da linha e do tipo de dia (D63). O km real desses dias é de 0,93 a 2,26 vezes o km do horário só nas faixas com serviço (mediana 1,36): houve serviço fora das faixas, que o modelo não representa (as falhas fora das faixas ficam fora, como na v1.1.0).
 - Parcela de cada frota por linha e dia em `frota_diaria.csv` e por mês em `frota_mensal.csv`, medida pelo km real em todo o período (spec 018; na v1.1.0, medida até 2023-09 e suposta igual à do último ano depois).

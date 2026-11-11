@@ -5,7 +5,7 @@ Todo número publicado vem dos arquivos listados aqui, e qualquer pessoa pode co
 
 - Site: https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/
 - Hashes completos: [`fontes_manifesto.json`](fontes_manifesto.json)
-- Dados brutos, cópia exata: Releases [`dados-2026-10-20`](https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/releases/tag/dados-2026-10-20) (fase 0) e [`dados-2026-10-21`](https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/releases/tag/dados-2026-10-21) (fase 1: clima horário e expansão)
+- Dados brutos, cópia exata: Releases [`dados-2026-10-20`](https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/releases/tag/dados-2026-10-20) (fase 0), [`dados-2026-10-21`](https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/releases/tag/dados-2026-10-21) (fase 1: clima horário e expansão) e [`dados-2026-11`](https://github.com/felipe44776-eseg/confiabilidade-metro-montreal/releases/tag/dados-2026-11) (revisão de 2026-11: km real republicado pela STM em 2026-10-23)
 - Colunas de cada tabela derivada e fatores sem fonte: [`../docs/dicionario_dados.md`](../docs/dicionario_dados.md)
 
 ## Como conferir sozinho
@@ -213,7 +213,7 @@ As 6 ressalvas de apresentação foram corrigidas:
 ## 6. Limites conhecidos
 
 - **Duração:** mede o tempo até o serviço voltar, não o reparo do equipamento.
-- **Quilometragem:** vai até 2023-09-30.
+- **Quilometragem:** a cópia de 2026-10-20 vai até 2023-09-30; a republicada em 2026-10-23, até 2026-09-30. O modelo e o simulador usam a republicada até 2026-06-30; o painel do site continua com o km real só até 2023-09-30 (seção 1).
 - **Passageiros:** a STM não publica entradas diárias.
 - **Códigos de local:**
   - os `xSyy` são dedução nossa, com coerência de 100% com a linha registrada;
