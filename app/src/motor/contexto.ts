@@ -7,10 +7,11 @@ import { linhasDoHorario, montaGrafo } from './grafo';
 import { hipotese } from './hipoteses';
 import type { Politicas } from './politicas';
 import type { Fluxo } from './prng';
+import { gamaFuncao, hash30 } from './prng';
 import type { HorarioDia, Rede } from './rede';
 import type { Renovacao01 } from './taxas';
-import { renovacaoDe, taxaAcumulada, taxaAcumuladaConstante } from './taxas';
-import type { Causa, Cenario, Lognormal, Parametros } from './tipos';
+import { renovacaoDaFonte, renovacaoDe, taxaAcumulada, taxaAcumuladaConstante, taxaAcumuladaFonte } from './taxas';
+import type { Causa, Cenario, LocalEF, Lognormal, Parametros } from './tipos';
 import { CAUSAS } from './tipos';
 
 export interface Duracao {
@@ -100,10 +101,55 @@ export function duracaoMediaMin(d: Duracao): number {
   return (1 - d.pZero) * Math.exp(d.mu + (d.sigma * d.sigma) / 2);
 }
 
+/** Locais de falha de equipamento fixo (km com peso; o resto uniforme ao longo da linha). */
+function montaLocais(lista0: LocalEF[] | undefined, semPosicao: number): LocaisLinha {
+  const lista = (lista0 ?? []).filter((x) => Number.isFinite(x.km) && x.peso > 0);
+  const pesosAcum: number[] = [];
+  let acc = 0;
+  for (const x of lista) {
+    acc += x.peso;
+    pesosAcum.push(acc);
+  }
+  // sem nenhum local com posição, todas as falhas ficam uniformes ao longo da linha
+  return { kms: lista.map((x) => x.km), pesosAcum, pesoSemPosicao: lista.length ? semPosicao : 1, codigos: lista.map((x) => x.codigo) };
+}
+
+/** Sub-fluxo de uma fonte do contrato v2: depende só do nome da linha e da fonte (acrescentar uma fonte não mexe nas outras). */
+export function subFluxoDaFonte(linha: string, id: string): number {
+  return 1000 + (hash30(`${linha}|${id}`) % 1_000_000_000);
+}
+
 export function preparaContexto(rede: Rede, parametros: Parametros, cenario: Cenario, grafo?: Grafo): Contexto {
   const horario = rede.horarios[cenario.tipoDia];
   const fontes: FonteFalha[] = [];
+  const v2 = parametros.versao >= 2 && (parametros.fontes?.length ?? 0) > 0;
   rede.ids.forEach((linha, li) => {
+    if (v2) {
+      // contrato v2 (spec 019): as fontes do arquivo, na ordem do arquivo, em cada linha em que existem
+      for (const fp of parametros.fontes ?? []) {
+        const fl = fp.linhas[linha];
+        if (!fl) continue;
+        if (!fl.ttr) throw new Error(`parametros.json sem duração da fonte ${fp.id} na linha ${linha}`);
+        const sub = subFluxoDaFonte(linha, fp.id);
+        fontes.push({
+          id: fp.id,
+          fi: fontes.length,
+          linha,
+          li,
+          causa: fp.familia,
+          acum: taxaAcumuladaFonte(fp, horario, cenario, linha),
+          renovacao: renovacaoDaFonte(fp, linha),
+          duracao: duracaoDe(fl.ttr),
+          fluxoInstantes: fp.familia === 'MR' ? 'falhas_mr' : 'falhas_ef',
+          subInstantes: sub,
+          subDuracao: sub,
+          subEscolha: sub,
+          subPolitica: sub,
+          locais: fp.familia === 'EF' ? montaLocais(fl.locais, fl.locais_sem_posicao ?? 0) : undefined,
+        });
+      }
+      return;
+    }
     for (const causa of CAUSAS) {
       fontes.push({
         id: causa,
@@ -128,18 +174,7 @@ export function preparaContexto(rede: Rede, parametros: Parametros, cenario: Cen
     causaComum.push({ par, ci, linhas, acum: taxaAcumuladaConstante(cc.taxa_por_hora_op.valor, ini, fim), duracao: duracaoDe(cc.duracao) });
   });
   const locais: Record<string, LocaisLinha> = {};
-  for (const linha of rede.ids) {
-    const lista = (parametros.locais_ef[linha] ?? []).filter((x) => Number.isFinite(x.km) && x.peso > 0);
-    const pesosAcum: number[] = [];
-    let acc = 0;
-    for (const x of lista) {
-      acc += x.peso;
-      pesosAcum.push(acc);
-    }
-    const sem = parametros.locais_ef_sem_posicao?.[linha] ?? 0;
-    // sem nenhum local com posição, todas as falhas ficam uniformes ao longo da linha
-    locais[linha] = { kms: lista.map((x) => x.km), pesosAcum, pesoSemPosicao: lista.length ? sem : 1, codigos: lista.map((x) => x.codigo) };
-  }
+  for (const linha of rede.ids) locais[linha] = montaLocais(parametros.locais_ef[linha], parametros.locais_ef_sem_posicao?.[linha] ?? 0);
   const frota: Contexto['frota'] = {};
   const oficina: Contexto['oficina'] = {};
   const reparo = hipotese('reparo_oficina_dias', parametros, cenario);
@@ -173,6 +208,45 @@ export function preparaContexto(rede: Rede, parametros: Parametros, cenario: Cen
     frota,
     oficina,
   };
+}
+
+/** Uma família (MR ou EF) numa linha, somando as fontes dela: taxa acumulada, mistura das durações pesada pelas
+ * falhas esperadas e forma média da renovação. Com uma fonte só (contrato v1), é a própria fonte. */
+export interface FamiliaLinha {
+  acum: Float64Array;
+  duracoes: { peso: number; d: Duracao }[];
+  forma: number;
+  escala: number; // normalizada: média 1 no tempo reescalado
+}
+
+export function familiaNaLinha(ctx: Contexto, linha: string, causa: Causa): FamiliaLinha | null {
+  const fs = ctx.fontes.filter((f) => f.linha === linha && f.causa === causa);
+  if (!fs.length) return null;
+  if (fs.length === 1) return { acum: fs[0].acum, duracoes: [{ peso: 1, d: fs[0].duracao }], forma: fs[0].renovacao.forma, escala: fs[0].renovacao.escalaNormalizada };
+  const acum = new Float64Array(fs[0].acum.length);
+  const duracoes: FamiliaLinha['duracoes'] = [];
+  let total = 0;
+  let forma = 0;
+  for (const f of fs) {
+    for (let i = 0; i < acum.length; i++) acum[i] += f.acum[i];
+    const peso = f.acum[f.acum.length - 1];
+    total += peso;
+    forma += peso * f.renovacao.forma;
+    duracoes.push({ peso, d: f.duracao });
+  }
+  forma = total > 0 ? forma / total : 1;
+  return { acum, duracoes, forma, escala: 1 / gamaFuncao(1 + 1 / forma) };
+}
+
+/** Duração média de uma mistura de durações (minutos, com a massa em zero). */
+export function duracaoMediaMistura(ds: { peso: number; d: Duracao }[]): number {
+  let s = 0;
+  let p = 0;
+  for (const x of ds) {
+    s += x.peso * duracaoMediaMin(x.d);
+    p += x.peso;
+  }
+  return p > 0 ? s / p : 0;
 }
 
 /** Redução da taxa de causa comum com a política ligada. */

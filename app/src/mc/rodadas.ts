@@ -4,7 +4,7 @@
 
 import type { Contexto } from '../motor/contexto';
 import type { ResultadoDia } from '../motor/dia';
-import { simulaDia } from '../motor/dia';
+import { CLASSES_GRAVIDADE, simulaDia } from '../motor/dia';
 import type { Politicas } from '../motor/politicas';
 import { sementeDaRodada } from '../motor/prng';
 import type { TipoDia } from '../motor/tipos';
@@ -32,7 +32,17 @@ export interface Estimativa {
   semente: number;
 }
 
-export function nomesMetricas(ids: string[]): string[] {
+/** Métricas acrescentadas na revisão de 2026-11 (spec 019, D58): falhas por classe de gravidade de cada linha. Vão no
+ * fim do vetor e só com `gravidade = true`, para o vetor de antes (e os números que dependem dele) não mudar. */
+const NOMES_GRAVIDADE = CLASSES_GRAVIDADE.map((c) => `falhas_${c}`);
+
+export function nomesMetricas(ids: string[], gravidade = false): string[] {
+  const nomes = nomesMetricasV1(ids);
+  if (gravidade) for (const l of ids) for (const m of NOMES_GRAVIDADE) nomes.push(`${l}.${m}`);
+  return nomes;
+}
+
+function nomesMetricasV1(ids: string[]): string[] {
   const nomes: string[] = [];
   for (const l of ids) {
     for (const m of [
@@ -55,7 +65,7 @@ export function nomesMetricas(ids: string[]): string[] {
   return nomes;
 }
 
-export function metricasDoDia(r: ResultadoDia, ids: string[]): number[] {
+export function metricasDoDia(r: ResultadoDia, ids: string[], gravidade = false): number[] {
   const v: number[] = [];
   for (const l of ids) {
     const m = r.porLinha[l];
@@ -75,6 +85,7 @@ export function metricasDoDia(r: ResultadoDia, ids: string[]): number[] {
     );
   }
   v.push(r.rede.minutosInterrupcao, r.rede.trensHoraPerdidos, r.rede.dispOD, r.rede.extraMin, r.rede.minutosParInterrompido);
+  if (gravidade) for (const l of ids) for (const c of CLASSES_GRAVIDADE) v.push(r.porLinha[l].falhasPorClasse[c]);
   return v;
 }
 

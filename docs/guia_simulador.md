@@ -2,6 +2,8 @@
 
 Como usar a página https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/simulador/ e como ler o que ela mostra. Tudo roda no seu navegador: nada é enviado para servidor.
 
+> **Revisão de 2026-11 (após a ressegmentação).** As falhas passaram a ser separadas por frota (MR-73, MPM-10) e por setor do equipamento fixo, a duração segue a faixa oficial da STM quando a calculada pelos horários a contradiz, e a exposição é medida em todo o período (km real republicado pela STM em 2026-10-23). Specs 017 a 020; decisões D55 a D63. A versão anterior continua em [`/versoes/v1.1.0/`](https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/versoes/v1.1.0/), e cada número que mudou está em [`revisao_2026-11.md`](../fontes/verificacao/revisao_2026-11.md).
+
 ## O que o simulador faz
 
 Ele recria um dia de operação do metrô de Montreal, trem a trem, com o horário real (GTFS da STM), e sorteia falhas com as taxas e as durações estimadas dos dados de 2019 a 2026. Repetindo o dia milhares de vezes (Monte Carlo), estima quanto cada linha fica parada, quantos trens-hora se perdem e com que frequência um par de estações fica sem caminho, sempre com intervalo de 95%.
@@ -12,12 +14,12 @@ Ele recria um dia de operação do metrô de Montreal, trem a trem, com o horár
 |---|---|
 | **Dia** | Tipo de dia (útil, sábado, domingo) e mês. O tipo de dia muda o horário; o mês muda a estação do ano no modelo de falhas |
 | **Clima** | Temperatura, precipitação, condição (seco, chuva, neve, chuva congelante) e neve no solo. Cada escolha multiplica a taxa de falha pelo fator estimado no modelo (spec 005), nunca por um número escolhido à mão |
-| **Eventos** | Jogo do Canadiens, fim de semana do GP, feriado e greve. A greve deixa só as viagens que partem nas faixas com serviço e não muda a taxa de falha por trem: o modelo estimou 1,17 (material rodante) e 1,11 (equipamentos fixos) para dia de greve, mas o intervalo de 95% contém 1 (`fontes/verificacao/modelo_taxa.md`), e desde 2026-10-21 o simulador não aplica esse multiplicador (decisão D42) |
+| **Eventos** | Jogo do Canadiens, fim de semana do GP, feriado e greve. A greve deixa só as viagens que partem nas faixas com serviço e não muda a taxa de falha por trem: o modelo estimou 1,16 (material rodante) e 1,10 (equipamentos fixos) para dia de greve após a revisão de 2026-11 (1,17 e 1,11 na v1.1.0), e o intervalo de 95% contém 1 (`fontes/verificacao/modelo_taxa.md`), e desde 2026-10-21 o simulador não aplica esse multiplicador (decisão D42) |
 | **Políticas de tolerância a falhas** | Liga ou desliga cada uma das seis políticas da spec 008 |
 | **Hipóteses (sem dado)** | Parâmetros que não existem nas fontes públicas (tempo de reparo na oficina, separação mínima entre trens, tempo de retirada do trem falho...). Cada uma tem uma faixa razoável no `parametros.json`; o controle vai meia faixa além de cada ponta, para testar extrapolações, e fora da faixa a página avisa. O valor aparece com o rótulo "hipótese" |
 | **Rodadas e semente** | Quantos dias simular e a semente do sorteio. A mesma semente dá os mesmos números |
 
-**Copiar o link do cenário** guarda tudo (cenário, semente e rodadas) no endereço. Quem abrir o link vê exatamente os mesmos números. **Voltar ao padrão** limpa o cenário.
+**Copiar o link do cenário** guarda tudo (cenário, semente e rodadas) no endereço. Quem abrir o link vê exatamente os mesmos números. **Voltar ao padrão** limpa o cenário. Desde a revisão de 2026-11, o link leva a versão dos números (`v=2`). Um link de antes abre o mesmo cenário com os números revistos e mostra no topo um aviso com o link para o mesmo cenário na versão 1.1.0.
 
 **Avisos** aparecem quando o cenário sai do que foi observado nos dados (por exemplo, neve no solo em julho) ou quando uma hipótese sai da faixa. O simulador continua rodando, mas o número passa a ser extrapolação.
 
@@ -74,11 +76,15 @@ Avalia as cinco candidatas de expansão com fonte pública e qualquer ligação 
 
 Todos os números do modelo: valor, intervalo de 95%, status (ajustado, deduzido, hipótese, não verificado) e link para o relatório que os produziu. O método aparece ao passar o mouse sobre o link; o número de observações aparece nas durações e na causa comum.
 
+**Fontes de falha (revisão de 2026-11, spec 019).** O simulador sorteia cada fonte à parte: no material rodante, a frota (MR-73, MPM-10 e outros veículos); no equipamento fixo, o setor da STM (via, "Service aux trains", estações, TCPE), dividido pelo sintoma quando cada parte tem 400 falhas ou mais. A tabela mostra, por fonte e linha, a taxa-base por trem-hora com IC 95%, a fração sem interrupção, a duração média quando para e a forma da renovação. No material rodante, a taxa-base já vem multiplicada pela parcela dos km da linha que a frota rodou em 2025. A falha de trem para o trem no sentido; a falha fixa bloqueia o trecho; a família decide o efeito e as políticas, como antes. Os pesos do painel continuam por família (material rodante e equipamentos fixos). "Controle de trens" e "energia" são dedução nossa até a STM confirmar o que são o "Service aux trains" e o "Service TCPE".
+
 ## Como ler os resultados
 
 - **Disponibilidade** é a fração do tempo de serviço sem bloqueio na linha. 99,5% num dia útil de 20 horas são cerca de 6 minutos parados.
 - **Disponibilidade origem-destino** é a fração dos pares de estações que têm caminho, ponderada pela oferta de trens (não há dado de passageiros).
-- **Noves** são −log₁₀ da indisponibilidade: 99% são 2 noves, 99,9% são 3, 99,99% são 4. Perto de 100%, a disponibilidade esconde as diferenças (99,5% e 99,9% parecem iguais, mas o tempo parado cai 5 vezes); os noves, os minutos parados e o gráfico em escala logarítmica, em que cada marca é 10 vezes a anterior, mostram a diferença.
+- **Minutos sem caminho** são a área de perda da curva de resiliência (Zhou et al., 2019): a soma, ao longo do dia, da fração da oferta origem-destino sem caminho. Como cada falha tem só início e fim, a perda entra e sai de uma vez.
+- **Toda disponibilidade aqui é do serviço**, não de um equipamento: a duração de cada falha é o tempo até o serviço voltar, não o reparo na oficina. As falhas simuladas são as de rotina registradas pela STM; o simulador não mede resiliência a desastres nem segurança (risco de acidente).
+- **Noves** são −log₁₀ da indisponibilidade do serviço: 99% são 2 noves, 99,9% são 3, 99,99% são 4. Perto de 100%, a disponibilidade esconde as diferenças (99,5% e 99,9% parecem iguais, mas o tempo parado cai 5 vezes); os noves, os minutos parados e o gráfico em escala logarítmica, em que cada marca é 10 vezes a anterior, mostram a diferença.
 - **Intervalo de 95%** é a incerteza do Monte Carlo. Se o intervalo de uma diferença contém zero, o efeito não é detectável com aquele número de dias.
 - **Hipótese** é escolha nossa, sem dado. O resultado que depende dela deve ser lido como "se o reparo levar X dias, então...".
 

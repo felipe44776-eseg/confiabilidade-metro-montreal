@@ -2,6 +2,8 @@
 
 Para quem vai mexer no código. O que cada parte faz, por onde os dados passam, como testar e como publicar. As decisões e os motivos estão em [`decisoes/registro_de_decisoes.md`](decisoes/registro_de_decisoes.md).
 
+> **Revisão de 2026-11 (após a ressegmentação).** As falhas passaram a ser separadas por frota (MR-73, MPM-10) e por setor do equipamento fixo, a duração segue a faixa oficial da STM quando a calculada pelos horários a contradiz, e a exposição é medida em todo o período (km real republicado pela STM em 2026-10-23). Specs 017 a 020; decisões D55 a D63. A versão anterior continua em [`/versoes/v1.1.0/`](https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/versoes/v1.1.0/), e cada número que mudou está em [`revisao_2026-11.md`](../fontes/verificacao/revisao_2026-11.md).
+
 ## Visão geral
 
 ```mermaid
@@ -23,6 +25,7 @@ flowchart LR
   MC --> UI[app/src/simulador<br/>/simulador/]
   M --> RT[app/relatorios<br/>políticas e expansão]
   P2 --> BT[pipeline/backtest.py]
+  P2 --> PR[pipeline/preregistro.py<br/>previsões congeladas]
   REL --> V[pipeline/verifica_fontes.py<br/>2ª implementação]
   V --> CI[GitHub Actions]
   CI --> SITE[GitHub Pages]
@@ -32,7 +35,7 @@ flowchart LR
 
 | Pasta | Conteúdo | Linguagem |
 |---|---|---|
-| `pipeline/` | Do dado bruto ao `parametros.json`, mais o backtest e a verificação independente | Python 3.11, versões em `pipeline/requirements.txt` |
+| `pipeline/` | Do dado bruto ao `parametros.json`, mais o backtest e a verificação independente. Módulos comuns da revisão de 2026-11: `duracao.py` (regra da faixa oficial e classes de gravidade, usada pela normalização, pelo painel e, reimplementada, pela verificação) e `km_real.py` (leitor dos dois formatos do km real) | Python 3.11, versões em `pipeline/requirements.txt` |
 | `pipeline/tests/` | Critérios de aceite das specs como testes (`pytest`) | Python |
 | `contratos/` | Esquema JSON do contrato entre pipeline e simulador | JSON Schema |
 | `app/src/motor/` | Motor de eventos discretos: rede, taxas, falhas, frota, políticas, grafo, expansão | TypeScript |
@@ -58,21 +61,25 @@ python -I pipeline/extrai_mobilidade.py dados/brutos/google/google_Region_Mobili
 python -I pipeline/monta_painel.py            # painel diário
 python -I pipeline/analise_confiabilidade.py  # 17 tabelas do painel
 python -I pipeline/geo_base.py                # traçado, estações, locais (spec 002)
-python -I pipeline/normaliza.py               # eventos (spec 001)
-python -I pipeline/exposicao.py               # exposição (spec 004)
+python -I pipeline/normaliza.py               # eventos, fontes e durações (specs 001 e 017)
+python -I pipeline/exposicao.py               # exposição e parcela da frota (specs 004 e 018)
 python -I pipeline/baixa_clima_eventos.py     # pula o ECCC se o zip da Release existe
 python -I pipeline/clima_eventos.py           # painel horário (spec 003)
 python -I pipeline/horario_simulador.py       # rede.json
 python -I pipeline/candidatas.py              # candidatas.json (spec 014)
-python -I pipeline/modelo_taxa.py             # spec 005, ~20 min, 3 GB
+python -I pipeline/modelo_taxa.py             # specs 005 e 018: famílias e fontes, bootstrap B = 200, ~80 min
 python -I pipeline/diagnostico_taxa.py
-python -I pipeline/distribuicoes.py           # spec 006, ~10 min
-python -I pipeline/parametros.py              # contrato do simulador
-python -I pipeline/backtest.py                # spec 012, ~40 min
-cd app && npx vitest run --config vitest.relatorios.config.ts   # políticas, expansão, viagem e linhas novas
+python -I pipeline/fora_da_amostra.py         # spec 018: um ano de fora, v1.1.0 contra o modelo por fonte
+python -I pipeline/distribuicoes.py           # specs 006 e 018
+python -I pipeline/parametros.py              # contrato do simulador (v2)
+python -I pipeline/backtest.py                # specs 012 e 020, B = 100, ~20 min
+cd app && npx vitest run --config vitest.relatorios.config.ts   # políticas, expansão, viagem, linhas novas e revalidação
+cd .. && python -I pipeline/compara_versoes.py                 # antes e depois da revisão de 2026-11
 ```
 
-**Memória:** rode `modelo_taxa`, `distribuicoes` e `backtest` um de cada vez. Juntos passam de 4 GB.
+**Memória:** rode `modelo_taxa`, `distribuicoes` e `backtest` um de cada vez. Juntos passam de 4 GB. O bootstrap coleta o lixo a cada réplica: o statsmodels guarda um ciclo de referências entre o modelo e o resultado, e sem a coleta cada réplica do painel empilhado (até cerca de 200 MB) fica presa na memória.
+
+**Pré-registro (spec 020):** `python -I pipeline/preregistro.py congela v2` congela o modelo revisto e grava `fontes/verificacao/preregistro/modelo_v2.json`; o commit desse arquivo vem antes de qualquer download de incidentes novos. `preregistro.py avalia v1` (ou `v2`) só roda quando a STM tiver publicado pelo menos 3 meses depois de 2026-06.
 
 ## O contrato `parametros.json`
 
@@ -80,9 +87,12 @@ cd app && npx vitest run --config vitest.relatorios.config.ts   # políticas, ex
 
 | Chave | O que é | De onde vem |
 |---|---|---|
-| `taxas.MR`, `taxas.EF` | Taxa-base por trem-hora de cada linha e multiplicadores por fator | `modelo_taxa.py` |
-| `renovacao` | Forma e escala da Weibull no tempo reescalado, por linha e causa | `distribuicoes.py` |
-| `ttr` | Massa em zero, lognormal e `amostra_positivos` (o sorteio usa a amostra) | `distribuicoes.py` + `parametros.py` |
+| `versao` | `2` desde a revisão de 2026-11; o motor ainda lê o contrato `1` (v1.1.0) com os mesmos números | `parametros.py` |
+| `fontes[]` | Contrato v2 (spec 018): 9 fontes, cada uma com `id`, `familia` (`MR` para trem, `EF` para trecho), `rotulo` e status do rótulo, modelo, α, multiplicadores e, por linha, `base_por_trem_hora` (já multiplicada pela parcela da frota), `renovacao` e `ttr`. A ordem do arquivo é a ordem do sorteio; falta de `renovacao` ou de `ttr` é erro | `modelo_taxa.py`, `distribuicoes.py`, `parametros.py` |
+| `frota_por_linha` | Parcela dos km de cada frota em cada linha no ano-base, com status (para o cenário futuro, spec 022) | `exposicao.py` |
+| `taxas.MR`, `taxas.EF` | Taxa-base por trem-hora de cada linha e multiplicadores por fator, por família (o peso de cada variável na página usa a família) | `modelo_taxa.py` |
+| `renovacao` | Forma e escala da Weibull no tempo reescalado, por linha e família | `distribuicoes.py` |
+| `ttr` | Massa em zero, lognormal e `amostra_positivos` (o sorteio usa a amostra), por linha e família | `distribuicoes.py` + `parametros.py` |
 | `causa_comum` | Um grupo por conjunto de linhas paradas juntas, com taxa e duração | `distribuicoes.py` |
 | `causa_comum_beta` | Fator β por par (só relatório) | `distribuicoes.py` |
 | `locais_ef` | Onde ocorrem as falhas de equipamento fixo (km na linha, peso) | `parametros.py` |
@@ -96,7 +106,7 @@ Mudar o formato exige mudar o esquema em `contratos/`, o `parametros.py`, os tip
 ```bash
 python -m pytest pipeline/tests -q                  # 55 testes: critérios das specs 001 a 006, 012 e 013
 cd app && npm test                                  # 87 testes: motor e interface
-python -I pipeline/verifica_fontes.py --recalcula   # 25 números recalculados direto dos brutos
+python -I pipeline/verifica_fontes.py --recalcula   # 38 números recalculados direto dos brutos (25 até a v1.1.0)
 ```
 
 Teste no navegador (opcional, fora do CI): `publicacao/testa_navegador.py` abre o simulador publicado num Edge ou Chrome sem janela, em tamanho de celular e de notebook, e mede rolagem lateral, WebGL, quadros por segundo (com a animação parada e tocando a 300×, 1 h/s, 10 h/s e 1 dia/s, contados por `requestAnimationFrame` com a aba na frente, com a ocupação da thread da página em cada velocidade), o resultado do Monte Carlo de abertura e erros no console; a 1 dia/s conta os eventos vermelhos, os dias emendados e o placar, e depois muda o clima e confere que a faixa "Cenário aplicado" e o peso da neve no solo mudaram; abre a nota do método e captura o painel do cenário; roda a viagem padrão da aba "Viagem de A a B" e lê as tabelas; por fim, marca a Linha Rosa, desenha uma linha pela lista, avalia a viagem com as linhas novas e lê a comparação. As falhas esperadas por dia vêm de `app/src/simulador/efeito.ts`, pela mesma taxa acumulada que o motor sorteia. Precisa de `websocket-client` num ambiente à parte. Rode um tamanho por vez (`SO=celular`, depois `SO=notebook`).

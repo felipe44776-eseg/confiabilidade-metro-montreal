@@ -44,7 +44,7 @@ Script `pipeline/normaliza.py`; testes em `pipeline/tests/test_normaliza.py`; sa
 *Registrada em 2026-11-10, depois de ver os dados (decisões D55 e D56; spec 017).* Os critérios acima não mudam. O resultado de 98,83% continua sendo a exceção oficial deste critério.
 
 - **O que a revisão viu:**
-  - As 100 exceções são 1,2% das falhas, mas tinham 25,3% dos minutos parados (11.129 de 43.971). Exemplo: 7 registros de 1.140 a 1.170 min em Saint-Michel, outubro de 2024, com faixa oficial "02 min et moins".
+  - As 100 exceções são 1,2% das falhas, mas tinham 25,3% dos minutos parados (11.129 de 43.971). Exemplo: 7 registros de 1.140 a 1.170 min em Saint-Michel, outubro de 2024, 6 deles com faixa oficial "02 min et moins".
   - O critério media só a contagem e não viu esse peso.
 - **O que mudou:**
   - Nas exceções, a duração passa a respeitar a faixa oficial: sorteio entre as durações coerentes da mesma faixa e família, com semente pelo número do incidente.

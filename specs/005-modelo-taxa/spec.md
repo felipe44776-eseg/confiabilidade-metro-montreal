@@ -4,7 +4,7 @@
 **Fase:** F2 (semanas 3 a 5)
 **Depende de:** 001, 003, 004
 
-> **Revisão em andamento (2026-11-10, decisões D55 a D61).** A ressegmentação das falhas por frota e por setor dos equipamentos fixos e a regra nova de duração vão mudar números desta spec (spec 018). Os resultados abaixo são os da versão v1.1.0, que continua publicada em `/versoes/v1.1.0/`; os novos entram numa seção "Revisão de 2026-11 (após a ressegmentação)", ao lado dos originais, que não se apagam.
+> **Revisão de 2026-11 (após a ressegmentação, decisões D55 a D63).** Com a exposição medida até 2026-06, os multiplicadores mudam pouco e as conclusões ficam as mesmas; o de greve, depois da correção da D63, fica em 1,16 no material rodante e 1,10 nos equipamentos fixos. Os resultados abaixo são os da versão v1.1.0, que continua publicada em `/versoes/v1.1.0/`; os revistos estão na seção "Revisão de 2026-11 (após a ressegmentação)", ao lado dos originais.
 
 ## Pergunta de engenharia
 Quanto a taxa de falha de cada linha muda com a hora do dia, o clima, a frota e os eventos, medida por unidade de exposição? O número que responde é o multiplicador de cada fator, com intervalo de confiança de 95%.
@@ -37,6 +37,37 @@ Scripts `pipeline/modelo_taxa.py` e `pipeline/diagnostico_taxa.py`; testes em `p
 | Parâmetro com valor, IC, n, método, fontes e status | **Atende**: `dados/derivados/simulador/parametros.json` (contrato `contratos/parametros.schema.json`) |
 
 Achados: mais de 10 cm de neve no solo eleva as duas causas em cerca de 37%; 25 °C ou mais eleva os equipamentos fixos em 83%; uma falha na hora anterior dobra (MR) ou quase triplica (EF) a taxa na hora seguinte, sinal do agrupamento tratado na spec 006. O ajuste direto do `statsmodels.discrete.NegativeBinomial` não convergiu; o α vem de verossimilhança perfilada (plan.md).
+
+## Revisão de 2026-11 (após a ressegmentação)
+
+*Registrada em 2026-11-11 (decisões D57 e D63; spec 018).* Os critérios acima não mudam, e o resultado de 2026-10-21 continua sendo o da v1.1.0.
+
+- **O que mudou na entrada:** só a exposição (spec 004). Com o km real republicado pela STM, ela passa a ser medida até 2026-06-30; na v1.1.0, era estimada depois de 2023-09. As falhas no modelo são as mesmas (3.966 de material rodante e 4.423 de equipamentos fixos): a duração pela faixa oficial (D55) não entra na taxa.
+- **O que mudou no método:**
+  - os dois modelos têm a mesma especificação da v1.1.0, com B = 200 e a mesma semente;
+  - *depois de ver (D63):* com o km real nos dias de greve, o multiplicador de dia de greve saiu 1,73 no material rodante e 1,66 nos equipamentos fixos, por contagem dupla da redução do serviço. Os 25 dias de greve passaram ao fator típico da linha e do tipo de dia, e o ajuste foi refeito;
+  - as taxas do simulador passam a vir dos modelos por fonte da spec 018 (contrato v2). Os dois modelos desta spec continuam no contrato (`taxas`) e dão o clima, o dia, os eventos e o ano às fontes com modelo reduzido. A especificação deles é a "v1.1.0" do teste de um ano de fora (spec 018) e a do backtest refeito (spec 020).
+
+| Número | v1.1.0 | Após a revisão |
+|---|---|---|
+| α do material rodante (p da razão de verossimilhança) | 1,83 (3,6e-33) | 1,83 (4,0e-33) |
+| α dos equipamentos fixos (p) | 5,47 (4,4e-206) | 5,55 (4,1e-208) |
+| Razão MR/EF na abertura | 0,74 (0,63–0,89) | 0,73 (0,63–0,88) |
+| Dia de greve, material rodante | 1,17 (0,56–2,24) | 1,16 (0,55–2,23) |
+| Dia de greve, equipamentos fixos | 1,11 (0,52–1,73) | 1,10 (0,52–1,72) |
+| 25 °C ou mais nos equipamentos fixos | 1,83 (+83%) | 1,84 (+84%) |
+
+Não mudam: B = 200; resíduos com média 0,000 e desvio 1,00; observado/esperado por faixa entre 0,98 e 1,01, com EF na abertura em 0,91; pico da tarde (1,39; 1,22–1,66); pico da manhã e frio sem diferença detectável; neve no solo acima de 10 cm (cerca de 37% nas duas causas); a falha na hora anterior, que continua dobrando (MR, 1,95) ou quase triplicando (EF, de 2,75 para 2,76) a taxa da hora seguinte. Fora do Resultado, só dois multiplicadores mudam mais de 2%: Linha Amarela (MR 5,05 → 5,44; EF 2,14 → 2,37) e fim de semana do GP (MR 1,16 → 1,10; EF 0,76 → 0,70). Nenhum intervalo passa a conter 1 nem deixa de conter. Relatórios: [`modelo_taxa.md`](../../fontes/verificacao/modelo_taxa.md) e [`modelo_taxa_por_faixa.md`](../../fontes/verificacao/modelo_taxa_por_faixa.md).
+
+Critérios:
+- Poisson contra binomial negativa: continua atendendo, binomial negativa nas duas causas.
+- IC por bootstrap em blocos semanais: continua atendendo. As mesmas semanas valem agora para estes dois modelos e para os da spec 018.
+- Resíduos e observado contra esperado: continua atendendo, com os mesmos números em duas casas.
+- Frio e ponta: a resposta é a mesma.
+- Greves só pela exposição: continua atendendo, depois da correção da D63 (depois de ver). A D42 (greve no simulador só pela oferta) se mantém, e o contrato continua sem o multiplicador de greve.
+- Parâmetro com valor, IC, n, método, fontes e status: continua atendendo no contrato v2.
+
+Nenhum critério passou a exceção.
 
 ## Fora de escopo
 - Modelos de aprendizado de máquina sem interpretação de cada fator.

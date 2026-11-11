@@ -32,7 +32,7 @@ import { blocosAtivos, blocosDoDia, cruzadas, falhasAte, FPS_PARADO, fracaoNaBar
 import type { CandidatasJson } from './candidatas';
 import { candidatasDoJson } from './candidatas';
 import type { EstadoCenario, Greve } from './cenario';
-import { aplicaGreve, chaveCenario, chaveRede, copia, desserializa, itensDoCenario, JANELAS_GREVE, MAX_DESENHADAS, MAX_PONTOS_DESENHO, MESES, NIVEIS, ORDEM_POLITICAS, PADRAO, paraCenarioMotor, ROTULOS, serializa } from './cenario';
+import { aplicaGreve, chaveCenario, chaveRede, copia, desserializa, itensDoCenario, JANELAS_GREVE, MAX_DESENHADAS, MAX_PONTOS_DESENHO, MESES, NIVEIS, ORDEM_POLITICAS, PADRAO, paraCenarioMotor, ROTULOS, serializa, VERSAO_LINK, versaoDoLink } from './cenario';
 import type { Esperado } from './efeito';
 import { esperadoPorDia } from './efeito';
 import { avisosDeExtrapolacao } from './extrapolacao';
@@ -1577,6 +1577,16 @@ async function busca(): Promise<void> {
 }
 
 // ---------- parâmetros ----------
+/** Link de antes da revisão de 2026-11 (D28, spec 019): o cenário abre, mas os números são os revistos; a versão anterior fica guardada. */
+function avisaLinkAntigo(hash: string): void {
+  const p = el('p', 'Este link é de antes da revisão de 2026-11 (ressegmentação por frota e setor e durações pela faixa oficial da STM). O cenário abre igual, mas os números foram revistos. Para ver os números de antes: ', 'aviso-versao');
+  const a = document.createElement('a');
+  a.href = `${import.meta.env.BASE_URL}versoes/v1.1.0/simulador/${hash}`;
+  a.textContent = 'versão 1.1.0';
+  p.append(a, '.');
+  document.querySelector('main')?.prepend(p);
+}
+
 function mostraParametros(): void {
   const caixa = $('r-param');
   if (!caixa) return;
@@ -1614,6 +1624,24 @@ function mostraParametros(): void {
   });
   caixa.append(tabela(['Fator', 'Material rodante', 'Equipamentos fixos', 'Status', 'Fonte'], linhasM, [1, 2]));
   caixa.append(el('p', 'A faixa do dia (abertura, picos, noite) e o tipo de dia também multiplicam a taxa, hora a hora, pelos coeficientes do mesmo modelo.', 'nota'));
+  if (p.fontes?.length) {
+    // spec 019: o simulador sorteia cada fonte separadamente (frota do trem; setor e sintoma do equipamento fixo)
+    caixa.append(el('h3', 'Fontes de falha (revisão de 2026-11)'));
+    caixa.append(
+      el(
+        'p',
+        'Cada fonte tem a sua taxa, a sua duração e os seus locais. No material rodante, a taxa-base já está multiplicada pela parcela do km da linha rodada pela frota. Os nomes dos setores do equipamento fixo são as etiquetas da STM; "controle de trens" e "energia" são dedução até a STM confirmar.',
+        'nota',
+      ),
+    );
+    const linhasF: (string | Node)[][] = [];
+    for (const f of p.fontes)
+      for (const [l, x] of Object.entries(f.linhas)) {
+        const a = x.ttr.amostra_positivos;
+        linhasF.push([f.rotulo, l, ic(x.base_por_trem_hora, 6), comIC(x.ttr.p_zero.valor, x.ttr.p_zero.ic95 ?? undefined, 1, (v, cs) => pct(v, cs)), a ? num(a.media_min, 1) : '—', num(x.renovacao.forma.valor, 2), f.status_rotulo]);
+      }
+    caixa.append(tabela(['Fonte', 'Linha', 'Taxa-base por trem-hora (IC 95%)', 'Sem interrupção', 'Duração média se parar (min)', 'Forma da renovação', 'Nome'], linhasF, [2, 3, 4, 5]));
+  }
   caixa.append(el('h3', 'Tempo até o serviço voltar'));
   caixa.append(
     el(
@@ -1730,7 +1758,10 @@ async function inicia(): Promise<void> {
       mostraPesos();
     })
     .catch(() => undefined);
-  if (location.hash.length > 1) estado = desserializa(location.hash);
+  if (location.hash.length > 1) {
+    estado = desserializa(location.hash);
+    if (versaoDoLink(location.hash) < VERSAO_LINK) avisaLinkAntigo(location.hash);
+  }
   const rede = redeDo('nao').rede;
   candidatas = candidatasDoJson(candidatasJson, rede);
   try {

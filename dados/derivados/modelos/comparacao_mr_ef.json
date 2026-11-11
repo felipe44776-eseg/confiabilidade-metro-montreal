@@ -2,12 +2,12 @@
  {
   "termo": "faixa=pico_manha",
   "fator": "Pico da manhã",
-  "mult_MR": 1.354882,
-  "mult_EF": 1.256339,
-  "razao_MR_EF": 1.0784,
+  "mult_MR": 1.353379,
+  "mult_EF": 1.256051,
+  "razao_MR_EF": 1.0775,
   "ic95": [
-   0.9592,
-   1.2306
+   0.958,
+   1.2302
   ],
   "reamostras": 200,
   "conclusao": "sem diferença detectável"
@@ -15,12 +15,12 @@
  {
   "termo": "faixa=pico_tarde",
   "fator": "Pico da tarde",
-  "mult_MR": 0.851227,
-  "mult_EF": 0.611522,
-  "razao_MR_EF": 1.392,
+  "mult_MR": 0.851264,
+  "mult_EF": 0.611684,
+  "razao_MR_EF": 1.3917,
   "ic95": [
-   1.2167,
-   1.6553
+   1.2163,
+   1.6552
   ],
   "reamostras": 200,
   "conclusao": "eleva mais o material rodante"
@@ -28,12 +28,12 @@
  {
   "termo": "faixa=abertura",
   "fator": "Abertura (5 a 6 h)",
-  "mult_MR": 2.641689,
-  "mult_EF": 3.585218,
-  "razao_MR_EF": 0.7368,
+  "mult_MR": 2.638705,
+  "mult_EF": 3.591027,
+  "razao_MR_EF": 0.7348,
   "ic95": [
-   0.6304,
-   0.8855
+   0.6289,
+   0.8828
   ],
   "reamostras": 200,
   "conclusao": "eleva mais os equipamentos fixos"
@@ -41,12 +41,12 @@
  {
   "termo": "temp=abaixo_-15",
   "fator": "Abaixo de −15 °C",
-  "mult_MR": 0.925809,
-  "mult_EF": 1.05349,
-  "razao_MR_EF": 0.8788,
+  "mult_MR": 0.93663,
+  "mult_EF": 1.065064,
+  "razao_MR_EF": 0.8794,
   "ic95": [
-   0.626,
-   1.2767
+   0.6247,
+   1.2727
   ],
   "reamostras": 200,
   "conclusao": "sem diferença detectável"
@@ -54,12 +54,12 @@
  {
   "termo": "temp=-15a-5",
   "fator": "−15 a −5 °C",
-  "mult_MR": 1.091329,
-  "mult_EF": 0.973922,
-  "razao_MR_EF": 1.1206,
+  "mult_MR": 1.094404,
+  "mult_EF": 0.976427,
+  "razao_MR_EF": 1.1208,
   "ic95": [
-   0.8596,
-   1.5111
+   0.8613,
+   1.5143
   ],
   "reamostras": 200,
   "conclusao": "sem diferença detectável"
@@ -67,12 +67,12 @@
  {
   "termo": "temp=-5a5",
   "fator": "−5 a 5 °C",
-  "mult_MR": 1.071007,
-  "mult_EF": 0.910623,
-  "razao_MR_EF": 1.1761,
+  "mult_MR": 1.074204,
+  "mult_EF": 0.911667,
+  "razao_MR_EF": 1.1783,
   "ic95": [
-   0.9402,
-   1.4326
+   0.9398,
+   1.4349
   ],
   "reamostras": 200,
   "conclusao": "sem diferença detectável"
@@ -80,12 +80,12 @@
  {
   "termo": "neve_solo=acima_10",
   "fator": "Mais de 10 cm de neve no solo",
-  "mult_MR": 1.373639,
-  "mult_EF": 1.377093,
-  "razao_MR_EF": 0.9975,
+  "mult_MR": 1.367725,
+  "mult_EF": 1.367441,
+  "razao_MR_EF": 1.0002,
   "ic95": [
-   0.752,
-   1.359
+   0.7516,
+   1.364
   ],
   "reamostras": 200,
   "conclusao": "sem diferença detectável"
@@ -93,12 +93,12 @@
  {
   "termo": "precip=acima_1mm",
   "fator": "Precipitação acima de 1 mm/h",
-  "mult_MR": 0.950247,
-  "mult_EF": 1.149881,
-  "razao_MR_EF": 0.8264,
+  "mult_MR": 0.950781,
+  "mult_EF": 1.152136,
+  "razao_MR_EF": 0.8252,
   "ic95": [
-   0.5989,
-   1.1327
+   0.5972,
+   1.1314
   ],
   "reamostras": 200,
   "conclusao": "sem diferença detectável"
@@ -106,12 +106,12 @@
  {
   "termo": "cond=neve",
   "fator": "Neve",
-  "mult_MR": 0.871586,
-  "mult_EF": 0.748972,
-  "razao_MR_EF": 1.1637,
+  "mult_MR": 0.871604,
+  "mult_EF": 0.74883,
+  "razao_MR_EF": 1.164,
   "ic95": [
-   0.9073,
-   1.4584
+   0.9064,
+   1.4576
   ],
   "reamostras": 200,
   "conclusao": "sem diferença detectável"
@@ -119,12 +119,12 @@
  {
   "termo": "cond=chuva_congelante",
   "fator": "Chuva congelante",
-  "mult_MR": 0.889545,
-  "mult_EF": 0.688552,
-  "razao_MR_EF": 1.2919,
+  "mult_MR": 0.888771,
+  "mult_EF": 0.685143,
+  "razao_MR_EF": 1.2972,
   "ic95": [
-   0.6348,
-   3.263
+   0.6359,
+   3.257
   ],
   "reamostras": 200,
   "conclusao": "sem diferença detectável"

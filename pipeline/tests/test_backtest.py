@@ -41,8 +41,29 @@ def test_greve_separada_e_minutos(bt):
         assert m["ic95"][0] <= m["mediana"] <= m["ic95"][1] and m["observado"] > 0
 
 
+def test_alvos_da_revisao_por_familia_e_5_min(bt):
+    """Spec 020: o backtest refeito traz os alvos por família e de 5 min ou mais, em todas as versões."""
+    linhas = ("verde", "laranja", "amarela", "azul")
+    for v, x in bt.items():
+        assert len(x["casos_familia"]) == 144, v
+        for c in ("MR", "EF"):
+            assert x["cobertura_por_familia"][c]["casos"] == 72
+        for l in linhas:
+            g = x["ge5_ano"][l]
+            assert g["ic95"][0] <= g["mediana"] <= g["ic95"][1]
+            assert g["observado"] >= sum(x["ge5_familia"][f"{l}|{c}"]["observado"] for c in ("MR", "EF"))  # o total soma a causa comum
+            assert x["minutos_ano"][l]["observado"] >= sum(x["minutos_familia"][f"{l}|{c}"]["observado"] for c in ("MR", "EF"))
+        # a contagem mensal da família soma a do total
+        tot = {(c["linha"], c["mes"]): c["observado"] for c in x["casos"]}
+        fam = {}
+        for c in x["casos_familia"]:
+            fam[(c["linha"], c["mes"])] = fam.get((c["linha"], c["mes"]), 0) + c["observado"]
+        assert fam == tot, v
+
+
 def test_relatorio_lista_falhas_e_registro():
     texto = open("fontes/verificacao/backtest.md", encoding="utf-8").read()
-    for secao in ("## Cobertura do intervalo de predição de 90%", "## Registro de mudança", "## Onde o modelo falhou", "## PIT", "## Minutos parados"):
+    for secao in ("## Cobertura do intervalo de predição de 90%", "## Registro de mudança", "## Onde o modelo falhou", "## PIT", "## Minutos parados",
+                  "após a revisão (pós-hoc, spec 020)", "## Por família", "## Falhas de 5 min ou mais"):
         assert secao in texto
     assert os.path.exists("fontes/verificacao/backtest_pit.svg")

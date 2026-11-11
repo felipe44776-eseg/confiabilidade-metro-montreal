@@ -113,6 +113,105 @@
     "issue": null,
     "paginas": null
    }
+  },
+  {
+   "consulta": "Resilience of Transportation Systems: Concepts and Comprehensive Review",
+   "autor": "Zhou",
+   "ano_citado": 2019,
+   "consultado_em": "2026-11-10",
+   "crossref": {
+    "titulo": "Resilience of Transportation Systems: Concepts and Comprehensive Review",
+    "doi": "10.1109/tits.2018.2883766",
+    "ano": 2019,
+    "revista": "IEEE Transactions on Intelligent Transportation Systems",
+    "volume": "20",
+    "issue": "12",
+    "paginas": "4262-4276",
+    "primeiro_autor": "Zhou",
+    "licenca": [
+     "https://ieeexplore.ieee.org/Xplorehelp/downloads/license-information/IEEE.html",
+     "https://doi.org/10.15223/policy-029"
+    ]
+   }
+  },
+  {
+   "consulta": "A Review of Resilient Transportation Systems in the Last Five Years",
+   "autor": "Chen",
+   "ano_citado": 2023,
+   "consultado_em": "2026-11-10",
+   "crossref": {
+    "titulo": "A Review of Resilient Transportation Systems in the Last Five Years",
+    "doi": "10.1109/ictis60134.2023.10243879",
+    "ano": 2023,
+    "revista": "2023 7th International Conference on Transportation Information and Safety (ICTIS)",
+    "volume": "",
+    "issue": "",
+    "paginas": "521-529",
+    "primeiro_autor": "Chen",
+    "licenca": [
+     "https://doi.org/10.15223/policy-029",
+     "https://doi.org/10.15223/policy-037"
+    ]
+   }
+  },
+  {
+   "consulta": "Software Safety in Subway and Air Traffic Control Applications",
+   "autor": "Almeida",
+   "ano_citado": 2008,
+   "consultado_em": "2026-11-10",
+   "crossref": {
+    "titulo": "Software Safety in Subway and Air Traffic Control Applications",
+    "doi": "10.1109/tla.2008.4461639",
+    "ano": 2008,
+    "revista": "IEEE Latin America Transactions",
+    "volume": "6",
+    "issue": "1",
+    "paginas": "106-113",
+    "primeiro_autor": "de Almeida",
+    "licenca": [
+     "https://ieeexplore.ieee.org/Xplorehelp/downloads/license-information/IEEE.html"
+    ]
+   }
+  },
+  {
+   "consulta": "Performability Evaluation of Railway Systems: A Study on the Impact of Adding Alternative Routes",
+   "autor": "Marinho",
+   "ano_citado": 2023,
+   "consultado_em": "2026-11-10",
+   "crossref": {
+    "titulo": "Performability Evaluation of Railway Systems: A Study on the Impact of Adding Alternative Routes",
+    "doi": "10.1109/tla.2023.10015219",
+    "ano": 2023,
+    "revista": "IEEE Latin America Transactions",
+    "volume": "21",
+    "issue": "2",
+    "paginas": "270-276",
+    "primeiro_autor": "Marinho",
+    "licenca": [
+     "https://ieeexplore.ieee.org/Xplorehelp/downloads/license-information/IEEE.html",
+     "https://doi.org/10.15223/policy-029"
+    ]
+   }
+  },
+  {
+   "consulta": "Infrastructure availability and urban railway performability",
+   "autor": "Santos Neto",
+   "ano_citado": 2027,
+   "consultado_em": "2026-11-10",
+   "crossref": {
+    "titulo": "Infrastructure availability and urban railway performability: A stochastic petri net approach to resilience, congestion, and service reliability",
+    "doi": "10.1016/j.ress.2026.113439",
+    "ano": 2027,
+    "revista": "Reliability Engineering &amp; System Safety",
+    "volume": "278",
+    "issue": "",
+    "paginas": "113439",
+    "primeiro_autor": "dos Santos Neto",
+    "licenca": [
+     "https://www.elsevier.com/tdm/userlicense/1.0/",
+     "https://www.elsevier.com/legal/tdmrep-license"
+    ]
+   }
   }
  ]
 }

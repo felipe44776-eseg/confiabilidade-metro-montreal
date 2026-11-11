@@ -122,6 +122,10 @@ Relatórios de validação: <a href="verificacao/validacao_geo.html">base geoesp
 <a href="verificacao/modelo_taxa.html">modelo da taxa de falha</a> (e <a href="verificacao/modelo_taxa_por_faixa.html">por faixa do dia</a>),
 <a href="verificacao/distribuicoes.html">distribuições</a>, <a href="verificacao/politicas.html">políticas</a>, <a href="verificacao/expansao.html">expansão da rede</a>
 e <a href="verificacao/backtest.html">validação contra o histórico</a>.
+Revisão de 2026-11 (após a ressegmentação): <a href="verificacao/fontes_e_duracoes.html">fontes e durações</a>, <a href="verificacao/taxa_por_fonte.html">taxa por fonte</a>,
+<a href="verificacao/fora_da_amostra.html">um ano de fora</a>,
+<a href="verificacao/revalidacao.html">simulador contra o histórico</a>, <a href="verificacao/revisao_2026-11.html">números antes e depois</a>
+e <a href="{REPO}/tree/main/fontes/verificacao/preregistro">previsões pré-registradas</a>; a versão anterior continua em <a href="../versoes/v1.1.0/">/versoes/v1.1.0/</a>.
 Dicionário de dados e fatores sem fonte: <a href="../docs/dicionario/">dicionário de dados</a>. Decisões: <a href="../decisoes/">registro de decisões</a>.
 Manifesto: <a href="fontes_manifesto.json">fontes_manifesto.json</a>.</p>
 {relatorio}

@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-11-10T15:37:40+00:00",
+ "gerado_em": "2026-11-11T04:41:10+00:00",
  "release": "dados-2026-10-20",
  "releases": [
   "dados-2026-10-20",
@@ -1554,8 +1554,8 @@
     "stm_incidentes"
    ],
    "script": "pipeline/normaliza.py",
-   "bytes": 1296,
-   "sha256": "ab2df07c0089340f80e6195948597ff1fa2965adf17bc0d83caa6dcdfb15f805"
+   "bytes": 1644,
+   "sha256": "80b84cba41afaf6f25c82c2a64f47723631d33df2ffbf9d382b884646347a533"
   },
   {
    "arquivo": "dados/derivados/exposicao/perfil_horario.csv",
@@ -1578,8 +1578,8 @@
     "greves_stm"
    ],
    "script": "pipeline/exposicao.py",
-   "bytes": 961775,
-   "sha256": "2181559764dc458d6096a4876cc70c2f0243a406b2aeadfff69f3f3a4d37831a"
+   "bytes": 836511,
+   "sha256": "4ad49baa4aba237f96c1489083ba64f591c03a92495c5cf6ea37c19fbbe31f63"
   },
   {
    "arquivo": "dados/derivados/exposicao/calibracao_mensal.csv",
@@ -1590,8 +1590,8 @@
     "greves_stm"
    ],
    "script": "pipeline/exposicao.py",
-   "bytes": 9087,
-   "sha256": "f21e5dd31494de86d8be509263c95a2156513af73952e3623792049207ee43aa"
+   "bytes": 14138,
+   "sha256": "5f40c6ce5372bcade9f6b12707fa8b4b21e0b660fe8b57ec7c31ae4c024bb2ec"
   },
   {
    "arquivo": "dados/derivados/exposicao/frota_mensal.csv",
@@ -1602,8 +1602,20 @@
     "greves_stm"
    ],
    "script": "pipeline/exposicao.py",
-   "bytes": 76255,
-   "sha256": "8dcfb3992af4cc8fc02abd0615e35f515194f5b8415b23574d1b613e74e66861"
+   "bytes": 74377,
+   "sha256": "694f08bff23e0bd25101c7aec16af7c4e71b3f17c26a89d5b120d9dfc4ebef0e"
+  },
+  {
+   "arquivo": "dados/derivados/exposicao/frota_diaria.csv",
+   "de": [
+    "gtfs_stm",
+    "stm_km_reel",
+    "nager_*",
+    "greves_stm"
+   ],
+   "script": "pipeline/exposicao.py",
+   "bytes": 768324,
+   "sha256": "204f2192eef92008961b7329ba5b452f43c73ad27b834405cfa17c82cf58e33c"
   },
   {
    "arquivo": "dados/derivados/exposicao/resumo_exposicao.json",
@@ -1614,8 +1626,8 @@
     "greves_stm"
    ],
    "script": "pipeline/exposicao.py",
-   "bytes": 1192,
-   "sha256": "9b29077cd5e013db0fe2ccda3af701dfe77d58874ecc3396ffd1413f9eb9957f"
+   "bytes": 1306,
+   "sha256": "66a9f36d532014ea3143dfd5ccd762a4104cf069370f80fec7be60b4729c0e44"
   },
   {
    "arquivo": "dados/derivados/clima/painel_horario.csv",
@@ -1671,8 +1683,8 @@
     "greves_stm"
    ],
    "script": "pipeline/modelo_taxa.py",
-   "bytes": 10545,
-   "sha256": "a1d10bd23c47008680088808b8b87949899f00a96b7c76def48a22ab7f43db0b"
+   "bytes": 10529,
+   "sha256": "fbc99fca87e8a5ed51d7eed7fb4f094635b0ed77c1a16cce373cbfac10447072"
   },
   {
    "arquivo": "dados/derivados/modelos/taxa_EF.json",
@@ -1686,8 +1698,8 @@
     "greves_stm"
    ],
    "script": "pipeline/modelo_taxa.py",
-   "bytes": 10537,
-   "sha256": "5bf69987d2e9fc8b748300540b68bee1a262343290e6b18b032a4866d646b50f"
+   "bytes": 10539,
+   "sha256": "1aa631130ae769364b9143a47d32d56818b8a2b462b26c37ed23cb1648a6c3ac"
   },
   {
    "arquivo": "dados/derivados/modelos/painel_modelo.csv.gz",
@@ -1701,8 +1713,38 @@
     "greves_stm"
    ],
    "script": "pipeline/modelo_taxa.py",
-   "bytes": 3987710,
-   "sha256": "a7361f12cdaf9a3a2af95f1c47eb3242a9ade117ad96dd1863f4e59c2da258f7"
+   "bytes": 11491598,
+   "sha256": "4a1bbb37a55667aa8b4414df60afaf02f023b09e8dfa1ca2cd69f6c1f8baed87"
+  },
+  {
+   "arquivo": "dados/derivados/modelos/taxa_fontes.json",
+   "de": [
+    "stm_incidentes",
+    "gtfs_stm",
+    "stm_km_reel",
+    "eccc_horario_*",
+    "nhl_*",
+    "f1_villeneuve",
+    "greves_stm"
+   ],
+   "script": "pipeline/modelo_taxa.py",
+   "bytes": 67182,
+   "sha256": "607c4c0f1ae287c4029142a8db1949ab0767342e84a4b8e712dff0f2bb1712a3"
+  },
+  {
+   "arquivo": "dados/derivados/modelos/vetores_bootstrap.json.gz",
+   "de": [
+    "stm_incidentes",
+    "gtfs_stm",
+    "stm_km_reel",
+    "eccc_horario_*",
+    "nhl_*",
+    "f1_villeneuve",
+    "greves_stm"
+   ],
+   "script": "pipeline/modelo_taxa.py",
+   "bytes": 384221,
+   "sha256": "4cb98b442997632fceb9d135f61a7af145afb529edb8b8d9a5812c6469961bc0"
   },
   {
    "arquivo": "dados/derivados/modelos/distribuicoes.json",
@@ -1710,8 +1752,8 @@
     "stm_incidentes"
    ],
    "script": "pipeline/distribuicoes.py",
-   "bytes": 38974,
-   "sha256": "4e7d67f1c8ed41a20a293465706507d2938abe48484aed11cbb0a88c1d6868bb"
+   "bytes": 106737,
+   "sha256": "464b953978228a8cfae5647a9c83682936a2b3eacf9dbef91de191d56aee5132"
   },
   {
    "arquivo": "dados/derivados/simulador/rede.json",
@@ -1732,8 +1774,8 @@
     "eccc_horario_*"
    ],
    "script": "pipeline/parametros.py",
-   "bytes": 133336,
-   "sha256": "bc7c66aa5e09b4a24a1f98251e1291da5699e27755baa9d9e77c3ea84196b2f4"
+   "bytes": 500354,
+   "sha256": "22bf797b7b0a0bf809513f09f74f19414f32c58ff4de20489aba91a941d46cbd"
   },
   {
    "arquivo": "dados/derivados/simulador/candidatas.json",
@@ -1754,7 +1796,7 @@
    ],
    "script": "pipeline/modelo_taxa.py",
    "bytes": 2431,
-   "sha256": "cfa595612262d7e1a4f9c12719a5d19545fda7c85c06f2f9674812720540171f"
+   "sha256": "42a69fe3ee6a914bfd7e1d31783ad5afd539903cd87153b26079684cd855a0b9"
   },
   {
    "arquivo": "dados/derivados/modelos/backtest.json",
@@ -1765,8 +1807,8 @@
     "eccc_horario_*"
    ],
    "script": "pipeline/backtest.py",
-   "bytes": 71659,
-   "sha256": "02e65f400158f0e03f30a554210e9448f8e9bbab58fd312229416f905501afb5"
+   "bytes": 209149,
+   "sha256": "ae358f03a59b313b5f15187687858b9dd02195ec068f28ba931f0a082b7abd84"
   },
   {
    "arquivo": "dados/derivados/simulador/politicas.json",
@@ -1777,8 +1819,8 @@
     "eccc_horario_*"
    ],
    "script": "app/relatorios/politicas.relatorio.ts",
-   "bytes": 48561,
-   "sha256": "21f87a9e10b5b1d83e70f09be5c258a91054c7eccc694657730dc53320285faa"
+   "bytes": 48600,
+   "sha256": "60bde9ace8fb3651bcacf2296bfbfde52cbc6ac062650c8bfa78400958ae197e"
   },
   {
    "arquivo": "dados/derivados/simulador/expansao.json",
@@ -1789,8 +1831,32 @@
     "osm_metro"
    ],
    "script": "app/relatorios/expansao.relatorio.ts",
-   "bytes": 60615,
-   "sha256": "c3fdd0668ce0e1871ebd2ee7446f808693741c911dcec3c4edf98a9dd297a98a"
+   "bytes": 60664,
+   "sha256": "aebc09979c6bf6b95d93e1dfddaae18df632d07a607a23776d4fb7e4d02995eb"
+  },
+  {
+   "arquivo": "dados/derivados/modelos/fora_da_amostra.json",
+   "de": [
+    "stm_incidentes",
+    "gtfs_stm",
+    "stm_km_reel",
+    "eccc_horario_*"
+   ],
+   "script": "pipeline/fora_da_amostra.py",
+   "bytes": 8354,
+   "sha256": "2ee8b4bc528e4d2cef1599f8083d708b5c0acbabd3d1e0175fa6be3ee62ec8a8"
+  },
+  {
+   "arquivo": "dados/derivados/simulador/revalidacao.json",
+   "de": [
+    "stm_incidentes",
+    "gtfs_stm",
+    "stm_km_reel",
+    "eccc_horario_*"
+   ],
+   "script": "app/relatorios/revalidacao.relatorio.ts",
+   "bytes": 15857,
+   "sha256": "f6887d32cd967ae5d03ba6796adb6cc9172a20421268410a2ec6b7d3aa41188d"
   }
  ]
 }

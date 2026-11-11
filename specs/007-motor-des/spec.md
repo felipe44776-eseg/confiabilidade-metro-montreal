@@ -4,7 +4,7 @@
 **Fase:** F3 (semanas 4 a 7)
 **Depende de:** 002, 004
 
-> **Revisão em andamento (2026-11-10, decisões D55 a D61).** A ressegmentação das falhas por frota e por setor dos equipamentos fixos e a regra nova de duração vão mudar números desta spec (spec 019). Os resultados abaixo são os da versão v1.1.0, que continua publicada em `/versoes/v1.1.0/`; os novos entram numa seção "Revisão de 2026-11 (após a ressegmentação)", ao lado dos originais, que não se apagam.
+> **Revisão de 2026-11 (após a ressegmentação, decisões D55 a D63).** O motor passou a sortear 9 fontes por linha (spec 019); com os parâmetros da v1.1.0, os 198 casos da referência saem idênticos, e nenhum número desta spec muda. Os resultados abaixo são os da versão v1.1.0, que continua publicada em `/versoes/v1.1.0/`; os revistos estão na seção "Revisão de 2026-11 (após a ressegmentação)", ao lado dos originais.
 
 ## Pergunta de engenharia
 Um modelo da rede, trem a trem, reproduz a operação real sem falhas e permite injetar falhas que se propagam como na prática? O número que responde é o desvio entre a operação simulada sem falhas e o horário publicado.
@@ -39,6 +39,14 @@ Código em `app/src/motor/`; testes em `app/tests/motor/` (`horario`, `falhas`, 
 | Registro com hora, linha, trem, trecho, tipo e origem do sorteio | **Atende** |
 
 Desvios registrados no `plan.md`: o bloco inclui a plataforma de chegada; a escala da renovação Weibull é normalizada para média 1; desde 2026-10-21 a duração positiva é sorteada da amostra observada.
+
+## Revisão de 2026-11 (após a ressegmentação)
+
+*Registrada em 2026-11-10 (decisão D59; spec 019).* Os critérios e os resultados acima não mudam: nenhum depende das taxas.
+
+- **O que mudou no motor:** cada linha deixou de ter duas fontes fixas (MR e EF) e passou a ter a lista do contrato v2, com 9 fontes por frota e setor. Cada fonte tem taxa, renovação, duração, locais e sub-fluxo de números aleatórios próprios. A família da fonte decide o efeito: a de trem para o trem no sentido, a fixa bloqueia o trecho, como antes.
+- **Como se provou que nada mais mudou:** antes da troca, a equipe gravou a referência do motor (198 casos: registro de dias fixos, vetor de métricas, bloqueios origem-destino, viagens com linhas novas e expansão). Com o contrato v1 (v1.1.0), os 198 saem idênticos depois dos passos 1 e 2 da spec 019 (`app/tests/motor/referencia_v1.test.ts`).
+- **Registro:** a falha passa a levar o id da fonte e a classe de gravidade (D58); os rótulos `falhas_mr` e `falhas_ef` continuam, como soma das fontes de cada família.
 
 ## Fora de escopo
 - Física da tração, frenagem e consumo de energia.

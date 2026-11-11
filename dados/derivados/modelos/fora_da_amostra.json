@@ -1,0 +1,470 @@
+{
+ "casos": [
+  {
+   "ano": "2019",
+   "linha": "verde",
+   "familia": "MR",
+   "observado": 373.0,
+   "esperado_v1": 182.51,
+   "esperado_fonte": 396.52
+  },
+  {
+   "ano": "2019",
+   "linha": "verde",
+   "familia": "EF",
+   "observado": 165.0,
+   "esperado_v1": 182.02,
+   "esperado_fonte": 171.22
+  },
+  {
+   "ano": "2019",
+   "linha": "laranja",
+   "familia": "MR",
+   "observado": 159.0,
+   "esperado_v1": 123.98,
+   "esperado_fonte": 122.76
+  },
+  {
+   "ano": "2019",
+   "linha": "laranja",
+   "familia": "EF",
+   "observado": 290.0,
+   "esperado_v1": 297.48,
+   "esperado_fonte": 261.54
+  },
+  {
+   "ano": "2019",
+   "linha": "amarela",
+   "familia": "MR",
+   "observado": 135.0,
+   "esperado_v1": 61.94,
+   "esperado_fonte": 62.23
+  },
+  {
+   "ano": "2019",
+   "linha": "amarela",
+   "familia": "EF",
+   "observado": 51.0,
+   "esperado_v1": 77.77,
+   "esperado_fonte": 54.13
+  },
+  {
+   "ano": "2019",
+   "linha": "azul",
+   "familia": "MR",
+   "observado": 166.0,
+   "esperado_v1": 140.67,
+   "esperado_fonte": 141.16
+  },
+  {
+   "ano": "2019",
+   "linha": "azul",
+   "familia": "EF",
+   "observado": 66.0,
+   "esperado_v1": 58.88,
+   "esperado_fonte": 53.9
+  },
+  {
+   "ano": "2020",
+   "linha": "verde",
+   "familia": "MR",
+   "observado": 277.0,
+   "esperado_v1": 185.92,
+   "esperado_fonte": 318.24
+  },
+  {
+   "ano": "2020",
+   "linha": "verde",
+   "familia": "EF",
+   "observado": 107.0,
+   "esperado_v1": 182.54,
+   "esperado_fonte": 170.05
+  },
+  {
+   "ano": "2020",
+   "linha": "laranja",
+   "familia": "MR",
+   "observado": 145.0,
+   "esperado_v1": 117.34,
+   "esperado_fonte": 117.51
+  },
+  {
+   "ano": "2020",
+   "linha": "laranja",
+   "familia": "EF",
+   "observado": 231.0,
+   "esperado_v1": 289.48,
+   "esperado_fonte": 252.32
+  },
+  {
+   "ano": "2020",
+   "linha": "amarela",
+   "familia": "MR",
+   "observado": 56.0,
+   "esperado_v1": 68.69,
+   "esperado_fonte": 69.89
+  },
+  {
+   "ano": "2020",
+   "linha": "amarela",
+   "familia": "EF",
+   "observado": 18.0,
+   "esperado_v1": 76.95,
+   "esperado_fonte": 52.79
+  },
+  {
+   "ano": "2020",
+   "linha": "azul",
+   "familia": "MR",
+   "observado": 136.0,
+   "esperado_v1": 136.27,
+   "esperado_fonte": 139.49
+  },
+  {
+   "ano": "2020",
+   "linha": "azul",
+   "familia": "EF",
+   "observado": 31.0,
+   "esperado_v1": 61.1,
+   "esperado_fonte": 55.43
+  },
+  {
+   "ano": "2021",
+   "linha": "verde",
+   "familia": "MR",
+   "observado": 145.0,
+   "esperado_v1": 200.99,
+   "esperado_fonte": 170.92
+  },
+  {
+   "ano": "2021",
+   "linha": "verde",
+   "familia": "EF",
+   "observado": 194.0,
+   "esperado_v1": 167.76,
+   "esperado_fonte": 155.79
+  },
+  {
+   "ano": "2021",
+   "linha": "laranja",
+   "familia": "MR",
+   "observado": 132.0,
+   "esperado_v1": 117.23,
+   "esperado_fonte": 116.8
+  },
+  {
+   "ano": "2021",
+   "linha": "laranja",
+   "familia": "EF",
+   "observado": 222.0,
+   "esperado_v1": 293.36,
+   "esperado_fonte": 253.86
+  },
+  {
+   "ano": "2021",
+   "linha": "amarela",
+   "familia": "MR",
+   "observado": 43.0,
+   "esperado_v1": 68.64,
+   "esperado_fonte": 70.13
+  },
+  {
+   "ano": "2021",
+   "linha": "amarela",
+   "familia": "EF",
+   "observado": 43.0,
+   "esperado_v1": 72.95,
+   "esperado_fonte": 50.49
+  },
+  {
+   "ano": "2021",
+   "linha": "azul",
+   "familia": "MR",
+   "observado": 111.0,
+   "esperado_v1": 135.19,
+   "esperado_fonte": 138.84
+  },
+  {
+   "ano": "2021",
+   "linha": "azul",
+   "familia": "EF",
+   "observado": 42.0,
+   "esperado_v1": 58.62,
+   "esperado_fonte": 53.14
+  },
+  {
+   "ano": "2022",
+   "linha": "verde",
+   "familia": "MR",
+   "observado": 182.0,
+   "esperado_v1": 194.06,
+   "esperado_fonte": 159.38
+  },
+  {
+   "ano": "2022",
+   "linha": "verde",
+   "familia": "EF",
+   "observado": 156.0,
+   "esperado_v1": 172.62,
+   "esperado_fonte": 160.04
+  },
+  {
+   "ano": "2022",
+   "linha": "laranja",
+   "familia": "MR",
+   "observado": 80.0,
+   "esperado_v1": 123.96,
+   "esperado_fonte": 124.64
+  },
+  {
+   "ano": "2022",
+   "linha": "laranja",
+   "familia": "EF",
+   "observado": 303.0,
+   "esperado_v1": 277.1,
+   "esperado_fonte": 239.5
+  },
+  {
+   "ano": "2022",
+   "linha": "amarela",
+   "familia": "MR",
+   "observado": 76.0,
+   "esperado_v1": 68.37,
+   "esperado_fonte": 70.16
+  },
+  {
+   "ano": "2022",
+   "linha": "amarela",
+   "familia": "EF",
+   "observado": 53.0,
+   "esperado_v1": 75.99,
+   "esperado_fonte": 50.36
+  },
+  {
+   "ano": "2022",
+   "linha": "azul",
+   "familia": "MR",
+   "observado": 151.0,
+   "esperado_v1": 127.26,
+   "esperado_fonte": 131.61
+  },
+  {
+   "ano": "2022",
+   "linha": "azul",
+   "familia": "EF",
+   "observado": 53.0,
+   "esperado_v1": 56.09,
+   "esperado_fonte": 50.4
+  },
+  {
+   "ano": "2023",
+   "linha": "verde",
+   "familia": "MR",
+   "observado": 157.0,
+   "esperado_v1": 180.72,
+   "esperado_fonte": 176.58
+  },
+  {
+   "ano": "2023",
+   "linha": "verde",
+   "familia": "EF",
+   "observado": 209.0,
+   "esperado_v1": 150.65,
+   "esperado_fonte": 140.57
+  },
+  {
+   "ano": "2023",
+   "linha": "laranja",
+   "familia": "MR",
+   "observado": 120.0,
+   "esperado_v1": 113.74,
+   "esperado_fonte": 113.29
+  },
+  {
+   "ano": "2023",
+   "linha": "laranja",
+   "familia": "EF",
+   "observado": 292.0,
+   "esperado_v1": 270.26,
+   "esperado_fonte": 235.55
+  },
+  {
+   "ano": "2023",
+   "linha": "amarela",
+   "familia": "MR",
+   "observado": 66.0,
+   "esperado_v1": 90.86,
+   "esperado_fonte": 92.8
+  },
+  {
+   "ano": "2023",
+   "linha": "amarela",
+   "familia": "EF",
+   "observado": 63.0,
+   "esperado_v1": 97.54,
+   "esperado_fonte": 66.14
+  },
+  {
+   "ano": "2023",
+   "linha": "azul",
+   "familia": "MR",
+   "observado": 137.0,
+   "esperado_v1": 126.31,
+   "esperado_fonte": 129.89
+  },
+  {
+   "ano": "2023",
+   "linha": "azul",
+   "familia": "EF",
+   "observado": 52.0,
+   "esperado_v1": 55.05,
+   "esperado_fonte": 49.82
+  },
+  {
+   "ano": "2024",
+   "linha": "verde",
+   "familia": "MR",
+   "observado": 132.0,
+   "esperado_v1": 196.32,
+   "esperado_fonte": 125.48
+  },
+  {
+   "ano": "2024",
+   "linha": "verde",
+   "familia": "EF",
+   "observado": 209.0,
+   "esperado_v1": 165.01,
+   "esperado_fonte": 155.15
+  },
+  {
+   "ano": "2024",
+   "linha": "laranja",
+   "familia": "MR",
+   "observado": 89.0,
+   "esperado_v1": 120.06,
+   "esperado_fonte": 121.28
+  },
+  {
+   "ano": "2024",
+   "linha": "laranja",
+   "familia": "EF",
+   "observado": 400.0,
+   "esperado_v1": 265.97,
+   "esperado_fonte": 241.86
+  },
+  {
+   "ano": "2024",
+   "linha": "amarela",
+   "familia": "MR",
+   "observado": 75.0,
+   "esperado_v1": 69.93,
+   "esperado_fonte": 71.82
+  },
+  {
+   "ano": "2024",
+   "linha": "amarela",
+   "familia": "EF",
+   "observado": 328.0,
+   "esperado_v1": 41.37,
+   "esperado_fonte": 35.62
+  },
+  {
+   "ano": "2024",
+   "linha": "azul",
+   "familia": "MR",
+   "observado": 116.0,
+   "esperado_v1": 129.32,
+   "esperado_fonte": 133.66
+  },
+  {
+   "ano": "2024",
+   "linha": "azul",
+   "familia": "EF",
+   "observado": 128.0,
+   "esperado_v1": 45.92,
+   "esperado_fonte": 43.11
+  },
+  {
+   "ano": "2025",
+   "linha": "verde",
+   "familia": "MR",
+   "observado": 135.0,
+   "esperado_v1": 195.76,
+   "esperado_fonte": 130.33
+  },
+  {
+   "ano": "2025",
+   "linha": "verde",
+   "familia": "EF",
+   "observado": 153.0,
+   "esperado_v1": 165.3,
+   "esperado_fonte": 153.67
+  },
+  {
+   "ano": "2025",
+   "linha": "laranja",
+   "familia": "MR",
+   "observado": 125.0,
+   "esperado_v1": 114.03,
+   "esperado_fonte": 113.58
+  },
+  {
+   "ano": "2025",
+   "linha": "laranja",
+   "familia": "EF",
+   "observado": 263.0,
+   "esperado_v1": 270.14,
+   "esperado_fonte": 233.78
+  },
+  {
+   "ano": "2025",
+   "linha": "amarela",
+   "familia": "MR",
+   "observado": 60.0,
+   "esperado_v1": 69.32,
+   "esperado_fonte": 70.95
+  },
+  {
+   "ano": "2025",
+   "linha": "amarela",
+   "familia": "EF",
+   "observado": 19.0,
+   "esperado_v1": 77.72,
+   "esperado_fonte": 51.76
+  },
+  {
+   "ano": "2025",
+   "linha": "azul",
+   "familia": "MR",
+   "observado": 112.0,
+   "esperado_v1": 130.03,
+   "esperado_fonte": 133.93
+  },
+  {
+   "ano": "2025",
+   "linha": "azul",
+   "familia": "EF",
+   "observado": 41.0,
+   "esperado_v1": 55.43,
+   "esperado_fonte": 49.64
+  }
+ ],
+ "resumo": {
+  "MR|v1": {
+   "rmse_log": 0.3078,
+   "casos": 28
+  },
+  "MR|fonte": {
+   "rmse_log": 0.247,
+   "casos": 28
+  },
+  "EF|v1": {
+   "rmse_log": 0.6464,
+   "casos": 28
+  },
+  "EF|fonte": {
+   "rmse_log": 0.5886,
+   "casos": 28
+  }
+ }
+}

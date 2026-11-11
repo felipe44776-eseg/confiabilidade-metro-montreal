@@ -8,7 +8,7 @@
 // usa números aleatórios comuns: os componentes da rede atual saem iguais com e sem ela.
 
 import type { Contexto } from './contexto';
-import { duracaoMediaMin, preparaContexto, reducaoCausaComum } from './contexto';
+import { duracaoMediaMin, duracaoMediaMistura, familiaNaLinha, preparaContexto, reducaoCausaComum } from './contexto';
 import type { Grafo, LinhaGrafo } from './grafo';
 import { avaliaOD, efeitoBloqueio, linhasDoHorario, montaGrafo } from './grafo';
 import { hipotese } from './hipoteses';
@@ -77,14 +77,14 @@ export interface AvaliacaoEstados {
   semente: number;
 }
 
-interface Componente {
+export interface Componente {
   p: number;
   arestas: number[];
   linhas: string[];
   rotulo: string;
 }
 
-interface ModeloEstados {
+export interface ModeloEstados {
   grafo: Grafo;
   componentes: Componente[];
   minutosJanela: number;
@@ -104,15 +104,15 @@ function taxasDasLinhas(ctx: Contexto): Record<string, TaxasLinha> {
   const saida: Record<string, TaxasLinha> = {};
   for (const linha of ctx.rede.ids) {
     const minutos = Math.max(1, (ctx.horario.fimServico[linha] - ctx.horario.inicioServico[linha]) / 60);
-    const fonte = (c: 'MR' | 'EF') => ctx.fontes.find((f) => f.linha === linha && f.causa === c);
-    const mr = fonte('MR');
-    const ef = fonte('EF');
+    // soma das fontes de cada família na linha (spec 019); no contrato v1, a própria fonte
+    const mr = familiaNaLinha(ctx, linha, 'MR');
+    const ef = familiaNaLinha(ctx, linha, 'EF');
     const km = ctx.rede.linhas[linha].kmTrecho.reduce((a, b) => a + b, 0);
     saida[linha] = {
       mr: mr ? mr.acum[mr.acum.length - 1] / minutos : 0,
       ef: ef ? ef.acum[ef.acum.length - 1] / minutos : 0,
-      dMR: mr ? duracaoMediaMin(mr.duracao) : 0,
-      dEF: ef ? duracaoMediaMin(ef.duracao) : 0,
+      dMR: mr ? duracaoMediaMistura(mr.duracoes) : 0,
+      dEF: ef ? duracaoMediaMistura(ef.duracoes) : 0,
       km,
     };
   }
@@ -191,12 +191,13 @@ function sorteiaFora(rng: Rng, p: Float64Array, pMax: number, saida: number[]): 
   }
 }
 
-interface Acumulador {
+export interface Acumulador {
   od: Float64Array; // por lote: soma da disponibilidade OD
   linha: Record<string, Float64Array>;
 }
 
-function avaliaModelo(m: ModeloEstados, amostras: number, semente: number, rotaAlternativa: boolean, extra?: { comps: Componente[]; semente: number }): Acumulador {
+/** Núcleo do método de estados; exportado para o teste contra a enumeração exata (spec 020, D62). */
+export function avaliaModelo(m: ModeloEstados, amostras: number, semente: number, rotaAlternativa: boolean, extra?: { comps: Componente[]; semente: number }): Acumulador {
   const base = Float64Array.from(m.componentes.map((c) => c.p));
   const pMaxBase = base.reduce((a, b) => Math.max(a, b), 0);
   const ext = extra ? Float64Array.from(extra.comps.map((c) => c.p)) : new Float64Array(0);

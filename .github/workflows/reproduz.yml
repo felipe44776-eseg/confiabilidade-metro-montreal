@@ -13,9 +13,11 @@ permissions:
 jobs:
   reproduzir:
     runs-on: ubuntu-latest
-    timeout-minutes: 300
+    timeout-minutes: 360 # teto dos runners do GitHub; o modelo_taxa com as 9 fontes leva cerca de 80 min numa máquina local
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # o relatório de revalidação (spec 020) compara com os parâmetros da etiqueta v1.1.0
 
       - uses: actions/setup-python@v7
         with:
@@ -42,7 +44,7 @@ jobs:
           python -I pipeline/extrai_gtfs_metro.py dados/brutos/gtfs/gtfs_stm_mdb-2126_latest.zip
           python -I pipeline/extrai_mobilidade.py dados/brutos/google/google_Region_Mobility_Report_CSVs.zip
           for s in monta_painel analise_confiabilidade geo_base normaliza exposicao \
-                   baixa_clima_eventos clima_eventos horario_simulador candidatas modelo_taxa diagnostico_taxa distribuicoes parametros backtest; do
+                   baixa_clima_eventos clima_eventos horario_simulador candidatas modelo_taxa diagnostico_taxa fora_da_amostra distribuicoes parametros backtest; do
             echo "== $s"
             python -I pipeline/$s.py
           done

@@ -11,6 +11,9 @@ pytestmark = pytest.mark.skipif(not os.path.exists(RESUMO), reason="rode pipelin
 # 2019 na Amarela. Revisão de 2026-11: o km real republicado pela STM em 2026-10-23 preencheu o período de exploração
 # de cerca de 80 mil registros que estavam com "#"; a calibração passou de 220 para 228 meses comparados, junho de 2019
 # na Amarela ficou dentro de 10% e maio de 2020 nas três linhas grandes ficou fora.
+# Com o km medido até o fim do modelo (356 meses), novembro de 2025 na Azul também saía (+11,2%), porque o km estimado
+# supunha o dia de greve inteiro; desde a D63 (2026-11-10, depois de ver), o estimado conta só as horas com serviço, e o
+# mês fica a −3,5%.
 EXCECOES = {("verde", "2020-04"), ("azul", "2020-04"), ("laranja", "2020-04"),
             ("verde", "2020-05"), ("azul", "2020-05"), ("laranja", "2020-05")}
 
@@ -43,19 +46,23 @@ def test_sem_trens_de_madrugada():
 
 def test_frotas_somam_o_total_menos_o_tipo_63(resumo):
     km = resumo["km_carro_por_frota"]
-    assert resumo["registros_por_frota"]["MR-63"] == 22
+    assert resumo["registros_por_frota"]["MR-63"] == 26  # 22 na cópia de 2026-10-20 (até 2023-09)
     # o total está em milhões com 4 casas (passo de 100 km): a soma tem de bater até meio passo
     assert abs(resumo["km_carro_total_milhoes"] * 1e6 - km["MR-73"] - km["MPM-10"] - km["MR-63"]) <= 50
     assert resumo["total_menos_mr73_e_mpm10_km"] == pytest.approx(km["MR-63"], abs=0.1)
     with open("dados/derivados/exposicao/frota_mensal.csv", encoding="utf-8") as f:
         fr = list(csv.DictReader(f, delimiter=";"))
-    assert all(r["status"] == ("medido" if r["mes"] <= "2023-09" else "estimado") and r["fonte"] for r in fr)
+    # revisão de 2026-11 (spec 018): km real até 2026-09, então todo o período do modelo é medido
+    assert all(r["status"] == ("medido" if r["mes"] <= "2026-09" else "estimado") and r["fonte"] for r in fr)
 
 
 def test_status_medido_e_estimado():
     with open("dados/derivados/exposicao/exposicao_diaria.csv", encoding="utf-8") as f:
         dias = list(csv.DictReader(f, delimiter=";"))
-    assert all(d["status"] == "medido" for d in dias if d["data_servico"] <= "2023-09-30" and d["fonte_fator"].startswith("km real"))
-    assert all(d["status"] == "estimado" for d in dias if d["data_servico"] > "2023-09-30")
+    # revisão de 2026-11 (spec 018): medido em todo o período, salvo os dias de greve, que ficam com o fator típico nas
+    # horas com serviço (D63: o km real deles inclui serviço fora das faixas, que o modelo não representa)
+    assert all(d["status"] == "medido" for d in dias if d["fonte_fator"].startswith("km real"))
+    estimados = [d for d in dias if d["status"] == "estimado"]
     greve = [d for d in dias if d["greve"] == "1"]
     assert len({d["data_servico"] for d in greve}) == 25
+    assert {(d["data_servico"], d["linha"]) for d in estimados} == {(d["data_servico"], d["linha"]) for d in greve}

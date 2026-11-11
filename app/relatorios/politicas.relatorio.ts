@@ -1,7 +1,7 @@
 // Relatório das specs 008 (políticas) e 009 (Monte Carlo) com o parametros.json real do pipeline.
 // Roda com: npx vitest run --config vitest.relatorios.config.ts relatorios/politicas.relatorio.ts
 // Saídas: ../fontes/verificacao/politicas.md e ../dados/derivados/simulador/politicas.json
-import { writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { it } from 'vitest';
 import type { Estimativa, Rodada } from '../src/mc/rodadas';
@@ -53,6 +53,11 @@ it('relatório das políticas e do Monte Carlo', { timeout: 3_600_000 }, () => {
     anual[l] = anualiza({ util: porTipo.util.porMetrica[m], sabado: porTipo.sabado.porMetrica[m], domingo: porTipo.domingo.porMetrica[m] });
     if (l !== 'rede') precisao[l] = rodadasParaPrecisao(porTipo.util.porMetrica[m]);
   }
+  // painel do site (média de 2019 a 2026): Laranja sozinha, Monte Carlo e analítico
+  const corredor = JSON.parse(readFileSync(resolve(RAIZ, 'dados/derivados/painel/corredor.json'), 'utf8')) as { cenario: string; sim_min_ano: number; min_ano_analitico: number }[];
+  const soLaranja = corredor.find((c) => c.cenario === 'so_laranja')!;
+  const painelMC = soLaranja.sim_min_ano;
+  const painelAna = soLaranja.min_ano_analitico;
   const ccLaranja = anualiza({
     util: porTipo.util.porMetrica['laranja.minutosCC'],
     sabado: porTipo.sabado.porMetrica['laranja.minutosCC'],
@@ -114,10 +119,10 @@ it('relatório das políticas e do Monte Carlo', { timeout: 3_600_000 }, () => {
   L.push(
     `| rede (soma) | ${ic(anual.rede, 0)} | disponibilidade origem-destino ${fmt(100 * porTipo.util.porMetrica['rede.dispOD'].media, 3)}% | |`,
     '',
-    `Laranja contra o painel: o painel tem 1.852 min/ano (Monte Carlo) e 1.797 (analítico). O intervalo do motor é ${fmt(anual.laranja.ic95[0], 0)} a ${fmt(anual.laranja.ic95[1], 0)} ` +
-      `(${anual.laranja.ic95[0] <= 1852 && 1852 <= anual.laranja.ic95[1] ? 'contém 1.852' : 'não contém 1.852'}; ${anual.laranja.ic95[0] <= 1797 && 1797 <= anual.laranja.ic95[1] ? 'contém 1.797' : 'não contém 1.797'}). ` +
+    `Laranja contra o painel: o painel tem ${fmt(painelMC, 0)} min/ano (Monte Carlo) e ${fmt(painelAna, 0)} (analítico), lidos de \`dados/derivados/painel/corredor.json\` (na v1.1.0, 1.852 e 1.797). O intervalo do motor é ${fmt(anual.laranja.ic95[0], 0)} a ${fmt(anual.laranja.ic95[1], 0)} ` +
+      `(${anual.laranja.ic95[0] <= painelMC && painelMC <= anual.laranja.ic95[1] ? 'contém' : 'não contém'} ${fmt(painelMC, 0)}; ${anual.laranja.ic95[0] <= painelAna && painelAna <= anual.laranja.ic95[1] ? 'contém' : 'não contém'} ${fmt(painelAna, 0)}). ` +
       `Diferenças de definição: o motor soma a causa comum de todos os grupos de linhas que incluem a Laranja (${fmt(ccLaranja.media, 0)} min/ano; 44 dos 45 eventos multilinha), ` +
-      'o painel só a Verde–Laranja (31 eventos); o motor usa a taxa de 2025 do modelo da spec 005 e o horário do GTFS, o painel a média de 2019 a 2026; ' +
+      'o painel só a Verde–Laranja (31 eventos); o motor usa a taxa de 2025 (por fonte desde a revisão de 2026-11, specs 018 e 019) e o horário do GTFS, o painel a média de 2019 a 2026; ' +
       'o motor conta a união dos intervalos bloqueados (falhas sobrepostas não somam duas vezes), o painel soma as durações. ' +
       'A duração positiva é sorteada da amostra observada (a média observada era 23% a 29% maior que a da lognormal na Laranja; decisão de 2026-10-21).',
     '',

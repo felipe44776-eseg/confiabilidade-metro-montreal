@@ -4,7 +4,7 @@
 **Fase:** F1 (semanas 2 e 3)
 **Depende de:** 000, 001, 002
 
-> **Revisão em andamento (2026-11-10, decisões D55 a D61).** A ressegmentação das falhas por frota e por setor dos equipamentos fixos e a regra nova de duração vão mudar números desta spec (spec 018). Os resultados abaixo são os da versão v1.1.0, que continua publicada em `/versoes/v1.1.0/`; os novos entram numa seção "Revisão de 2026-11 (após a ressegmentação)", ao lado dos originais, que não se apagam.
+> **Revisão de 2026-11 (após a ressegmentação, decisões D55 a D63).** O km real republicado pela STM estende a exposição medida até 2026-06. Os resultados abaixo são os da versão v1.1.0, que continua publicada em `/versoes/v1.1.0/`; os revistos estão na seção "Revisão de 2026-11 (após a ressegmentação)", ao lado dos originais.
 
 ## Pergunta de engenharia
 Quanto serviço cada linha ofereceu em cada hora, para que a taxa de falha seja medida por exposição e não por tempo de calendário? O número que responde é o erro mensal da exposição estimada contra o km real.
@@ -37,6 +37,28 @@ Script `pipeline/exposicao.py`; testes em `pipeline/tests/test_exposicao.py`; re
 | Greves reduzem a oferta | **Atende**: fração da hora com serviço (spec 003) |
 | MR-73 e MPM-10 somam o total menos os 22 registros do tipo 63 | **Atende**: diferença de 15,7 km, igual ao km do tipo 63 |
 | Cada valor com fonte e status | **Atende**: `exposicao_diaria.csv` e `frota_mensal.csv` |
+
+## Revisão de 2026-11 (após a ressegmentação)
+
+*Registrada em 2026-11-10 (decisões D18, D57 e D63; spec 018).* Os critérios acima não mudam, e o resultado de 2026-10-21 (216 de 220 meses, erro mediano de 0,44%) continua sendo o da v1.1.0.
+
+- **O que mudou na entrada:** a STM republicou o km real em 2026-10-23, de 2019-01 a 2026-09 (Release `dados-2026-11`). Nos 57 meses em comum, os km por mês, linha e frota são iguais aos da cópia de 2026-10-20, e o arquivo novo preenche o período de exploração de cerca de 80 mil registros que estavam com "#".
+- **O que mudou no método:**
+  - a exposição passa a ser medida até 2026-06-30, o fim dos incidentes;
+  - *depois de ver (D63):* os 25 dias de greve ficam com o fator típico da linha e do tipo de dia (status "estimado"), nas horas com serviço. O km real deles inclui serviço fora das faixas, que o modelo não representa, e usá-lo com a fração da hora contava a redução duas vezes;
+  - a parcela de cada frota passa a ser medida por dia (`frota_diaria.csv`), para o modelo empilhado por frota da spec 018. Na v1.1.0, depois de 2023-09 ela era suposta igual à dos últimos 12 meses medidos (2022-10 a 2023-09). Na Verde em 2025, a parcela suposta de MPM-10 era 72,8%; a medida é 85,4% (`frota_por_linha` do contrato);
+  - os fatores de calibração por linha e período de exploração mudam com os períodos preenchidos, e a lista de meses acima de 10% muda.
+
+| Número | v1.1.0 | Após a revisão |
+|---|---|---|
+| Meses-linha comparados com o km real | 220 (2019-01 a 2023-09) | 356 (até 2026-06) |
+| Meses acima de 10% | 4: abril de 2020 nas três linhas grandes e junho de 2019 na Amarela | 6: abril e maio de 2020 nas três linhas grandes |
+| Meses dentro de 10% | 98,18% | 98,31% |
+| Erro absoluto mediano | 0,44% | 0,50% |
+| Dias-linha com fator medido / estimado | 6.936 / 4.016 | 10.852 / 100 (os 25 dias de greve × 4 linhas) |
+| Km-carro do km real | 411,63 milhões | 666,57 milhões (2019-01 a 2026-09) |
+
+O critério de 10% continua com exceção: 6 meses fora, todos do início da pandemia, listados em [`exposicao.md`](../../fontes/verificacao/exposicao.md). Em junho e novembro de 2025, os meses com mais dias de greve, o erro fica de −2,6% a −6,0%: o km real tem o serviço fora das faixas, e o estimado não.
 
 ## Fora de escopo
 - Exposição por passageiro: não existe dado diário de passageiros.

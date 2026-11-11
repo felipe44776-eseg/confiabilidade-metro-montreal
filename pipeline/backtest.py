@@ -154,6 +154,7 @@ def avalia(nome, cfg, painel, ev, cc, rng):
     ev_treino = [r for r in ev if r["data_servico"] <= corte]
     contagens = {c: {l: [] for l in LINHAS} for c in ("MR", "EF")}
     minutos = {c: {l: [] for l in LINHAS} for c in ("MR", "EF")}
+    ge5 = {c: {l: [] for l in LINHAS} for c in ("MR", "EF")}  # falhas de 5 min ou mais no primeiro ano (spec 020)
     formas, n_vetores = {}, {}
     for causa in ("MR", "EF"):
         colunas, vetores, alpha, mu_treino = ajusta_com_bootstrap(treino, causa, B, rng)
@@ -184,13 +185,16 @@ def avalia(nome, cfg, painel, ev, cc, rng):
                     n1 = int(no_ano_min[hora].sum())
                     dur = np.where(rng.uniform(size=n1) < p0, 0.0, rng.choice(positivos, n1))
                     minutos[causa][l].append(float(dur.sum()))
+                    ge5[causa][l].append(int((dur >= 5).sum()))
     # MR + EF caminho a caminho; se o bootstrap descartou reamostras numa causa, corta no menor número de caminhos
     n = min(len(contagens[c][l]) for c in ("MR", "EF") for l in LINHAS)
     total = {l: np.array(contagens["MR"][l][:n]) + np.array(contagens["EF"][l][:n]) for l in LINHAS}
     m_tec = {l: np.array(minutos["MR"][l][:n]) + np.array(minutos["EF"][l][:n]) for l in LINHAS}
+    g_tec = {l: np.array(ge5["MR"][l][:n]) + np.array(ge5["EF"][l][:n]) for l in LINHAS}
     # causa comum no primeiro ano do teste: Poisson com a taxa do treino por hora de operação, duração do treino
     horas_treino = ((date.fromisoformat(corte) - date(2019, 1, 1)).days + 1) * 20
     cc_min = {l: np.zeros(n) for l in LINHAS}
+    cc_ge5 = {l: np.zeros(n) for l in LINHAS}
     for l in LINHAS:
         sel = [r for r in cc if r["data_servico"] <= corte and l in r["linhas"].split(",")]
         if not sel:
@@ -199,7 +203,9 @@ def avalia(nome, cfg, painel, ev, cc, rng):
         p0 = float((d == 0).mean())
         positivos = d[d > 0].astype(float)
         ks = rng.poisson(len(sel) / horas_treino * 365 * 20, n)
-        cc_min[l] = np.array([np.sum(np.where(rng.uniform(size=k) < p0, 0, rng.choice(positivos, k))) for k in ks])
+        sorteios = [np.where(rng.uniform(size=k) < p0, 0, rng.choice(positivos, k)) for k in ks]  # mesma ordem de sorteio de antes
+        cc_min[l] = np.array([np.sum(s) for s in sorteios])
+        cc_ge5[l] = np.array([np.sum(s >= 5) for s in sorteios])
 
     obs = teste.groupby(["linha", "mes"])[["y_MR", "y_EF"]].sum()
     casos = []
@@ -212,21 +218,41 @@ def avalia(nome, cfg, painel, ev, cc, rng):
             pit = F(y - 1) + rng.uniform() * (F(y) - F(y - 1))
             casos.append({"linha": l, "mes": m, "observado": y, "mediana": float(q50), "ip90": [float(q05), float(q95)],
                           "dentro": bool(q05 <= y <= q95), "acima": bool(y > q95), "pit": round(pit, 4), "greve": m in MESES_GREVE})
-    observado_min = defaultdict(float)
+    # por família (spec 020): só o intervalo, sem PIT, para não gastar sorteios e manter a sequência do total
+    casos_familia = []
+    for c in ("MR", "EF"):
+        for l in LINHAS:
+            sim = np.array(contagens[c][l][:n])
+            for j, m in enumerate(meses):
+                y = int(obs.loc[(l, m), f"y_{c}"])
+                q05, q50, q95 = np.percentile(sim[:, j], [5, 50, 95])
+                casos_familia.append({"familia": c, "linha": l, "mes": m, "observado": y, "mediana": float(q50), "ip90": [float(q05), float(q95)],
+                                      "dentro": bool(q05 <= y <= q95), "acima": bool(y > q95), "greve": m in MESES_GREVE})
+    observado_min, observado_ge5 = defaultdict(float), defaultdict(int)
+    observado_fam, observado_ge5_fam = defaultdict(float), defaultdict(int)
     horas_teste = set(zip(teste["data_servico"], teste["hora"]))
     for r in ev:
         if r["data_servico"].startswith(ano_min) and (r["data_servico"], minuto_servico(r["inicio_local"], r["data_servico"]) // 60) in horas_teste:
-            observado_min[r["linha"]] += int(r["duracao_min"])
+            d = int(r["duracao_min"])
+            observado_min[r["linha"]] += d
+            observado_ge5[r["linha"]] += int(d >= 5)
+            observado_fam[(r["linha"], r["causa"])] += d
+            observado_ge5_fam[(r["linha"], r["causa"])] += int(d >= 5)
     for r in cc:
         if r["data_servico"].startswith(ano_min):
+            d = int(r["duracao_min"])
             for l in r["linhas"].split(","):
-                observado_min[l] += int(r["duracao_min"])
-    minutos_ano = {}
-    for l in LINHAS:
-        s = m_tec[l] + cc_min[l]
+                observado_min[l] += d
+                observado_ge5[l] += int(d >= 5)
+
+    def resumo(s, observado):
         lo, hi = np.percentile(s, [2.5, 97.5])
-        minutos_ano[l] = {"observado": observado_min[l], "mediana": round(float(np.median(s)), 1), "ic95": [round(float(lo), 1), round(float(hi), 1)],
-                          "dentro": bool(lo <= observado_min[l] <= hi)}
+        return {"observado": observado, "mediana": round(float(np.median(s)), 1), "ic95": [round(float(lo), 1), round(float(hi), 1)],
+                "dentro": bool(lo <= observado <= hi)}
+    minutos_ano = {l: resumo(m_tec[l] + cc_min[l], observado_min[l]) for l in LINHAS}
+    ge5_ano = {l: resumo(g_tec[l] + cc_ge5[l], observado_ge5[l]) for l in LINHAS}
+    minutos_familia = {f"{l}|{c}": resumo(np.array(minutos[c][l][:n]), observado_fam[(l, c)]) for l in LINHAS for c in ("MR", "EF")}
+    ge5_familia = {f"{l}|{c}": resumo(np.array(ge5[c][l][:n]), observado_ge5_fam[(l, c)]) for l in LINHAS for c in ("MR", "EF")}
     pits = np.array([c["pit"] for c in casos])
     return {
         **{k: cfg[k] for k in ("corte", "teste", "pre_registrada", "descricao")}, "regra_ano": modo_ano, "ano_fixo": ano_fixo,
@@ -237,6 +263,8 @@ def avalia(nome, cfg, painel, ev, cc, rng):
         "fora_acima": sum(c["acima"] for c in casos), "fora_abaixo": sum(not c["dentro"] and not c["acima"] for c in casos),
         "pit_histograma_10": np.histogram(pits, bins=10, range=(0, 1))[0].tolist(), "pit_ks_p": float(stats.kstest(pits, "uniform").pvalue),
         "ano_minutos": ano_min, "minutos_ano": minutos_ano, "casos": casos,
+        "cobertura_por_familia": {c: cobertura([x for x in casos_familia if x["familia"] == c]) for c in ("MR", "EF")},
+        "ge5_ano": ge5_ano, "minutos_familia": minutos_familia, "ge5_familia": ge5_familia, "casos_familia": casos_familia,
     }
 
 
@@ -267,6 +295,11 @@ def relatorio(r):
          "Conta as falhas técnicas (material rodante e equipamentos fixos) nas horas com serviço programado.", "",
          "O processo previsto é o mesmo do simulador: taxa horária do modelo da spec 005 ajustado só no treino, com o clima e a oferta observados no teste, "
          "e falhas como renovação Weibull no tempo reescalado (spec 006). As durações saem da amostra observada no treino, como no simulador. A incerteza dos parâmetros entra pelo bootstrap em blocos semanais.", "",
+         "> **Refeito em 2026-11, após a revisão (pós-hoc, spec 020).** Mesmo modelo por família da spec 005 e mesmas versões A a D, sobre os dados "
+         "revistos pelas specs 017 e 018: duração pela faixa oficial da STM e exposição medida até 2026-09. O resultado oficial da spec 012 é o da v1.1.0 "
+         "(`git show v1.1.0:fontes/verificacao/backtest.md`): na versão A, 66,7% dos casos (48 de 72) dentro do intervalo, fora do critério, e minutos "
+         "previstos da Azul em 2025 de 2.962 contra 708 observados. O modelo por fonte é comparado com o da v1.1.0 deixando um ano de fora em "
+         "[`fora_da_amostra.md`](fora_da_amostra.md), e o teste com meses que nenhum dos dois viu é o pré-registrado (spec 020).", "",
          "## Cobertura do intervalo de predição de 90%", "", "Critério da spec: entre 80% e 98% dos casos linha × mês, no corte em 2024-12 (versão A).", "",
          "| Versão | Regra | Pré-registrada | Total (IC 95%) | Sem greve | Meses de greve | Fora acima / abaixo | Entre 80% e 98% |", "|---|---|---|---|---|---|---|---|"]
     for v, x in r.items():
@@ -296,6 +329,26 @@ def relatorio(r):
     for v, x in r.items():
         for l, m in x["minutos_ano"].items():
             L.append(f"| {v} | {x['ano_minutos']} | {l} | {m['observado']:.0f} | {m['mediana']:.0f} | {m['ic95'][0]:.0f}–{m['ic95'][1]:.0f} | {'sim' if m['dentro'] else 'não'} |")
+    sim_nao = lambda m: "sim" if m["dentro"] else "não"
+    L += ["", "## Por família (após a revisão, spec 020)", "",
+          "Falhas por linha × mês de cada família (MR, EF) contra o intervalo de predição de 90% da própria família.", "",
+          "| Versão | MR | EF |", "|---|---|---|"]
+    for v, x in r.items():
+        L.append(f"| {v} | {cob(x['cobertura_por_familia']['MR'])} | {cob(x['cobertura_por_familia']['EF'])} |")
+    L += ["", "## Falhas de 5 min ou mais no primeiro ano do teste (após a revisão, spec 020)", "",
+          "Eventos técnicos nas horas com serviço e de causa comum que incluem a linha, com duração de 5 min ou mais (limite do indicador da STM).", "",
+          "| Versão | Ano | Linha | Observado | Mediana prevista | IC 95% | Dentro | MR: observado, IC 95% | EF: observado, IC 95% |", "|---|---|---|---|---|---|---|---|---|"]
+    for v, x in r.items():
+        for l, m in x["ge5_ano"].items():
+            fam = " | ".join(f"{x['ge5_familia'][f'{l}|{c}']['observado']}, {x['ge5_familia'][f'{l}|{c}']['ic95'][0]:.0f}–{x['ge5_familia'][f'{l}|{c}']['ic95'][1]:.0f}" for c in ("MR", "EF"))
+            L.append(f"| {v} | {x['ano_minutos']} | {l} | {m['observado']} | {m['mediana']:.0f} | {m['ic95'][0]:.0f}–{m['ic95'][1]:.0f} | {sim_nao(m)} | {fam} |")
+    L += ["", "## Minutos por família no primeiro ano do teste (após a revisão, spec 020)", "",
+          "Só eventos técnicos nas horas com serviço; a causa comum fica no total acima.", "",
+          "| Versão | Linha | MR: observado | MR: IC 95% | MR dentro | EF: observado | EF: IC 95% | EF dentro |", "|---|---|---|---|---|---|---|---|"]
+    for v, x in r.items():
+        for l in LINHAS:
+            a, b = x["minutos_familia"][f"{l}|MR"], x["minutos_familia"][f"{l}|EF"]
+            L.append(f"| {v} | {l} | {a['observado']:.0f} | {a['ic95'][0]:.0f}–{a['ic95'][1]:.0f} | {sim_nao(a)} | {b['observado']:.0f} | {b['ic95'][0]:.0f}–{b['ic95'][1]:.0f} | {sim_nao(b)} |")
     L += ["", "## Forma da renovação ajustada no treino", ""]
     for v, x in r.items():
         L.append(f"- {v}: " + ", ".join(f"{k} {f}" for k, f in x["forma_renovacao_treino"].items()))

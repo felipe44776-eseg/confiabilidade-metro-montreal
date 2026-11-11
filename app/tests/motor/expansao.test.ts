@@ -2,8 +2,10 @@
 import { describe, expect, it } from 'vitest';
 import { agrega, nomesMetricas, rodaRodadas } from '../../src/mc/rodadas';
 import { preparaContexto } from '../../src/motor/contexto';
-import type { Candidata } from '../../src/motor/expansao';
-import { avaliaCandidatas, avaliaRedeAtual, buscaExaustiva, candidataLivre, candidatasDaBusca } from '../../src/motor/expansao';
+import type { Acumulador, Candidata, Componente } from '../../src/motor/expansao';
+import { avaliaCandidatas, avaliaModelo, avaliaRedeAtual, buscaExaustiva, candidataLivre, candidatasDaBusca } from '../../src/motor/expansao';
+import type { Grafo, LinhaGrafo } from '../../src/motor/grafo';
+import { chave, montaGrafo } from '../../src/motor/grafo';
 import { NENHUMA_POLITICA } from '../../src/motor/politicas';
 import { haversineKm } from '../../src/motor/rede';
 import { carregaFixture, carregaRede } from './apoio';
@@ -39,6 +41,48 @@ describe('spec 014: validação do método de estados', () => {
     console.log(linhas.join('\n'));
     expect(Math.abs(odA - odB)).toBeLessThan(TOLERANCIA_PP);
   }, LONGO);
+});
+
+describe('spec 020 (D62): método de estados contra a enumeração exata', () => {
+  it('grafo A–M–B com ligação nova A–B: indisponibilidade sem e com a ligação e ganho iguais aos 8 estados', () => {
+    // Três estações, seis pares de peso 1. Linha L1: A–M (s1) e M–B (s2); ligação nova L2: A–B (s3).
+    // Cada componente bloqueia o seu trecho nos dois sentidos, com probabilidade p.
+    const est = (id: string) => ({ id, nome: id, lat: 0, lon: 0 });
+    const L1: LinhaGrafo = { id: 'L1', estacoes: [est('A'), est('M'), est('B')], tempo0: [60, 60], tempo1: [60, 60], km: [1, 1], pontasRetorno: [0, 2] };
+    const L2: LinhaGrafo = { id: 'L2', estacoes: [est('A'), est('B')], tempo0: [150], tempo1: [150], km: [2], pontasRetorno: [0, 1], candidata: true };
+    const sem = montaGrafo([L1], 30);
+    const com = montaGrafo([L1, L2], 30, { pesosDe: sem });
+    const trecho = (g: Grafo, linha: string, t: number) => [0, 1].map((s) => g.chaveAresta.get(chave(linha, t, s as 0 | 1)) as number);
+    const [p1, p2, p3] = [0.01, 0.01, 0.02];
+    const daRede = (g: Grafo): Componente[] => [
+      { p: p1, arestas: trecho(g, 'L1', 0), linhas: ['L1'], rotulo: 's1' },
+      { p: p2, arestas: trecho(g, 'L1', 1), linhas: ['L1'], rotulo: 's2' },
+    ];
+    const n = 200_000;
+    const accSem = avaliaModelo({ grafo: sem, componentes: daRede(sem), minutosJanela: 1, linhas: ['L1'] }, n, SEMENTE, true);
+    const accCom = avaliaModelo({ grafo: com, componentes: daRede(com), minutosJanela: 1, linhas: ['L1'] }, n, SEMENTE, true, {
+      comps: [{ p: p3, arestas: trecho(com, 'L2', 0), linhas: ['L2'], rotulo: 's3' }],
+      semente: SEMENTE + 1,
+    });
+    // Enumeração (conta à mão): sem L2, um trecho fora isola M de uma ponta (4 dos 6 pares); os dois, tudo.
+    // Com L2, um trecho só nunca corta nada; dois fora isolam uma estação (4 de 6); os três, tudo.
+    const q = (p: number) => 1 - p;
+    const uSem = (4 / 6) * (p1 * q(p2) + q(p1) * p2) + p1 * p2;
+    const uCom = (4 / 6) * (p1 * p2 * q(p3) + p1 * q(p2) * p3 + q(p1) * p2 * p3) + p1 * p2 * p3;
+    const estima = (lotes: number[]) => {
+      const m = lotes.reduce((a, b) => a + b, 0) / lotes.length;
+      const ep = Math.sqrt(lotes.reduce((a, b) => a + (b - m) ** 2, 0) / (lotes.length - 1) / lotes.length);
+      return { m, ep };
+    };
+    const indisp = (acc: Acumulador) => [...acc.od].map((x) => 1 - x);
+    const s = estima(indisp(accSem));
+    const c = estima(indisp(accCom));
+    const g = estima([...accCom.od].map((x, k) => x - accSem.od[k]));
+    console.log(`sem: ${s.m.toFixed(6)} (exato ${uSem.toFixed(6)}) | com: ${c.m.toFixed(6)} (exato ${uCom.toFixed(6)}) | ganho ${g.m.toFixed(6)} ± ${g.ep.toFixed(6)} (exato ${(uSem - uCom).toFixed(6)})`);
+    expect(Math.abs(s.m - uSem)).toBeLessThan(4 * s.ep);
+    expect(Math.abs(c.m - uCom)).toBeLessThan(4 * Math.max(c.ep, 1e-6));
+    expect(Math.abs(g.m - (uSem - uCom))).toBeLessThan(4 * g.ep);
+  });
 });
 
 describe('spec 014: candidatas', () => {

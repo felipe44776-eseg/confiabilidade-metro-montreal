@@ -147,6 +147,7 @@ tr.destaque td { background: var(--grade); }
 .cand .nome { font-weight: 600; display: flex; gap: 6px; align-items: center; }
 .cand .traco { width: 18px; height: 0; border-top: 3px dashed; flex: none; }
 .erro { color: var(--alerta); font-size: 13px; }
+.aviso-versao { margin: 0 0 12px; padding: 8px 12px; border-left: 3px solid var(--alerta); background: var(--painel, transparent); font-size: 14px; }
 .rodape-site { border-top: 1px solid var(--linha-divisoria); padding: 12px 16px 20px; font-size: 12.5px; color: var(--tinta-2); }
 .rodape-site p { margin: 4px 0; max-width: 72rem; }
 .maplibregl-popup-content { font-family: var(--fonte); font-size: 13px; line-height: 1.45; padding: 10px 12px; max-width: 18rem; color: #1d1d1b; }

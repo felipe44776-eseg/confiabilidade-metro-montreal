@@ -174,11 +174,11 @@ DERIVADOS = [
     {"arquivo": f"{D}/eventos/{n}", "de": ["stm_incidentes"], "script": "pipeline/normaliza.py"}
     for n in ("eventos_tecnicos.csv", "eventos_causa_comum.csv", "eventos_sem_linha.csv", "excecoes.csv", "resumo_normalizacao.json")] + [
     {"arquivo": f"{D}/exposicao/{n}", "de": ["gtfs_stm", "stm_km_reel", "nager_*", "greves_stm"], "script": "pipeline/exposicao.py"}
-    for n in ("perfil_horario.csv", "exposicao_diaria.csv", "calibracao_mensal.csv", "frota_mensal.csv", "resumo_exposicao.json")] + [
+    for n in ("perfil_horario.csv", "exposicao_diaria.csv", "calibracao_mensal.csv", "frota_mensal.csv", "frota_diaria.csv", "resumo_exposicao.json")] + [
     {"arquivo": f"{D}/clima/{n}", "de": ["eccc_horario_*", "eccc_*", "nhl_*", "f1_villeneuve", "nager_*", "greves_stm"], "script": "pipeline/clima_eventos.py"}
     for n in ("painel_horario.csv", "eventos_externos.csv", "resumo_clima.json")] + [
     {"arquivo": f"{D}/modelos/{n}", "de": ["stm_incidentes", "gtfs_stm", "stm_km_reel", "eccc_horario_*", "nhl_*", "f1_villeneuve", "greves_stm"],
-     "script": "pipeline/modelo_taxa.py"} for n in ("taxa_MR.json", "taxa_EF.json", "painel_modelo.csv.gz")] + [
+     "script": "pipeline/modelo_taxa.py"} for n in ("taxa_MR.json", "taxa_EF.json", "painel_modelo.csv.gz", "taxa_fontes.json", "vetores_bootstrap.json.gz")] + [
     {"arquivo": f"{D}/modelos/distribuicoes.json", "de": ["stm_incidentes"], "script": "pipeline/distribuicoes.py"},
     {"arquivo": f"{D}/simulador/rede.json", "de": ["gtfs_stm", "osm_metro"], "script": "pipeline/horario_simulador.py"},
     {"arquivo": f"{D}/simulador/parametros.json", "de": ["stm_incidentes", "stm_km_reel", "gtfs_stm", "eccc_horario_*"], "script": "pipeline/parametros.py"},
@@ -187,6 +187,9 @@ DERIVADOS = [
     {"arquivo": f"{D}/modelos/backtest.json", "de": ["stm_incidentes", "gtfs_stm", "stm_km_reel", "eccc_horario_*"], "script": "pipeline/backtest.py"},
     {"arquivo": f"{D}/simulador/politicas.json", "de": ["stm_incidentes", "gtfs_stm", "stm_km_reel", "eccc_horario_*"], "script": "app/relatorios/politicas.relatorio.ts"},
     {"arquivo": f"{D}/simulador/expansao.json", "de": ["stm_incidentes", "gtfs_stm", "candidatas_expansao", "osm_metro"], "script": "app/relatorios/expansao.relatorio.ts"},
+    # revisão de 2026-11 (specs 018 e 020)
+    {"arquivo": f"{D}/modelos/fora_da_amostra.json", "de": ["stm_incidentes", "gtfs_stm", "stm_km_reel", "eccc_horario_*"], "script": "pipeline/fora_da_amostra.py"},
+    {"arquivo": f"{D}/simulador/revalidacao.json", "de": ["stm_incidentes", "gtfs_stm", "stm_km_reel", "eccc_horario_*"], "script": "app/relatorios/revalidacao.relatorio.ts"},
 ]
 
 

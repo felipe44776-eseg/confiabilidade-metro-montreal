@@ -129,3 +129,43 @@ def test_contrato_parametros():
     for l in ("verde", "laranja", "amarela", "azul"):
         assert p["taxas"]["MR"]["base_por_trem_hora"][l]["ic95"]
         assert sum(x["peso"] for x in p["locais_ef"][l]) > 0
+
+
+# ---------------------------------------------------------------- spec 018 (taxa por fonte) e contrato v2
+
+@pytest.mark.skipif(not os.path.exists("dados/derivados/modelos/taxa_fontes.json"), reason="rode modelo_taxa.py antes")
+def test_taxa_por_fonte():
+    tf = json.load(open("dados/derivados/modelos/taxa_fontes.json", encoding="utf-8"))
+    mr = tf["mr_empilhado"]
+    assert mr["modelo_escolhido"] == "binomial negativa" and mr["falhas_sem_exposicao"] == {"mpm10": 0, "mr73": 0}
+    assert set(mr["base_por_trem_hora_da_frota"]) == {"verde|MPM-10", "laranja|MPM-10", "verde|MR-73", "amarela|MR-73", "azul|MR-73"}
+    for a, r in mr["razao_mr73_mpm10_verde"].items():
+        assert r["ic95"][0] <= r["ic95"][1] and r["valor"] > 1, a
+    assert 0 <= mr["p_linha_dentro_da_frota"] <= 1 and mr["gl"] == 3
+    for f, x in tf["fontes"].items():
+        if x["modelo"] == "próprio":
+            assert x["n_falhas"] >= tf["limites"]["proprio"], f
+        elif x["modelo"].startswith("reduzido"):
+            assert x["n_falhas"] < tf["limites"]["proprio"] and x["herda_de"] in ("MR", "EF"), f
+    # as fontes somam as falhas da família no painel
+    soma = lambda fam: sum(x["n_falhas"] for x in tf["fontes"].values() if x["familia"] == fam)
+    assert soma("MR") == json.load(open("dados/derivados/modelos/taxa_MR.json", encoding="utf-8"))["n_falhas"]
+    assert soma("EF") == json.load(open("dados/derivados/modelos/taxa_EF.json", encoding="utf-8"))["n_falhas"]
+
+
+@pytest.mark.skipif(not os.path.exists(PARAM), reason="rode parametros.py antes")
+def test_contrato_v2_tem_as_fontes_com_tudo_por_linha():
+    p = json.load(open(PARAM, encoding="utf-8"))
+    assert p["versao"] == 2 and p["fontes"]
+    ids = {f["id"] for f in p["fontes"]}
+    assert {"mr73", "mpm10", "mr_outros", "voie_sintoma_fixo", "voie_sintoma_trem", "aux_trains_sintoma_fixo", "aux_trains_sintoma_trem", "aux_stations", "tcpe"} == ids
+    for f in p["fontes"]:
+        assert f["familia"] in ("MR", "EF") and f["linhas"], f["id"]
+        for l, x in f["linhas"].items():
+            assert x["base_por_trem_hora"]["valor"] > 0 and x["renovacao"]["forma"]["valor"] > 0, (f["id"], l)
+            a = x["ttr"]["amostra_positivos"]
+            assert a["n"] == len(a["minutos"]) > 0, (f["id"], l)
+            if f["familia"] == "EF":
+                assert "locais" in x, (f["id"], l)
+    assert {f["id"] for f in p["fontes"] if "laranja" in f["linhas"] and f["familia"] == "MR"} == {"mpm10", "mr_outros"}
+    assert abs(sum(v["valor"] for v in p["frota_por_linha"]["verde"].values()) - 1) < 0.01

@@ -5,6 +5,8 @@
 **Depende de:** 007, 008, 009, 011
 **Origem:** pedido da equipe em 2026-10-21 ("confiabilidades cruzadas, do tipo pessoa precisa ir de um ponto a outro")
 
+> **Revisão de 2026-11 (após a ressegmentação, decisões D55 a D63).** Com as durações pela faixa oficial e as taxas por fonte, a viagem padrão Angrignon → Saint-Michel sobe de 98,46% para 99,28%, o atraso médio cai de 3,27 para 0,13 min, e a viagem continua se comportando como série. Os resultados abaixo são os da versão v1.1.0, que continua publicada em `/versoes/v1.1.0/`; os revistos estão na seção "Revisão de 2026-11 (após a ressegmentação)", ao lado dos originais.
+
 ## Pergunta de engenharia
 
 Para uma pessoa que precisa ir da estação A à estação B, com que frequência a falha de alguma linha do caminho impede a viagem ou a atrasa, e como a confiabilidade da viagem se compõe das linhas que ela usa (em série) e dos caminhos alternativos (em paralelo)?
@@ -42,6 +44,48 @@ Código em `app/src/motor/viagem.ts`; aba "Viagem de A a B" no `/simulador/`; re
 | Conferência no site publicado (commit c2ff117) | Em tamanho de celular e de notebook, a viagem padrão rodou 1.000 dias em 3,1 e 3,2 s com 12 workers (navegador sem placa de vídeo), com as tabelas, as 20 barras por hora de saída e o caminho no mapa; sem rolagem lateral e sem erro no console (`fontes/verificacao/viagem_navegador_2026-10-21.json`) |
 
 Achado: quando a mesma linha aparece em dois trechos (Côte-Vertu → Montmorency usa a Laranja duas vezes), os trechos não são independentes, e o produto (98,35%) fica abaixo do simulado (98,90%). A página explica esse caso na leitura do resultado.
+
+## Revisão de 2026-11 (após a ressegmentação)
+
+*Registrada em 2026-11-11 (decisões D55, D56, D57 e D59; specs 019 e 020).* Os critérios acima não mudam, e o resultado de 2026-10-21 continua sendo o da v1.1.0.
+
+- **O que mudou na entrada:**
+  - nas 100 falhas em que a duração calculada contradiz a faixa oficial da STM, vale a faixa (D55). Os minutos das falhas técnicas vão de 43.971 para 33.404, e saem da amostra de durações as interrupções de quase 20 h da Azul em Saint-Michel (outubro de 2024);
+  - a taxa de cada linha vem de 9 fontes, por frota e setor, com o ano-base 2025 e a exposição medida (specs 017 e 018).
+- **O que mudou no método:** nada nesta spec. O motor sorteia a lista de fontes (spec 019); com os parâmetros da v1.1.0, ele reproduz byte a byte os 198 casos da referência anterior. As diferenças abaixo vêm dos parâmetros.
+- **Relatório:** [`viagem.md`](../../fontes/verificacao/viagem.md) refeito em 2026-11-11 (código `sha256-scripts:d2a89e7803552929`), com o mesmo cenário, os mesmos 1.000 dias e a mesma semente.
+
+Números de Angrignon → Saint-Michel, salvo quando a linha nomeia outra viagem.
+
+| Número | v1.1.0 | Após a revisão |
+|---|---|---|
+| Trechos Verde, Laranja e Azul | 99,54%, 99,46% e 99,43% | 99,74%, 99,71% e 99,81% |
+| Produto dos trechos (série) | 98,43% | 99,25% |
+| Viagem inteira, simulada | 98,46% (98,06% a 98,86%) | 99,28% (99,20% a 99,37%) |
+| Minutos por dia sem caminho | 18,4 (13,6 a 23,2) | 8,6 (7,6 a 9,6) |
+| Dias com ao menos uma interrupção no caminho | 75,2% | 72,7% |
+| Saídas com mais de 5, 15 e 60 min de atraso | 1,29%, 0,85% e 0,62% | 0,40%, 0,16% e 0,05% |
+| Chance de não chegar até o fim do serviço | 0,0053% | 0,0009% |
+| Atraso médio | 3,27 min (0,87 a 5,67) | 0,13 min (0,03 a 0,24) |
+| Lionel-Groulx → Berri-UQAM, sem e com rota alternativa | 99,54% e 99,98% | 99,74% e 99,98% |
+| Côte-Vertu → Montmorency, sem e com rota alternativa | 98,90% e 99,46% | 99,53% e 99,71% |
+| Côte-Vertu → Montmorency: produto contra simulado | 98,35% contra 98,90% (98,51% a 99,29%) | 99,22% contra 99,53% (99,45% a 99,60%) |
+| Disponibilidade origem-destino da rede, dia útil (spec 009, 4.000 dias) | 99,246% | 99,484% |
+
+Não mudam: o caminho de sempre de cada viagem (linhas, baldeações e tempo programado) e Lionel-Groulx → Berri-UQAM com rota alternativa (99,98%). As interrupções ficam mais curtas, não muito mais raras: os dias com interrupção caem pouco, e os minutos sem caminho, para menos da metade.
+
+| Critério | Após a revisão |
+|---|---|
+| Caminho de sempre com trechos, sentido, baldeações e tempo | **Continua atendendo**: o mesmo caminho pela Verde, Laranja e Azul |
+| Disponibilidade total, por trecho, produto em série, minutos sem caminho e dias com interrupção | **Continua atendendo**. A viagem continua se comportando como série: o produto (99,25%) fica dentro do intervalo do simulado (99,20% a 99,37%) |
+| Atraso por limiar, não chegar, atraso médio e por hora de saída | **Continua atendendo**. A leitura muda: sem as paradas de quase 20 h da Azul, o atraso médio cai de 3,27 para 0,13 min, e as saídas com mais de 60 min de atraso, de 0,62% para 0,05% |
+| Rota alternativa desligada: só o caminho de sempre; ligada: qualquer caminho | **Continua atendendo**. O ganho da rota alternativa fica menor porque o caminho de sempre ficou mais disponível: Lionel-Groulx → Berri-UQAM vai de 99,74% para 99,98%; Côte-Vertu → Montmorency, de 99,53% para 99,71% |
+| Ponderada pela oferta, reproduz a disponibilidade origem-destino da rede no mesmo dia | **Continua atendendo** (teste com a fixture, com e sem rota alternativa; `viagem.test.ts` passa na versão revista em 2026-11-11) |
+| Sem falhas: atraso zero e disponibilidade 1 | **Continua atendendo** (teste) |
+| Mesmo link, mesmos números; rodada i = dia i do Monte Carlo | **Continua atendendo** (testes) |
+| Conferência no site publicado | Não refeita aqui: a conferência da versão revista está na spec 020 |
+
+O achado da mesma linha em dois trechos continua valendo: em Côte-Vertu → Montmorency, o produto (99,22%) fica abaixo do intervalo do simulado (99,45% a 99,60%), porque uma falha na Laranja para os dois trechos ao mesmo tempo.
 
 ## Fora de escopo
 

@@ -13,6 +13,7 @@
 //   os trens seguem o horário, sem fila (simplificação declarada no plano da spec 016).
 
 import type { Contexto, Duracao } from './contexto';
+import { familiaNaLinha } from './contexto';
 import type { ResultadoDia } from './dia';
 import { sorteiaDuracao } from './dia';
 import type { Candidata } from './expansao';
@@ -21,7 +22,7 @@ import type { BloqueioOD, Grafo, OrigemBloqueio } from './grafo';
 import { chave, efeitoBloqueio, montaGrafo } from './grafo';
 import { hipotese } from './hipoteses';
 import type { Politicas } from './politicas';
-import { criaFluxo } from './prng';
+import { criaFluxo, hash30 } from './prng';
 import { sorteiaInstantes } from './taxas';
 import type { Sentido } from './tipos';
 
@@ -97,15 +98,6 @@ export interface OpcoesVariante {
   injetadas?: FalhaNovaInjetada[];
 }
 
-/** FNV-1a de 30 bits: fluxo de sorteio de uma fonte a partir do nome dela. */
-function hash30(s: string): number {
-  let h = 0x811c9dc5;
-  for (let i = 0; i < s.length; i++) {
-    h ^= s.charCodeAt(i);
-    h = Math.imul(h, 0x01000193);
-  }
-  return (h >>> 0) & 0x3fffffff;
-}
 
 /** Partes de um conjunto de candidatas (com as extras de cada projeto), sem repetir; erro se forem incompatíveis. */
 export function partesDe(ctx: Contexto, cands: readonly Candidata[]): Candidata[] {
@@ -186,8 +178,9 @@ export function preparaVariante(ctx: Contexto, cands: readonly Candidata[], op: 
   }
   const kmLinha = (R: string) => ctx.rede.linhas[R].kmTrecho.reduce((a, b) => a + b, 0);
   const kmRede = ids.reduce((s, R) => s + kmLinha(R), 0);
-  const fonteDe = (R: string, causa: 'MR' | 'EF') => {
-    const f = ctx.fontes.find((x) => x.linha === R && x.causa === causa);
+  // família da linha herdada: soma das fontes dela (spec 019); no contrato v1, a própria fonte
+  const familiaDe = (R: string, causa: 'MR' | 'EF') => {
+    const f = familiaNaLinha(ctx, R, causa);
     if (!f) throw new Error(`sem fonte de falha ${causa} na linha ${R}`);
     return f;
   };
@@ -201,18 +194,21 @@ export function preparaVariante(ctx: Contexto, cands: readonly Candidata[], op: 
       let escala = 1;
       let duracoes: FonteNova['duracoes'];
       if (R !== 'media') {
-        const f = fonteDe(R, causa);
+        const f = familiaDe(R, causa);
         acum = multiplica(f.acum, tr.km / kmLinha(R));
-        forma = f.renovacao.forma;
-        escala = f.renovacao.escalaNormalizada;
-        duracoes = [{ peso: 1, d: f.duracao }];
+        forma = f.forma;
+        escala = f.escala;
+        duracoes = f.duracoes;
       } else {
         acum = new Float64Array(ctx.fontes[0].acum.length);
         duracoes = [];
         for (const L of ids) {
-          const f = fonteDe(L, causa);
-          for (let i = 0; i < acum.length; i++) acum[i] += (f.acum[i] * tr.km) / kmRede;
-          duracoes.push({ peso: f.acum[f.acum.length - 1], d: f.duracao });
+          familiaDe(L, causa); // erro se a linha não tiver a família
+          for (const f of ctx.fontes) {
+            if (f.linha !== L || f.causa !== causa) continue;
+            for (let i = 0; i < acum.length; i++) acum[i] += (f.acum[i] * tr.km) / kmRede;
+            duracoes.push({ peso: f.acum[f.acum.length - 1], d: f.duracao });
+          }
         }
       }
       if (causa === 'MR') {

@@ -101,6 +101,61 @@ def garwood(k, t):
     return [round(lo / t, 8), round(hi / t, 8)]
 
 
+REARME = ("aux_trains_sintoma_fixo", "aux_trains_sintoma_trem", "mr73", "mpm10")  # controle de trens (dedução) e frotas
+OUTRAS_FIXAS = ("voie_sintoma_fixo", "voie_sintoma_trem", "aux_stations", "tcpe")
+
+
+def massa_em_zero(ev):
+    """Spec 020 (D62): as falhas de zero minuto vêm de parada segura com rearme rápido ou de artefato de registro?
+    Proporção de duração zero e de até 1 min por fonte e por ano, com IC de Clopper–Pearson, e a leitura fixada
+    na spec antes de calcular. `mr_outros` (51 falhas) fica fora das comparações."""
+    n, zero, ate1 = defaultdict(int), defaultdict(int), defaultdict(int)
+    for r in ev:
+        d, f, a = int(r["duracao_min"]), r["fonte"], r["data_servico"][:4]
+        for k in (f, (f, a)):
+            n[k] += 1
+            zero[k] += d == 0
+            ate1[k] += d <= 1
+    fontes = sorted(k for k in n if isinstance(k, str))
+    anos = sorted({k[1] for k in n if isinstance(k, tuple)})
+    comparadas = [f for f in fontes if f in REARME + OUTRAS_FIXAS]
+
+    def homogeneidade(tabela):
+        tabela = np.array(tabela, float)
+        tabela = tabela[tabela.sum(axis=1) > 0]
+        if len(tabela) < 2 or (tabela.sum(axis=0) == 0).any():
+            return None
+        return float(stats.chi2_contingency(tabela)[1])
+
+    saida = {"fontes": {}, "anos": anos, "fontes_comparadas": comparadas}
+    for f in fontes:
+        por_ano = {a: {"n": n[(f, a)], "p_zero": round(zero[(f, a)] / n[(f, a)], 4), "ic95": clopper(zero[(f, a)], n[(f, a)])} for a in anos if n[(f, a)]}
+        saida["fontes"][f] = {
+            "n": n[f], "p_zero": round(zero[f] / n[f], 4), "p_zero_ic95": clopper(zero[f], n[f]),
+            "p_ate_1min": round(ate1[f] / n[f], 4), "p_ate_1min_ic95": clopper(ate1[f], n[f]), "por_ano": por_ano,
+            "p_homogeneo_entre_anos": homogeneidade([[zero[(f, a)], n[(f, a)] - zero[(f, a)]] for a in anos])}
+    p_fontes = homogeneidade([[zero[f], n[f] - zero[f]] for f in comparadas])
+    saida["p_homogeneo_entre_fontes"] = p_fontes
+    # leitura fixada na spec 020 antes de calcular
+    pz = {f: zero[f] / n[f] for f in comparadas}
+    rearme_f = [f for f in REARME if f in pz]
+    outras_f = [f for f in OUTRAS_FIXAS if f in pz]
+    estaveis = all((saida["fontes"][f]["p_homogeneo_entre_anos"] or 1.0) >= 0.01 for f in rearme_f)
+    rearme = p_fontes is not None and p_fontes < 0.01 and min(pz[f] for f in rearme_f) > max(pz[f] for f in outras_f) and estaveis
+    saltos = {}
+    for a in anos:
+        acima = [f for f in comparadas if a in saida["fontes"][f]["por_ano"] and saida["fontes"][f]["por_ano"][a]["ic95"][0] > pz[f]]
+        abaixo = [f for f in comparadas if a in saida["fontes"][f]["por_ano"] and saida["fontes"][f]["por_ano"][a]["ic95"][1] < pz[f]]
+        if max(len(acima), len(abaixo)) * 2 >= len(comparadas):
+            saltos[a] = {"acima": acima, "abaixo": abaixo}
+    registro = (p_fontes is not None and p_fontes >= 0.01) or bool(saltos)
+    saida["saltos_comuns"] = saltos
+    saida["rearme_estavel_entre_anos"] = estaveis
+    saida["leitura"] = ("os dois padrões" if rearme and registro else "parada segura com rearme rápido" if rearme
+                        else "artefato de registro" if registro else "inconclusiva")
+    return saida
+
+
 def main():
     rng = np.random.default_rng(SEMENTE)
     with open("dados/derivados/eventos/eventos_tecnicos.csv", encoding="utf-8") as f:
@@ -189,6 +244,58 @@ def main():
                 "media_min": round(float(d.mean()), 3), "mediana_min": float(np.median(d)), "p90_min": float(np.percentile(d, 90)),
                 "max_min": int(d.max()),
             }
+    # ---------------- Spec 018: renovação e duração por linha × fonte (estrato com menos de MIN_ESTRATO herda da rede)
+    fontes = sorted({r["fonte"] for r in ev})
+    pf = pd.read_csv("dados/derivados/modelos/painel_modelo.csv.gz", sep=";", usecols=["data_servico", "linha", "hora"] + [f"mu_{f}" for f in fontes])
+    resultado["reescala_fonte"], resultado["ttr_fonte"] = {}, {}
+
+    def intervalos(l, f):
+        p = pf[pf.linha == l].sort_values(["data_servico", "hora"])
+        mu = p[f"mu_{f}"].to_numpy()
+        if mu.sum() <= 0:
+            return None
+        acum = np.concatenate([[0.0], np.cumsum(mu)])
+        pos = {k: i for i, k in enumerate(zip(p.data_servico, p.hora))}
+        lam = []
+        for r in ev:
+            if r["linha"] == l and r["fonte"] == f:
+                m = minuto_servico(r)
+                i = pos.get((r["data_servico"], m // 60))
+                if i is not None:
+                    lam.append(acum[i] + mu[i] * (m % 60) / 60)
+        return np.maximum(np.diff(np.sort(np.array(lam))), 1e-6) if len(lam) > 1 else np.array([])
+
+    def weibull(tau):
+        wb = stats.weibull_min.fit(tau, floc=0)
+        bw = [stats.weibull_min.fit(rng.choice(tau, len(tau)), floc=0) for _ in range(min(B, 100))]
+        return {"forma": round(float(wb[0]), 4), "escala": round(float(wb[2]), 4),
+                "forma_ic95": [round(float(np.percentile([x[0] for x in bw], q)), 4) for q in (2.5, 97.5)],
+                "escala_ic95": [round(float(np.percentile([x[2] for x in bw], q)), 4) for q in (2.5, 97.5)]}
+
+    for f in fontes:
+        taus = {l: intervalos(l, f) for l in LINHAS}
+        juntos = np.concatenate([t for t in taus.values() if t is not None and len(t)])
+        rede_w = weibull(juntos) if len(juntos) >= MIN_ESTRATO else None
+        dur_rede = np.array([int(r["duracao_min"]) for r in ev if r["fonte"] == f])
+        for l in LINHAS:
+            tau = taus[l]
+            if tau is None:
+                continue  # a fonte não existe nesta linha (frota que não roda nela)
+            proprio = len(tau) >= MIN_ESTRATO
+            w = weibull(tau) if proprio else rede_w
+            resultado["reescala_fonte"][f"{l}|{f}"] = {
+                "n": int(len(tau)), "weibull_reescalado": w or {"forma": 1.0, "escala": 1.0, "forma_ic95": None, "escala_ic95": None},
+                "origem": "linha" if proprio else ("rede (estrato pequeno)" if w else "Poisson (sem dados para a forma)")}
+            d = np.array([int(r["duracao_min"]) for r in ev if r["linha"] == l and r["fonte"] == f])
+            base_d = d if (d > 0).sum() >= MIN_ESTRATO else dur_rede
+            pos_ = base_d[base_d > 0]
+            lg = np.log(pos_) if len(pos_) else np.array([0.0])
+            resultado["ttr_fonte"][f"{l}|{f}"] = {
+                "n": int(len(d)), "p_zero": round(float((base_d == 0).mean()), 4), "p_zero_ic95": wilson(int((base_d == 0).sum()), len(base_d)),
+                "lognormal_positivos": {"mu_log": round(float(lg.mean()), 4), "sigma_log": round(float(lg.std(ddof=1)) if len(lg) > 1 else 1.0, 4)},
+                "positivos": sorted(int(x) for x in pos_), "origem": "linha" if base_d is d else "rede (estrato pequeno)"}
+        print(f"fonte {f}: forma na rede {rede_w['forma'] if rede_w else '—'}", flush=True)
+
     dfp = pd.DataFrame([r for r in ev if int(r["duracao_min"]) > 0])
     dfp["logdur"] = np.log(dfp["duracao_min"].astype(float))
     top = dfp["causa_secundaria"].value_counts()
@@ -226,6 +333,18 @@ def main():
                                     "sigma_log": round(float(np.log(pos_).std(ddof=1)), 4) if len(pos_) > 1 else None},
             "media_min": round(float(dur.mean()), 2),
         }
+    # Spec 018: β com o denominador da família de cada evento (40 dos 45 eventos são de equipamentos fixos).
+    por_linha_fam = defaultdict(int)
+    for r in ev:
+        por_linha_fam[(r["linha"], r["causa"])] += 1
+    resultado["causa_comum_beta_familia"] = {}
+    for a, b in pares:
+        for fam_ in ("MR", "EF"):
+            k = sum(1 for r in cc if {a, b} <= set(r["linhas"].split(",")) and r["causa"] == fam_)
+            if k:
+                resultado["causa_comum_beta_familia"][f"{a}-{b}|{fam_}"] = {
+                    "eventos": k, "beta_a": round(k / (k + por_linha_fam[(a, fam_)]), 5), "beta_a_ic95": clopper(k, k + por_linha_fam[(a, fam_)]),
+                    "beta_b": round(k / (k + por_linha_fam[(b, fam_)]), 5), "beta_b_ic95": clopper(k, k + por_linha_fam[(b, fam_)])}
     # Grupos: o conjunto exato de linhas que cada evento parou. Taxa por grupo (Garwood); duração do conjunto
     # dos 45 eventos (a maioria dos grupos tem menos de 10 eventos).
     todas = np.array([int(r["duracao_min"]) for r in cc])
@@ -240,6 +359,7 @@ def main():
         g: {"linhas": g.split("-"), "eventos": len(rs), "taxa_por_hora_op": round(len(rs) / horas_op, 8), "taxa_ic95": garwood(len(rs), horas_op),
             "media_min_grupo": round(float(np.mean([int(r["duracao_min"]) for r in rs])), 2)}
         for g, rs in sorted(grupos.items())}
+    resultado["massa_em_zero"] = massa_em_zero(ev)  # spec 020, D62
     os.makedirs("dados/derivados/modelos", exist_ok=True)
     with open("dados/derivados/modelos/distribuicoes.json", "w", encoding="utf-8", newline="\n") as f:
         json.dump(resultado, f, ensure_ascii=False, indent=1)
@@ -291,7 +411,55 @@ def escreve_relatorio(r):
           "| Grupo de linhas | Eventos | Taxa por hora de operação (IC 95%) | Duração média no grupo (min) |", "|---|---|---|---|"]
     for k, v in r["causa_comum_grupos"].items():
         L.append(f"| {k} | {v['eventos']} | {v['taxa_por_hora_op']:.2e} ({v['taxa_ic95'][0]:.2e}–{v['taxa_ic95'][1]:.2e}) | {v['media_min_grupo']} |")
+    L += relatorio_por_fonte(r)
+    L += relatorio_massa_em_zero(r["massa_em_zero"])
     open("fontes/verificacao/distribuicoes.md", "w", encoding="utf-8", newline="\n").write("\n".join(L) + "\n")
+
+
+def relatorio_por_fonte(r):
+    """Spec 018: β da causa comum pelo denominador da família, e renovação e duração de cada linha × fonte."""
+    n = lambda x, c=4: f"{x:.{c}f}".replace(".", ",")
+    L = ["", "## Causa comum: fator β pelo denominador da família (spec 018)", "",
+         "O evento conta na família da sua fonte (trem ou fixo), e o β divide pelas falhas daquela família na linha. 40 dos 45 eventos são de equipamento fixo.", "",
+         "| Par e família | Eventos | β da 1ª (IC 95%) | β da 2ª (IC 95%) |", "|---|---|---|---|"]
+    for k, v in r["causa_comum_beta_familia"].items():
+        L.append(f"| {k.replace('|', ' · ')} | {v['eventos']} | {n(v['beta_a'])} ({n(v['beta_a_ic95'][0])}–{n(v['beta_a_ic95'][1])}) | "
+                 f"{n(v['beta_b'])} ({n(v['beta_b_ic95'][0])}–{n(v['beta_b_ic95'][1])}) |")
+    L += ["", "## Renovação e duração por linha × fonte (spec 018)", "",
+          f"Forma da Weibull no tempo reescalado pela taxa da fonte (spec 018) e duração (sem interrupção e média quando para). Estrato com menos de {MIN_ESTRATO} falhas "
+          "herda da mesma fonte na rede (coluna de origem).", "",
+          "| Linha · fonte | Falhas | Forma (IC 95%) | Origem da renovação | Sem interrupção (IC 95%) | Média quando para (min) | Origem da duração |", "|---|---|---|---|---|---|---|"]
+    for k, v in r["reescala_fonte"].items():
+        t = r["ttr_fonte"].get(k, {})
+        w = v["weibull_reescalado"]
+        pos = t.get("positivos") or []
+        media = n(sum(pos) / len(pos), 1) if pos else "—"
+        pz = f"{n(t['p_zero'], 3)} ({n(t['p_zero_ic95'][0], 3)}–{n(t['p_zero_ic95'][1], 3)})" if t else "—"
+        L.append(f"| {k.replace('|', ' · ')} | {v['n']} | {n(w['forma'])} ({n(w['forma_ic95'][0])}–{n(w['forma_ic95'][1])}) | {v['origem']} | {pz} | {media} | {t.get('origem', '—')} |")
+    return L
+
+
+def relatorio_massa_em_zero(m):
+    pct = lambda x: f"{100 * x:.1f}".replace(".", ",")
+    ic = lambda c: f"{pct(c[0])}–{pct(c[1])}"
+    pv = lambda p: "—" if p is None else "< 0,0001" if p < 1e-4 else f"{p:.2g}".replace(".", ",")
+    L = ["", "## Falhas de zero minuto por fonte e ano (spec 020, D62)", "",
+         "A massa em zero vem de parada segura com rearme rápido (Almeida Jr. et al., 2008) ou de artefato de registro? Proporções em %, com IC 95% de "
+         "Clopper–Pearson; p do qui-quadrado de homogeneidade. A leitura foi fixada na spec 020 antes de calcular:",
+         "- **parada segura com rearme rápido:** fontes heterogêneas (p < 0,01), a menor proporção entre controle de trens e frotas acima da maior entre via, "
+         "estações e TCPE, e essas quatro fontes estáveis entre os anos;",
+         "- **artefato de registro:** fontes homogêneas, ou um ano em que pelo menos metade das fontes tem o IC inteiro acima ou abaixo da própria proporção.",
+         "", f"**Leitura: {m['leitura']}.** Homogeneidade entre as fontes comparadas: p {pv(m['p_homogeneo_entre_fontes']) if pv(m['p_homogeneo_entre_fontes']).startswith('<') else '= ' + pv(m['p_homogeneo_entre_fontes'])}. "
+         f"Controle de trens e frotas estáveis entre os anos: {'sim' if m['rearme_estavel_entre_anos'] else 'não'}. "
+         f"Anos com salto comum: {', '.join(m['saltos_comuns']) or 'nenhum'}. \"Controle de trens\" (Service aux trains) é dedução até a resposta da STM.", "",
+         "| Fonte | n | Duração zero (IC 95%) | Até 1 min (IC 95%) | p entre anos |", "|---|---|---|---|---|"]
+    for f, v in m["fontes"].items():
+        L.append(f"| {f} | {v['n']} | {pct(v['p_zero'])} ({ic(v['p_zero_ic95'])}) | {pct(v['p_ate_1min'])} ({ic(v['p_ate_1min_ic95'])}) | {pv(v['p_homogeneo_entre_anos'])} |")
+    L += ["", "Duração zero por ano (%):", "", "| Fonte | " + " | ".join(m["anos"]) + " |", "|---|" + "---|" * len(m["anos"])]
+    for f, v in m["fontes"].items():
+        L.append(f"| {f} | " + " | ".join(pct(v["por_ano"][a]["p_zero"]) + f" ({v['por_ano'][a]['n']})" if a in v["por_ano"] else "" for a in m["anos"]) + " |")
+    L += ["", "Entre parênteses, o número de falhas da fonte no ano. `mr_outros` fica fora das comparações; o salto de 2024 da via com sintoma de trem já era conhecido (D56)."]
+    return L
 
 
 if __name__ == "__main__":

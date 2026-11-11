@@ -50,7 +50,21 @@
     }
   },
   "properties": {
-    "versao": {"type": "integer"},
+    "versao": {"type": "integer", "description": "1 até a v1.1.0; 2 a partir da revisão de 2026-11 (spec 018), com fontes e frota_por_linha"},
+    "fontes": {
+      "type": "array",
+      "description": "Contrato v2 (spec 018, D59): fontes de falha. Cada linha da fonte tem taxa-base (já × parcela da frota no material rodante), renovação, duração e, no equipamento fixo, locais.",
+      "items": {
+        "type": "object", "required": ["id", "familia", "rotulo", "status_rotulo", "modelo", "alpha", "multiplicadores", "linhas"],
+        "properties": {
+          "id": {"type": "string"}, "familia": {"enum": ["MR", "EF"]}, "rotulo": {"type": "string"}, "status_rotulo": {"type": "string"},
+          "modelo": {"type": "string"}, "alpha": {"$ref": "#/$defs/Parametro"},
+          "linhas": {"type": "object", "additionalProperties": {"type": "object", "required": ["base_por_trem_hora", "renovacao", "ttr"],
+            "properties": {"base_por_trem_hora": {"$ref": "#/$defs/Parametro"}, "ttr": {"$ref": "#/$defs/Lognormal"}}}}
+        }
+      }
+    },
+    "frota_por_linha": {"type": "object", "description": "Parcela do km de cada linha rodada por cada frota no ano-base (spec 018); para o cenário de troca de frota (spec 022)."},
     "codigo_commit": {"type": "string"},
     "ano_base": {"type": "integer"},
     "janela_operacao_h": {"$ref": "#/$defs/Parametro"},

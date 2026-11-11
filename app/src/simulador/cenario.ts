@@ -189,7 +189,16 @@ export function serializa(e: EstadoCenario): string {
   if (e.linhasNovas.length) p.set('ln', e.linhasNovas.join(','));
   if (e.linhasDesenhadas.length) p.set('ld', e.linhasDesenhadas.map((l) => l.map(textoPonto).join('~')).join('|'));
   if (e.ccNova) p.set('lc', '1');
+  p.set('v', String(VERSAO_LINK));
   return p.toString();
+}
+
+/** Versão dos números no link (D28, spec 019): 2 depois da revisão de 2026-11; link sem ela é da v1.1.0. */
+export const VERSAO_LINK = 2;
+
+export function versaoDoLink(texto: string): number {
+  const v = Number(new URLSearchParams(texto.replace(/^#/, '')).get('v') ?? '1');
+  return Number.isFinite(v) && v >= 1 ? v : 1;
 }
 
 /** Ponto de linha desenhada no link: o id da estação ou "@lat,lon" com 5 casas (cerca de 1 m). */

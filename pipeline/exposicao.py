@@ -1,7 +1,7 @@
 """Spec 004: exposição (trens-hora e trem-km) por linha, dia e hora de operação.
 
 Uso (da raiz do repositório): .venv/Scripts/python -I pipeline/exposicao.py
-Entradas: GTFS (horários), km real da STM (2019-01 a 2023-09), estações com km ao longo da linha (spec 002),
+Entradas: GTFS (horários), km real da STM (2019-01 a 2026-09, publicado em 2026-10-23; até a v1.1.0, 2019-01 a 2023-09), estações com km ao longo da linha (spec 002),
           feriados (Nager.Date) e greves de 2025 (dados/manuais/greves_stm.csv).
 Saídas em dados/derivados/exposicao/:
   perfil_horario.csv       trens-hora e trem-km por linha, tipo de dia e hora, tirados do GTFS (molde de serviço)
@@ -27,7 +27,9 @@ import km_real  # noqa: E402
 GTFS = "dados/brutos/gtfs/gtfs_stm_mdb-2126_latest.zip"
 KM_REEL = "dados/brutos/stm/km_reel.csv"
 SAIDA = "dados/derivados/exposicao"
-INICIO, FIM, FIM_KM = date(2019, 1, 1), date(2026, 6, 30), date(2023, 9, 30)
+# FIM_KM: fim do km real usado. Na v1.1.0 era 2023-09-30 e a exposição depois disso era estimada; com o arquivo
+# republicado pela STM em 2026-10-23 (revisão de 2026-11, spec 018), todo o período do modelo é medido.
+INICIO, FIM, FIM_KM = date(2019, 1, 1), date(2026, 6, 30), date(2026, 9, 30)
 ROTA = {"1": "verde", "2": "laranja", "4": "amarela", "5": "azul"}
 LIGNE = {"Ligne verte": "verde", "Ligne orange": "laranja", "Ligne jaune": "amarela", "Ligne bleue": "azul"}
 MOLDE = {"util": "26N-GLOBAUX-01-S", "sabado": "26N-GLOBAUX-00-A", "domingo": "26N-GLOBAUX-01-I"}
@@ -36,7 +38,7 @@ VAGOES = {"verde": 9, "laranja": 9, "amarela": 9, "azul": 6}
 HORAS = range(0, 30)  # horas do dia de operação; 24-29 = madrugada do dia civil seguinte
 # Campo "Type matériel" do km real: 10 = MPM-10, 73 = MR-73, 63 = MR-63 (22 registros residuais, FONTES.md)
 FROTA = {"10": "MPM-10", "73": "MR-73", "63": "MR-63"}
-REF_FROTA = ("2022-10", "2023-09")  # parcela de cada frota usada depois do fim do km real
+REF_FROTA = ("2025-07", "2026-06")  # parcela de cada frota nos dias sem km real (12 meses antes do fim do modelo)
 
 
 def segundos(hhmmss):
@@ -113,6 +115,7 @@ def main():
     # km real por dia e linha, convertido em trem-km pelo número de vagões
     real, periodo_dia = defaultdict(float), {}
     km_frota, reg_tipo, km_tipo = defaultdict(float), defaultdict(int), defaultdict(float)
+    km_frota_dia = defaultdict(float)
     periodos_vistos = defaultdict(lambda: defaultdict(float))
     for r in km_real.registros(KM_REEL, ate=FIM_KM.isoformat()):
         l = LIGNE.get(r["ligne"])
@@ -122,6 +125,7 @@ def main():
         real[(r["data"], l)] += km / VAGOES[l]
         frota = FROTA.get(r["tipo_materiel"], "tipo " + r["tipo_materiel"])
         km_frota[(l, r["data"][:7], frota)] += km
+        km_frota_dia[(l, r["data"], frota)] += km
         reg_tipo[frota] += 1
         km_tipo[frota] += km
         p = r["periodo"]
@@ -140,6 +144,20 @@ def main():
         for r in csv.DictReader(f, delimiter=";"):
             greves[r["data_servico"]] = janelas_de(r["janelas_com_servico"])
 
+    def molde_do_dia(l, d):
+        """Trem-km do molde no dia; em dia de greve, só nas horas com serviço, como a exposição do modelo (perfil × fator ×
+        fração da hora com serviço)."""
+        t = tipo_dia(d, feriados)
+        jan = greves.get(d.isoformat())
+        if jan is None:
+            return km_dia_molde[(l, t)]
+        return sum(perfil[(l, t, h)][1] * fracao_hora(jan, h) for h in HORAS)
+
+    # Dia de greve (revisão de 2026-11, D63): o modelo conta só as horas das faixas com serviço (fração da hora), e o km
+    # real do dia inclui serviço fora delas, que não é modelado (a imprensa cita 50%; dados/manuais/LEIAME.md). Dividir
+    # esse km pelo molde do dia inteiro e depois aplicar a fração contava a redução duas vezes; dividi-lo só pelo molde das
+    # faixas punha nelas o km de fora. Por isso o dia de greve fica com o fator típico (estimado), como na v1.1.0.
+    km_greve = {}
     dias = [INICIO + timedelta(days=i) for i in range((FIM - INICIO).days + 1)]
     fator_dia = {}
     for d in dias:
@@ -147,12 +165,16 @@ def main():
             continue
         for l in VAGOES:
             molde = km_dia_molde[(l, tipo_dia(d, feriados))]
+            if d.isoformat() in greves:
+                if real.get((d.isoformat(), l)) and molde_do_dia(l, d):
+                    km_greve[(d, l)] = real[(d.isoformat(), l)] / molde_do_dia(l, d)
+                continue
             if real.get((d.isoformat(), l)) and molde:
                 fator_dia[(d, l)] = real[(d.isoformat(), l)] / molde
-    # Depois de 2023-09: mediana do fator nos últimos 12 meses medidos, por linha e tipo de dia
+    # Dias sem km real: mediana do fator nos 12 meses antes do fim do modelo, por linha e tipo de dia
     ref = defaultdict(list)
     for (d, l), fat in fator_dia.items():
-        if d >= date(2022, 10, 1):
+        if date(2025, 7, 1) <= d <= FIM:
             ref[(l, tipo_dia(d, feriados))].append(fat)
     fator_ref = {k: statistics.median(v) for k, v in ref.items()}
 
@@ -164,7 +186,7 @@ def main():
         for l in VAGOES:
             if (d.isoformat(), l) in real:
                 soma_p[(l, periodo_dia[d.isoformat()])][0] += real[(d.isoformat(), l)]
-                soma_p[(l, periodo_dia[d.isoformat()])][1] += km_dia_molde[(l, tipo_dia(d, feriados))]
+                soma_p[(l, periodo_dia[d.isoformat()])][1] += molde_do_dia(l, d)
     fator_p = {k: r / m for k, (r, m) in soma_p.items() if m}
     mensal = defaultdict(lambda: [0.0, 0.0])
     for d in dias:
@@ -173,7 +195,7 @@ def main():
         for l in VAGOES:
             if (d.isoformat(), l) in real:
                 mensal[(l, d.strftime("%Y-%m"))][0] += real[(d.isoformat(), l)]
-                mensal[(l, d.strftime("%Y-%m"))][1] += km_dia_molde[(l, tipo_dia(d, feriados))] * fator_p[(l, periodo_dia[d.isoformat()])]
+                mensal[(l, d.strftime("%Y-%m"))][1] += molde_do_dia(l, d) * fator_p[(l, periodo_dia[d.isoformat()])]
     with open(f"{SAIDA}/calibracao_mensal.csv", "w", encoding="utf-8", newline="") as f:
         w = csv.writer(f, delimiter=";", lineterminator="\n")
         w.writerow(["linha", "mes", "trem_km_real", "trem_km_estimado", "erro_relativo"])
@@ -191,13 +213,16 @@ def main():
                 t = tipo_dia(d, feriados)
                 if (d, l) in fator_dia:
                     fat, st, fonte = fator_dia[(d, l)], "medido", "km real do dia / km do molde GTFS"
+                elif d.isoformat() in greves:
+                    fat, st = fator_ref[(l, t)], "estimado"
+                    fonte = "greve: mediana do fator de 2025-07 a 2026-06, mesma linha e tipo de dia, nas horas com serviço (D63)"
                 else:
-                    fat, st, fonte = fator_ref[(l, t)], "estimado", "mediana do fator de 2022-10 a 2023-09, mesma linha e tipo de dia"
+                    fat, st, fonte = fator_ref[(l, t)], "estimado", "mediana do fator de 2025-07 a 2026-06, mesma linha e tipo de dia"
                 g = d.isoformat() in greves
                 jan = ";".join(f"{a // 60:02d}:{a % 60:02d}-{b // 60:02d}:{b % 60:02d}" for a, b in greves[d.isoformat()]) if g else ""
                 w.writerow([d.isoformat(), l, t, round(fat, 5), st, fonte, int(g), jan])
 
-    # Parcela de cada frota no km da linha por mês: medida até 2023-09; depois, a parcela de REF_FROTA (estimada)
+    # Parcela de cada frota no km da linha por mês: medida até FIM_KM; depois, a parcela de REF_FROTA (estimada)
     tot_mes, ref_fr, ref_tot = defaultdict(float), defaultdict(float), defaultdict(float)
     for (l, mes, fr), km in km_frota.items():
         tot_mes[(l, mes)] += km
@@ -219,6 +244,16 @@ def main():
                     else:
                         w.writerow([l, mes, fr, "", round(ref_fr[(l, fr)] / ref_tot[l], 6), "estimado",
                                     f"parcela de {REF_FROTA[0]} a {REF_FROTA[1]}, mesma linha"])
+    # Parcela diária de cada frota no km da linha (spec 018): entra no deslocamento do modelo do material rodante
+    tot_dia = defaultdict(float)
+    for (l, dia, fr), km in km_frota_dia.items():
+        tot_dia[(l, dia)] += km
+    with open(f"{SAIDA}/frota_diaria.csv", "w", encoding="utf-8", newline="") as f:
+        w = csv.writer(f, delimiter=";", lineterminator="\n")
+        w.writerow(["linha", "data_servico", "frota", "km_carro", "parcela_km_linha"])
+        for (l, dia, fr), km in sorted(km_frota_dia.items()):
+            if dia <= FIM.isoformat() and tot_dia[(l, dia)] > 0:
+                w.writerow([l, dia, fr, round(km, 3), round(km / tot_dia[(l, dia)], 6)])
     km_total = sum(km_tipo.values())
 
     acima = [(l, m, e) for l, m, e in erros if abs(e) > 0.10]
@@ -237,6 +272,8 @@ def main():
         "dias_medidos": sum(1 for _ in fator_dia),
         "dias_estimados": len(dias) * 4 - len(fator_dia),
         "dias_de_greve": len(greves),
+        "greve_km_real_sobre_molde_das_faixas": {"min": round(min(km_greve.values()), 3), "mediana": round(statistics.median(km_greve.values()), 3),
+                                                  "max": round(max(km_greve.values()), 3), "dias_linha": len(km_greve)},
         "km_molde_dia_util_trem_km": {l: round(km_dia_molde[(l, "util")], 1) for l in VAGOES},
     }
     with open(f"{SAIDA}/resumo_exposicao.json", "w", encoding="utf-8", newline="\n") as f:
@@ -248,7 +285,8 @@ def main():
 def escreve_relatorio(r):
     esperado = r["trens_esperados_08h"]
     L = ["# Exposição (spec 004)", "", "Gerado por `pipeline/exposicao.py` a partir do GTFS da STM (moldes de dia útil, sábado e domingo) e do km real "
-         "(2019-01 a 2023-09).", "", "## Trens em viagem às 08:00 de um dia útil", "", "| Linha | GTFS | Esperado | Dentro da tolerância de 1 trem |", "|---|---|---|---|"]
+         f"republicado pela STM em 2026-10-23 (usado até {FIM.isoformat()}, o fim dos incidentes; até a v1.1.0, o km real ia de 2019-01 a 2023-09).", "",
+         "## Trens em viagem às 08:00 de um dia útil", "", "| Linha | GTFS | Esperado | Dentro da tolerância de 1 trem |", "|---|---|---|---|"]
     for l, n in r["trens_em_viagem_08h_dia_util"].items():
         L.append(f"| {l} | {n} | {esperado[l]} | {'sim' if abs(n - esperado[l]) <= 1 else 'não'} |")
     L += ["", "## Erro mensal do km estimado contra o km real", "",
@@ -257,16 +295,25 @@ def escreve_relatorio(r):
           "| Linha | Mês | Erro |", "|---|---|---|"]
     for m in r["piores_meses"]:
         L.append(f"| {m['linha']} | {m['mes']} | {m['erro']:+.1%} |")
-    L += ["", "Exceção registrada: abril de 2020 (primeiro mês da pandemia, com oferta cortada no meio do mês) nas três linhas grandes e junho de 2019 na Amarela. "
-          "O critério não foi afrouxado.", "", "## Km real por frota", "", "| Frota | Registros | km-carro |", "|---|---|---|"]
+    L += ["", "Exceção registrada na v1.1.0 (220 meses, 2019-01 a 2023-09): abril de 2020 (primeiro mês da pandemia, com oferta cortada no meio do mês) "
+          "nas três linhas grandes e junho de 2019 na Amarela. O km real republicado preencheu o período de exploração de cerca de 80 mil registros "
+          "que estavam com \"#\", o que muda os fatores de calibração por linha e período, e estende a comparação até o fim dos incidentes; "
+          "os meses acima de 10% passam a ser os da tabela. Em dia de greve, o km estimado conta só as horas com serviço (D63). "
+          "O critério não foi afrouxado.", "",
+          "## Km real por frota", "", "| Frota | Registros | km-carro |", "|---|---|---|"]
     br = lambda x, casas=1: f"{x:,.{casas}f}".replace(",", "_").replace(".", ",").replace("_", ".")
     for fr, km in r["km_carro_por_frota"].items():
         L.append(f"| {fr} | {br(r['registros_por_frota'][fr], 0)} | {br(km)} |")
     L += ["", f"Total: {br(r['km_carro_total_milhoes'], 2)} milhões de km-carro. O total menos MR-73 e MPM-10 dá {br(r['total_menos_mr73_e_mpm10_km'], 2)} km, "
               f"que são os {r['registros_por_frota'].get('MR-63', 0)} registros do material tipo 63.", "",
-          "## Status", "", f"- {r['dias_medidos']} dias-linha com fator medido (km real) e {r['dias_estimados']} estimados (depois de 2023-09 ou sem km no dia).",
-          f"- {r['dias_de_greve']} dias de greve em 2025: a exposição de cada hora é multiplicada pela fração da hora com serviço.",
-          "- Parcela de cada frota por linha e mês em `frota_mensal.csv`: medida até 2023-09, estimada depois."]
+          "## Status", "", f"- {r['dias_medidos']} dias-linha com fator medido (km real) e {r['dias_estimados']} estimados (sem km real no dia).",
+          f"- {r['dias_de_greve']} dias de greve em 2025: a exposição de cada hora é multiplicada pela fração da hora com serviço, com o fator "
+          "típico da linha e do tipo de dia (D63). O km real desses dias é de "
+          f"{br(r['greve_km_real_sobre_molde_das_faixas']['min'], 2)} a {br(r['greve_km_real_sobre_molde_das_faixas']['max'], 2)} vezes o km do horário "
+          "só nas faixas com serviço (mediana " f"{br(r['greve_km_real_sobre_molde_das_faixas']['mediana'], 2)}): houve serviço fora das faixas, "
+          "que o modelo não representa (as falhas fora das faixas ficam fora, como na v1.1.0).",
+          "- Parcela de cada frota por linha e dia em `frota_diaria.csv` e por mês em `frota_mensal.csv`, medida pelo km real em todo o período "
+          "(spec 018; na v1.1.0, medida até 2023-09 e suposta igual à do último ano depois)."]
     open("fontes/verificacao/exposicao.md", "w", encoding="utf-8", newline="\n").write("\n".join(L) + "\n")
 
 

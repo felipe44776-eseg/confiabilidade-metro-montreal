@@ -1,6 +1,6 @@
 # 018 — Taxa, renovação e duração por fonte de falha
 
-**Status:** especificada
+**Status:** implementada com exceções
 **Fase:** revisão de 2026-11
 **Depende de:** 003, 004, 017
 **Revisa:** 004 (exposição), 005 (modelo da taxa), 006 (tempo entre falhas, duração e causa comum)
@@ -36,6 +36,10 @@ Quanto cada frota e cada setor do equipamento fixo contribui para a taxa de falh
   - Dada cada fonte fixa com 400 falhas ou mais no painel, quando ajustada, então tem binomial negativa própria, com as covariáveis da spec 005.
   - Abaixo disso, o modelo é reduzido: linha, faixa do dia e ano, com o efeito do clima e dos eventos da família como deslocamento (réplica b com réplica b do bootstrap).
   - A exposição continua trens-hora (D17). Horas de serviço entram como sensibilidade.
+  - *Mudança registrada em 2026-11-10, ao implementar, antes dos resultados finais:*
+    - no modelo reduzido, o efeito do ano também vem da família, porque com poucas falhas por ano o efeito próprio não se estima;
+    - abaixo de 100 falhas no painel, só a linha entra (é o caso de `mr_outros`, com 40).
+    - Contagem no painel, que exclui as horas sem serviço programado: `aux_stations` 388 e `tcpe` 132 ficaram reduzidas.
 - **Binomial negativa contra Poisson:** dada cada fonte com modelo próprio, quando ajustada, então a comparação por AIC e razão de verossimilhança do α é publicada, como na spec 005.
 - **IC pareado entre fontes:** dado o bootstrap em blocos semanais, quando roda, então as mesmas semanas sorteadas valem para todas as fontes, e as razões entre fontes têm IC.
 - **Melhora fora da amostra:** dado o modelo v1.1.0 e o novo, quando comparados por AIC e deixando um ano de fora de cada vez, então o relatório mostra o desvio do log(observado ÷ esperado) por linha e ano no ano deixado de fora, nas duas versões.
@@ -44,6 +48,30 @@ Quanto cada frota e cada setor do equipamento fixo contribui para a taxa de falh
 - **Causa comum:** dados os 45 eventos, quando o β é calculado, então o denominador é o da família (trem ou fixo) de cada evento.
 - **Contrato v2:** dado o `parametros.json`, quando gerado, então traz a lista de fontes por linha com base já multiplicada pela parcela, multiplicadores, renovação, duração, locais e a parcela da frota com status. Cada parâmetro leva valor, IC, n, método, fontes e status.
 - **Pré-registro:** dado o modelo novo, quando pronto, então suas previsões para os meses depois do retrato ficam congeladas e commitadas (spec 020) antes de qualquer download de incidentes novos.
+
+## Resultado (2026-11-11)
+
+Código em `pipeline/exposicao.py` (parcela diária da frota), `pipeline/modelo_taxa.py` (MR empilhado por frota, fontes fixas, reduzidos, bootstrap com B = 200 e as mesmas semanas em todos os modelos), `pipeline/diagnostico_taxa.py` (mistura de frotas por faixa), `pipeline/fora_da_amostra.py`, `pipeline/distribuicoes.py` e `pipeline/parametros.py` (contrato v2). Relatórios: [`taxa_por_fonte.md`](../../fontes/verificacao/taxa_por_fonte.md), [`fora_da_amostra.md`](../../fontes/verificacao/fora_da_amostra.md), [`modelo_taxa_por_faixa.md`](../../fontes/verificacao/modelo_taxa_por_faixa.md) e [`distribuicoes.md`](../../fontes/verificacao/distribuicoes.md).
+
+| Critério | Resultado |
+|---|---|
+| Exposição por frota, medida até o fim do arquivo | **Atende**: parcela diária de cada frota pelo km real até 2026-06 (`frota_diaria.csv`). A dedução pelas falhas rotuladas não foi necessária: nenhum mês ficou sem medida |
+| Parcela igual entre as horas (hipótese), testada pela mistura de frotas por faixa nas falhas da Verde | **Exceção**: a hipótese é rejeitada (qui-quadrado 58,2 com 5 graus de liberdade, p = 2,8e-11). A fração do MR-73 nas falhas das duas frotas é 0,85 e 0,87 nos picos, contra 0,80 prevista, e 0,58 a 0,66 na abertura, à noite e no fim do serviço, contra 0,78 a 0,80: o MR-73 roda mais nos picos. O km real da STM é diário, então a parcela por hora não se mede; a razão entre as frotas fica com essa ressalva |
+| Razão MR-73 ÷ MPM-10 na Verde com IC 95% | **Atende**: 8,89 (6,61–11,23) por trem-hora da frota em 2025; entre os anos, de 6,06 (2020) a 15,54 (2022) |
+| A linha ainda pesa dentro de cada frota? | **Atende** (a pergunta tem resposta): sim. Razão de verossimilhança 131,5 com 3 graus de liberdade, p = 2,5e-28. Por trem-hora da frota em 2025, nas condições de referência: MR-73 0,0046 na Verde, 0,0044 na Amarela e 0,0031 na Azul; MPM-10 0,00052 na Verde e 0,00078 na Laranja |
+| Referência por fonte; taxa-base só onde a parcela é maior que zero | **Atende**: nenhuma falha de frota ficou sem exposição da frota no dia ou no mês |
+| Modelos dos equipamentos fixos | **Atende**: modelo próprio em `aux_trains_sintoma_fixo` (1.500 falhas no painel), `voie_sintoma_fixo` (924), `voie_sintoma_trem` (785) e `aux_trains_sintoma_trem` (694); reduzido em `aux_stations` (388) e `tcpe` (132); `mr_outros` (40), só a linha |
+| Horas de serviço como sensibilidade da exposição dos equipamentos fixos | **Não feita nesta rodada**: fica como tarefa aberta. A exposição continua trens-hora (D17) |
+| Binomial negativa contra Poisson por fonte | **Atende**: a binomial negativa vence nas quatro fontes com modelo próprio (α de 2,85 a 19,99) e no MR empilhado (α = 2,03; p = 8,7e-34). O α de `aux_trains_sintoma_trem` (19,99) e o de `voie_sintoma_trem` (15,70) ficam perto do teto da busca (20): são as fontes mais em rajadas. Nas três reduzidas, a Poisson tem AIC menor |
+| IC pareado entre fontes | **Atende**: as mesmas semanas sorteadas em todos os modelos (`vetores_bootstrap.json.gz`), B = 200 |
+| Melhora fora da amostra (um ano de fora, v1.1.0 contra por fonte) | **Atende**: a raiz do erro quadrático do log(observado ÷ esperado) por linha e ano cai de 0,308 para 0,247 no material rodante e de 0,646 para 0,589 nos equipamentos fixos (28 casos em cada). Onde a frota mudou, o ganho é grande: na Verde, material rodante, 2019 vai de 2,04 para 0,94 e 2024–2025 de 0,67–0,69 para 1,04–1,05. Nenhum dos dois prevê a Amarela de 2024 nos equipamentos fixos (7,9 e 9,2): é o surto de registros de terminal |
+| De onde vem cada efeito | **Atende**: a abertura eleva todas as fontes (3,1 a 3,8 nas fixas com modelo próprio; 2,64 no material rodante); na TCPE, 8,5 (5,4–13,7), lido como probabilidade de falha por abertura do serviço, ao energizar a rede (dedução). O calor de 25 °C ou mais vem da via (2,23 e 2,70) e do "Service aux trains" com sintoma fixo (1,39); no material rodante não há efeito (1,08; 0,84–1,36). A neve no solo acima de 10 cm pesa no material rodante (1,31; 1,02–1,62); em cada fonte fixa o intervalo contém 1, e só a família (1,37) o separa de 1 |
+| Renovação e duração por fonte | **Atende**: 32 estratos linha × fonte. Renovação própria em 25, herdada da rede em 7; duração própria em 17, herdada em 15 (estratos com menos de 30 falhas). A forma da Weibull fica sempre abaixo de 1, de 0,37 (Azul, via com sintoma de trem) a 0,83 (Verde, MR-73) |
+| β da causa comum pelo denominador da família | **Atende**: 40 dos 45 eventos são de equipamento fixo. Verde com Laranja nas falhas fixas: β da Verde 0,022 (0,015–0,031), contra 0,011 com o denominador de todas as falhas |
+| Contrato v2 | **Atende**: 9 fontes, 32 pares linha × fonte, `frota_por_linha` com status; `codigo_commit` = SHA-256 dos scripts do contrato, que passam a incluir `normaliza.py`, `exposicao.py` e `duracao.py` |
+| Pré-registro do modelo novo | Ver a spec 020 (`fontes/verificacao/preregistro/modelo_v2.json`) |
+
+*Mudança registrada em 2026-11-10, depois de ver (D63):* com o km real medido em 2025, o multiplicador de dia de greve saiu 1,73 (material rodante) por contagem dupla da redução do serviço na exposição. O ajuste completo foi parado, a exposição dos dias de greve passou ao fator típico nas horas com serviço, e o multiplicador voltou a 1,16 (0,55–2,23), com intervalo que contém 1, como na v1.1.0.
 
 ## Fora de escopo
 

@@ -3,63 +3,63 @@
  "n_horas": 226658,
  "n_falhas": 3966,
  "modelo_escolhido": "binomial negativa",
- "aic_poisson": 37850.38,
- "aic_nb": 37709.78,
- "alpha_nb": 1.833019,
+ "aic_poisson": 37849.54,
+ "aic_nb": 37709.15,
+ "alpha_nb": 1.830086,
  "perfil_alpha": [
   [
    0.01,
-   -18882.94
+   -18882.52
   ],
   [
    0.02,
-   -18881.71
+   -18881.29
   ],
   [
    0.0398,
-   -18879.33
+   -18878.91
   ],
   [
    0.0795,
-   -18874.82
+   -18874.41
   ],
   [
    0.1586,
-   -18866.71
+   -18866.3
   ],
   [
    0.3166,
-   -18853.37
+   -18852.97
   ],
   [
    0.6318,
-   -18834.81
+   -18834.43
   ],
   [
    1.2608,
-   -18816.84
+   -18816.49
   ],
   [
    2.5162,
-   -18816.92
+   -18816.65
   ],
   [
    5.0216,
-   -18869.28
+   -18869.16
   ],
   [
    10.0216,
-   -19027.37
+   -19027.5
   ],
   [
    20.0,
-   -19362.31
+   -19362.8
   ]
  ],
- "lr_dispersao": 142.604,
- "p_lr_dispersao": 3.588217442232199e-33,
+ "lr_dispersao": 142.391,
+ "p_lr_dispersao": 3.993373295440685e-33,
  "bootstrap_b": 200,
- "bootstrap_segundos": 618.9,
+ "bootstrap_segundos": 383.3,
  "semente": 20261021,
  "referencia": {
   "linha": "laranja",
@@ -75,453 +75,453 @@
  "coeficientes": [
   {
    "termo": "const",
-   "coef": -6.631476,
-   "multiplicador": 0.001318,
+   "coef": -6.639241,
+   "multiplicador": 0.001308,
    "ic95": [
-    0.001086,
-    0.001613
+    0.001077,
+    0.001601
    ],
-   "ep_modelo": 0.082898,
+   "ep_modelo": 0.082905,
    "reamostras_validas": 200
   },
   {
    "termo": "linha=amarela",
-   "coef": 1.619126,
-   "multiplicador": 5.048676,
+   "coef": 1.693663,
+   "multiplicador": 5.439368,
    "ic95": [
-    4.416622,
-    5.774917
+    4.772729,
+    6.222218
    ],
-   "ep_modelo": 0.055191,
+   "ep_modelo": 0.055176,
    "reamostras_validas": 200
   },
   {
    "termo": "linha=azul",
-   "coef": 1.319557,
-   "multiplicador": 3.741762,
+   "coef": 1.324095,
+   "multiplicador": 3.758783,
    "ic95": [
-    3.371619,
-    4.215486
+    3.391483,
+    4.232186
    ],
-   "ep_modelo": 0.046689,
+   "ep_modelo": 0.046688,
    "reamostras_validas": 200
   },
   {
    "termo": "linha=verde",
-   "coef": 0.746928,
-   "multiplicador": 2.110507,
+   "coef": 0.734667,
+   "multiplicador": 2.084788,
    "ic95": [
-    1.890632,
-    2.379743
+    1.868562,
+    2.349604
    ],
-   "ep_modelo": 0.043255,
+   "ep_modelo": 0.043251,
    "reamostras_validas": 200
   },
   {
    "termo": "faixa=abertura",
-   "coef": 0.971419,
-   "multiplicador": 2.641689,
+   "coef": 0.970288,
+   "multiplicador": 2.638705,
    "ic95": [
-    2.364074,
-    2.922693
+    2.361544,
+    2.916991
    ],
    "ep_modelo": 0.054572,
    "reamostras_validas": 200
   },
   {
    "termo": "faixa=fim",
-   "coef": -0.638132,
-   "multiplicador": 0.528279,
+   "coef": -0.638608,
+   "multiplicador": 0.528027,
    "ic95": [
-    0.456535,
-    0.618521
+    0.456358,
+    0.618231
    ],
    "ep_modelo": 0.089271,
    "reamostras_validas": 200
   },
   {
    "termo": "faixa=noite",
-   "coef": -0.501716,
-   "multiplicador": 0.605491,
+   "coef": -0.501785,
+   "multiplicador": 0.605449,
    "ic95": [
-    0.538044,
-    0.673184
+    0.53798,
+    0.67327
    ],
    "ep_modelo": 0.060749,
    "reamostras_validas": 200
   },
   {
    "termo": "faixa=pico_manha",
-   "coef": 0.303714,
-   "multiplicador": 1.354882,
+   "coef": 0.302604,
+   "multiplicador": 1.353379,
    "ic95": [
-    1.233822,
-    1.476909
+    1.232829,
+    1.475229
    ],
-   "ep_modelo": 0.045985,
+   "ep_modelo": 0.045982,
    "reamostras_validas": 200
   },
   {
    "termo": "faixa=pico_tarde",
-   "coef": -0.161077,
-   "multiplicador": 0.851227,
+   "coef": -0.161033,
+   "multiplicador": 0.851264,
    "ic95": [
-    0.772121,
-    0.928475
+    0.77205,
+    0.92853
    ],
-   "ep_modelo": 0.050563,
+   "ep_modelo": 0.050559,
    "reamostras_validas": 200
   },
   {
    "termo": "tipo_dia=domingo",
-   "coef": -0.298785,
-   "multiplicador": 0.741719,
+   "coef": -0.295813,
+   "multiplicador": 0.743927,
    "ic95": [
-    0.662596,
-    0.872045
+    0.66342,
+    0.872249
    ],
-   "ep_modelo": 0.060882,
+   "ep_modelo": 0.06089,
    "reamostras_validas": 200
   },
   {
    "termo": "tipo_dia=sabado",
-   "coef": -0.321776,
-   "multiplicador": 0.724861,
+   "coef": -0.318311,
+   "multiplicador": 0.727376,
    "ic95": [
-    0.644702,
-    0.831228
+    0.643909,
+    0.83459
    ],
-   "ep_modelo": 0.060315,
+   "ep_modelo": 0.060321,
    "reamostras_validas": 200
   },
   {
    "termo": "estacao=inverno",
-   "coef": 0.052375,
-   "multiplicador": 1.053771,
+   "coef": 0.054064,
+   "multiplicador": 1.055552,
    "ic95": [
-    0.862584,
-    1.283332
+    0.863072,
+    1.289464
    ],
-   "ep_modelo": 0.067236,
+   "ep_modelo": 0.06726,
    "reamostras_validas": 200
   },
   {
    "termo": "estacao=primavera",
-   "coef": 0.109614,
-   "multiplicador": 1.115847,
+   "coef": 0.107987,
+   "multiplicador": 1.114034,
    "ic95": [
-    0.96333,
-    1.278674
+    0.962668,
+    1.275831
    ],
-   "ep_modelo": 0.051966,
+   "ep_modelo": 0.05196,
    "reamostras_validas": 200
   },
   {
    "termo": "estacao=verao",
-   "coef": 0.126085,
-   "multiplicador": 1.134379,
+   "coef": 0.13265,
+   "multiplicador": 1.14185,
    "ic95": [
-    0.934826,
-    1.391386
+    0.940044,
+    1.401457
    ],
-   "ep_modelo": 0.069128,
+   "ep_modelo": 0.069113,
    "reamostras_validas": 200
   },
   {
    "termo": "temp=-15a-5",
-   "coef": 0.087396,
-   "multiplicador": 1.091329,
+   "coef": 0.09021,
+   "multiplicador": 1.094404,
    "ic95": [
-    0.891828,
-    1.398674
+    0.895798,
+    1.402605
    ],
-   "ep_modelo": 0.077563,
+   "ep_modelo": 0.077533,
    "reamostras_validas": 200
   },
   {
    "termo": "temp=-5a5",
-   "coef": 0.068599,
-   "multiplicador": 1.071007,
+   "coef": 0.07158,
+   "multiplicador": 1.074204,
    "ic95": [
-    0.925117,
-    1.293301
+    0.926351,
+    1.298092
    ],
-   "ep_modelo": 0.059136,
+   "ep_modelo": 0.059122,
    "reamostras_validas": 200
   },
   {
    "termo": "temp=15a25",
-   "coef": 0.074901,
-   "multiplicador": 1.077778,
+   "coef": 0.072891,
+   "multiplicador": 1.075614,
    "ic95": [
-    0.926289,
-    1.24769
+    0.924036,
+    1.247763
    ],
-   "ep_modelo": 0.05965,
+   "ep_modelo": 0.059637,
    "reamostras_validas": 200
   },
   {
    "termo": "temp=25_ou_mais",
-   "coef": 0.067773,
-   "multiplicador": 1.070122,
+   "coef": 0.065853,
+   "multiplicador": 1.068069,
    "ic95": [
-    0.825686,
-    1.345682
+    0.825056,
+    1.342269
    ],
-   "ep_modelo": 0.090408,
+   "ep_modelo": 0.090401,
    "reamostras_validas": 200
   },
   {
    "termo": "temp=abaixo_-15",
-   "coef": -0.077088,
-   "multiplicador": 0.925809,
+   "coef": -0.065467,
+   "multiplicador": 0.93663,
    "ic95": [
-    0.710048,
-    1.240201
+    0.715429,
+    1.2563
    ],
-   "ep_modelo": 0.122716,
+   "ep_modelo": 0.122702,
    "reamostras_validas": 200
   },
   {
    "termo": "temp=sem_dado",
-   "coef": -21.351815,
+   "coef": -21.348456,
    "multiplicador": 0.0,
    "ic95": [
     0.0,
     0.0
    ],
-   "ep_modelo": 150873.110532,
+   "ep_modelo": 150191.538804,
    "reamostras_validas": 185
   },
   {
    "termo": "precip=acima_1mm",
-   "coef": -0.051033,
-   "multiplicador": 0.950247,
+   "coef": -0.050472,
+   "multiplicador": 0.950781,
    "ic95": [
-    0.734212,
-    1.18105
+    0.735349,
+    1.182248
    ],
-   "ep_modelo": 0.104362,
+   "ep_modelo": 0.104347,
    "reamostras_validas": 200
   },
   {
    "termo": "precip=ate_1mm",
-   "coef": -0.048525,
-   "multiplicador": 0.952633,
+   "coef": -0.048911,
+   "multiplicador": 0.952266,
    "ic95": [
-    0.829983,
-    1.121824
+    0.829485,
+    1.122429
    ],
-   "ep_modelo": 0.070426,
+   "ep_modelo": 0.070423,
    "reamostras_validas": 200
   },
   {
    "termo": "precip=sem_dado",
-   "coef": -23.220905,
+   "coef": -23.239784,
    "multiplicador": 0.0,
    "ic95": [
     0.0,
     0.0
    ],
-   "ep_modelo": 161558.716688,
+   "ep_modelo": 161567.200416,
    "reamostras_validas": 199
   },
   {
    "termo": "cond=chuva",
-   "coef": -0.107883,
-   "multiplicador": 0.897733,
+   "coef": -0.108544,
+   "multiplicador": 0.89714,
    "ic95": [
-    0.775729,
-    1.024435
+    0.775598,
+    1.023658
    ],
-   "ep_modelo": 0.077657,
+   "ep_modelo": 0.077639,
    "reamostras_validas": 200
   },
   {
    "termo": "cond=chuva_congelante",
-   "coef": -0.117046,
-   "multiplicador": 0.889545,
+   "coef": -0.117916,
+   "multiplicador": 0.888771,
    "ic95": [
-    0.53869,
-    1.404905
+    0.537987,
+    1.400782
    ],
-   "ep_modelo": 0.215866,
+   "ep_modelo": 0.215835,
    "reamostras_validas": 200
   },
   {
    "termo": "cond=neve",
-   "coef": -0.137441,
-   "multiplicador": 0.871586,
+   "coef": -0.137421,
+   "multiplicador": 0.871604,
    "ic95": [
-    0.751911,
-    1.025408
+    0.750566,
+    1.024787
    ],
-   "ep_modelo": 0.069804,
+   "ep_modelo": 0.069818,
    "reamostras_validas": 200
   },
   {
    "termo": "cond=sem_dado",
-   "coef": -0.103892,
-   "multiplicador": 0.901323,
+   "coef": -0.104069,
+   "multiplicador": 0.901163,
    "ic95": [
-    0.835336,
-    0.96822
+    0.835469,
+    0.968113
    ],
-   "ep_modelo": 0.038487,
+   "ep_modelo": 0.038484,
    "reamostras_validas": 200
   },
   {
    "termo": "neve_solo=1a10",
-   "coef": 0.329345,
-   "multiplicador": 1.390057,
+   "coef": 0.327452,
+   "multiplicador": 1.387428,
    "ic95": [
-    1.125291,
-    1.662573
+    1.12404,
+    1.654494
    ],
-   "ep_modelo": 0.067683,
+   "ep_modelo": 0.067722,
    "reamostras_validas": 200
   },
   {
    "termo": "neve_solo=acima_10",
-   "coef": 0.317463,
-   "multiplicador": 1.373639,
+   "coef": 0.313149,
+   "multiplicador": 1.367725,
    "ic95": [
-    1.098397,
-    1.674229
+    1.089289,
+    1.66942
    ],
-   "ep_modelo": 0.075006,
+   "ep_modelo": 0.075056,
    "reamostras_validas": 200
   },
   {
    "termo": "neve_solo=sem_dado",
-   "coef": -0.055382,
-   "multiplicador": 0.946124,
+   "coef": -0.05459,
+   "multiplicador": 0.946873,
    "ic95": [
-    0.815237,
-    1.091536
+    0.815016,
+    1.090923
    ],
-   "ep_modelo": 0.05704,
+   "ep_modelo": 0.057044,
    "reamostras_validas": 200
   },
   {
    "termo": "ano=2020",
-   "coef": -0.254549,
-   "multiplicador": 0.775266,
+   "coef": -0.254658,
+   "multiplicador": 0.775181,
    "ic95": [
-    0.644872,
-    0.905533
+    0.644966,
+    0.904755
    ],
-   "ep_modelo": 0.055728,
+   "ep_modelo": 0.055706,
    "reamostras_validas": 200
   },
   {
    "termo": "ano=2021",
-   "coef": -0.587428,
-   "multiplicador": 0.555755,
+   "coef": -0.587029,
+   "multiplicador": 0.555977,
    "ic95": [
-    0.46558,
-    0.674729
+    0.466454,
+    0.675931
    ],
-   "ep_modelo": 0.061638,
+   "ep_modelo": 0.061622,
    "reamostras_validas": 200
   },
   {
    "termo": "ano=2022",
-   "coef": -0.4646,
-   "multiplicador": 0.628387,
+   "coef": -0.464858,
+   "multiplicador": 0.628224,
    "ic95": [
-    0.541916,
-    0.758078
+    0.541814,
+    0.758572
    ],
-   "ep_modelo": 0.059032,
+   "ep_modelo": 0.059017,
    "reamostras_validas": 200
   },
   {
    "termo": "ano=2023",
-   "coef": -0.470411,
-   "multiplicador": 0.624746,
+   "coef": -0.472018,
+   "multiplicador": 0.623742,
    "ic95": [
-    0.528441,
-    0.717937
+    0.527247,
+    0.716541
    ],
-   "ep_modelo": 0.059775,
+   "ep_modelo": 0.059762,
    "reamostras_validas": 200
   },
   {
    "termo": "ano=2024",
-   "coef": -0.602167,
-   "multiplicador": 0.547624,
+   "coef": -0.61638,
+   "multiplicador": 0.539896,
    "ic95": [
-    0.471735,
-    0.665511
+    0.464717,
+    0.652894
    ],
-   "ep_modelo": 0.062817,
+   "ep_modelo": 0.0628,
    "reamostras_validas": 200
   },
   {
    "termo": "ano=2025",
-   "coef": -0.558396,
-   "multiplicador": 0.572126,
+   "coef": -0.574759,
+   "multiplicador": 0.562841,
    "ic95": [
-    0.470182,
-    0.671367
+    0.46197,
+    0.661134
    ],
-   "ep_modelo": 0.062423,
+   "ep_modelo": 0.062414,
    "reamostras_validas": 200
   },
   {
    "termo": "ano=2026",
-   "coef": -0.397814,
-   "multiplicador": 0.671787,
+   "coef": -0.409801,
+   "multiplicador": 0.663782,
    "ic95": [
-    0.501624,
-    0.868482
+    0.494262,
+    0.858973
    ],
-   "ep_modelo": 0.073012,
+   "ep_modelo": 0.073049,
    "reamostras_validas": 200
   },
   {
    "termo": "jogo",
-   "coef": 0.229846,
-   "multiplicador": 1.258406,
+   "coef": 0.228683,
+   "multiplicador": 1.256943,
    "ic95": [
-    1.004204,
-    1.5937
+    1.00559,
+    1.590077
    ],
-   "ep_modelo": 0.118713,
+   "ep_modelo": 0.118709,
    "reamostras_validas": 200
   },
   {
    "termo": "gp_fds",
-   "coef": 0.152248,
-   "multiplicador": 1.164449,
+   "coef": 0.095329,
+   "multiplicador": 1.100021,
    "ic95": [
-    0.594743,
-    1.653195
+    0.551428,
+    1.532923
    ],
-   "ep_modelo": 0.214137,
+   "ep_modelo": 0.213924,
    "reamostras_validas": 199
   },
   {
    "termo": "feriado",
-   "coef": -0.115204,
-   "multiplicador": 0.891184,
+   "coef": -0.120687,
+   "multiplicador": 0.886312,
    "ic95": [
-    0.601159,
-    1.230108
+    0.597481,
+    1.230415
    ],
-   "ep_modelo": 0.160098,
+   "ep_modelo": 0.160104,
    "reamostras_validas": 200
   },
   {
    "termo": "greve",
-   "coef": 0.154945,
-   "multiplicador": 1.167594,
+   "coef": 0.149027,
+   "multiplicador": 1.160704,
    "ic95": [
-    0.55636,
-    2.243673
+    0.553718,
+    2.228396
    ],
-   "ep_modelo": 0.241795,
+   "ep_modelo": 0.241947,
    "reamostras_validas": 200
   }
  ],
@@ -535,69 +535,69 @@
   {
    "contagem": 0,
    "observado": 222865,
-   "esperado": 222865.0
+   "esperado": 222864.8
   },
   {
    "contagem": 1,
    "observado": 3638,
-   "esperado": 3634.8
+   "esperado": 3635.3
   },
   {
    "contagem": 2,
    "observado": 140,
-   "esperado": 147.2
+   "esperado": 146.9
   },
   {
    "contagem": "3+",
    "observado": 15,
-   "esperado": 11.0
+   "esperado": 10.9
   }
  ],
  "ano_base": "2025",
  "base_por_trem_hora": {
   "verde": {
-   "valor": 0.00159171,
+   "valor": 0.00153483,
    "ic95": [
-    0.00123915,
-    0.0019776
+    0.00120023,
+    0.00190067
    ]
   },
   "laranja": {
-   "valor": 0.00075419,
+   "valor": 0.00073621,
    "ic95": [
-    0.00059458,
-    0.00094025
+    0.00058282,
+    0.00092718
    ]
   },
   "amarela": {
-   "valor": 0.00380764,
+   "valor": 0.0040045,
    "ic95": [
-    0.00297658,
-    0.00478085
+    0.00309809,
+    0.00504806
    ]
   },
   "azul": {
-   "valor": 0.00282198,
+   "valor": 0.00276724,
    "ic95": [
-    0.00223414,
-    0.00358167
+    0.00218584,
+    0.00350545
    ]
   }
  },
  "falhas_fora_do_horario_com_servico": 16,
  "defasagem_1h": {
-  "multiplicador": 1.9476,
+  "multiplicador": 1.9479,
   "ic95_modelo": [
-   1.7376,
-   2.183
+   1.7378,
+   2.1833
   ]
  },
  "so_periodo_km_real": {
   "const": 0.0012,
-  "linha=amarela": 5.4549,
-  "linha=azul": 3.6585,
-  "linha=verde": 2.3466,
-  "faixa=abertura": 2.5992,
+  "linha=amarela": 5.455,
+  "linha=azul": 3.6586,
+  "linha=verde": 2.3467,
+  "faixa=abertura": 2.5991,
   "faixa=fim": 0.4501,
   "faixa=noite": 0.5485,
   "faixa=pico_manha": 1.2193,
@@ -606,11 +606,11 @@
   "tipo_dia=sabado": 0.7027,
   "estacao=inverno": 1.0401,
   "estacao=primavera": 1.2776,
-  "estacao=verao": 1.1784,
+  "estacao=verao": 1.1783,
   "temp=-15a-5": 1.1402,
   "temp=-5a5": 1.0798,
   "temp=15a25": 1.1511,
-  "temp=25_ou_mais": 1.1871,
+  "temp=25_ou_mais": 1.187,
   "temp=abaixo_-15": 1.0734,
   "temp=sem_dado": 0.0,
   "precip=acima_1mm": 1.0136,

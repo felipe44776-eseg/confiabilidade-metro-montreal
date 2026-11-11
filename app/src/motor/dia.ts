@@ -86,6 +86,20 @@ export interface MetricasLinha {
   falhas: Record<CausaBloqueio, number>;
   trensNaOficina: number;
   frotaCompleta: boolean;
+  /** Spec 019: falhas e minutos parados por fonte (id da fonte; "CC" para a causa comum; "injetada" para as injetadas). */
+  falhasPorFonte: Record<string, number>;
+  minutosPorFonte: Record<string, number>;
+  /** Spec 019 (D58): falhas por classe de gravidade, pela interrupção efetiva (depois das políticas). */
+  falhasPorClasse: Record<ClasseGravidade, number>;
+}
+
+export type ClasseGravidade = 'menos_de_5' | '5_a_10' | '10_a_30' | '30_ou_mais';
+export const CLASSES_GRAVIDADE: ClasseGravidade[] = ['menos_de_5', '5_a_10', '10_a_30', '30_ou_mais'];
+
+/** Classe de gravidade de uma interrupção (segundos), pelos limites da STM: 5, 10 e 30 minutos. */
+export function classeGravidade(segundos: number): ClasseGravidade {
+  const m = segundos / 60;
+  return m < 5 ? 'menos_de_5' : m < 10 ? '5_a_10' : m < 30 ? '10_a_30' : '30_ou_mais';
 }
 
 export interface ResultadoDia {
@@ -118,6 +132,7 @@ interface Bloqueio {
   ini: number;
   fim: number;
   causa: CausaBloqueio;
+  fonte?: string;
 }
 
 interface Lento {
@@ -166,10 +181,18 @@ export function simulaDia(ctx: Contexto, politicas: Politicas, semente: number, 
   }
   const bloqueiosLinha: Record<string, Bloqueio[]> = {};
   const contagem: Record<string, Record<CausaBloqueio, number>> = {};
+  const porFonte: Record<string, Record<string, number>> = {};
+  const porClasse: Record<string, Record<ClasseGravidade, number>> = {};
   for (const linha of rede.ids) {
     bloqueiosLinha[linha] = [];
     contagem[linha] = { MR: 0, EF: 0, CC: 0 };
+    porFonte[linha] = {};
+    porClasse[linha] = { menos_de_5: 0, '5_a_10': 0, '10_a_30': 0, '30_ou_mais': 0 };
   }
+  const contaFalha = (linha: string, fonte: string, paradaS: number) => {
+    porFonte[linha][fonte] = (porFonte[linha][fonte] ?? 0) + 1;
+    porClasse[linha][classeGravidade(paradaS)]++;
+  };
   const bloqueiosOD: BloqueioOD[] = [];
 
   // ---------- Frota no início do dia (reserva fria k-de-n) ----------
@@ -286,10 +309,11 @@ export function simulaDia(ctx: Contexto, politicas: Politicas, semente: number, 
       const par = linhas.join('-');
       for (const linha of linhas) {
         contagem[linha].CC++;
+        contaFalha(linha, 'CC', dur);
         anota({ t, linha, trem: null, trecho: null, sentido: null, tipo: 'CAUSA_COMUM', fluxo: fl, sorteio, duracaoS: dur, detalhe: `par ${par}` });
         if (dur <= 0) continue;
         const n = rede.linhas[linha].n;
-        for (const s of [0, 1] as Sentido[]) for (let j = 0; j < n - 1; j++) bloqueia(linha, s, j, { ini: t, fim: t + dur, causa: 'CC' });
+        for (const s of [0, 1] as Sentido[]) for (let j = 0; j < n - 1; j++) bloqueia(linha, s, j, { ini: t, fim: t + dur, causa: 'CC', fonte: 'CC' });
         bloqueiosOD.push({ ini: t, fim: t + dur, arestas: grafo.arestasDaLinha.get(linha) ?? [], origem: { causa: 'CC', linha, trecho: null, sentidos: [0, 1] } });
         anota({ t: t + dur, linha, trem: null, trecho: null, sentido: null, tipo: 'FIM_INTERRUPCAO', fluxo: fl, sorteio, duracaoS: dur, detalhe: `causa comum ${par}` });
       }
@@ -300,6 +324,7 @@ export function simulaDia(ctx: Contexto, politicas: Politicas, semente: number, 
     if (!linha) continue;
     const n = rede.linhas[linha].n;
     const inj = ev.injetada;
+    const fonteId = ev.fi !== undefined ? ctx.fontes[ev.fi].id : 'injetada';
 
     if (ev.tipo === 'EF') {
       contagem[linha].EF++;
@@ -328,9 +353,10 @@ export function simulaDia(ctx: Contexto, politicas: Politicas, semente: number, 
       }
       const degradada = politicas.operacaoDegradada && dur > tAtivacao;
       const parada = degradada ? tAtivacao : dur;
+      contaFalha(linha, fonteId, parada);
       anota({ t, linha, trem: null, trecho: g, sentido: sentidos.length === 1 ? sentidos[0] : null, tipo: 'FALHA_EF', fluxo: fl, sorteio, duracaoS: dur, detalhe: codigo ? `local ${codigo}` : `${sentidos.length} sentido(s)` });
       if (parada > 0) {
-        for (const s of sentidos) bloqueia(linha, s, trechoFisico(n, s, g), { ini: t, fim: t + parada, causa: 'EF' });
+        for (const s of sentidos) bloqueia(linha, s, trechoFisico(n, s, g), { ini: t, fim: t + parada, causa: 'EF', fonte: fonteId });
         bloqueiosOD.push({ ini: t, fim: t + parada, arestas: efeitoBloqueio(grafo, linha, g, sentidos, politicas.retornoParcial), origem: { causa: 'EF', linha, trecho: g, sentidos } });
         anota({ t: t + parada, linha, trem: null, trecho: g, sentido: sentidos.length === 1 ? sentidos[0] : null, tipo: 'FIM_INTERRUPCAO', fluxo: fl, sorteio, duracaoS: parada, detalhe: 'equipamento fixo' });
       }
@@ -377,6 +403,7 @@ export function simulaDia(ctx: Contexto, politicas: Politicas, semente: number, 
     let alvo = circulando[Math.min(circulando.length - 1, Math.floor(uEscolha * circulando.length))];
     if (inj?.viagem) alvo = circulando.find((c) => c.tr.viagem.id === inj.viagem) ?? alvo;
     if (!alvo) {
+      contaFalha(linha, fonteId, 0);
       anota({ t, linha, trem: null, trecho: null, sentido: null, tipo: 'SEM_TREM', fluxo: fl, sorteio, duracaoS: dur, detalhe: 'nenhum trem em circulação' });
       continue;
     }
@@ -401,9 +428,10 @@ export function simulaDia(ctx: Contexto, politicas: Politicas, semente: number, 
     const g = trechoFisico(n, s, trechoLocal);
     const retira = retirar && dur > 0 && uRetirada < pRetirada;
     const parada = retira ? Math.min(dur, tRetirada) : dur;
+    contaFalha(linha, fonteId, parada);
     anota({ t, linha, trem: v.id, trecho: g, sentido: s, tipo: 'FALHA_TREM', fluxo: fl, sorteio, duracaoS: dur, detalhe: naEstacao ? `parado na estação ${nomeLocal(ctx, linha, s, local)}` : `entre ${nomeLocal(ctx, linha, s, local)} e ${nomeLocal(ctx, linha, s, local + 1)}` });
     if (parada > 0) {
-      bloqueia(linha, s, trechoLocal, { ini: t, fim: t + parada, causa: 'MR' });
+      bloqueia(linha, s, trechoLocal, { ini: t, fim: t + parada, causa: 'MR', fonte: fonteId });
       bloqueiosOD.push({ ini: t, fim: t + parada, arestas: efeitoBloqueio(grafo, linha, g, [s], politicas.retornoParcial), origem: { causa: 'MR', linha, trecho: g, sentidos: [s] } });
       anota({ t: t + parada, linha, trem: v.id, trecho: g, sentido: s, tipo: 'FIM_INTERRUPCAO', fluxo: fl, sorteio, duracaoS: parada, detalhe: 'material rodante' });
     }
@@ -480,6 +508,9 @@ export function simulaDia(ctx: Contexto, politicas: Politicas, semente: number, 
       falhas: contagem[linha],
       trensNaOficina: oficinaDia[linha],
       frotaCompleta: frotaCompleta[linha],
+      falhasPorFonte: porFonte[linha],
+      minutosPorFonte: Object.fromEntries([...new Set(bl.map((b) => b.fonte ?? b.causa))].map((f) => [f, uniao(bl.filter((b) => (b.fonte ?? b.causa) === f), ini, fim) / 60])),
+      falhasPorClasse: porClasse[linha],
     };
   }
   const od = opcoes.odDaRede === false ? { dispOD: NaN, extraMin: NaN, minutosParInterrompido: NaN } : origemDestino(grafo, bloqueiosOD, horario.janelaRede, politicas.rotaAlternativa);

@@ -12,3 +12,7 @@ app/node_modules/
 __pycache__/
 *.pyc
 .venv/
+# Artigos de referência (D62): as cópias da IEEE têm licença institucional e ficam fora do repositório público,
+# citadas pelo DOI; o artigo da RESS é CC BY 4.0 e entra
+dados/manuais/*.pdf
+!dados/manuais/Infrastructure availability and urban railway performability.pdf

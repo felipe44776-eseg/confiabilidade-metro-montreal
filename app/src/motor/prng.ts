@@ -135,6 +135,16 @@ export const FLUXOS = {
 } as const;
 export type Fluxo = keyof typeof FLUXOS;
 
+/** FNV-1a de 30 bits: sub-fluxo de sorteio de uma fonte a partir do nome dela (linhas novas, spec 016; fontes v2, spec 019). */
+export function hash30(s: string): number {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 0x01000193);
+  }
+  return (h >>> 0) & 0x3fffffff;
+}
+
 /** Semente da rodada i: depende só da semente-base e do índice (spec 009). */
 export function sementeDaRodada(sementeBase: number, indice: number): number {
   return misturaSemente(sementeBase, indice, 0x5eed);

@@ -358,7 +358,7 @@ Origem: perguntas da reunião de 2026-10-27 (bitola, fabricantes, via ou trem, t
 
 - **Decisão:** quando a duração calculada pelos horários cai fora da faixa oficial "Incident en minutes" e da faixa vizinha, ela é sorteada, com semente fixa pelo número do incidente, entre as durações coerentes da mesma faixa e da mesma família (trem ou fixo), zeros incluídos. Na faixa "30 min et plus" vale a calculada. A calculada continua guardada.
 - **Por quê (depois de ver):** a revalidação de 2026-11-10 mostrou que essas exceções são 1,2% das falhas (100 de 8.530) e 25% dos minutos (11.129 de 43.971).
-  - Exemplo: 7 falhas de cerca de 19 h em Saint-Michel, em outubro de 2024, com faixa oficial "02 min et moins". Na amostra de durações do simulador, elas levavam a média da Azul em equipamentos fixos a 21,9 min por falha, contra 6,0 pela faixa.
+  - Exemplo: 7 falhas de cerca de 19 h em Saint-Michel, em outubro de 2024; 6 delas com faixa oficial "02 min et moins" (a sétima, de 1.170 min, tem faixa "30 min et plus" e continua com a calculada). Na amostra de durações do simulador, elas levavam a média da Azul em equipamentos fixos a 21,9 min por falha, contra 6,0 pela faixa.
   - O backtest da versão A previu 2.962 min/ano parados na Azul, contra 708 observados.
   - O critério da spec 001 olhava só a contagem.
 - **Alternativas consideradas:** ponto médio da faixa (fica como sensibilidade: transformava 29 exceções da faixa "02 min et moins" em 1 min e mexia na massa em zero); excluir as 100 (rejeitada: perde as longas verdadeiras); manter (rejeitada: a Azul continuaria inflada).
@@ -412,3 +412,25 @@ Origem: perguntas da reunião de 2026-10-27 (bitola, fabricantes, via ou trem, t
 - **Decisão:** os modelos v1.1.0 e novo são congelados, com os vetores do bootstrap, as formas e as durações, e o protocolo de avaliação fica fixado em código (`pipeline/preregistro.py`). Isso é commitado antes de qualquer download de incidentes posteriores a 2026-06-30. O avaliador roda quando houver 3 meses novos.
 - **Por quê:** a ressegmentação é feita depois de ver os dados, e o backtest de 2025–2026 já é conhecido. Só meses ainda não publicados testam de verdade. Em 2026-11-10, o CSV de incidentes da STM não tinha mudado desde 2026-09-14.
 - **Registro:** spec 020; `fontes/verificacao/preregistro/`.
+
+### D62 — Referências acadêmicas de 2026-11: o que entra no método
+
+- **Decisão:** das cinco referências que a equipe recebeu da faculdade em 2026-11-10 (Zhou et al., 2019; Chen et al., 2023; Almeida Jr. et al., 2008; Marinho et al., 2023; dos Santos Neto e Callou, 2026), entram nesta revisão só texto e testes, sem mudar número:
+  - escopo e vocabulário no relatório e no guia: o que se mede é confiabilidade e disponibilidade do serviço diante de falhas de rotina, não resiliência a desastres nem segurança; minutos de pares sem caminho são a área de perda da curva de resiliência; verificação separada de validação; a duração é a da interrupção do serviço, não o reparo do equipamento;
+  - teste exato do método de estados da expansão num grafo pequeno com ciclo;
+  - massa em zero por fonte e por ano, com a leitura fixada antes de calcular.
+- **Para depois:**
+  - spec 021: importância medida em desempenho, com os mesmos números aleatórios, e linha de base topológica (centralidade de intermediação);
+  - spec 022: CBTC como hipótese, com faixa que inclui piora;
+  - métricas que mudam o motor (viagens programadas afetadas, desvio separado do encurtamento na expansão, profundidade e duração por falha, operação degradada como lentidão).
+- **Por quê:** nenhuma das cinco contradiz o núcleo do método (binomial negativa, renovação Weibull, fator β, validação fora da amostra). Elas trazem vocabulário, um caso analítico para verificar o motor e uma hipótese que se pode testar para as falhas de zero minuto: parada segura com rearme rápido (Almeida Jr. et al., 2008).
+- **Alternativas consideradas:** adotar redes de Petri estocásticas (rejeitada: o Monte Carlo já cobre, e as dos artigos supõem tempos exponenciais); medir a vazão pela lei de Little com permanência fixa (rejeitada: tem viés quando há bloqueio entre trens).
+- **Registro:** spec 020; DOIs conferidos no Crossref (`fontes/verificacao/referencias_crossref.json`).
+
+### D63 — Exposição dos dias de greve com o km real medido
+
+- **Decisão:** nos 25 dias de greve de 2025, a exposição de cada hora continua sendo o perfil do horário × fator do dia × fração da hora com serviço, mas o fator do dia passa a ser o típico da linha e do tipo de dia (mediana de 2025-07 a 2026-06), com status "estimado", e não o do km real do dia. Na calibração mensal, o km estimado do dia de greve conta só as horas com serviço.
+- **Por quê (depois de ver, 2026-11-10):** com o km real republicado, 2025 passou a ter fator medido, e o multiplicador de dia de greve subiu de 1,17 para 1,73 no material rodante (de 1,11 para 1,66 nos equipamentos fixos). A causa era contagem dupla: o km real do dia de greve já trazia o serviço reduzido (fator de 0,6 a 0,8), e a fração da hora tirava as horas sem serviço outra vez. Dividir o km real só pelo horário das faixas também não serve: dá de 0,93 a 2,26 vezes (mediana 1,36), porque houve serviço fora das faixas, que a imprensa estima em 50% e que o modelo não representa (`dados/manuais/LEIAME.md`). Com o fator típico, a exposição das faixas é a do horário, como na v1.1.0, e as falhas fora das faixas ficam fora, como antes. O defeito foi visto e corrigido com o ajuste completo em andamento, que foi parado e refeito.
+- **Alternativas consideradas:** estimar a parte do serviço fora das faixas pelo km real (fração entre as faixas e o resto do dia). Rejeitada nesta rodada: muda o método da greve depois de ver os dados, e a greve não entra na taxa do simulador (D42).
+- **Consequência:** a calibração de novembro de 2025 na Azul passa de +11,2% para −3,5%, e os meses acima de 10% voltam a ser só os do início da pandemia (6 de 356). O teste da D42 é refeito com o novo multiplicador.
+- **Registro:** `pipeline/exposicao.py` (`molde_do_dia`), `pipeline/tests/test_exposicao.py`, `fontes/verificacao/exposicao.md`; specs 004 e 018.

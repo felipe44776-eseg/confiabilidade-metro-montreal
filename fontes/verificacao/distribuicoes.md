@@ -44,14 +44,14 @@ Com a taxa horária da spec 005, os intervalos reescalados deveriam seguir uma e
 
 | Linha e causa | n | Média reescalada | KS contra Exp(1) | p | Forma da Weibull reescalada | Processo usado no simulador |
 |---|---|---|---|---|---|---|
-| verde · MR | 1493 | 0.9888 | 0.0821 | 3.4e-09 | 0.8017 | renovação Weibull no tempo reescalado (taxa variável + agrupamento) |
-| laranja · MR | 912 | 1.0033 | 0.1238 | 1.2e-12 | 0.7335 | renovação Weibull no tempo reescalado (taxa variável + agrupamento) |
-| amarela · MR | 542 | 0.9952 | 0.1565 | 4.7e-12 | 0.6982 | renovação Weibull no tempo reescalado (taxa variável + agrupamento) |
-| azul · MR | 1015 | 1.0038 | 0.112 | 1.5e-11 | 0.7472 | renovação Weibull no tempo reescalado (taxa variável + agrupamento) |
-| verde · EF | 1272 | 1.0298 | 0.0963 | 1e-10 | 0.7625 | renovação Weibull no tempo reescalado (taxa variável + agrupamento) |
-| laranja · EF | 2116 | 1.0276 | 0.1479 | 7.7e-41 | 0.6691 | renovação Weibull no tempo reescalado (taxa variável + agrupamento) |
-| amarela · EF | 598 | 0.9719 | 0.4079 | 2e-90 | 0.4387 | renovação Weibull no tempo reescalado (taxa variável + agrupamento) |
-| azul · EF | 433 | 0.9961 | 0.147 | 1.2e-08 | 0.656 | renovação Weibull no tempo reescalado (taxa variável + agrupamento) |
+| verde · MR | 1493 | 0.9887 | 0.0833 | 1.9e-09 | 0.8009 | renovação Weibull no tempo reescalado (taxa variável + agrupamento) |
+| laranja · MR | 912 | 1.0032 | 0.1238 | 1.2e-12 | 0.7339 | renovação Weibull no tempo reescalado (taxa variável + agrupamento) |
+| amarela · MR | 542 | 0.995 | 0.1572 | 3.7e-12 | 0.699 | renovação Weibull no tempo reescalado (taxa variável + agrupamento) |
+| azul · MR | 1015 | 1.0037 | 0.1121 | 1.4e-11 | 0.7477 | renovação Weibull no tempo reescalado (taxa variável + agrupamento) |
+| verde · EF | 1272 | 1.0326 | 0.0945 | 2.5e-10 | 0.761 | renovação Weibull no tempo reescalado (taxa variável + agrupamento) |
+| laranja · EF | 2116 | 1.0291 | 0.1466 | 3.8e-40 | 0.6689 | renovação Weibull no tempo reescalado (taxa variável + agrupamento) |
+| amarela · EF | 598 | 0.9744 | 0.4146 | 1.5e-93 | 0.435 | renovação Weibull no tempo reescalado (taxa variável + agrupamento) |
+| azul · EF | 433 | 0.9964 | 0.1482 | 9e-09 | 0.6552 | renovação Weibull no tempo reescalado (taxa variável + agrupamento) |
 
 ## Tempo até o serviço voltar
 
@@ -112,3 +112,96 @@ Cada evento entra uma vez só, no grupo exato de linhas que parou. A duração v
 | azul-laranja-verde | 1 | 1.83e-05 (4.60e-07–1.02e-04) | 70.0 |
 | azul-verde | 1 | 1.83e-05 (4.60e-07–1.02e-04) | 4.0 |
 | laranja-verde | 12 | 2.19e-04 (1.13e-04–3.83e-04) | 18.67 |
+
+## Causa comum: fator β pelo denominador da família (spec 018)
+
+O evento conta na família da sua fonte (trem ou fixo), e o β divide pelas falhas daquela família na linha. 40 dos 45 eventos são de equipamento fixo.
+
+| Par e família | Eventos | β da 1ª (IC 95%) | β da 2ª (IC 95%) |
+|---|---|---|---|
+| verde-laranja · MR | 1 | 0,0007 (0,0000–0,0037) | 0,0011 (0,0000–0,0060) |
+| verde-laranja · EF | 30 | 0,0222 (0,0150–0,0315) | 0,0136 (0,0092–0,0194) |
+| verde-amarela · MR | 1 | 0,0007 (0,0000–0,0037) | 0,0018 (0,0001–0,0102) |
+| verde-amarela · EF | 17 | 0,0127 (0,0074–0,0202) | 0,0275 (0,0161–0,0436) |
+| verde-azul · MR | 1 | 0,0007 (0,0000–0,0037) | 0,0010 (0,0000–0,0054) |
+| verde-azul · EF | 11 | 0,0082 (0,0041–0,0147) | 0,0238 (0,0119–0,0422) |
+| laranja-amarela · MR | 2 | 0,0022 (0,0003–0,0078) | 0,0037 (0,0004–0,0132) |
+| laranja-amarela · EF | 19 | 0,0087 (0,0052–0,0135) | 0,0306 (0,0185–0,0474) |
+| laranja-azul · MR | 2 | 0,0022 (0,0003–0,0078) | 0,0020 (0,0002–0,0071) |
+| laranja-azul · EF | 19 | 0,0087 (0,0052–0,0135) | 0,0404 (0,0245–0,0624) |
+| amarela-azul · EF | 10 | 0,0163 (0,0079–0,0298) | 0,0217 (0,0104–0,0395) |
+
+## Renovação e duração por linha × fonte (spec 018)
+
+Forma da Weibull no tempo reescalado pela taxa da fonte (spec 018) e duração (sem interrupção e média quando para). Estrato com menos de 30 falhas herda da mesma fonte na rede (coluna de origem).
+
+| Linha · fonte | Falhas | Forma (IC 95%) | Origem da renovação | Sem interrupção (IC 95%) | Média quando para (min) | Origem da duração |
+|---|---|---|---|---|---|---|
+| verde · aux_stations | 212 | 0,7500 (0,6934–0,8309) | linha | 0,900 (0,868–0,925) | 23,3 | rede (estrato pequeno) |
+| laranja · aux_stations | 145 | 0,6984 (0,6347–0,7763) | linha | 0,900 (0,868–0,925) | 23,3 | rede (estrato pequeno) |
+| amarela · aux_stations | 9 | 0,7293 (0,6778–0,7855) | rede (estrato pequeno) | 0,900 (0,868–0,925) | 23,3 | rede (estrato pequeno) |
+| azul · aux_stations | 18 | 0,7293 (0,6778–0,7855) | rede (estrato pequeno) | 0,900 (0,868–0,925) | 23,3 | rede (estrato pequeno) |
+| verde · aux_trains_sintoma_fixo | 468 | 0,8155 (0,7621–0,8710) | linha | 0,590 (0,545–0,633) | 8,5 | linha |
+| laranja · aux_trains_sintoma_fixo | 782 | 0,7167 (0,6775–0,7765) | linha | 0,597 (0,563–0,630) | 7,8 | linha |
+| amarela · aux_trains_sintoma_fixo | 95 | 0,5751 (0,4937–0,6877) | linha | 0,448 (0,352–0,547) | 10,0 | linha |
+| azul · aux_trains_sintoma_fixo | 151 | 0,6912 (0,6159–0,8230) | linha | 0,480 (0,403–0,559) | 5,0 | linha |
+| verde · aux_trains_sintoma_trem | 145 | 0,6473 (0,5526–0,7368) | linha | 0,616 (0,535–0,691) | 7,6 | linha |
+| laranja · aux_trains_sintoma_trem | 368 | 0,4492 (0,4203–0,4837) | linha | 0,903 (0,868–0,929) | 9,0 | linha |
+| amarela · aux_trains_sintoma_trem | 96 | 0,4371 (0,3889–0,5207) | linha | 0,817 (0,787–0,844) | 8,5 | rede (estrato pequeno) |
+| azul · aux_trains_sintoma_trem | 81 | 0,5580 (0,4755–0,6772) | linha | 0,817 (0,787–0,844) | 8,5 | rede (estrato pequeno) |
+| verde · mpm10 | 304 | 0,7206 (0,6466–0,7793) | linha | 0,278 (0,231–0,331) | 5,9 | linha |
+| laranja · mpm10 | 884 | 0,7407 (0,7077–0,7727) | linha | 0,421 (0,389–0,454) | 6,4 | linha |
+| verde · mr73 | 1184 | 0,8257 (0,7936–0,8761) | linha | 0,231 (0,208–0,255) | 5,5 | linha |
+| amarela · mr73 | 542 | 0,6919 (0,6544–0,7233) | linha | 0,398 (0,357–0,440) | 4,7 | linha |
+| azul · mr73 | 1007 | 0,7547 (0,7149–0,7923) | linha | 0,196 (0,173–0,222) | 5,2 | linha |
+| verde · mr_outros | 3 | 0,7046 (0,5411–1,1127) | rede (estrato pequeno) | 0,471 (0,341–0,605) | 14,0 | rede (estrato pequeno) |
+| laranja · mr_outros | 27 | 0,7046 (0,5411–1,1127) | rede (estrato pequeno) | 0,471 (0,341–0,605) | 14,0 | rede (estrato pequeno) |
+| azul · mr_outros | 7 | 0,7046 (0,5411–1,1127) | rede (estrato pequeno) | 0,471 (0,341–0,605) | 14,0 | rede (estrato pequeno) |
+| verde · tcpe | 50 | 0,7170 (0,5931–0,9204) | linha | 0,331 (0,259–0,412) | 7,8 | rede (estrato pequeno) |
+| laranja · tcpe | 50 | 0,7540 (0,6060–1,0244) | linha | 0,241 (0,146–0,369) | 10,0 | linha |
+| amarela · tcpe | 12 | 0,7642 (0,6552–0,9075) | rede (estrato pequeno) | 0,331 (0,259–0,412) | 7,8 | rede (estrato pequeno) |
+| azul · tcpe | 16 | 0,7642 (0,6552–0,9075) | rede (estrato pequeno) | 0,331 (0,259–0,412) | 7,8 | rede (estrato pequeno) |
+| verde · voie_sintoma_fixo | 309 | 0,7748 (0,7179–0,8553) | linha | 0,279 (0,233–0,330) | 10,6 | linha |
+| laranja · voie_sintoma_fixo | 415 | 0,7982 (0,7634–0,8641) | linha | 0,214 (0,178–0,255) | 11,4 | linha |
+| amarela · voie_sintoma_fixo | 88 | 0,4329 (0,3935–0,4811) | linha | 0,130 (0,076–0,214) | 8,3 | linha |
+| azul · voie_sintoma_fixo | 108 | 0,6213 (0,5422–0,7188) | linha | 0,556 (0,465–0,642) | 36,1 | linha |
+| verde · voie_sintoma_trem | 83 | 0,4405 (0,3857–0,5177) | linha | 0,892 (0,869–0,912) | 9,6 | rede (estrato pequeno) |
+| laranja · voie_sintoma_trem | 351 | 0,4714 (0,4278–0,5199) | linha | 0,892 (0,869–0,912) | 9,6 | rede (estrato pequeno) |
+| amarela · voie_sintoma_trem | 293 | 0,4117 (0,3796–0,4612) | linha | 0,857 (0,812–0,892) | 9,2 | linha |
+| azul · voie_sintoma_trem | 54 | 0,3701 (0,3291–0,4575) | linha | 0,892 (0,869–0,912) | 9,6 | rede (estrato pequeno) |
+
+## Falhas de zero minuto por fonte e ano (spec 020, D62)
+
+A massa em zero vem de parada segura com rearme rápido (Almeida Jr. et al., 2008) ou de artefato de registro? Proporções em %, com IC 95% de Clopper–Pearson; p do qui-quadrado de homogeneidade. A leitura foi fixada na spec 020 antes de calcular:
+- **parada segura com rearme rápido:** fontes heterogêneas (p < 0,01), a menor proporção entre controle de trens e frotas acima da maior entre via, estações e TCPE, e essas quatro fontes estáveis entre os anos;
+- **artefato de registro:** fontes homogêneas, ou um ano em que pelo menos metade das fontes tem o IC inteiro acima ou abaixo da própria proporção.
+
+**Leitura: inconclusiva.** Homogeneidade entre as fontes comparadas: p < 0,0001. Controle de trens e frotas estáveis entre os anos: não. Anos com salto comum: nenhum. "Controle de trens" (Service aux trains) é dedução até a resposta da STM.
+
+| Fonte | n | Duração zero (IC 95%) | Até 1 min (IC 95%) | p entre anos |
+|---|---|---|---|---|
+| aux_stations | 420 | 90,0 (86,7–92,7) | 90,7 (87,5–93,3) | 0,00036 |
+| aux_trains_sintoma_fixo | 1534 | 57,4 (54,8–59,9) | 64,3 (61,9–66,7) | 0,18 |
+| aux_trains_sintoma_trem | 695 | 81,7 (78,6–84,5) | 83,0 (80,0–85,7) | 0,091 |
+| mpm10 | 1191 | 38,5 (35,7–41,3) | 43,8 (41,0–46,7) | < 0,0001 |
+| mr73 | 2740 | 25,1 (23,5–26,8) | 29,1 (27,4–30,8) | < 0,0001 |
+| mr_outros | 51 | 47,1 (32,9–61,5) | 49,0 (34,8–63,4) | 0,054 |
+| tcpe | 142 | 33,1 (25,4–41,5) | 36,6 (28,7–45,1) | 0,77 |
+| voie_sintoma_fixo | 969 | 26,9 (24,2–29,8) | 27,9 (25,1–30,8) | 0,096 |
+| voie_sintoma_trem | 788 | 89,2 (86,8–91,3) | 89,5 (87,1–91,5) | < 0,0001 |
+
+Duração zero por ano (%):
+
+| Fonte | 2019 | 2020 | 2021 | 2022 | 2023 | 2024 | 2025 | 2026 |
+|---|---|---|---|---|---|---|---|---|
+| aux_stations | 78,6 (28) | 76,2 (21) | 93,1 (29) | 77,4 (31) | 80,4 (46) | 94,7 (95) | 94,6 (111) | 96,6 (59) |
+| aux_trains_sintoma_fixo | 57,5 (266) | 52,1 (167) | 59,7 (201) | 53,1 (194) | 60,4 (225) | 53,1 (194) | 59,5 (190) | 67,0 (97) |
+| aux_trains_sintoma_trem | 78,6 (131) | 85,0 (93) | 77,0 (100) | 89,4 (161) | 80,9 (68) | 73,9 (69) | 81,0 (58) | 80,0 (15) |
+| mpm10 | 20,7 (208) | 28,0 (189) | 28,0 (175) | 44,5 (110) | 43,9 (139) | 37,6 (109) | 65,8 (158) | 56,3 (103) |
+| mr73 | 29,9 (623) | 22,1 (425) | 33,5 (251) | 25,5 (376) | 18,3 (334) | 28,1 (292) | 22,1 (271) | 14,9 (168) |
+| mr_outros | 100,0 (2) |  | 33,3 (6) | 50,0 (6) | 25,0 (8) | 23,1 (13) | 77,8 (9) | 71,4 (7) |
+| tcpe | 20,8 (24) | 28,6 (14) | 38,5 (13) | 43,8 (16) | 42,1 (19) | 38,1 (21) | 31,2 (16) | 26,3 (19) |
+| voie_sintoma_fixo | 25,8 (128) | 25,6 (86) | 20,4 (157) | 28,0 (143) | 22,1 (136) | 32,1 (196) | 29,3 (75) | 39,6 (48) |
+| voie_sintoma_trem | 16,7 (6) | 58,3 (12) | 54,5 (11) | 67,7 (34) | 92,1 (139) | 91,5 (516) | 98,1 (52) | 83,3 (18) |
+
+Entre parênteses, o número de falhas da fonte no ano. `mr_outros` fica fora das comparações; o salto de 2024 da via com sintoma de trem já era conhecido (D56).

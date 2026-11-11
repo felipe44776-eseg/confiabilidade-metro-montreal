@@ -17,10 +17,14 @@ LINHAS = ("verde", "laranja", "amarela", "azul")
 
 def main():
     soma = defaultdict(lambda: [0.0, 0.0, 0.0, 0.0])  # (faixa, linha) -> [y_MR, mu_MR, y_EF, mu_EF]
+    frota = defaultdict(lambda: [0.0, 0.0, 0.0, 0.0])  # faixa -> [y_mr73, y_mpm10, mu_mr73, mu_mpm10], só na Verde (spec 018)
     texto = gzip.decompress(open("dados/derivados/modelos/painel_modelo.csv.gz", "rb").read()).decode("utf-8")
     for r in csv.DictReader(io.StringIO(texto), delimiter=";"):
         s = soma[(r["faixa"], r["linha"])]
         s[0] += float(r["y_MR"]); s[1] += float(r["mu_MR"]); s[2] += float(r["y_EF"]); s[3] += float(r["mu_EF"])
+        if r["linha"] == "verde" and "mu_mr73" in r:
+            v = frota[r["faixa"]]
+            v[0] += float(r["y_mr73"]); v[1] += float(r["y_mpm10"]); v[2] += float(r["mu_mr73"]); v[3] += float(r["mu_mpm10"])
     L = ["# Observado contra esperado por faixa do dia (spec 005)", "",
          "Gerado por `pipeline/diagnostico_taxa.py` a partir de `dados/derivados/modelos/painel_modelo.csv.gz`. "
          "Esperado = soma da falha esperada pelo modelo escolhido em cada hora-linha. Razão perto de 1 = o modelo acerta o nível da faixa.", "",
@@ -40,6 +44,29 @@ def main():
             cel.append(f"{s[0] + s[2]:.0f} / {s[1] + s[3]:.0f}")
         L.append(f"| {l} | " + " | ".join(cel) + " |")
     L += ["", "Cada célula: observado / esperado.", "", "![Observado contra esperado por faixa](modelo_taxa_por_faixa.svg)", ""]
+    if frota:
+        # Spec 018: a parcela diária da frota vale igual em todas as horas (hipótese). Se o MR-73 rodasse mais em certas
+        # faixas, a fração dele nas falhas da Verde dessas faixas sairia acima da prevista pelo modelo.
+        from scipy import stats
+        qui, k = 0.0, 0
+        L += ["## Parcela da frota igual em todas as horas (spec 018)", "",
+              "Na Verde, a única linha com as duas frotas, a fração de falhas do MR-73 entre as falhas das duas frotas, por faixa do dia: "
+              "observada e prevista pelo modelo empilhado, que supõe a mesma parcela de km da frota em todas as horas do dia. "
+              "Teste: qui-quadrado da soma dos desvios padronizados (binomial) nas faixas, com graus de liberdade = faixas − 1.", "",
+              "| Faixa | Falhas das duas frotas | Fração MR-73 observada | Prevista | Desvio padronizado |", "|---|---|---|---|---|"]
+        for f in FAIXAS:
+            y73, y10, m73, m10 = frota[f]
+            n, p = y73 + y10, m73 / (m73 + m10) if m73 + m10 else 0.0
+            z = (y73 - n * p) / (n * p * (1 - p)) ** 0.5 if n and 0 < p < 1 else 0.0
+            qui += z * z
+            k += 1 if n else 0
+            L.append(f"| {ROTULO[f]} | {n:.0f} | {y73 / n if n else 0:.3f} | {p:.3f} | {z:+.2f} |".replace(".", ","))
+        pv = float(stats.chi2.sf(qui, k - 1))
+        qtxt, ptxt = f"{qui:.1f}".replace(".", ","), f"{pv:.1e}".replace(".", ",")
+        L += ["", f"Qui-quadrado {qtxt} com {k - 1} graus de liberdade, p = {ptxt}. "
+              + ("A hipótese não é rejeitada a 5%." if pv >= 0.05 else
+                 "A hipótese é rejeitada a 5%: a mistura de frotas muda com a hora do dia (o MR-73 pesa mais nos picos). "
+                 "O km real da STM é diário, então a parcela por hora não se mede; a razão MR-73 ÷ MPM-10 fica com essa ressalva."), ""]
     open("fontes/verificacao/modelo_taxa_por_faixa.md", "w", encoding="utf-8", newline="\n").write("\n".join(L) + "\n")
     # Gráfico de barras pareadas (observado e esperado) por faixa, uma escala, rótulos em cor de texto
     w, h, mx, my = 720, 300, 56, 40

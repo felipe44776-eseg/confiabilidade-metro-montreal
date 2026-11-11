@@ -34,7 +34,21 @@ def amostra(duracoes, origem):
             "script": "pipeline/parametros.py", "status": "ajustado", "origem": origem}
 
 
-SCRIPTS_DO_CONTRATO = ("pipeline/modelo_taxa.py", "pipeline/distribuicoes.py", "pipeline/parametros.py")
+SCRIPTS_DO_CONTRATO = ("pipeline/modelo_taxa.py", "pipeline/distribuicoes.py", "pipeline/parametros.py",
+                       "pipeline/normaliza.py", "pipeline/duracao.py", "pipeline/exposicao.py", "pipeline/km_real.py")
+# Fontes de falha (spec 017, D56). Nomes pelas etiquetas da STM; o significado de Service aux trains e TCPE é dedução
+# até a resposta da STM (pedido a ccia@stm.info).
+ROTULOS = {
+    "mr73": ("MR-73 (Bombardier, 1976–1980)", "verificado"),
+    "mpm10": ("MPM-10 Azur (Bombardier–Alstom, 2016–2021)", "verificado"),
+    "mr_outros": ("material rodante: veículos de trabalho, causa genérica e frota fora da sua linha", "verificado"),
+    "voie_sintoma_fixo": ("via (Service de la voie), vista na hora como equipamento fixo", "etiqueta da STM"),
+    "voie_sintoma_trem": ("via (Service de la voie), vista na hora como material rodante", "etiqueta da STM"),
+    "aux_trains_sintoma_fixo": ("Service aux trains (controle de trens, por dedução), vista na hora como equipamento fixo", "etiqueta da STM; significado deduzido"),
+    "aux_trains_sintoma_trem": ("Service aux trains (controle de trens, por dedução), vista na hora como material rodante", "etiqueta da STM; significado deduzido"),
+    "aux_stations": ("Service aux stations (estações)", "etiqueta da STM"),
+    "tcpe": ("Service TCPE (energia, por dedução)", "etiqueta da STM; significado deduzido"),
+}
 
 
 def commit():
@@ -48,15 +62,26 @@ def commit():
 
 def taxa(causa):
     t = json.load(open(f"{M}/taxa_{causa}.json", encoding="utf-8"))
-    script = "pipeline/modelo_taxa.py"
     metodo = f"GLM {t['modelo_escolhido']} com deslocamento log(trens-hora); IC por bootstrap em blocos semanais (B={t['bootstrap_b']})"
+    mult = multiplicadores(t, metodo)
+    base = {l: P(v["valor"], "ajustado", metodo + f"; condições de referência no ano {t['ano_base']}", FONTES_TAXA, "pipeline/modelo_taxa.py", v["ic95"],
+                 t["n_horas"], "falhas por trem-hora") for l, v in t["base_por_trem_hora"].items()}
+    return {"modelo": t["modelo_escolhido"], "referencia": t["referencia"],
+            "alpha": P(t["alpha_nb"], "ajustado", "máxima verossimilhança da binomial negativa (NB2)", FONTES_TAXA, "pipeline/modelo_taxa.py", None, t["n_horas"]),
+            "base_por_trem_hora": base, "multiplicadores": mult}
+
+
+def multiplicadores(t, metodo):
+    """Multiplicadores de um ajuste (spec 005 ou 018), com o nível de referência de cada fator valendo 1."""
+    script = "pipeline/modelo_taxa.py"
     mult = defaultdict(dict)
+    termos = {c["termo"] for c in t["coeficientes"]}
     for fator, nivel in t["referencia"].items():
-        if fator not in ("linha", "ano"):
+        if fator not in ("linha", "ano") and any(x.startswith(f"{fator}=") for x in termos):
             mult[fator][nivel] = P(1.0, "ajustado", "nível de referência do modelo", FONTES_TAXA, script, [1.0, 1.0], t["n_horas"])
     for c in t["coeficientes"]:
         termo = c["termo"]
-        if termo == "const" or termo.startswith(("linha=", "ano=")):
+        if termo == "const" or termo.startswith(("linha=", "ano=", "frota=")):
             continue
         fator, nivel = termo.split("=", 1) if "=" in termo else (termo, "1")
         if nivel == "sem_dado":
@@ -68,11 +93,76 @@ def taxa(causa):
             # a greve reduz a oferta e não muda a taxa por trem-hora (decisão D42, 2026-10-21)
             continue
         mult[fator][nivel] = P(c["multiplicador"], "ajustado", metodo, FONTES_TAXA, script, c["ic95"], t["n_horas"], "multiplicador da taxa")
-    base = {l: P(v["valor"], "ajustado", metodo + f"; condições de referência no ano {t['ano_base']}", FONTES_TAXA, script, v["ic95"],
-                 t["n_horas"], "falhas por trem-hora") for l, v in t["base_por_trem_hora"].items()}
-    return {"modelo": t["modelo_escolhido"], "referencia": t["referencia"],
-            "alpha": P(t["alpha_nb"], "ajustado", "máxima verossimilhança da binomial negativa (NB2)", FONTES_TAXA, script, None, t["n_horas"]),
-            "base_por_trem_hora": base, "multiplicadores": mult}
+    return mult
+
+
+def renovacao_de(v, sd="pipeline/distribuicoes.py"):
+    w = v["weibull_reescalado"]
+    met = f"Weibull ajustada aos intervalos reescalados pela taxa da fonte (spec 018); origem: {v.get('origem', 'linha')}"
+    return {"forma": P(w["forma"], "ajustado", met, ["stm_incidentes"], sd, w["forma_ic95"], v["n"]),
+            "escala": P(w["escala"], "ajustado", met, ["stm_incidentes"], sd, w["escala_ic95"], v["n"]),
+            "processo": v.get("processo_no_simulador", "renovação Weibull no tempo reescalado")}
+
+
+def ttr_de(v, origem, sd="pipeline/distribuicoes.py"):
+    ln = v["lognormal_positivos"]
+    return {"p_zero": P(v["p_zero"], "ajustado", "proporção de falhas sem interrupção; IC de Wilson", ["stm_incidentes"], sd, v["p_zero_ic95"], v["n"]),
+            "mu_log": P(ln["mu_log"], "ajustado", "lognormal das durações positivas (minutos)", ["stm_incidentes"], sd, ln.get("mu_log_ic95"), v["n"], "log(minutos)"),
+            "sigma_log": P(ln["sigma_log"], "ajustado", "lognormal das durações positivas", ["stm_incidentes"], sd, ln.get("sigma_log_ic95"), v["n"], "log(minutos)"),
+            "amostra_positivos": amostra(v["positivos"], origem)}
+
+
+def fontes_v2(d, fam, locais_f, sem_pos_f):
+    """Lista de fontes do contrato v2 (spec 018): taxa-base por linha já multiplicada pela parcela da frota, multiplicadores,
+    renovação, duração e locais de cada linha × fonte."""
+    tf = json.load(open(f"{M}/taxa_fontes.json", encoding="utf-8"))
+    mr = tf["mr_empilhado"]
+    script = "pipeline/modelo_taxa.py"
+    lista, frota_linha = [], defaultdict(dict)
+    for k, x in mr["base_por_trem_hora_da_frota"].items():
+        l, fr = k.split("|")
+        frota_linha[l][fr] = P(x["parcela_ano_base"], "ajustado", f"parcela do km real da linha rodada pela frota em {mr['ano_base']}", ["stm_km_reel"],
+                               "pipeline/exposicao.py", None, None, "fração do km")
+    for f, x in tf["fontes"].items():
+        rotulo, status_rotulo = ROTULOS.get(f, (f, "etiqueta da STM"))
+        if x["modelo"] == "empilhado por frota":
+            metodo = (f"GLM {mr['modelo_escolhido']} empilhado por frota, deslocamento log(trens-hora × parcela da frota); "
+                      f"IC por bootstrap em blocos semanais (B={mr['bootstrap_b']})")
+            mult = multiplicadores(mr, metodo)
+            base = {}
+            for k, b in mr["base_por_trem_hora_da_frota"].items():
+                l, fr = k.split("|")
+                if fr == x["frota"] and b["parcela_ano_base"] > 0:
+                    p = b["parcela_ano_base"]
+                    base[l] = P(round(b["valor"] * p, 8), "ajustado", metodo + f"; × parcela da frota em {mr['ano_base']} ({p:.3f})", FONTES_TAXA, script,
+                                [round(v * p, 8) for v in b["ic95"]], mr["n_horas"], "falhas por trem-hora da linha")
+            alpha, modelo, n_h = mr["alpha_nb"], f"binomial negativa empilhada por frota ({x['frota']})", mr["n_horas"]
+        else:
+            metodo = f"GLM {x['modelo_escolhido']} ({x['modelo']}); deslocamento log(trens-hora); IC por bootstrap em blocos semanais (B={x['bootstrap_b']})"
+            if x["modelo"] == "próprio":
+                mult = multiplicadores(x, metodo)
+            else:
+                mult = {k: dict(v) for k, v in fam[x["herda_de"]]["multiplicadores"].items()}
+                proprio = multiplicadores(x, metodo)
+                if "faixa" in proprio:
+                    mult["faixa"] = proprio["faixa"]
+            base = {l: P(v["valor"], "ajustado", metodo + f"; condições de referência no ano {x['ano_base']}", FONTES_TAXA, script, v["ic95"],
+                         x["n_horas"], "falhas por trem-hora") for l, v in x["base_por_trem_hora"].items()}
+            alpha, modelo, n_h = x["alpha_nb"], x["modelo"], x["n_horas"]
+        linhas = {}
+        for l in LINHAS:
+            if l not in base or f"{l}|{f}" not in d["ttr_fonte"]:
+                continue
+            item = {"base_por_trem_hora": base[l], "renovacao": renovacao_de(d["reescala_fonte"][f"{l}|{f}"]),
+                    "ttr": ttr_de(d["ttr_fonte"][f"{l}|{f}"], f"eventos técnicos {l}|{f} ({d['ttr_fonte'][f'{l}|{f}']['origem']})")}
+            if x["familia"] == "EF":
+                item["locais"] = locais_f[f][l]
+                item["locais_sem_posicao"] = sem_pos_f[f][l]
+            linhas[l] = item
+        lista.append({"id": f, "familia": x["familia"], "rotulo": rotulo, "status_rotulo": status_rotulo, "modelo": modelo, "n_falhas": x["n_falhas"],
+                      "alpha": P(alpha, "ajustado", "máxima verossimilhança da binomial negativa (NB2)", FONTES_TAXA, script, None, n_h),
+                      "multiplicadores": mult, "linhas": linhas})
+    return lista, dict(frota_linha)
 
 
 def main():
@@ -119,8 +209,10 @@ def main():
     km_estacao = {(f["properties"]["linha"], f["properties"]["estacao"]): f["properties"]["km_linha"]
                   for f in json.load(open("dados/derivados/geo/estacoes.geojson", encoding="utf-8"))["features"]}
     peso = defaultdict(lambda: defaultdict(int))
+    peso_f = defaultdict(lambda: defaultdict(lambda: defaultdict(int)))  # spec 018: locais por fonte
     pos = {}
     sem_posicao = defaultdict(int)
+    sem_pos_f = defaultdict(lambda: defaultdict(int))
     with open("dados/derivados/eventos/eventos_tecnicos.csv", encoding="utf-8") as f:
         for r in csv.DictReader(f, delimiter=";"):
             if r["causa"] != "EF":
@@ -133,10 +225,15 @@ def main():
                 km, status = km_estacao[(l, loc["estacoes"][0])], loc["status"] + " (estação na linha da falha)"
             if km is None:
                 sem_posicao[l] += 1
+                sem_pos_f[r["fonte"]][l] += 1
                 continue
             peso[l][r["local_codigo"]] += 1
+            peso_f[r["fonte"]][l][r["local_codigo"]] += 1
             pos[(l, r["local_codigo"])] = (km, status)
     locais_ef = {l: [{"km": pos[(l, c)][0], "peso": n, "codigo": c, "status": pos[(l, c)][1]} for c, n in sorted(peso[l].items())] for l in LINHAS}
+    locais_f = {f: {l: [{"km": pos[(l, c)][0], "peso": n, "codigo": c, "status": pos[(l, c)][1]} for c, n in sorted(peso_f[f][l].items())] for l in LINHAS}
+                for f in set(peso_f) | set(sem_pos_f)}
+    sem_pos_f = {f: {l: sem_pos_f[f][l] for l in LINHAS} for f in locais_f}
 
     painel = {r["linha"]: r for r in json.load(open("dados/derivados/painel/linhas.json", encoding="utf-8"))}
     frota = {}
@@ -169,10 +266,15 @@ def main():
         "reducao_causa_comum": P(0.0, "hipótese", H + ": redução da taxa de causa comum por alimentação ou controle redundante", [], "pipeline/parametros.py", None, None, "", [0.0, 1.0]),
         "velocidade_comercial_candidata_kmh": P(36, "hipótese", H + ": velocidade comercial de uma linha candidata (média das linhas atuais, 35 a 38 km/h)", [], "pipeline/parametros.py", None, None, "km/h", [30, 45]),
     }
-    out = {"versao": 1, "codigo_commit": commit(), "ano_base": int(json.load(open(f"{M}/taxa_MR.json", encoding="utf-8"))["ano_base"]),
+    fam = {"MR": taxa("MR"), "EF": taxa("EF")}
+    fontes, frota_linha = fontes_v2(d, fam, locais_f, sem_pos_f)
+    # Contrato v2 (spec 018, D59): o v1 continua dentro (taxas, renovação e duração por família), para o peso de cada
+    # variável na página e para quem lê o v1; o simulador usa a lista de fontes.
+    out = {"versao": 2, "codigo_commit": commit(), "ano_base": int(json.load(open(f"{M}/taxa_MR.json", encoding="utf-8"))["ano_base"]),
            "janela_operacao_h": P(20, "hipótese", "inferida do horário dos incidentes (05:00 a 01:00)", ["stm_incidentes"], "pipeline/analise_confiabilidade.py", None, None, "h"),
-           "taxas": {"MR": taxa("MR"), "EF": taxa("EF")}, "renovacao": renov, "ttr": ttr, "causa_comum": cc, "causa_comum_beta": beta,
-           "locais_ef": locais_ef, "locais_ef_sem_posicao": dict(sem_posicao), "frota": frota, "hipoteses": hip}
+           "taxas": fam, "renovacao": renov, "ttr": ttr, "causa_comum": cc, "causa_comum_beta": beta,
+           "locais_ef": locais_ef, "locais_ef_sem_posicao": dict(sem_posicao), "frota": frota, "hipoteses": hip,
+           "fontes": fontes, "frota_por_linha": frota_linha}
     # Relatório: média observada das durações positivas contra a média da lognormal ajustada (decisão D25)
     L = ["# Duração das interrupções: amostra observada contra lognormal", "",
          "Gerado por `pipeline/parametros.py`. Média das durações positivas observadas contra a média exp(μ + σ²/2) da lognormal "
@@ -186,7 +288,7 @@ def main():
     open("fontes/verificacao/duracoes.md", "w", encoding="utf-8", newline="\n").write("\n".join(L) + "\n")
     with open("dados/derivados/simulador/parametros.json", "w", encoding="utf-8", newline="\n") as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
-    print("parametros.json:", {k: (len(v) if isinstance(v, dict) else v) for k, v in out.items() if k != "codigo_commit"})
+    print("parametros.json:", {k: (len(v) if isinstance(v, (dict, list)) else v) for k, v in out.items() if k != "codigo_commit"})
 
 
 if __name__ == "__main__":

@@ -240,6 +240,9 @@ def main():
     grava("excecoes.csv", excecoes, COLUNAS + ["motivo"])
     n = len(tecnicos)
     soma = lambda lista, campo: int(sum(r[campo] for r in lista))
+    # Indicador da STM (spec 020): incidentes de 5 min ou mais pela faixa oficial, por ano civil; todas as causas e só as técnicas
+    cinco = lambda e: finais[e["Numero d'incident"]]["classe_faixa_oficial"] not in ("menos_de_5", "")
+    por_ano = lambda lista: dict(sorted(Counter(e["Jour calendaire"][:4] for e in lista if cinco(e)).items()))
     resumo = {
         "tecnicos_uma_linha": n,
         "por_linha": {l: sum(1 for r in tecnicos if r["linha"] == l) for l in ("verde", "laranja", "amarela", "azul")},
@@ -263,6 +266,7 @@ def main():
         "sem_linha": len(sem_linha),
         "inicio_depois_da_meia_noite": sum(1 for r in tecnicos if r["inicio_local"][:10] != r["data_servico"]),
         "duracao_max_min": max(r["duracao_min"] for r in tecnicos),
+        "cinco_ou_mais_faixa_oficial_por_ano": {"todas_as_causas": por_ano(brutos), "tecnicas": por_ano(tecnicos_brutos)},
     }
     with open(os.path.join(SAIDA, "resumo_normalizacao.json"), "w", encoding="utf-8", newline="\n") as f:
         json.dump(resumo, f, ensure_ascii=False, indent=1)

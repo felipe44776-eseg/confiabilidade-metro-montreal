@@ -1,6 +1,6 @@
 # Confiabilidade de uma viagem (spec 015)
 
-Gerado por `app/relatorios/viagem.relatorio.ts` com o `parametros.json` real (código sha256-scripts:70cf9c002aa2ba0a). Cenário padrão (dia útil, condições de referência do modelo), 1.000 dias por viagem, semente 20261021: os mesmos dias da aba "Muitos dias" com essa semente. Média e intervalo de 95%.
+Gerado por `app/relatorios/viagem.relatorio.ts` com o `parametros.json` real (código sha256-scripts:a0ff551bd3d56c35). Cenário padrão (dia útil, condições de referência do modelo), 1.000 dias por viagem, semente 20261021: os mesmos dias da aba "Muitos dias" com essa semente. Média e intervalo de 95%.
 
 Disponibilidade: fração da janela de serviço da rede em que o caminho existe, a partir dos bloqueios do dia no grafo das estações (o mesmo método da disponibilidade origem-destino da spec 009). "Produto" é o valor em série, multiplicando as disponibilidades dos trechos como se as linhas falhassem de forma independente. Atraso: saídas a cada 10 minutos; para cada uma, a chegada mais cedo com os trens simulados do dia contra a mesma saída num dia sem falhas.
 
@@ -10,19 +10,19 @@ Caminho de sempre: Verde de Angrignon a Berri-Uqam, baldeação, Laranja de Berr
 
 | Medida | Valor (IC 95%) |
 |---|---|
-| Trechos | Verde 99,54% (99,44% a 99,64%); Laranja 99,46% (99,28% a 99,63%); Azul 99,43% (99,08% a 99,77%) |
-| Produto dos trechos (série) | 98,43% |
-| Viagem inteira, simulada | 98,46% (98,06% a 98,86%) |
-| Minutos por dia sem caminho | 18,4 (13,6 a 23,2) |
-| Dias com ao menos uma interrupção no caminho | 75,2% (72,5% a 77,9%) |
-| Chance de chegar mais de 5 min atrasado | 1,29% (0,84% a 1,74%) |
-| Chance de chegar mais de 15 min atrasado | 0,85% (0,44% a 1,26%) |
-| Chance de chegar mais de 60 min atrasado | 0,62% (0,22% a 1,01%) |
-| Chance de não chegar até o fim do serviço | 0,0053% (0,0000% a 0,0142%) |
-| Atraso médio por viagem (min) | 3,27 (0,87 a 5,67) |
-| Com rota alternativa: viagem inteira | 98,46% (98,06% a 98,86%) |
-| Com rota alternativa: chance de mais de 5 min | 1,08% (0,66% a 1,51%) |
-| Com rota alternativa: atraso médio (min) | 3,17 (0,79 a 5,56) |
+| Trechos | Verde 99,74% (99,70% a 99,78%); Laranja 99,71% (99,66% a 99,75%); Azul 99,81% (99,74% a 99,87%) |
+| Produto dos trechos (série) | 99,25% |
+| Viagem inteira, simulada | 99,28% (99,20% a 99,37%) |
+| Minutos por dia sem caminho | 8,6 (7,6 a 9,6) |
+| Dias com ao menos uma interrupção no caminho | 72,7% (69,9% a 75,5%) |
+| Chance de chegar mais de 5 min atrasado | 0,40% (0,30% a 0,50%) |
+| Chance de chegar mais de 15 min atrasado | 0,16% (0,09% a 0,24%) |
+| Chance de chegar mais de 60 min atrasado | 0,05% (0,00% a 0,10%) |
+| Chance de não chegar até o fim do serviço | 0,0009% (0,0000% a 0,0026%) |
+| Atraso médio por viagem (min) | 0,13 (0,03 a 0,24) |
+| Com rota alternativa: viagem inteira | 99,28% (99,20% a 99,37%) |
+| Com rota alternativa: chance de mais de 5 min | 0,29% (0,20% a 0,38%) |
+| Com rota alternativa: atraso médio (min) | 0,11 (0,00 a 0,21) |
 
 ## Côte-Vertu → Montmorency
 
@@ -30,19 +30,19 @@ Caminho de sempre: Laranja de Côte-Vertu a Snowdon, baldeação, Azul de Snowdo
 
 | Medida | Valor (IC 95%) |
 |---|---|
-| Trechos | Laranja 99,46% (99,28% a 99,63%); Azul 99,43% (99,08% a 99,77%); Laranja 99,46% (99,28% a 99,63%) |
-| Produto dos trechos (série) | 98,35% |
-| Viagem inteira, simulada | 98,90% (98,51% a 99,29%) |
-| Minutos por dia sem caminho | 13,2 (8,5 a 17,8) |
-| Dias com ao menos uma interrupção no caminho | 54,6% (51,5% a 57,7%) |
-| Chance de chegar mais de 5 min atrasado | 0,71% (0,45% a 0,96%) |
-| Chance de chegar mais de 15 min atrasado | 0,37% (0,18% a 0,56%) |
-| Chance de chegar mais de 60 min atrasado | 0,17% (0,01% a 0,33%) |
+| Trechos | Laranja 99,71% (99,66% a 99,75%); Azul 99,81% (99,74% a 99,87%); Laranja 99,71% (99,66% a 99,75%) |
+| Produto dos trechos (série) | 99,22% |
+| Viagem inteira, simulada | 99,53% (99,45% a 99,60%) |
+| Minutos por dia sem caminho | 5,7 (4,7 a 6,6) |
+| Dias com ao menos uma interrupção no caminho | 53,4% (50,3% a 56,5%) |
+| Chance de chegar mais de 5 min atrasado | 0,28% (0,20% a 0,36%) |
+| Chance de chegar mais de 15 min atrasado | 0,11% (0,06% a 0,15%) |
+| Chance de chegar mais de 60 min atrasado | 0,01% (0,00% a 0,02%) |
 | Chance de não chegar até o fim do serviço | 0,0000% (0,0000% a 0,0000%) |
-| Atraso médio por viagem (min) | 0,60 (0,00 a 1,29) |
-| Com rota alternativa: viagem inteira | 99,46% (99,28% a 99,63%) |
-| Com rota alternativa: chance de mais de 5 min | 0,71% (0,45% a 0,96%) |
-| Com rota alternativa: atraso médio (min) | 0,60 (0,00 a 1,29) |
+| Atraso médio por viagem (min) | 0,07 (0,04 a 0,09) |
+| Com rota alternativa: viagem inteira | 99,71% (99,66% a 99,75%) |
+| Com rota alternativa: chance de mais de 5 min | 0,28% (0,20% a 0,36%) |
+| Com rota alternativa: atraso médio (min) | 0,07 (0,04 a 0,09) |
 
 ## Longueuil- U. De Sherbrooke → Snowdon
 
@@ -50,19 +50,19 @@ Caminho de sempre: Amarela de Longueuil- U. De Sherbrooke a Berri-Uqam, baldeaç
 
 | Medida | Valor (IC 95%) |
 |---|---|
-| Trechos | Amarela 99,90% (99,87% a 99,93%); Laranja 99,46% (99,28% a 99,63%) |
-| Produto dos trechos (série) | 99,36% |
-| Viagem inteira, simulada | 99,36% (99,18% a 99,54%) |
-| Minutos por dia sem caminho | 7,6 (5,5 a 9,8) |
-| Dias com ao menos uma interrupção no caminho | 45,8% (42,7% a 48,9%) |
-| Chance de chegar mais de 5 min atrasado | 0,78% (0,57% a 0,98%) |
-| Chance de chegar mais de 15 min atrasado | 0,33% (0,16% a 0,51%) |
-| Chance de chegar mais de 60 min atrasado | 0,16% (0,01% a 0,32%) |
-| Chance de não chegar até o fim do serviço | 0,0009% (0,0000% a 0,0026%) |
-| Atraso médio por viagem (min) | 0,59 (0,00 a 1,27) |
-| Com rota alternativa: viagem inteira | 99,36% (99,18% a 99,54%) |
-| Com rota alternativa: chance de mais de 5 min | 0,76% (0,56% a 0,97%) |
-| Com rota alternativa: atraso médio (min) | 0,54 (0,00 a 1,15) |
+| Trechos | Amarela 99,90% (99,87% a 99,93%); Laranja 99,71% (99,66% a 99,75%) |
+| Produto dos trechos (série) | 99,61% |
+| Viagem inteira, simulada | 99,61% (99,56% a 99,67%) |
+| Minutos por dia sem caminho | 4,6 (4,0 a 5,3) |
+| Dias com ao menos uma interrupção no caminho | 44,4% (41,3% a 47,5%) |
+| Chance de chegar mais de 5 min atrasado | 0,53% (0,45% a 0,61%) |
+| Chance de chegar mais de 15 min atrasado | 0,10% (0,06% a 0,15%) |
+| Chance de chegar mais de 60 min atrasado | 0,01% (0,00% a 0,03%) |
+| Chance de não chegar até o fim do serviço | 0,0000% (0,0000% a 0,0000%) |
+| Atraso médio por viagem (min) | 0,11 (0,09 a 0,14) |
+| Com rota alternativa: viagem inteira | 99,61% (99,56% a 99,67%) |
+| Com rota alternativa: chance de mais de 5 min | 0,52% (0,44% a 0,59%) |
+| Com rota alternativa: atraso médio (min) | 0,10 (0,09 a 0,12) |
 
 ## Lionel-Groulx → Berri-Uqam
 
@@ -70,19 +70,19 @@ Caminho de sempre: Verde de Lionel-Groulx a Berri-Uqam.
 
 | Medida | Valor (IC 95%) |
 |---|---|
-| Trechos | Verde 99,54% (99,44% a 99,64%) |
-| Produto dos trechos (série) | 99,54% |
-| Viagem inteira, simulada | 99,54% (99,44% a 99,64%) |
-| Minutos por dia sem caminho | 5,5 (4,3 a 6,7) |
-| Dias com ao menos uma interrupção no caminho | 45,2% (42,1% a 48,3%) |
-| Chance de chegar mais de 5 min atrasado | 0,22% (0,11% a 0,34%) |
-| Chance de chegar mais de 15 min atrasado | 0,14% (0,05% a 0,23%) |
-| Chance de chegar mais de 60 min atrasado | 0,06% (0,00% a 0,13%) |
+| Trechos | Verde 99,74% (99,70% a 99,78%) |
+| Produto dos trechos (série) | 99,74% |
+| Viagem inteira, simulada | 99,74% (99,70% a 99,78%) |
+| Minutos por dia sem caminho | 3,2 (2,7 a 3,6) |
+| Dias com ao menos uma interrupção no caminho | 36,8% (33,8% a 39,8%) |
+| Chance de chegar mais de 5 min atrasado | 0,10% (0,06% a 0,14%) |
+| Chance de chegar mais de 15 min atrasado | 0,04% (0,02% a 0,07%) |
+| Chance de chegar mais de 60 min atrasado | 0,01% (0,00% a 0,02%) |
 | Chance de não chegar até o fim do serviço | 0,0000% (0,0000% a 0,0000%) |
-| Atraso médio por viagem (min) | 0,15 (0,00 a 0,33) |
+| Atraso médio por viagem (min) | 0,02 (0,01 a 0,04) |
 | Com rota alternativa: viagem inteira | 99,98% (99,97% a 100,00%) |
 | Com rota alternativa: chance de mais de 5 min | 0,02% (0,00% a 0,04%) |
-| Com rota alternativa: atraso médio (min) | 0,01 (0,01 a 0,02) |
+| Com rota alternativa: atraso médio (min) | 0,01 (0,00 a 0,02) |
 
 ## Atwater → Berri-Uqam
 
@@ -90,19 +90,19 @@ Caminho de sempre: Verde de Atwater a Berri-Uqam.
 
 | Medida | Valor (IC 95%) |
 |---|---|
-| Trechos | Verde 99,54% (99,44% a 99,64%) |
-| Produto dos trechos (série) | 99,54% |
-| Viagem inteira, simulada | 99,54% (99,44% a 99,64%) |
-| Minutos por dia sem caminho | 5,5 (4,3 a 6,7) |
-| Dias com ao menos uma interrupção no caminho | 45,2% (42,1% a 48,3%) |
-| Chance de chegar mais de 5 min atrasado | 0,22% (0,11% a 0,33%) |
-| Chance de chegar mais de 15 min atrasado | 0,13% (0,05% a 0,22%) |
-| Chance de chegar mais de 60 min atrasado | 0,06% (0,00% a 0,13%) |
+| Trechos | Verde 99,74% (99,70% a 99,78%) |
+| Produto dos trechos (série) | 99,74% |
+| Viagem inteira, simulada | 99,74% (99,70% a 99,78%) |
+| Minutos por dia sem caminho | 3,2 (2,7 a 3,6) |
+| Dias com ao menos uma interrupção no caminho | 36,8% (33,8% a 39,8%) |
+| Chance de chegar mais de 5 min atrasado | 0,09% (0,06% a 0,12%) |
+| Chance de chegar mais de 15 min atrasado | 0,04% (0,01% a 0,06%) |
+| Chance de chegar mais de 60 min atrasado | 0,01% (0,00% a 0,02%) |
 | Chance de não chegar até o fim do serviço | 0,0000% (0,0000% a 0,0000%) |
-| Atraso médio por viagem (min) | 0,15 (0,00 a 0,32) |
-| Com rota alternativa: viagem inteira | 99,54% (99,44% a 99,64%) |
-| Com rota alternativa: chance de mais de 5 min | 0,22% (0,11% a 0,33%) |
-| Com rota alternativa: atraso médio (min) | 0,14 (0,00 a 0,30) |
+| Atraso médio por viagem (min) | 0,02 (0,01 a 0,04) |
+| Com rota alternativa: viagem inteira | 99,74% (99,70% a 99,78%) |
+| Com rota alternativa: chance de mais de 5 min | 0,09% (0,06% a 0,12%) |
+| Com rota alternativa: atraso médio (min) | 0,02 (0,01 a 0,02) |
 
 ## Como ler
 
@@ -112,4 +112,4 @@ Caminho de sempre: Verde de Atwater a Berri-Uqam.
 - O atraso médio é puxado pelas poucas saídas que pegam uma interrupção longa: a amostra de durações da STM tem paradas de horas.
 - Não entram ônibus de substituição, caminhada até a plataforma nem lotação.
 
-Tempo de execução nesta máquina: 1,2 min (um processo).
+Tempo de execução nesta máquina: 0,8 min (um processo).

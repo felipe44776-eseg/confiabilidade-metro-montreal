@@ -94,8 +94,34 @@ export interface FrotaParam {
   lambda_trem_dia: Parametro;
 }
 
+/** Uma linha de uma fonte de falha do contrato v2 (spec 018). */
+export interface FonteNaLinhaParam {
+  base_por_trem_hora: Parametro; // já multiplicada pela parcela da frota na linha (material rodante)
+  renovacao: Renovacao;
+  ttr: Lognormal;
+  locais?: LocalEF[];
+  locais_sem_posicao?: number;
+}
+
+/** Fonte de falha do contrato v2: frota do material rodante ou setor × sintoma do equipamento fixo (spec 017). */
+export interface FonteParam {
+  id: string;
+  familia: Causa;
+  rotulo: string;
+  status_rotulo: string;
+  modelo: string;
+  n_falhas: number;
+  alpha: Parametro;
+  referencia?: Record<string, string>;
+  multiplicadores: Record<string, Record<string, Parametro>>;
+  linhas: Record<string, FonteNaLinhaParam>;
+}
+
 export interface Parametros {
   versao: number;
+  /** Contrato v2 (spec 018): fontes de falha por linha. Sem elas, o motor usa as duas famílias do v1 (taxas, renovacao, ttr). */
+  fontes?: FonteParam[];
+  frota_por_linha?: Record<string, Record<string, Parametro>>;
   codigo_commit: string;
   ano_base: number;
   janela_operacao_h?: Parametro;

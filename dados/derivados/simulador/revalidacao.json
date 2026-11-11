@@ -1,0 +1,779 @@
+{
+ "semente": 20261110,
+ "dias_2025": 364,
+ "simulacoes_por_dia": 6,
+ "comparacoes": [
+  {
+   "linha": "verde",
+   "metrica": "falhas_MR",
+   "observado": 138,
+   "ic95_observado": [
+    101,
+    179
+   ],
+   "media_2019_2025": 201.14285714285714,
+   "revisto": 128.83333333333377,
+   "v1": 177.66666666666623,
+   "dentro_15pct": true,
+   "dentro_ic": true,
+   "v1_dentro_ic": true
+  },
+  {
+   "linha": "verde",
+   "metrica": "falhas_EF",
+   "observado": 162,
+   "ic95_observado": [
+    126,
+    200
+   ],
+   "media_2019_2025": 177,
+   "revisto": 141.16666666666683,
+   "v1": 166.99999999999946,
+   "dentro_15pct": true,
+   "dentro_ic": true,
+   "v1_dentro_ic": true
+  },
+  {
+   "linha": "verde",
+   "metrica": "falhas_CC",
+   "observado": 10,
+   "ic95_observado": [
+    3,
+    18
+   ],
+   "media_2019_2025": 4,
+   "revisto": 4.499999999999999,
+   "v1": 4.499999999999999,
+   "dentro_15pct": false,
+   "dentro_ic": true,
+   "v1_dentro_ic": true
+  },
+  {
+   "linha": "verde",
+   "metrica": "minutos_MR",
+   "observado": 585,
+   "ic95_observado": [
+    420,
+    746
+   ],
+   "media_2019_2025": 849.4285714285714,
+   "revisto": 541.4628230240877,
+   "v1": 793.5465574258938,
+   "dentro_15pct": true,
+   "dentro_ic": true,
+   "v1_dentro_ic": false
+  },
+  {
+   "linha": "verde",
+   "metrica": "minutos_EF",
+   "observado": 630,
+   "ic95_observado": [
+    311,
+    1022
+   ],
+   "media_2019_2025": 739.1428571428571,
+   "revisto": 592.182998190199,
+   "v1": 775.8305318936061,
+   "dentro_15pct": true,
+   "dentro_ic": true,
+   "v1_dentro_ic": true
+  },
+  {
+   "linha": "verde",
+   "metrica": "minutos_CC",
+   "observado": 150,
+   "ic95_observado": [
+    12,
+    368
+   ],
+   "media_2019_2025": 97.57142857142857,
+   "revisto": 75.37894159401823,
+   "v1": 75.37894159401823,
+   "dentro_15pct": false,
+   "dentro_ic": true,
+   "v1_dentro_ic": true
+  },
+  {
+   "linha": "verde",
+   "metrica": "falhas_5_ou_mais",
+   "observado": 81,
+   "ic95_observado": [
+    61,
+    101
+   ],
+   "media_2019_2025": 103.42857142857143,
+   "revisto": 70.49999999999989,
+   "v1": 99.0000000000003,
+   "dentro_15pct": true,
+   "dentro_ic": true,
+   "v1_dentro_ic": true
+  },
+  {
+   "linha": "laranja",
+   "metrica": "falhas_MR",
+   "observado": 127,
+   "ic95_observado": [
+    96,
+    164
+   ],
+   "media_2019_2025": 121.71428571428571,
+   "revisto": 122.3333333333338,
+   "v1": 104.83333333333366,
+   "dentro_15pct": true,
+   "dentro_ic": true,
+   "v1_dentro_ic": true
+  },
+  {
+   "linha": "laranja",
+   "metrica": "falhas_EF",
+   "observado": 279,
+   "ic95_observado": [
+    231,
+    333
+   ],
+   "media_2019_2025": 292.57142857142856,
+   "revisto": 232.66666666666538,
+   "v1": 262.9999999999993,
+   "dentro_15pct": false,
+   "dentro_ic": true,
+   "v1_dentro_ic": true
+  },
+  {
+   "linha": "laranja",
+   "metrica": "falhas_CC",
+   "observado": 11,
+   "ic95_observado": [
+    4,
+    19
+   ],
+   "media_2019_2025": 5.571428571428571,
+   "revisto": 6.333333333333336,
+   "v1": 6.333333333333336,
+   "dentro_15pct": false,
+   "dentro_ic": true,
+   "v1_dentro_ic": true
+  },
+  {
+   "linha": "laranja",
+   "metrica": "minutos_MR",
+   "observado": 269,
+   "ic95_observado": [
+    148,
+    449
+   ],
+   "media_2019_2025": 493.14285714285717,
+   "revisto": 435.8006474953935,
+   "v1": 418.5051672180534,
+   "dentro_15pct": false,
+   "dentro_ic": true,
+   "v1_dentro_ic": true
+  },
+  {
+   "linha": "laranja",
+   "metrica": "minutos_EF",
+   "observado": 742,
+   "ic95_observado": [
+    461,
+    1077
+   ],
+   "media_2019_2025": 987.2857142857143,
+   "revisto": 643.6666666666669,
+   "v1": 1027.0945962152487,
+   "dentro_15pct": true,
+   "dentro_ic": true,
+   "v1_dentro_ic": true
+  },
+  {
+   "linha": "laranja",
+   "metrica": "minutos_CC",
+   "observado": 150,
+   "ic95_observado": [
+    12,
+    368
+   ],
+   "media_2019_2025": 132.14285714285714,
+   "revisto": 105.87894159401824,
+   "v1": 106.37894159401824,
+   "dentro_15pct": false,
+   "dentro_ic": true,
+   "v1_dentro_ic": true
+  },
+  {
+   "linha": "laranja",
+   "metrica": "falhas_5_ou_mais",
+   "observado": 61,
+   "ic95_observado": [
+    48,
+    75
+   ],
+   "media_2019_2025": 85.57142857142857,
+   "revisto": 74.33333333333331,
+   "v1": 79.66666666666677,
+   "dentro_15pct": false,
+   "dentro_ic": true,
+   "v1_dentro_ic": false
+  },
+  {
+   "linha": "amarela",
+   "metrica": "falhas_MR",
+   "observado": 60,
+   "ic95_observado": [
+    43,
+    76
+   ],
+   "media_2019_2025": 73.14285714285714,
+   "revisto": 59.3333333333332,
+   "v1": 52.499999999999844,
+   "dentro_15pct": true,
+   "dentro_ic": true,
+   "v1_dentro_ic": true
+  },
+  {
+   "linha": "amarela",
+   "metrica": "falhas_EF",
+   "observado": 19,
+   "ic95_observado": [
+    9,
+    32
+   ],
+   "media_2019_2025": 82.57142857142857,
+   "revisto": 40.49999999999996,
+   "v1": 59.83333333333327,
+   "dentro_15pct": false,
+   "dentro_ic": false,
+   "v1_dentro_ic": false
+  },
+  {
+   "linha": "amarela",
+   "metrica": "falhas_CC",
+   "observado": 4,
+   "ic95_observado": [
+    0,
+    10
+   ],
+   "media_2019_2025": 2.2857142857142856,
+   "revisto": 2.666666666666666,
+   "v1": 2.666666666666666,
+   "dentro_15pct": false,
+   "dentro_ic": true,
+   "v1_dentro_ic": true
+  },
+  {
+   "linha": "amarela",
+   "metrica": "minutos_MR",
+   "observado": 252,
+   "ic95_observado": [
+    160,
+    352
+   ],
+   "media_2019_2025": 209.14285714285714,
+   "revisto": 189.59711734299495,
+   "v1": 124.51272812903878,
+   "dentro_15pct": false,
+   "dentro_ic": true,
+   "v1_dentro_ic": false
+  },
+  {
+   "linha": "amarela",
+   "metrica": "minutos_EF",
+   "observado": 44,
+   "ic95_observado": [
+    8,
+    98
+   ],
+   "media_2019_2025": 238.28571428571428,
+   "revisto": 143.27030360940805,
+   "v1": 178.4565162789874,
+   "dentro_15pct": false,
+   "dentro_ic": false,
+   "v1_dentro_ic": false
+  },
+  {
+   "linha": "amarela",
+   "metrica": "minutos_CC",
+   "observado": 11,
+   "ic95_observado": [
+    0,
+    26
+   ],
+   "media_2019_2025": 56.142857142857146,
+   "revisto": 19.0456082606849,
+   "v1": 19.0456082606849,
+   "dentro_15pct": false,
+   "dentro_ic": true,
+   "v1_dentro_ic": true
+  },
+  {
+   "linha": "amarela",
+   "metrica": "falhas_5_ou_mais",
+   "observado": 25,
+   "ic95_observado": [
+    15,
+    36
+   ],
+   "media_2019_2025": 33.857142857142854,
+   "revisto": 23.666666666666686,
+   "v1": 22.16666666666667,
+   "dentro_15pct": true,
+   "dentro_ic": true,
+   "v1_dentro_ic": true
+  },
+  {
+   "linha": "azul",
+   "metrica": "falhas_MR",
+   "observado": 113,
+   "ic95_observado": [
+    82,
+    147
+   ],
+   "media_2019_2025": 133.14285714285714,
+   "revisto": 135.83333333333377,
+   "v1": 118.33333333333393,
+   "dentro_15pct": false,
+   "dentro_ic": true,
+   "v1_dentro_ic": true
+  },
+  {
+   "linha": "azul",
+   "metrica": "falhas_EF",
+   "observado": 42,
+   "ic95_observado": [
+    29,
+    57
+   ],
+   "media_2019_2025": 61,
+   "revisto": 44.833333333333265,
+   "v1": 52.9999999999999,
+   "dentro_15pct": true,
+   "dentro_ic": true,
+   "v1_dentro_ic": true
+  },
+  {
+   "linha": "azul",
+   "metrica": "falhas_CC",
+   "observado": 2,
+   "ic95_observado": [
+    0,
+    5
+   ],
+   "media_2019_2025": 2.7142857142857144,
+   "revisto": 3.1666666666666656,
+   "v1": 3.1666666666666656,
+   "dentro_15pct": false,
+   "dentro_ic": true,
+   "v1_dentro_ic": true
+  },
+  {
+   "linha": "azul",
+   "metrica": "minutos_MR",
+   "observado": 517,
+   "ic95_observado": [
+    345,
+    709
+   ],
+   "media_2019_2025": 554.7142857142857,
+   "revisto": 541.0294022991759,
+   "v1": 521.8555719407019,
+   "dentro_15pct": true,
+   "dentro_ic": true,
+   "v1_dentro_ic": true
+  },
+  {
+   "linha": "azul",
+   "metrica": "minutos_EF",
+   "observado": 141,
+   "ic95_observado": [
+    55,
+    266
+   ],
+   "media_2019_2025": 351,
+   "revisto": 98.00000000000001,
+   "v1": 908.7775903844205,
+   "dentro_15pct": false,
+   "dentro_ic": true,
+   "v1_dentro_ic": false
+  },
+  {
+   "linha": "azul",
+   "metrica": "minutos_CC",
+   "observado": 2,
+   "ic95_observado": [
+    0,
+    6
+   ],
+   "media_2019_2025": 59,
+   "revisto": 48.212274927351565,
+   "v1": 48.712274927351565,
+   "dentro_15pct": false,
+   "dentro_ic": false,
+   "v1_dentro_ic": false
+  },
+  {
+   "linha": "azul",
+   "metrica": "falhas_5_ou_mais",
+   "observado": 48,
+   "ic95_observado": [
+    32,
+    66
+   ],
+   "media_2019_2025": 50.857142857142854,
+   "revisto": 50.49999999999982,
+   "v1": 47.4999999999999,
+   "dentro_15pct": true,
+   "dentro_ic": true,
+   "v1_dentro_ic": true
+  }
+ ],
+ "dispersao": {
+  "observado": {
+   "verde|MR": 1.2816206694069299,
+   "verde|EF": 1.3122403144300931,
+   "verde|CC": 1.2637362637362521,
+   "laranja|MR": 1.4386013986014052,
+   "laranja|EF": 1.5611616954474128,
+   "laranja|CC": 1.4750000000000016,
+   "amarela|MR": 1.108391608391612,
+   "amarela|EF": 1.0800000000000094,
+   "amarela|CC": 0.9923076923076891,
+   "azul|MR": 1.2823076923076886,
+   "azul|EF": 1.1112426035502991,
+   "azul|CC": 0.9961538461538466
+  },
+  "ic95_observado": {
+   "verde|MR": [
+    0.9339928265648515,
+    1.732692307692308
+   ],
+   "verde|EF": [
+    1.143456924754636,
+    1.472194881889765
+   ],
+   "verde|CC": [
+    0.9726562499999993,
+    1.6615384615384587
+   ],
+   "laranja|MR": [
+    1.1708422810785022,
+    1.7024038461538469
+   ],
+   "laranja|EF": [
+    1.2159850307404443,
+    1.9395927601809946
+   ],
+   "laranja|CC": [
+    0.9807692307692258,
+    1.8615384615384627
+   ],
+   "amarela|MR": [
+    0.9305931133946219,
+    1.288324420677357
+   ],
+   "amarela|EF": [
+    0.9263565891472901,
+    1.3534412955465631
+   ],
+   "amarela|CC": [
+    0.9769230769230659,
+    1.000000000000004
+   ],
+   "azul|MR": [
+    1.0114560236511427,
+    1.6025359256128444
+   ],
+   "azul|EF": [
+    0.880769230769232,
+    1.4199475065616796
+   ],
+   "azul|CC": [
+    0.9844961240310042,
+    1.000000000000006
+   ]
+  },
+  "revisto": {
+   "verde": {
+    "MR": 1.2485687634512552,
+    "EF": 1.064907833438373,
+    "CC": 0.9867637326273838
+   },
+   "laranja": {
+    "MR": 1.2977141984421925,
+    "EF": 1.3371591558929903,
+    "CC": 0.9814692256783638
+   },
+   "amarela": {
+    "MR": 1.3618392656749234,
+    "EF": 1.6427052677527978,
+    "CC": 0.9920582395764598
+   },
+   "azul": {
+    "MR": 1.294038588810295,
+    "EF": 1.1512332981558429,
+    "CC": 0.9920582395764576
+   }
+  },
+  "v1": {
+   "verde": {
+    "MR": 1.2511221340532719,
+    "EF": 1.2985028033415358,
+    "CC": 0.9867637326273838
+   },
+   "laranja": {
+    "MR": 1.3012574454004426,
+    "EF": 1.6323354225873103,
+    "CC": 0.9814692256783638
+   },
+   "amarela": {
+    "MR": 1.1595784757929009,
+    "EF": 2.059827928524181,
+    "CC": 0.9920582395764598
+   },
+   "azul": {
+    "MR": 1.3737766185229967,
+    "EF": 1.2661976962946249,
+    "CC": 0.9920582395764576
+   }
+  },
+  "comparacoes": [
+   {
+    "linha": "verde",
+    "familia": "MR",
+    "observado": 1.2816206694069299,
+    "ic95": [
+     0.9339928265648515,
+     1.732692307692308
+    ],
+    "revisto": 1.2485687634512552,
+    "v1": 1.2511221340532719,
+    "dentro": true,
+    "abaixo": false,
+    "v1_dentro": true
+   },
+   {
+    "linha": "verde",
+    "familia": "EF",
+    "observado": 1.3122403144300931,
+    "ic95": [
+     1.143456924754636,
+     1.472194881889765
+    ],
+    "revisto": 1.064907833438373,
+    "v1": 1.2985028033415358,
+    "dentro": false,
+    "abaixo": true,
+    "v1_dentro": true
+   },
+   {
+    "linha": "verde",
+    "familia": "CC",
+    "observado": 1.2637362637362521,
+    "ic95": [
+     0.9726562499999993,
+     1.6615384615384587
+    ],
+    "revisto": 0.9867637326273838,
+    "v1": 0.9867637326273838,
+    "dentro": true,
+    "abaixo": false,
+    "v1_dentro": true
+   },
+   {
+    "linha": "laranja",
+    "familia": "MR",
+    "observado": 1.4386013986014052,
+    "ic95": [
+     1.1708422810785022,
+     1.7024038461538469
+    ],
+    "revisto": 1.2977141984421925,
+    "v1": 1.3012574454004426,
+    "dentro": true,
+    "abaixo": false,
+    "v1_dentro": true
+   },
+   {
+    "linha": "laranja",
+    "familia": "EF",
+    "observado": 1.5611616954474128,
+    "ic95": [
+     1.2159850307404443,
+     1.9395927601809946
+    ],
+    "revisto": 1.3371591558929903,
+    "v1": 1.6323354225873103,
+    "dentro": true,
+    "abaixo": false,
+    "v1_dentro": true
+   },
+   {
+    "linha": "laranja",
+    "familia": "CC",
+    "observado": 1.4750000000000016,
+    "ic95": [
+     0.9807692307692258,
+     1.8615384615384627
+    ],
+    "revisto": 0.9814692256783638,
+    "v1": 0.9814692256783638,
+    "dentro": true,
+    "abaixo": false,
+    "v1_dentro": true
+   },
+   {
+    "linha": "amarela",
+    "familia": "MR",
+    "observado": 1.108391608391612,
+    "ic95": [
+     0.9305931133946219,
+     1.288324420677357
+    ],
+    "revisto": 1.3618392656749234,
+    "v1": 1.1595784757929009,
+    "dentro": false,
+    "abaixo": false,
+    "v1_dentro": true
+   },
+   {
+    "linha": "amarela",
+    "familia": "EF",
+    "observado": 1.0800000000000094,
+    "ic95": [
+     0.9263565891472901,
+     1.3534412955465631
+    ],
+    "revisto": 1.6427052677527978,
+    "v1": 2.059827928524181,
+    "dentro": false,
+    "abaixo": false,
+    "v1_dentro": false
+   },
+   {
+    "linha": "amarela",
+    "familia": "CC",
+    "observado": 0.9923076923076891,
+    "ic95": [
+     0.9769230769230659,
+     1.000000000000004
+    ],
+    "revisto": 0.9920582395764598,
+    "v1": 0.9920582395764598,
+    "dentro": true,
+    "abaixo": false,
+    "v1_dentro": true
+   },
+   {
+    "linha": "azul",
+    "familia": "MR",
+    "observado": 1.2823076923076886,
+    "ic95": [
+     1.0114560236511427,
+     1.6025359256128444
+    ],
+    "revisto": 1.294038588810295,
+    "v1": 1.3737766185229967,
+    "dentro": true,
+    "abaixo": false,
+    "v1_dentro": true
+   },
+   {
+    "linha": "azul",
+    "familia": "EF",
+    "observado": 1.1112426035502991,
+    "ic95": [
+     0.880769230769232,
+     1.4199475065616796
+    ],
+    "revisto": 1.1512332981558429,
+    "v1": 1.2661976962946249,
+    "dentro": true,
+    "abaixo": false,
+    "v1_dentro": true
+   },
+   {
+    "linha": "azul",
+    "familia": "CC",
+    "observado": 0.9961538461538466,
+    "ic95": [
+     0.9844961240310042,
+     1.000000000000006
+    ],
+    "revisto": 0.9920582395764576,
+    "v1": 0.9920582395764576,
+    "dentro": true,
+    "abaixo": false,
+    "v1_dentro": true
+   }
+  ]
+ },
+ "indicador": {
+  "km_carro_2025_milhoes": 83.80020261600004,
+  "simulado": 2.613358836416296,
+  "dados_abertos_2025": 2.4582279465833685,
+  "stm_publicado": {
+   "2019": 10.6,
+   "2020": 9.2,
+   "2021": 9.4,
+   "2022": 10.4,
+   "2023": 13.2,
+   "2024": 13,
+   "2025": 11.66
+  },
+  "por_ano": [
+   {
+    "ano": "2019",
+    "km_carro_milhoes": 90.89444939400002,
+    "todas_as_causas": 9.087463596589261,
+    "tecnicas": 3.1575085377979635,
+    "publicado": 10.6,
+    "razao": 0.857307886470685
+   },
+   {
+    "ano": "2020",
+    "km_carro_milhoes": 86.95728857099995,
+    "todas_as_causas": 8.164927997039495,
+    "tecnicas": 2.7944753567332357,
+    "publicado": 9.2,
+    "razao": 0.8874921735912495
+   },
+   {
+    "ano": "2021",
+    "km_carro_milhoes": 85.398526392,
+    "todas_as_causas": 7.986086280569459,
+    "tecnicas": 3.021129414057068,
+    "publicado": 9.4,
+    "razao": 0.8495836468690913
+   },
+   {
+    "ano": "2022",
+    "km_carro_milhoes": 85.83118252499999,
+    "todas_as_causas": 8.889543142176347,
+    "tecnicas": 3.0175513418396775,
+    "publicado": 10.4,
+    "razao": 0.8547637636708025
+   },
+   {
+    "ano": "2023",
+    "km_carro_milhoes": 83.34579289800001,
+    "todas_as_causas": 11.338304755904199,
+    "tecnicas": 3.491477972453039,
+    "publicado": 13.2,
+    "razao": 0.8589624815078939
+   },
+   {
+    "ano": "2024",
+    "km_carro_milhoes": 86.118133641,
+    "todas_as_causas": 11.101030173102332,
+    "tecnicas": 3.6345423056286923,
+    "publicado": 13,
+    "razao": 0.8539253979309487
+   },
+   {
+    "ano": "2025",
+    "km_carro_milhoes": 83.80020261600004,
+    "todas_as_causas": 9.892577513192293,
+    "tecnicas": 2.5059605280704242,
+    "publicado": 11.66,
+    "razao": 0.8484200268604025
+   }
+  ]
+ }
+}

@@ -1,0 +1,3787 @@
+{
+ "fontes": {
+  "mpm10": {
+   "familia": "MR",
+   "modelo": "empilhado por frota",
+   "frota": "MPM-10",
+   "n_falhas": 1190
+  },
+  "mr73": {
+   "familia": "MR",
+   "modelo": "empilhado por frota",
+   "frota": "MR-73",
+   "n_falhas": 2736
+  },
+  "aux_stations": {
+   "familia": "EF",
+   "modelo": "reduzido: linha e faixa; clima, dia, eventos e ano da família EF",
+   "n_falhas": 388,
+   "causa": "aux_stations",
+   "n_horas": 226658,
+   "modelo_escolhido": "Poisson",
+   "aic_poisson": 5349.29,
+   "aic_nb": 5351.25,
+   "alpha_nb": 0.227174,
+   "perfil_alpha": [
+    [
+     0.01,
+     -2665.64
+    ],
+    [
+     0.02,
+     -2665.64
+    ],
+    [
+     0.0398,
+     -2665.64
+    ],
+    [
+     0.0795,
+     -2665.63
+    ],
+    [
+     0.1586,
+     -2665.62
+    ],
+    [
+     0.3166,
+     -2665.63
+    ],
+    [
+     0.6318,
+     -2665.67
+    ],
+    [
+     1.2608,
+     -2665.85
+    ],
+    [
+     2.5162,
+     -2666.42
+    ],
+    [
+     5.0216,
+     -2667.88
+    ],
+    [
+     10.0216,
+     -2671.18
+    ],
+    [
+     20.0,
+     -2678.03
+    ]
+   ],
+   "lr_dispersao": 0.039,
+   "p_lr_dispersao": 0.42180507594693617,
+   "bootstrap_b": 200,
+   "bootstrap_segundos": 59.3,
+   "semente": 20261021,
+   "referencia": {
+    "linha": "laranja",
+    "faixa": "entrepico",
+    "tipo_dia": "util",
+    "estacao": "outono",
+    "temp": "5a15",
+    "precip": "0",
+    "cond": "seco_ou_outro",
+    "neve_solo": "0",
+    "ano": "2019"
+   },
+   "coeficientes": [
+    {
+     "termo": "const",
+     "coef": -8.40138,
+     "multiplicador": 0.000225,
+     "ic95": [
+      0.000152,
+      0.000308
+     ],
+     "ep_modelo": 0.110474,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "linha=amarela",
+     "coef": -0.492558,
+     "multiplicador": 0.611061,
+     "ic95": [
+      0.191521,
+      1.007749
+     ],
+     "ep_modelo": 0.326951,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "linha=azul",
+     "coef": -0.825464,
+     "multiplicador": 0.438032,
+     "ic95": [
+      0.255137,
+      0.639095
+     ],
+     "ep_modelo": 0.243965,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "linha=verde",
+     "coef": 0.635247,
+     "multiplicador": 1.887488,
+     "ic95": [
+      1.517676,
+      2.269638
+     ],
+     "ep_modelo": 0.107449,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=abertura",
+     "coef": 0.716069,
+     "multiplicador": 2.046373,
+     "ic95": [
+      1.451517,
+      2.943182
+     ],
+     "ep_modelo": 0.175171,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=fim",
+     "coef": 0.084587,
+     "multiplicador": 1.088267,
+     "ic95": [
+      0.707106,
+      1.545511
+     ],
+     "ep_modelo": 0.197982,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=noite",
+     "coef": -0.793387,
+     "multiplicador": 0.45231,
+     "ic95": [
+      0.318843,
+      0.617023
+     ],
+     "ep_modelo": 0.193258,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=pico_manha",
+     "coef": 0.225406,
+     "multiplicador": 1.252831,
+     "ic95": [
+      0.96578,
+      1.575634
+     ],
+     "ep_modelo": 0.130811,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=pico_tarde",
+     "coef": -0.832107,
+     "multiplicador": 0.435131,
+     "ic95": [
+      0.30928,
+      0.649547
+     ],
+     "ep_modelo": 0.176625,
+     "reamostras_validas": 200
+    }
+   ],
+   "residuos_quantilicos": {
+    "media": 0.0001,
+    "desvio": 1.0005,
+    "p05": -1.647,
+    "p95": 1.642
+   },
+   "rootograma": [
+    {
+     "contagem": 0,
+     "observado": 226271,
+     "esperado": 226271.0
+    },
+    {
+     "contagem": 1,
+     "observado": 386,
+     "esperado": 386.0
+    },
+    {
+     "contagem": 2,
+     "observado": 1,
+     "esperado": 1.0
+    },
+    {
+     "contagem": "3+",
+     "observado": 0,
+     "esperado": 0.0
+    }
+   ],
+   "ano_base": "2025",
+   "base_por_trem_hora": {
+    "verde": {
+     "valor": 0.00037625,
+     "ic95": [
+      0.00024633,
+      0.00051438
+     ]
+    },
+    "laranja": {
+     "valor": 0.00019934,
+     "ic95": [
+      0.00013509,
+      0.00027376
+     ]
+    },
+    "amarela": {
+     "valor": 0.00012181,
+     "ic95": [
+      3.723e-05,
+      0.00020942
+     ]
+    },
+    "azul": {
+     "valor": 8.731e-05,
+     "ic95": [
+      4.349e-05,
+      0.00012665
+     ]
+    }
+   },
+   "herda_de": "EF"
+  },
+  "aux_trains_sintoma_fixo": {
+   "familia": "EF",
+   "modelo": "próprio",
+   "n_falhas": 1500,
+   "causa": "aux_trains_sintoma_fixo",
+   "n_horas": 226658,
+   "modelo_escolhido": "binomial negativa",
+   "aic_poisson": 17037.18,
+   "aic_nb": 16865.01,
+   "alpha_nb": 6.921547,
+   "perfil_alpha": [
+    [
+     0.01,
+     -8476.88
+    ],
+    [
+     0.02,
+     -8476.19
+    ],
+    [
+     0.0398,
+     -8474.83
+    ],
+    [
+     0.0795,
+     -8472.23
+    ],
+    [
+     0.1586,
+     -8467.43
+    ],
+    [
+     0.3166,
+     -8459.08
+    ],
+    [
+     0.6318,
+     -8445.92
+    ],
+    [
+     1.2608,
+     -8427.92
+    ],
+    [
+     2.5162,
+     -8407.91
+    ],
+    [
+     5.0216,
+     -8392.78
+    ],
+    [
+     10.0216,
+     -8394.39
+    ],
+    [
+     20.0,
+     -8430.93
+    ]
+   ],
+   "lr_dispersao": 174.17,
+   "p_lr_dispersao": 4.544356012692584e-40,
+   "bootstrap_b": 200,
+   "bootstrap_segundos": 425.7,
+   "semente": 20261021,
+   "referencia": {
+    "linha": "laranja",
+    "faixa": "entrepico",
+    "tipo_dia": "util",
+    "estacao": "outono",
+    "temp": "5a15",
+    "precip": "0",
+    "cond": "seco_ou_outro",
+    "neve_solo": "0",
+    "ano": "2019"
+   },
+   "coeficientes": [
+    {
+     "termo": "const",
+     "coef": -6.830965,
+     "multiplicador": 0.00108,
+     "ic95": [
+      0.000761,
+      0.001486
+     ],
+     "ep_modelo": 0.130564,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "linha=amarela",
+     "coef": 0.085853,
+     "multiplicador": 1.089646,
+     "ic95": [
+      0.805554,
+      1.34265
+     ],
+     "ep_modelo": 0.109854,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "linha=azul",
+     "coef": -0.446229,
+     "multiplicador": 0.640037,
+     "ic95": [
+      0.50489,
+      0.800258
+     ],
+     "ep_modelo": 0.090655,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "linha=verde",
+     "coef": -0.253427,
+     "multiplicador": 0.776136,
+     "ic95": [
+      0.671102,
+      0.889138
+     ],
+     "ep_modelo": 0.061166,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=abertura",
+     "coef": 1.142536,
+     "multiplicador": 3.134709,
+     "ic95": [
+      2.602371,
+      3.691112
+     ],
+     "ep_modelo": 0.088819,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=fim",
+     "coef": -0.130981,
+     "multiplicador": 0.877235,
+     "ic95": [
+      0.672706,
+      1.114916
+     ],
+     "ep_modelo": 0.121019,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=noite",
+     "coef": -0.282732,
+     "multiplicador": 0.753722,
+     "ic95": [
+      0.626439,
+      0.916557
+     ],
+     "ep_modelo": 0.093418,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=pico_manha",
+     "coef": 0.252816,
+     "multiplicador": 1.287647,
+     "ic95": [
+      1.10148,
+      1.486373
+     ],
+     "ep_modelo": 0.077443,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=pico_tarde",
+     "coef": -0.495696,
+     "multiplicador": 0.609147,
+     "ic95": [
+      0.501684,
+      0.750432
+     ],
+     "ep_modelo": 0.091139,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "tipo_dia=domingo",
+     "coef": -0.428087,
+     "multiplicador": 0.651755,
+     "ic95": [
+      0.493923,
+      0.890935
+     ],
+     "ep_modelo": 0.104824,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "tipo_dia=sabado",
+     "coef": -0.223375,
+     "multiplicador": 0.799815,
+     "ic95": [
+      0.60726,
+      1.029324
+     ],
+     "ep_modelo": 0.094022,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "estacao=inverno",
+     "coef": -0.285311,
+     "multiplicador": 0.751781,
+     "ic95": [
+      0.533244,
+      0.973151
+     ],
+     "ep_modelo": 0.114318,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "estacao=primavera",
+     "coef": -0.1461,
+     "multiplicador": 0.864071,
+     "ic95": [
+      0.695723,
+      1.075463
+     ],
+     "ep_modelo": 0.083047,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "estacao=verao",
+     "coef": 0.011015,
+     "multiplicador": 1.011076,
+     "ic95": [
+      0.822197,
+      1.306665
+     ],
+     "ep_modelo": 0.108264,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "temp=-15a-5",
+     "coef": 0.200055,
+     "multiplicador": 1.22147,
+     "ic95": [
+      0.836544,
+      1.836045
+     ],
+     "ep_modelo": 0.130861,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "temp=-5a5",
+     "coef": -0.031161,
+     "multiplicador": 0.969319,
+     "ic95": [
+      0.733763,
+      1.335372
+     ],
+     "ep_modelo": 0.096027,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "temp=15a25",
+     "coef": 0.018061,
+     "multiplicador": 1.018226,
+     "ic95": [
+      0.846621,
+      1.248851
+     ],
+     "ep_modelo": 0.094901,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "temp=25_ou_mais",
+     "coef": 0.329993,
+     "multiplicador": 1.390958,
+     "ic95": [
+      1.041307,
+      1.896629
+     ],
+     "ep_modelo": 0.139631,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "temp=abaixo_-15",
+     "coef": 0.284507,
+     "multiplicador": 1.329106,
+     "ic95": [
+      0.768139,
+      2.207006
+     ],
+     "ep_modelo": 0.200788,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "temp=sem_dado",
+     "coef": -21.036605,
+     "multiplicador": 0.0,
+     "ic95": [
+      0.0,
+      0.0
+     ],
+     "ep_modelo": 193971.418551,
+     "reamostras_validas": 185
+    },
+    {
+     "termo": "precip=acima_1mm",
+     "coef": 0.153385,
+     "multiplicador": 1.165773,
+     "ic95": [
+      0.826035,
+      1.600672
+     ],
+     "ep_modelo": 0.163598,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "precip=ate_1mm",
+     "coef": 0.232986,
+     "multiplicador": 1.262363,
+     "ic95": [
+      0.966429,
+      1.60289
+     ],
+     "ep_modelo": 0.112699,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "precip=sem_dado",
+     "coef": -22.600113,
+     "multiplicador": 0.0,
+     "ic95": [
+      0.0,
+      0.0
+     ],
+     "ep_modelo": 191303.866954,
+     "reamostras_validas": 199
+    },
+    {
+     "termo": "cond=chuva",
+     "coef": 0.014475,
+     "multiplicador": 1.01458,
+     "ic95": [
+      0.782764,
+      1.256435
+     ],
+     "ep_modelo": 0.122021,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "cond=chuva_congelante",
+     "coef": 0.098356,
+     "multiplicador": 1.103355,
+     "ic95": [
+      0.471117,
+      1.695552
+     ],
+     "ep_modelo": 0.353999,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "cond=neve",
+     "coef": -0.414115,
+     "multiplicador": 0.660925,
+     "ic95": [
+      0.507873,
+      0.866113
+     ],
+     "ep_modelo": 0.129075,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "cond=sem_dado",
+     "coef": -0.095571,
+     "multiplicador": 0.908854,
+     "ic95": [
+      0.809066,
+      1.039432
+     ],
+     "ep_modelo": 0.063604,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "neve_solo=1a10",
+     "coef": 0.322263,
+     "multiplicador": 1.380248,
+     "ic95": [
+      1.0676,
+      1.817528
+     ],
+     "ep_modelo": 0.118063,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "neve_solo=acima_10",
+     "coef": 0.262628,
+     "multiplicador": 1.300343,
+     "ic95": [
+      0.9974,
+      1.803833
+     ],
+     "ep_modelo": 0.132646,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "neve_solo=sem_dado",
+     "coef": 0.012914,
+     "multiplicador": 1.012997,
+     "ic95": [
+      0.808448,
+      1.30841
+     ],
+     "ep_modelo": 0.092108,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2020",
+     "coef": -0.409256,
+     "multiplicador": 0.664144,
+     "ic95": [
+      0.52656,
+      0.839974
+     ],
+     "ep_modelo": 0.104581,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2021",
+     "coef": -0.216422,
+     "multiplicador": 0.805395,
+     "ic95": [
+      0.649319,
+      0.996467
+     ],
+     "ep_modelo": 0.099831,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2022",
+     "coef": -0.263567,
+     "multiplicador": 0.768306,
+     "ic95": [
+      0.584064,
+      1.013606
+     ],
+     "ep_modelo": 0.100301,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2023",
+     "coef": -0.052731,
+     "multiplicador": 0.948636,
+     "ic95": [
+      0.726912,
+      1.284585
+     ],
+     "ep_modelo": 0.097069,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2024",
+     "coef": -0.247865,
+     "multiplicador": 0.780465,
+     "ic95": [
+      0.602795,
+      0.998547
+     ],
+     "ep_modelo": 0.101393,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2025",
+     "coef": -0.350789,
+     "multiplicador": 0.704133,
+     "ic95": [
+      0.549168,
+      0.861413
+     ],
+     "ep_modelo": 0.105235,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2026",
+     "coef": -0.250122,
+     "multiplicador": 0.778706,
+     "ic95": [
+      0.478133,
+      1.155103
+     ],
+     "ep_modelo": 0.127745,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "jogo",
+     "coef": 0.071135,
+     "multiplicador": 1.073726,
+     "ic95": [
+      0.599548,
+      1.548891
+     ],
+     "ep_modelo": 0.204295,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "gp_fds",
+     "coef": -0.085058,
+     "multiplicador": 0.918459,
+     "ic95": [
+      0.261532,
+      1.524513
+     ],
+     "ep_modelo": 0.371976,
+     "reamostras_validas": 199
+    },
+    {
+     "termo": "feriado",
+     "coef": -0.035079,
+     "multiplicador": 0.965529,
+     "ic95": [
+      0.435252,
+      1.622036
+     ],
+     "ep_modelo": 0.26073,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "greve",
+     "coef": 0.801673,
+     "multiplicador": 2.229267,
+     "ic95": [
+      0.774799,
+      4.033745
+     ],
+     "ep_modelo": 0.288022,
+     "reamostras_validas": 200
+    }
+   ],
+   "residuos_quantilicos": {
+    "media": 0.0001,
+    "desvio": 1.0008,
+    "p05": -1.648,
+    "p95": 1.644
+   },
+   "rootograma": [
+    {
+     "contagem": 0,
+     "observado": 225228,
+     "esperado": 225230.0
+    },
+    {
+     "contagem": 1,
+     "observado": 1370,
+     "esperado": 1351.5
+    },
+    {
+     "contagem": 2,
+     "observado": 51,
+     "esperado": 68.6
+    },
+    {
+     "contagem": "3+",
+     "observado": 9,
+     "esperado": 7.9
+    }
+   ],
+   "ano_base": "2025",
+   "base_por_trem_hora": {
+    "verde": {
+     "valor": 0.00059012,
+     "ic95": [
+      0.0004237,
+      0.00076635
+     ]
+    },
+    "laranja": {
+     "valor": 0.00076033,
+     "ic95": [
+      0.0005632,
+      0.00099632
+     ]
+    },
+    "amarela": {
+     "valor": 0.00082849,
+     "ic95": [
+      0.00055474,
+      0.00114905
+     ]
+    },
+    "azul": {
+     "valor": 0.00048664,
+     "ic95": [
+      0.00034729,
+      0.0006724
+     ]
+    }
+   }
+  },
+  "aux_trains_sintoma_trem": {
+   "familia": "EF",
+   "modelo": "próprio",
+   "n_falhas": 694,
+   "causa": "aux_trains_sintoma_trem",
+   "n_horas": 226658,
+   "modelo_escolhido": "binomial negativa",
+   "aic_poisson": 8985.64,
+   "aic_nb": 8445.27,
+   "alpha_nb": 19.990276,
+   "perfil_alpha": [
+    [
+     0.01,
+     -4450.31
+    ],
+    [
+     0.02,
+     -4448.83
+    ],
+    [
+     0.0398,
+     -4445.98
+    ],
+    [
+     0.0795,
+     -4440.62
+    ],
+    [
+     0.1586,
+     -4430.97
+    ],
+    [
+     0.3166,
+     -4414.75
+    ],
+    [
+     0.6318,
+     -4389.8
+    ],
+    [
+     1.2608,
+     -4355.24
+    ],
+    [
+     2.5162,
+     -4312.48
+    ],
+    [
+     5.0216,
+     -4265.26
+    ],
+    [
+     10.0216,
+     -4219.0
+    ],
+    [
+     20.0,
+     -4180.61
+    ]
+   ],
+   "lr_dispersao": 542.366,
+   "p_lr_dispersao": 2.8821498976453728e-120,
+   "bootstrap_b": 200,
+   "bootstrap_segundos": 583.7,
+   "semente": 20261021,
+   "referencia": {
+    "linha": "laranja",
+    "faixa": "entrepico",
+    "tipo_dia": "util",
+    "estacao": "outono",
+    "temp": "5a15",
+    "precip": "0",
+    "cond": "seco_ou_outro",
+    "neve_solo": "0",
+    "ano": "2019"
+   },
+   "coeficientes": [
+    {
+     "termo": "const",
+     "coef": -7.86875,
+     "multiplicador": 0.000383,
+     "ic95": [
+      0.000196,
+      0.00057
+     ],
+     "ep_modelo": 0.201961,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "linha=amarela",
+     "coef": 0.863057,
+     "multiplicador": 2.370397,
+     "ic95": [
+      1.594194,
+      3.491311
+     ],
+     "ep_modelo": 0.119812,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "linha=azul",
+     "coef": -0.295476,
+     "multiplicador": 0.744178,
+     "ic95": [
+      0.552631,
+      1.073091
+     ],
+     "ep_modelo": 0.12725,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "linha=verde",
+     "coef": -0.654664,
+     "multiplicador": 0.519617,
+     "ic95": [
+      0.388422,
+      0.712254
+     ],
+     "ep_modelo": 0.103426,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=abertura",
+     "coef": 1.335258,
+     "multiplicador": 3.800977,
+     "ic95": [
+      2.964666,
+      4.784812
+     ],
+     "ep_modelo": 0.132967,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=fim",
+     "coef": -0.405158,
+     "multiplicador": 0.666872,
+     "ic95": [
+      0.365831,
+      1.05855
+     ],
+     "ep_modelo": 0.209749,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=noite",
+     "coef": -0.109961,
+     "multiplicador": 0.895869,
+     "ic95": [
+      0.666905,
+      1.240815
+     ],
+     "ep_modelo": 0.1392,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=pico_manha",
+     "coef": 0.377381,
+     "multiplicador": 1.45846,
+     "ic95": [
+      1.087996,
+      1.878106
+     ],
+     "ep_modelo": 0.119475,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=pico_tarde",
+     "coef": -0.099017,
+     "multiplicador": 0.905727,
+     "ic95": [
+      0.69719,
+      1.158171
+     ],
+     "ep_modelo": 0.128535,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "tipo_dia=domingo",
+     "coef": -0.182344,
+     "multiplicador": 0.833315,
+     "ic95": [
+      0.585288,
+      1.135183
+     ],
+     "ep_modelo": 0.142474,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "tipo_dia=sabado",
+     "coef": -0.196969,
+     "multiplicador": 0.821216,
+     "ic95": [
+      0.481688,
+      1.178813
+     ],
+     "ep_modelo": 0.141646,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "estacao=inverno",
+     "coef": 0.469013,
+     "multiplicador": 1.598416,
+     "ic95": [
+      1.027179,
+      2.651046
+     ],
+     "ep_modelo": 0.168244,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "estacao=primavera",
+     "coef": -0.098737,
+     "multiplicador": 0.905981,
+     "ic95": [
+      0.600635,
+      1.56831
+     ],
+     "ep_modelo": 0.133235,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "estacao=verao",
+     "coef": 0.314259,
+     "multiplicador": 1.369244,
+     "ic95": [
+      0.909837,
+      2.659932
+     ],
+     "ep_modelo": 0.171981,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "temp=-15a-5",
+     "coef": -0.387761,
+     "multiplicador": 0.678575,
+     "ic95": [
+      0.407961,
+      1.149292
+     ],
+     "ep_modelo": 0.200464,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "temp=-5a5",
+     "coef": 0.000215,
+     "multiplicador": 1.000215,
+     "ic95": [
+      0.734187,
+      1.492303
+     ],
+     "ep_modelo": 0.150735,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "temp=15a25",
+     "coef": 0.079843,
+     "multiplicador": 1.083116,
+     "ic95": [
+      0.655341,
+      1.579347
+     ],
+     "ep_modelo": 0.149022,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "temp=25_ou_mais",
+     "coef": 0.258621,
+     "multiplicador": 1.295143,
+     "ic95": [
+      0.701879,
+      1.986942
+     ],
+     "ep_modelo": 0.214269,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "temp=abaixo_-15",
+     "coef": -0.448251,
+     "multiplicador": 0.638744,
+     "ic95": [
+      0.251118,
+      1.256693
+     ],
+     "ep_modelo": 0.302506,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "temp=sem_dado",
+     "coef": -24.214943,
+     "multiplicador": 0.0,
+     "ic95": [
+      0.0,
+      0.0
+     ],
+     "ep_modelo": 1612656.095602,
+     "reamostras_validas": 185
+    },
+    {
+     "termo": "precip=acima_1mm",
+     "coef": -0.256468,
+     "multiplicador": 0.77378,
+     "ic95": [
+      0.354053,
+      1.352128
+     ],
+     "ep_modelo": 0.292691,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "precip=ate_1mm",
+     "coef": 0.24108,
+     "multiplicador": 1.272623,
+     "ic95": [
+      0.908033,
+      1.847433
+     ],
+     "ep_modelo": 0.164773,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "precip=sem_dado",
+     "coef": -25.635408,
+     "multiplicador": 0.0,
+     "ic95": [
+      0.0,
+      0.0
+     ],
+     "ep_modelo": 1575308.901895,
+     "reamostras_validas": 199
+    },
+    {
+     "termo": "cond=chuva",
+     "coef": -0.377566,
+     "multiplicador": 0.685528,
+     "ic95": [
+      0.455614,
+      1.079736
+     ],
+     "ep_modelo": 0.206012,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "cond=chuva_congelante",
+     "coef": -27.491244,
+     "multiplicador": 0.0,
+     "ic95": [
+      0.0,
+      0.0
+     ],
+     "ep_modelo": 261235.176441,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "cond=neve",
+     "coef": 0.090458,
+     "multiplicador": 1.094675,
+     "ic95": [
+      0.663211,
+      1.774624
+     ],
+     "ep_modelo": 0.170902,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "cond=sem_dado",
+     "coef": -0.063129,
+     "multiplicador": 0.938822,
+     "ic95": [
+      0.794285,
+      1.175904
+     ],
+     "ep_modelo": 0.096026,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "neve_solo=1a10",
+     "coef": 0.232203,
+     "multiplicador": 1.261375,
+     "ic95": [
+      0.714559,
+      2.157517
+     ],
+     "ep_modelo": 0.180417,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "neve_solo=acima_10",
+     "coef": 0.443906,
+     "multiplicador": 1.558783,
+     "ic95": [
+      0.858353,
+      3.066021
+     ],
+     "ep_modelo": 0.191005,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "neve_solo=sem_dado",
+     "coef": 0.171552,
+     "multiplicador": 1.187146,
+     "ic95": [
+      0.709436,
+      1.752619
+     ],
+     "ep_modelo": 0.146208,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2020",
+     "coef": -0.483095,
+     "multiplicador": 0.616871,
+     "ic95": [
+      0.386365,
+      1.111229
+     ],
+     "ep_modelo": 0.148549,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2021",
+     "coef": -0.280444,
+     "multiplicador": 0.755448,
+     "ic95": [
+      0.461458,
+      1.212845
+     ],
+     "ep_modelo": 0.141925,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2022",
+     "coef": 0.176662,
+     "multiplicador": 1.193227,
+     "ic95": [
+      0.783565,
+      1.98059
+     ],
+     "ep_modelo": 0.12813,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2023",
+     "coef": -0.712841,
+     "multiplicador": 0.490249,
+     "ic95": [
+      0.323757,
+      0.740176
+     ],
+     "ep_modelo": 0.159392,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2024",
+     "coef": -0.629246,
+     "multiplicador": 0.532994,
+     "ic95": [
+      0.323553,
+      0.908005
+     ],
+     "ep_modelo": 0.157599,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2025",
+     "coef": -0.827613,
+     "multiplicador": 0.437091,
+     "ic95": [
+      0.240979,
+      0.76493
+     ],
+     "ep_modelo": 0.170698,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2026",
+     "coef": -1.473516,
+     "multiplicador": 0.229119,
+     "ic95": [
+      0.132572,
+      0.401446
+     ],
+     "ep_modelo": 0.281957,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "jogo",
+     "coef": -0.57926,
+     "multiplicador": 0.560313,
+     "ic95": [
+      0.176674,
+      1.185401
+     ],
+     "ep_modelo": 0.37892,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "gp_fds",
+     "coef": -0.313473,
+     "multiplicador": 0.730904,
+     "ic95": [
+      0.0,
+      1.931419
+     ],
+     "ep_modelo": 0.615787,
+     "reamostras_validas": 199
+    },
+    {
+     "termo": "feriado",
+     "coef": 0.015862,
+     "multiplicador": 1.015988,
+     "ic95": [
+      0.386695,
+      2.126996
+     ],
+     "ep_modelo": 0.346902,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "greve",
+     "coef": 0.284509,
+     "multiplicador": 1.329109,
+     "ic95": [
+      0.0,
+      2.88917
+     ],
+     "ep_modelo": 0.655536,
+     "reamostras_validas": 200
+    }
+   ],
+   "residuos_quantilicos": {
+    "media": -0.0002,
+    "desvio": 1.0,
+    "p05": -1.647,
+    "p95": 1.641
+   },
+   "rootograma": [
+    {
+     "contagem": 0,
+     "observado": 226059,
+     "esperado": 226011.9
+    },
+    {
+     "contagem": 1,
+     "observado": 539,
+     "esperado": 602.8
+    },
+    {
+     "contagem": 2,
+     "observado": 41,
+     "esperado": 37.0
+    },
+    {
+     "contagem": "3+",
+     "observado": 19,
+     "esperado": 6.4
+    }
+   ],
+   "ano_base": "2025",
+   "base_por_trem_hora": {
+    "verde": {
+     "valor": 8.688e-05,
+     "ic95": [
+      4.672e-05,
+      0.00014092
+     ]
+    },
+    "laranja": {
+     "valor": 0.00016719,
+     "ic95": [
+      8.49e-05,
+      0.00031353
+     ]
+    },
+    "amarela": {
+     "valor": 0.00039631,
+     "ic95": [
+      0.00017757,
+      0.00067285
+     ]
+    },
+    "azul": {
+     "valor": 0.00012442,
+     "ic95": [
+      6.279e-05,
+      0.00021352
+     ]
+    }
+   }
+  },
+  "mr_outros": {
+   "familia": "MR",
+   "modelo": "reduzido: linha; clima, dia, eventos e ano da família MR",
+   "n_falhas": 40,
+   "causa": "mr_outros",
+   "n_horas": 226658,
+   "modelo_escolhido": "Poisson",
+   "aic_poisson": 774.83,
+   "aic_nb": 776.83,
+   "alpha_nb": 0.010005,
+   "perfil_alpha": [
+    [
+     0.01,
+     -383.42
+    ],
+    [
+     0.02,
+     -383.42
+    ],
+    [
+     0.0398,
+     -383.42
+    ],
+    [
+     0.0795,
+     -383.42
+    ],
+    [
+     0.1586,
+     -383.42
+    ],
+    [
+     0.3166,
+     -383.42
+    ],
+    [
+     0.6318,
+     -383.42
+    ],
+    [
+     1.2608,
+     -383.42
+    ],
+    [
+     2.5162,
+     -383.42
+    ],
+    [
+     5.0216,
+     -383.42
+    ],
+    [
+     10.0216,
+     -383.43
+    ],
+    [
+     20.0,
+     -383.45
+    ]
+   ],
+   "lr_dispersao": 0.0,
+   "p_lr_dispersao": 0.49620400878315285,
+   "bootstrap_b": 200,
+   "bootstrap_segundos": 210.7,
+   "semente": 20261021,
+   "referencia": {
+    "linha": "laranja",
+    "faixa": "entrepico",
+    "tipo_dia": "util",
+    "estacao": "outono",
+    "temp": "5a15",
+    "precip": "0",
+    "cond": "seco_ou_outro",
+    "neve_solo": "0",
+    "ano": "2019"
+   },
+   "coeficientes": [
+    {
+     "termo": "const",
+     "coef": -10.10388,
+     "multiplicador": 4.1e-05,
+     "ic95": [
+      2.7e-05,
+      5.7e-05
+     ],
+     "ep_modelo": 0.188982,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "linha=amarela",
+     "coef": -11.139811,
+     "multiplicador": 1.5e-05,
+     "ic95": [
+      0.0,
+      2e-05
+     ],
+     "ep_modelo": 7.741225,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "linha=azul",
+     "coef": -0.01459,
+     "multiplicador": 0.985516,
+     "ic95": [
+      0.312079,
+      2.349165
+     ],
+     "ep_modelo": 0.400892,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "linha=verde",
+     "coef": -1.690803,
+     "multiplicador": 0.184371,
+     "ic95": [
+      0.034872,
+      0.464788
+     ],
+     "ep_modelo": 0.534522,
+     "reamostras_validas": 200
+    }
+   ],
+   "residuos_quantilicos": {
+    "media": 0.0002,
+    "desvio": 1.0003,
+    "p05": -1.647,
+    "p95": 1.643
+   },
+   "rootograma": [
+    {
+     "contagem": 0,
+     "observado": 226618,
+     "esperado": 226618.0
+    },
+    {
+     "contagem": 1,
+     "observado": 40,
+     "esperado": 40.0
+    },
+    {
+     "contagem": 2,
+     "observado": 0,
+     "esperado": 0.0
+    },
+    {
+     "contagem": "3+",
+     "observado": 0,
+     "esperado": 0.0
+    }
+   ],
+   "ano_base": "2025",
+   "base_por_trem_hora": {
+    "verde": {
+     "valor": 4.24e-06,
+     "ic95": [
+      9.7e-07,
+      8.68e-06
+     ]
+    },
+    "laranja": {
+     "valor": 2.303e-05,
+     "ic95": [
+      1.529e-05,
+      3.228e-05
+     ]
+    },
+    "amarela": {
+     "valor": 0.0,
+     "ic95": [
+      0.0,
+      0.0
+     ]
+    },
+    "azul": {
+     "valor": 2.27e-05,
+     "ic95": [
+      7.92e-06,
+      4.454e-05
+     ]
+    }
+   },
+   "herda_de": "MR"
+  },
+  "tcpe": {
+   "familia": "EF",
+   "modelo": "reduzido: linha e faixa; clima, dia, eventos e ano da família EF",
+   "n_falhas": 132,
+   "causa": "tcpe",
+   "n_horas": 226658,
+   "modelo_escolhido": "Poisson",
+   "aic_poisson": 2160.36,
+   "aic_nb": 2162.36,
+   "alpha_nb": 0.010005,
+   "perfil_alpha": [
+    [
+     0.01,
+     -1071.18
+    ],
+    [
+     0.02,
+     -1071.18
+    ],
+    [
+     0.0398,
+     -1071.18
+    ],
+    [
+     0.0795,
+     -1071.18
+    ],
+    [
+     0.1586,
+     -1071.18
+    ],
+    [
+     0.3166,
+     -1071.18
+    ],
+    [
+     0.6318,
+     -1071.18
+    ],
+    [
+     1.2608,
+     -1071.19
+    ],
+    [
+     2.5162,
+     -1071.19
+    ],
+    [
+     5.0216,
+     -1071.2
+    ],
+    [
+     10.0216,
+     -1071.24
+    ],
+    [
+     20.0,
+     -1071.34
+    ]
+   ],
+   "lr_dispersao": -0.0,
+   "p_lr_dispersao": 0.5,
+   "bootstrap_b": 200,
+   "bootstrap_segundos": 68.9,
+   "semente": 20261021,
+   "referencia": {
+    "linha": "laranja",
+    "faixa": "entrepico",
+    "tipo_dia": "util",
+    "estacao": "outono",
+    "temp": "5a15",
+    "precip": "0",
+    "cond": "seco_ou_outro",
+    "neve_solo": "0",
+    "ano": "2019"
+   },
+   "coeficientes": [
+    {
+     "termo": "const",
+     "coef": -9.608027,
+     "multiplicador": 6.7e-05,
+     "ic95": [
+      4e-05,
+      0.000102
+     ],
+     "ep_modelo": 0.198798,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "linha=amarela",
+     "coef": 0.740765,
+     "multiplicador": 2.09754,
+     "ic95": [
+      1.036871,
+      3.610199
+     ],
+     "ep_modelo": 0.310991,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "linha=azul",
+     "coef": 0.022902,
+     "multiplicador": 1.023167,
+     "ic95": [
+      0.483937,
+      1.773788
+     ],
+     "ep_modelo": 0.280355,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "linha=verde",
+     "coef": 0.270154,
+     "multiplicador": 1.310166,
+     "ic95": [
+      0.835909,
+      1.98596
+     ],
+     "ep_modelo": 0.19804,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=abertura",
+     "coef": 2.143608,
+     "multiplicador": 8.530158,
+     "ic95": [
+      5.389235,
+      13.673587
+     ],
+     "ep_modelo": 0.21468,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=fim",
+     "coef": -0.55256,
+     "multiplicador": 0.575474,
+     "ic95": [
+      0.108008,
+      1.34903
+     ],
+     "ep_modelo": 0.477341,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=noite",
+     "coef": -0.873886,
+     "multiplicador": 0.417326,
+     "ic95": [
+      0.148081,
+      0.770769
+     ],
+     "ep_modelo": 0.372682,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=pico_manha",
+     "coef": -0.260704,
+     "multiplicador": 0.770509,
+     "ic95": [
+      0.430208,
+      1.268915
+     ],
+     "ep_modelo": 0.283572,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=pico_tarde",
+     "coef": -1.251704,
+     "multiplicador": 0.286017,
+     "ic95": [
+      0.113404,
+      0.50218
+     ],
+     "ep_modelo": 0.390903,
+     "reamostras_validas": 200
+    }
+   ],
+   "residuos_quantilicos": {
+    "media": 0.0002,
+    "desvio": 1.0004,
+    "p05": -1.648,
+    "p95": 1.642
+   },
+   "rootograma": [
+    {
+     "contagem": 0,
+     "observado": 226526,
+     "esperado": 226526.2
+    },
+    {
+     "contagem": 1,
+     "observado": 132,
+     "esperado": 131.6
+    },
+    {
+     "contagem": 2,
+     "observado": 0,
+     "esperado": 0.2
+    },
+    {
+     "contagem": "3+",
+     "observado": 0,
+     "esperado": 0.0
+    }
+   ],
+   "ano_base": "2025",
+   "base_por_trem_hora": {
+    "verde": {
+     "valor": 7.814e-05,
+     "ic95": [
+      4.538e-05,
+      0.00012747
+     ]
+    },
+    "laranja": {
+     "valor": 5.964e-05,
+     "ic95": [
+      3.585e-05,
+      9.044e-05
+     ]
+    },
+    "amarela": {
+     "valor": 0.0001251,
+     "ic95": [
+      5.133e-05,
+      0.00022156
+     ]
+    },
+    "azul": {
+     "valor": 6.102e-05,
+     "ic95": [
+      2.788e-05,
+      9.694e-05
+     ]
+    }
+   },
+   "herda_de": "EF"
+  },
+  "voie_sintoma_fixo": {
+   "familia": "EF",
+   "modelo": "próprio",
+   "n_falhas": 924,
+   "causa": "voie_sintoma_fixo",
+   "n_horas": 226658,
+   "modelo_escolhido": "binomial negativa",
+   "aic_poisson": 11543.39,
+   "aic_nb": 11533.26,
+   "alpha_nb": 2.848972,
+   "perfil_alpha": [
+    [
+     0.01,
+     -5730.62
+    ],
+    [
+     0.02,
+     -5730.55
+    ],
+    [
+     0.0398,
+     -5730.41
+    ],
+    [
+     0.0795,
+     -5730.14
+    ],
+    [
+     0.1586,
+     -5729.64
+    ],
+    [
+     0.3166,
+     -5728.77
+    ],
+    [
+     0.6318,
+     -5727.44
+    ],
+    [
+     1.2608,
+     -5725.82
+    ],
+    [
+     2.5162,
+     -5724.67
+    ],
+    [
+     5.0216,
+     -5725.79
+    ],
+    [
+     10.0216,
+     -5732.64
+    ],
+    [
+     20.0,
+     -5751.52
+    ]
+   ],
+   "lr_dispersao": 12.133,
+   "p_lr_dispersao": 0.0002477234309970811,
+   "bootstrap_b": 200,
+   "bootstrap_segundos": 680.1,
+   "semente": 20261021,
+   "referencia": {
+    "linha": "laranja",
+    "faixa": "entrepico",
+    "tipo_dia": "util",
+    "estacao": "outono",
+    "temp": "5a15",
+    "precip": "0",
+    "cond": "seco_ou_outro",
+    "neve_solo": "0",
+    "ano": "2019"
+   },
+   "coeficientes": [
+    {
+     "termo": "const",
+     "coef": -7.115178,
+     "multiplicador": 0.000813,
+     "ic95": [
+      0.000571,
+      0.001207
+     ],
+     "ep_modelo": 0.155494,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "linha=amarela",
+     "coef": 0.619814,
+     "multiplicador": 1.858582,
+     "ic95": [
+      0.666228,
+      3.614302
+     ],
+     "ep_modelo": 0.117838,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "linha=azul",
+     "coef": -0.158353,
+     "multiplicador": 0.853549,
+     "ic95": [
+      0.627177,
+      1.08447
+     ],
+     "ep_modelo": 0.108408,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "linha=verde",
+     "coef": -0.034224,
+     "multiplicador": 0.966355,
+     "ic95": [
+      0.835688,
+      1.149572
+     ],
+     "ep_modelo": 0.075904,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=abertura",
+     "coef": 1.232752,
+     "multiplicador": 3.430657,
+     "ic95": [
+      2.528569,
+      4.432721
+     ],
+     "ep_modelo": 0.102375,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=fim",
+     "coef": -0.353929,
+     "multiplicador": 0.701925,
+     "ic95": [
+      0.520864,
+      0.890472
+     ],
+     "ep_modelo": 0.154653,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=noite",
+     "coef": -0.261134,
+     "multiplicador": 0.770177,
+     "ic95": [
+      0.609855,
+      0.939717
+     ],
+     "ep_modelo": 0.107216,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=pico_manha",
+     "coef": -0.080276,
+     "multiplicador": 0.922861,
+     "ic95": [
+      0.737239,
+      1.1027
+     ],
+     "ep_modelo": 0.098931,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=pico_tarde",
+     "coef": -0.930387,
+     "multiplicador": 0.394401,
+     "ic95": [
+      0.304998,
+      0.477161
+     ],
+     "ep_modelo": 0.120914,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "tipo_dia=domingo",
+     "coef": -0.068895,
+     "multiplicador": 0.933424,
+     "ic95": [
+      0.721199,
+      1.179645
+     ],
+     "ep_modelo": 0.113205,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "tipo_dia=sabado",
+     "coef": -0.084581,
+     "multiplicador": 0.918897,
+     "ic95": [
+      0.716087,
+      1.140869
+     ],
+     "ep_modelo": 0.111756,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "estacao=inverno",
+     "coef": -0.626438,
+     "multiplicador": 0.534492,
+     "ic95": [
+      0.341642,
+      0.759054
+     ],
+     "ep_modelo": 0.146966,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "estacao=primavera",
+     "coef": -0.5245,
+     "multiplicador": 0.591851,
+     "ic95": [
+      0.45649,
+      0.802164
+     ],
+     "ep_modelo": 0.100357,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "estacao=verao",
+     "coef": -0.728631,
+     "multiplicador": 0.482569,
+     "ic95": [
+      0.324797,
+      0.849197
+     ],
+     "ep_modelo": 0.113191,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "temp=-15a-5",
+     "coef": -0.118482,
+     "multiplicador": 0.888268,
+     "ic95": [
+      0.59939,
+      1.29775
+     ],
+     "ep_modelo": 0.174532,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "temp=-5a5",
+     "coef": -0.010059,
+     "multiplicador": 0.989992,
+     "ic95": [
+      0.764872,
+      1.334372
+     ],
+     "ep_modelo": 0.11967,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "temp=15a25",
+     "coef": 0.415674,
+     "multiplicador": 1.515392,
+     "ic95": [
+      1.139748,
+      1.945946
+     ],
+     "ep_modelo": 0.107569,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "temp=25_ou_mais",
+     "coef": 0.80345,
+     "multiplicador": 2.233233,
+     "ic95": [
+      1.173061,
+      3.521256
+     ],
+     "ep_modelo": 0.161358,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "temp=abaixo_-15",
+     "coef": -0.07442,
+     "multiplicador": 0.928282,
+     "ic95": [
+      0.429589,
+      1.589542
+     ],
+     "ep_modelo": 0.291889,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "temp=sem_dado",
+     "coef": -19.350854,
+     "multiplicador": 0.0,
+     "ic95": [
+      0.0,
+      0.000637
+     ],
+     "ep_modelo": 165376.312467,
+     "reamostras_validas": 185
+    },
+    {
+     "termo": "precip=acima_1mm",
+     "coef": 0.045134,
+     "multiplicador": 1.046168,
+     "ic95": [
+      0.708945,
+      1.440578
+     ],
+     "ep_modelo": 0.207209,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "precip=ate_1mm",
+     "coef": -0.000606,
+     "multiplicador": 0.999394,
+     "ic95": [
+      0.721796,
+      1.277679
+     ],
+     "ep_modelo": 0.150305,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "precip=sem_dado",
+     "coef": -21.34893,
+     "multiplicador": 0.0,
+     "ic95": [
+      0.0,
+      8.1e-05
+     ],
+     "ep_modelo": 154204.407627,
+     "reamostras_validas": 199
+    },
+    {
+     "termo": "cond=chuva",
+     "coef": -0.198707,
+     "multiplicador": 0.81979,
+     "ic95": [
+      0.57755,
+      1.109924
+     ],
+     "ep_modelo": 0.150832,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "cond=chuva_congelante",
+     "coef": -0.192124,
+     "multiplicador": 0.825205,
+     "ic95": [
+      0.0,
+      1.934075
+     ],
+     "ep_modelo": 0.518715,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "cond=neve",
+     "coef": -0.317557,
+     "multiplicador": 0.727925,
+     "ic95": [
+      0.529477,
+      1.018214
+     ],
+     "ep_modelo": 0.163297,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "cond=sem_dado",
+     "coef": -0.430481,
+     "multiplicador": 0.650196,
+     "ic95": [
+      0.539082,
+      0.765063
+     ],
+     "ep_modelo": 0.074794,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "neve_solo=1a10",
+     "coef": 0.035935,
+     "multiplicador": 1.036588,
+     "ic95": [
+      0.697372,
+      1.535975
+     ],
+     "ep_modelo": 0.156405,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "neve_solo=acima_10",
+     "coef": 0.365848,
+     "multiplicador": 1.441736,
+     "ic95": [
+      0.925667,
+      2.199182
+     ],
+     "ep_modelo": 0.171092,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "neve_solo=sem_dado",
+     "coef": -0.174314,
+     "multiplicador": 0.840033,
+     "ic95": [
+      0.635335,
+      1.157822
+     ],
+     "ep_modelo": 0.102515,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2020",
+     "coef": -0.348661,
+     "multiplicador": 0.705632,
+     "ic95": [
+      0.471871,
+      0.972174
+     ],
+     "ep_modelo": 0.143285,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2021",
+     "coef": 0.24305,
+     "multiplicador": 1.275133,
+     "ic95": [
+      0.973592,
+      1.687588
+     ],
+     "ep_modelo": 0.123242,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2022",
+     "coef": 0.134288,
+     "multiplicador": 1.143722,
+     "ic95": [
+      0.825238,
+      1.52219
+     ],
+     "ep_modelo": 0.125996,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2023",
+     "coef": 0.058476,
+     "multiplicador": 1.06022,
+     "ic95": [
+      0.757021,
+      1.426839
+     ],
+     "ep_modelo": 0.128939,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2024",
+     "coef": 0.46827,
+     "multiplicador": 1.597228,
+     "ic95": [
+      1.038018,
+      2.308532
+     ],
+     "ep_modelo": 0.118964,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2025",
+     "coef": -0.447863,
+     "multiplicador": 0.638992,
+     "ic95": [
+      0.414159,
+      0.931164
+     ],
+     "ep_modelo": 0.15188,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2026",
+     "coef": -0.12352,
+     "multiplicador": 0.883804,
+     "ic95": [
+      0.444024,
+      1.437955
+     ],
+     "ep_modelo": 0.183083,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "jogo",
+     "coef": 0.025773,
+     "multiplicador": 1.026108,
+     "ic95": [
+      0.536953,
+      1.608723
+     ],
+     "ep_modelo": 0.257716,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "gp_fds",
+     "coef": -0.553005,
+     "multiplicador": 0.575219,
+     "ic95": [
+      0.0,
+      1.329398
+     ],
+     "ep_modelo": 0.58376,
+     "reamostras_validas": 199
+    },
+    {
+     "termo": "feriado",
+     "coef": 0.209757,
+     "multiplicador": 1.233378,
+     "ic95": [
+      0.724187,
+      2.032072
+     ],
+     "ep_modelo": 0.237023,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "greve",
+     "coef": -1.212641,
+     "multiplicador": 0.297411,
+     "ic95": [
+      0.0,
+      0.950337
+     ],
+     "ep_modelo": 1.010185,
+     "reamostras_validas": 200
+    }
+   ],
+   "residuos_quantilicos": {
+    "media": 0.0003,
+    "desvio": 1.0005,
+    "p05": -1.647,
+    "p95": 1.643
+   },
+   "rootograma": [
+    {
+     "contagem": 0,
+     "observado": 225744,
+     "esperado": 225745.6
+    },
+    {
+     "contagem": 1,
+     "observado": 904,
+     "esperado": 896.7
+    },
+    {
+     "contagem": 2,
+     "observado": 10,
+     "esperado": 15.2
+    },
+    {
+     "contagem": "3+",
+     "observado": 0,
+     "esperado": 0.6
+    }
+   ],
+   "ano_base": "2025",
+   "base_por_trem_hora": {
+    "verde": {
+     "valor": 0.00050182,
+     "ic95": [
+      0.00032821,
+      0.00077328
+     ]
+    },
+    "laranja": {
+     "valor": 0.00051929,
+     "ic95": [
+      0.00031854,
+      0.0007744
+     ]
+    },
+    "amarela": {
+     "valor": 0.00096515,
+     "ic95": [
+      0.00028475,
+      0.00195225
+     ]
+    },
+    "azul": {
+     "valor": 0.00044324,
+     "ic95": [
+      0.00025687,
+      0.00071644
+     ]
+    }
+   }
+  },
+  "voie_sintoma_trem": {
+   "familia": "EF",
+   "modelo": "próprio",
+   "n_falhas": 785,
+   "causa": "voie_sintoma_trem",
+   "n_horas": 226658,
+   "modelo_escolhido": "binomial negativa",
+   "aic_poisson": 8233.06,
+   "aic_nb": 7691.95,
+   "alpha_nb": 15.701244,
+   "perfil_alpha": [
+    [
+     0.01,
+     -4073.68
+    ],
+    [
+     0.02,
+     -4071.88
+    ],
+    [
+     0.0398,
+     -4068.37
+    ],
+    [
+     0.0795,
+     -4061.69
+    ],
+    [
+     0.1586,
+     -4049.48
+    ],
+    [
+     0.3166,
+     -4028.55
+    ],
+    [
+     0.6318,
+     -3995.88
+    ],
+    [
+     1.2608,
+     -3950.95
+    ],
+    [
+     2.5162,
+     -3898.1
+    ],
+    [
+     5.0216,
+     -3847.16
+    ],
+    [
+     10.0216,
+     -3811.7
+    ],
+    [
+     20.0,
+     -3806.49
+    ]
+   ],
+   "lr_dispersao": 543.11,
+   "p_lr_dispersao": 1.9854963825999522e-120,
+   "bootstrap_b": 200,
+   "bootstrap_segundos": 990.4,
+   "semente": 20261021,
+   "referencia": {
+    "linha": "laranja",
+    "faixa": "entrepico",
+    "tipo_dia": "util",
+    "estacao": "outono",
+    "temp": "5a15",
+    "precip": "0",
+    "cond": "seco_ou_outro",
+    "neve_solo": "0",
+    "ano": "2019"
+   },
+   "coeficientes": [
+    {
+     "termo": "const",
+     "coef": -10.184909,
+     "multiplicador": 3.8e-05,
+     "ic95": [
+      1.1e-05,
+      9e-05
+     ],
+     "ep_modelo": 0.442109,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "linha=amarela",
+     "coef": 1.798534,
+     "multiplicador": 6.040786,
+     "ic95": [
+      3.664358,
+      9.550564
+     ],
+     "ep_modelo": 0.097793,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "linha=azul",
+     "coef": -0.742542,
+     "multiplicador": 0.475902,
+     "ic95": [
+      0.257043,
+      0.737961
+     ],
+     "ep_modelo": 0.159129,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "linha=verde",
+     "coef": -1.228697,
+     "multiplicador": 0.292674,
+     "ic95": [
+      0.168793,
+      0.484916
+     ],
+     "ep_modelo": 0.134141,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=abertura",
+     "coef": 1.317801,
+     "multiplicador": 3.735198,
+     "ic95": [
+      2.557195,
+      5.062128
+     ],
+     "ep_modelo": 0.147855,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=fim",
+     "coef": -0.463503,
+     "multiplicador": 0.629076,
+     "ic95": [
+      0.383989,
+      0.934971
+     ],
+     "ep_modelo": 0.214378,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=noite",
+     "coef": 0.077002,
+     "multiplicador": 1.080045,
+     "ic95": [
+      0.683606,
+      1.478651
+     ],
+     "ep_modelo": 0.136107,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=pico_manha",
+     "coef": 0.48412,
+     "multiplicador": 1.622747,
+     "ic95": [
+      1.230168,
+      2.092707
+     ],
+     "ep_modelo": 0.129066,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "faixa=pico_tarde",
+     "coef": -0.120205,
+     "multiplicador": 0.886738,
+     "ic95": [
+      0.666685,
+      1.200243
+     ],
+     "ep_modelo": 0.134314,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "tipo_dia=domingo",
+     "coef": -0.257386,
+     "multiplicador": 0.77307,
+     "ic95": [
+      0.443099,
+      1.237075
+     ],
+     "ep_modelo": 0.14751,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "tipo_dia=sabado",
+     "coef": -0.023573,
+     "multiplicador": 0.976703,
+     "ic95": [
+      0.641241,
+      1.359353
+     ],
+     "ep_modelo": 0.134156,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "estacao=inverno",
+     "coef": -1.476171,
+     "multiplicador": 0.228511,
+     "ic95": [
+      0.07401,
+      0.607467
+     ],
+     "ep_modelo": 0.273007,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "estacao=primavera",
+     "coef": -1.300408,
+     "multiplicador": 0.272421,
+     "ic95": [
+      0.106427,
+      0.485856
+     ],
+     "ep_modelo": 0.150461,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "estacao=verao",
+     "coef": -0.913179,
+     "multiplicador": 0.401247,
+     "ic95": [
+      0.216463,
+      1.030663
+     ],
+     "ep_modelo": 0.122729,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "temp=-15a-5",
+     "coef": 0.110564,
+     "multiplicador": 1.116908,
+     "ic95": [
+      0.518353,
+      2.261879
+     ],
+     "ep_modelo": 0.292195,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "temp=-5a5",
+     "coef": -0.832686,
+     "multiplicador": 0.43488,
+     "ic95": [
+      0.230713,
+      0.728142
+     ],
+     "ep_modelo": 0.197182,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "temp=15a25",
+     "coef": 0.742375,
+     "multiplicador": 2.100919,
+     "ic95": [
+      1.188781,
+      3.350167
+     ],
+     "ep_modelo": 0.133117,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "temp=25_ou_mais",
+     "coef": 0.992172,
+     "multiplicador": 2.697087,
+     "ic95": [
+      1.174303,
+      5.801001
+     ],
+     "ep_modelo": 0.191107,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "temp=abaixo_-15",
+     "coef": 0.10344,
+     "multiplicador": 1.108979,
+     "ic95": [
+      0.0,
+      3.347218
+     ],
+     "ep_modelo": 0.595183,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "temp=sem_dado",
+     "coef": -24.523837,
+     "multiplicador": 0.0,
+     "ic95": [
+      0.0,
+      0.0
+     ],
+     "ep_modelo": 6661030.75436,
+     "reamostras_validas": 185
+    },
+    {
+     "termo": "precip=acima_1mm",
+     "coef": 0.498736,
+     "multiplicador": 1.646639,
+     "ic95": [
+      0.767812,
+      3.226541
+     ],
+     "ep_modelo": 0.248994,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "precip=ate_1mm",
+     "coef": 0.154918,
+     "multiplicador": 1.167563,
+     "ic95": [
+      0.603531,
+      1.697146
+     ],
+     "ep_modelo": 0.203909,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "precip=sem_dado",
+     "coef": -27.430414,
+     "multiplicador": 0.0,
+     "ic95": [
+      0.0,
+      0.0
+     ],
+     "ep_modelo": 5652666.606487,
+     "reamostras_validas": 199
+    },
+    {
+     "termo": "cond=chuva",
+     "coef": -0.039293,
+     "multiplicador": 0.961469,
+     "ic95": [
+      0.555879,
+      1.380399
+     ],
+     "ep_modelo": 0.194281,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "cond=chuva_congelante",
+     "coef": -28.155408,
+     "multiplicador": 0.0,
+     "ic95": [
+      0.0,
+      0.0
+     ],
+     "ep_modelo": 844298.541804,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "cond=neve",
+     "coef": -0.174658,
+     "multiplicador": 0.839744,
+     "ic95": [
+      0.250385,
+      1.54962
+     ],
+     "ep_modelo": 0.290839,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "cond=sem_dado",
+     "coef": -0.257924,
+     "multiplicador": 0.772654,
+     "ic95": [
+      0.64258,
+      0.91159
+     ],
+     "ep_modelo": 0.095273,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "neve_solo=1a10",
+     "coef": -0.167667,
+     "multiplicador": 0.845635,
+     "ic95": [
+      0.283989,
+      2.658936
+     ],
+     "ep_modelo": 0.280049,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "neve_solo=acima_10",
+     "coef": 0.369521,
+     "multiplicador": 1.447041,
+     "ic95": [
+      0.407542,
+      4.384593
+     ],
+     "ep_modelo": 0.313644,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "neve_solo=sem_dado",
+     "coef": -0.365894,
+     "multiplicador": 0.693577,
+     "ic95": [
+      0.367257,
+      1.539638
+     ],
+     "ep_modelo": 0.134067,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2020",
+     "coef": 0.778771,
+     "multiplicador": 2.178792,
+     "ic95": [
+      0.799083,
+      7.683957
+     ],
+     "ep_modelo": 0.502527,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2021",
+     "coef": 0.628415,
+     "multiplicador": 1.874638,
+     "ic95": [
+      0.245511,
+      6.634088
+     ],
+     "ep_modelo": 0.510054,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2022",
+     "coef": 1.76091,
+     "multiplicador": 5.817729,
+     "ic95": [
+      2.066129,
+      14.623721
+     ],
+     "ep_modelo": 0.446375,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2023",
+     "coef": 3.093709,
+     "multiplicador": 22.058738,
+     "ic95": [
+      9.422616,
+      69.454522
+     ],
+     "ep_modelo": 0.420726,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2024",
+     "coef": 4.447614,
+     "multiplicador": 85.422872,
+     "ic95": [
+      40.472753,
+      213.497138
+     ],
+     "ep_modelo": 0.414427,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2025",
+     "coef": 2.331537,
+     "multiplicador": 10.293753,
+     "ic95": [
+      3.670952,
+      30.273484
+     ],
+     "ep_modelo": 0.433894,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "ano=2026",
+     "coef": 2.428927,
+     "multiplicador": 11.346695,
+     "ic95": [
+      0.0,
+      36.611586
+     ],
+     "ep_modelo": 0.477423,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "jogo",
+     "coef": -0.046475,
+     "multiplicador": 0.954588,
+     "ic95": [
+      0.452901,
+      1.787886
+     ],
+     "ep_modelo": 0.374086,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "gp_fds",
+     "coef": -1.463344,
+     "multiplicador": 0.231461,
+     "ic95": [
+      0.0,
+      1.196396
+     ],
+     "ep_modelo": 0.738844,
+     "reamostras_validas": 199
+    },
+    {
+     "termo": "feriado",
+     "coef": 0.209124,
+     "multiplicador": 1.232598,
+     "ic95": [
+      0.091413,
+      3.135974
+     ],
+     "ep_modelo": 0.298985,
+     "reamostras_validas": 200
+    },
+    {
+     "termo": "greve",
+     "coef": -1.306717,
+     "multiplicador": 0.270707,
+     "ic95": [
+      0.0,
+      1.063324
+     ],
+     "ep_modelo": 1.060505,
+     "reamostras_validas": 200
+    }
+   ],
+   "residuos_quantilicos": {
+    "media": 0.0001,
+    "desvio": 1.0001,
+    "p05": -1.648,
+    "p95": 1.642
+   },
+   "rootograma": [
+    {
+     "contagem": 0,
+     "observado": 226026,
+     "esperado": 226025.2
+    },
+    {
+     "contagem": 1,
+     "observado": 517,
+     "esperado": 537.3
+    },
+    {
+     "contagem": 2,
+     "observado": 86,
+     "esperado": 64.7
+    },
+    {
+     "contagem": "3+",
+     "observado": 29,
+     "esperado": 30.8
+    }
+   ],
+   "ano_base": "2025",
+   "base_por_trem_hora": {
+    "verde": {
+     "valor": 0.00011369,
+     "ic95": [
+      4.1e-05,
+      0.0002811
+     ]
+    },
+    "laranja": {
+     "valor": 0.00038844,
+     "ic95": [
+      0.00013466,
+      0.00094852
+     ]
+    },
+    "amarela": {
+     "valor": 0.00234648,
+     "ic95": [
+      0.00096041,
+      0.00570254
+     ]
+    },
+    "azul": {
+     "valor": 0.00018486,
+     "ic95": [
+      6.388e-05,
+      0.00053473
+     ]
+    }
+   }
+  }
+ },
+ "limites": {
+  "proprio": 400,
+  "linha_e_faixa": 100
+ },
+ "mr_empilhado": {
+  "causa": "mr_frota",
+  "n_horas": 283909,
+  "n_falhas": 3926,
+  "modelo_escolhido": "binomial negativa",
+  "aic_poisson": 38689.4,
+  "aic_nb": 38545.97,
+  "alpha_nb": 2.033805,
+  "perfil_alpha": [
+   [
+    0.01,
+    -19294.52
+   ],
+   [
+    0.02,
+    -19293.37
+   ],
+   [
+    0.0398,
+    -19291.12
+   ],
+   [
+    0.0795,
+    -19286.87
+   ],
+   [
+    0.1586,
+    -19279.15
+   ],
+   [
+    0.3166,
+    -19266.32
+   ],
+   [
+    0.6318,
+    -19248.04
+   ],
+   [
+    1.2608,
+    -19229.07
+   ],
+   [
+    2.5162,
+    -19224.69
+   ],
+   [
+    5.0216,
+    -19265.58
+   ],
+   [
+    10.0216,
+    -19400.6
+   ],
+   [
+    20.0,
+    -19696.59
+   ]
+  ],
+  "lr_dispersao": 145.426,
+  "p_lr_dispersao": 8.665787270681198e-34,
+  "bootstrap_b": 200,
+  "bootstrap_segundos": 628.3,
+  "semente": 20261021,
+  "referencia": {
+   "linha": "laranja",
+   "faixa": "entrepico",
+   "tipo_dia": "util",
+   "estacao": "outono",
+   "temp": "5a15",
+   "precip": "0",
+   "cond": "seco_ou_outro",
+   "neve_solo": "0",
+   "ano": "2019"
+  },
+  "coeficientes": [
+   {
+    "termo": "const",
+    "coef": -6.775388,
+    "multiplicador": 0.001142,
+    "ic95": [
+     0.000871,
+     0.001425
+    ],
+    "ep_modelo": 0.10007,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "linha=amarela",
+    "coef": -0.464773,
+    "multiplicador": 0.628278,
+    "ic95": [
+     0.516922,
+     0.767662
+    ],
+    "ep_modelo": 0.087258,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "linha=azul",
+    "coef": -0.824501,
+    "multiplicador": 0.438454,
+    "ic95": [
+     0.366542,
+     0.536044
+    ],
+    "ep_modelo": 0.081972,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "linha=verde",
+    "coef": -0.411776,
+    "multiplicador": 0.662473,
+    "ic95": [
+     0.562163,
+     0.782236
+    ],
+    "ep_modelo": 0.06769,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "faixa=abertura",
+    "coef": 0.972664,
+    "multiplicador": 2.644983,
+    "ic95": [
+     2.371047,
+     2.907139
+    ],
+    "ep_modelo": 0.054935,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "faixa=fim",
+    "coef": -0.660212,
+    "multiplicador": 0.516742,
+    "ic95": [
+     0.43943,
+     0.610637
+    ],
+    "ep_modelo": 0.090732,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "faixa=noite",
+    "coef": -0.49722,
+    "multiplicador": 0.608219,
+    "ic95": [
+     0.542065,
+     0.677756
+    ],
+    "ep_modelo": 0.061101,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "faixa=pico_manha",
+    "coef": 0.313172,
+    "multiplicador": 1.367756,
+    "ic95": [
+     1.244658,
+     1.498272
+    ],
+    "ep_modelo": 0.04619,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "faixa=pico_tarde",
+    "coef": -0.154205,
+    "multiplicador": 0.857096,
+    "ic95": [
+     0.777629,
+     0.934606
+    ],
+    "ep_modelo": 0.050841,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "tipo_dia=domingo",
+    "coef": -0.122093,
+    "multiplicador": 0.885066,
+    "ic95": [
+     0.783051,
+     1.020298
+    ],
+    "ep_modelo": 0.061938,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "tipo_dia=sabado",
+    "coef": -0.162515,
+    "multiplicador": 0.850003,
+    "ic95": [
+     0.742119,
+     0.966
+    ],
+    "ep_modelo": 0.061237,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "estacao=inverno",
+    "coef": 0.064894,
+    "multiplicador": 1.067046,
+    "ic95": [
+     0.87709,
+     1.292065
+    ],
+    "ep_modelo": 0.067725,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "estacao=primavera",
+    "coef": 0.096842,
+    "multiplicador": 1.101686,
+    "ic95": [
+     0.947252,
+     1.260499
+    ],
+    "ep_modelo": 0.052335,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "estacao=verao",
+    "coef": 0.136532,
+    "multiplicador": 1.146292,
+    "ic95": [
+     0.944175,
+     1.421256
+    ],
+    "ep_modelo": 0.069366,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "temp=-15a-5",
+    "coef": 0.095163,
+    "multiplicador": 1.099838,
+    "ic95": [
+     0.887282,
+     1.411021
+    ],
+    "ep_modelo": 0.078029,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "temp=-5a5",
+    "coef": 0.072442,
+    "multiplicador": 1.07513,
+    "ic95": [
+     0.917238,
+     1.28801
+    ],
+    "ep_modelo": 0.059562,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "temp=15a25",
+    "coef": 0.088672,
+    "multiplicador": 1.092723,
+    "ic95": [
+     0.934311,
+     1.272282
+    ],
+    "ep_modelo": 0.059889,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "temp=25_ou_mais",
+    "coef": 0.076652,
+    "multiplicador": 1.079666,
+    "ic95": [
+     0.835285,
+     1.363034
+    ],
+    "ep_modelo": 0.091114,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "temp=abaixo_-15",
+    "coef": -0.042709,
+    "multiplicador": 0.95819,
+    "ic95": [
+     0.7411,
+     1.278036
+    ],
+    "ep_modelo": 0.123332,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "temp=sem_dado",
+    "coef": -21.125717,
+    "multiplicador": 0.0,
+    "ic95": [
+     0.0,
+     0.0
+    ],
+    "ep_modelo": 135447.996116,
+    "reamostras_validas": 185
+   },
+   {
+    "termo": "precip=acima_1mm",
+    "coef": -0.048968,
+    "multiplicador": 0.952211,
+    "ic95": [
+     0.733989,
+     1.200042
+    ],
+    "ep_modelo": 0.10481,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "precip=ate_1mm",
+    "coef": -0.048069,
+    "multiplicador": 0.953068,
+    "ic95": [
+     0.833029,
+     1.123175
+    ],
+    "ep_modelo": 0.070801,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "precip=sem_dado",
+    "coef": -23.000043,
+    "multiplicador": 0.0,
+    "ic95": [
+     0.0,
+     0.0
+    ],
+    "ep_modelo": 144400.850465,
+    "reamostras_validas": 199
+   },
+   {
+    "termo": "cond=chuva",
+    "coef": -0.10156,
+    "multiplicador": 0.903427,
+    "ic95": [
+     0.778575,
+     1.037013
+    ],
+    "ep_modelo": 0.078169,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "cond=chuva_congelante",
+    "coef": -0.115031,
+    "multiplicador": 0.891338,
+    "ic95": [
+     0.54186,
+     1.395513
+    ],
+    "ep_modelo": 0.216348,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "cond=neve",
+    "coef": -0.129412,
+    "multiplicador": 0.878612,
+    "ic95": [
+     0.753926,
+     1.024828
+    ],
+    "ep_modelo": 0.070219,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "cond=sem_dado",
+    "coef": -0.095529,
+    "multiplicador": 0.908892,
+    "ic95": [
+     0.840973,
+     0.980105
+    ],
+    "ep_modelo": 0.038737,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "neve_solo=1a10",
+    "coef": 0.29902,
+    "multiplicador": 1.348536,
+    "ic95": [
+     1.106747,
+     1.61436
+    ],
+    "ep_modelo": 0.068131,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "neve_solo=acima_10",
+    "coef": 0.26631,
+    "multiplicador": 1.30514,
+    "ic95": [
+     1.019636,
+     1.619251
+    ],
+    "ep_modelo": 0.075602,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "neve_solo=sem_dado",
+    "coef": -0.05958,
+    "multiplicador": 0.94216,
+    "ic95": [
+     0.805572,
+     1.085011
+    ],
+    "ep_modelo": 0.057344,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "ano=2020",
+    "coef": -0.082933,
+    "multiplicador": 0.920413,
+    "ic95": [
+     0.695926,
+     1.208367
+    ],
+    "ep_modelo": 0.103301,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "ano=2021",
+    "coef": -0.264269,
+    "multiplicador": 0.767767,
+    "ic95": [
+     0.583614,
+     1.013528
+    ],
+    "ep_modelo": 0.1055,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "ano=2022",
+    "coef": -0.7283,
+    "multiplicador": 0.482729,
+    "ic95": [
+     0.373793,
+     0.648643
+    ],
+    "ep_modelo": 0.120251,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "ano=2023",
+    "coef": -0.427623,
+    "multiplicador": 0.652057,
+    "ic95": [
+     0.508968,
+     0.886893
+    ],
+    "ep_modelo": 0.112352,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "ano=2024",
+    "coef": -0.757156,
+    "multiplicador": 0.468998,
+    "ic95": [
+     0.35901,
+     0.609699
+    ],
+    "ep_modelo": 0.121436,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "ano=2025",
+    "coef": -0.375346,
+    "multiplicador": 0.687052,
+    "ic95": [
+     0.491711,
+     0.903138
+    ],
+    "ep_modelo": 0.109012,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "ano=2026",
+    "coef": -0.178219,
+    "multiplicador": 0.836759,
+    "ic95": [
+     0.548152,
+     1.235978
+    ],
+    "ep_modelo": 0.124304,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "jogo",
+    "coef": 0.2213,
+    "multiplicador": 1.247698,
+    "ic95": [
+     0.982358,
+     1.585699
+    ],
+    "ep_modelo": 0.119454,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "gp_fds",
+    "coef": 0.103368,
+    "multiplicador": 1.108899,
+    "ic95": [
+     0.54896,
+     1.563998
+    ],
+    "ep_modelo": 0.21294,
+    "reamostras_validas": 199
+   },
+   {
+    "termo": "feriado",
+    "coef": -0.171231,
+    "multiplicador": 0.842627,
+    "ic95": [
+     0.561962,
+     1.185269
+    ],
+    "ep_modelo": 0.163595,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "greve",
+    "coef": 0.077586,
+    "multiplicador": 1.080675,
+    "ic95": [
+     0.521889,
+     2.011036
+    ],
+    "ep_modelo": 0.24143,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "frota=MR-73",
+    "coef": 1.959247,
+    "multiplicador": 7.093984,
+    "ic95": [
+     5.696069,
+     9.025922
+    ],
+    "ep_modelo": 0.10146,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "frota=MR-73:ano=2020",
+    "coef": -0.157109,
+    "multiplicador": 0.85461,
+    "ic95": [
+     0.634773,
+     1.096715
+    ],
+    "ep_modelo": 0.122321,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "frota=MR-73:ano=2021",
+    "coef": -0.087284,
+    "multiplicador": 0.916417,
+    "ic95": [
+     0.667936,
+     1.320713
+    ],
+    "ep_modelo": 0.130782,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "frota=MR-73:ano=2022",
+    "coef": 0.783855,
+    "multiplicador": 2.189899,
+    "ic95": [
+     1.644561,
+     2.837508
+    ],
+    "ep_modelo": 0.138372,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "frota=MR-73:ano=2023",
+    "coef": 0.273909,
+    "multiplicador": 1.315096,
+    "ic95": [
+     0.979543,
+     1.779605
+    ],
+    "ep_modelo": 0.132651,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "frota=MR-73:ano=2024",
+    "coef": 0.70878,
+    "multiplicador": 2.031511,
+    "ic95": [
+     1.505226,
+     2.871457
+    ],
+    "ep_modelo": 0.142064,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "frota=MR-73:ano=2025",
+    "coef": 0.225832,
+    "multiplicador": 1.253365,
+    "ic95": [
+     0.913682,
+     1.711131
+    ],
+    "ep_modelo": 0.132518,
+    "reamostras_validas": 200
+   },
+   {
+    "termo": "frota=MR-73:ano=2026",
+    "coef": 0.207838,
+    "multiplicador": 1.231013,
+    "ic95": [
+     0.812062,
+     1.777475
+    ],
+    "ep_modelo": 0.15349,
+    "reamostras_validas": 200
+   }
+  ],
+  "residuos_quantilicos": {
+   "media": 0.0005,
+   "desvio": 1.0006,
+   "p05": -1.649,
+   "p95": 1.642
+  },
+  "rootograma": [
+   {
+    "contagem": 0,
+    "observado": 280144,
+    "esperado": 280148.4
+   },
+   {
+    "contagem": 1,
+    "observado": 3618,
+    "esperado": 3601.1
+   },
+   {
+    "contagem": 2,
+    "observado": 135,
+    "esperado": 146.3
+   },
+   {
+    "contagem": "3+",
+    "observado": 12,
+    "esperado": 13.3
+   }
+  ],
+  "ano_base": "2025",
+  "falhas_sem_exposicao": {
+   "mpm10": 0,
+   "mr73": 0
+  },
+  "lr_linha_dentro_da_frota": 131.547,
+  "gl": 3,
+  "p_linha_dentro_da_frota": 2.5103463354441974e-28,
+  "razao_mr73_mpm10_verde": {
+   "2019": {
+    "valor": 7.094,
+    "ic95": [
+     5.6961,
+     9.0259
+    ]
+   },
+   "2020": {
+    "valor": 6.0626,
+    "ic95": [
+     4.7465,
+     8.0193
+    ]
+   },
+   "2021": {
+    "valor": 6.501,
+    "ic95": [
+     5.0649,
+     8.6392
+    ]
+   },
+   "2022": {
+    "valor": 15.5351,
+    "ic95": [
+     12.1895,
+     19.2825
+    ]
+   },
+   "2023": {
+    "valor": 9.3293,
+    "ic95": [
+     7.2755,
+     11.8726
+    ]
+   },
+   "2024": {
+    "valor": 14.4115,
+    "ic95": [
+     10.8625,
+     19.9601
+    ]
+   },
+   "2025": {
+    "valor": 8.8914,
+    "ic95": [
+     6.6051,
+     11.2282
+    ]
+   },
+   "2026": {
+    "valor": 8.7328,
+    "ic95": [
+     5.8171,
+     12.2649
+    ]
+   }
+  },
+  "base_por_trem_hora_da_frota": {
+   "verde|MPM-10": {
+    "valor": 0.00051957,
+    "ic95": [
+     0.00036588,
+     0.00069102
+    ],
+    "parcela_ano_base": 0.852579
+   },
+   "laranja|MPM-10": {
+    "valor": 0.00078429,
+    "ic95": [
+     0.00057632,
+     0.00104589
+    ],
+    "parcela_ano_base": 0.996356
+   },
+   "verde|MR-73": {
+    "valor": 0.00461967,
+    "ic95": [
+     0.00356526,
+     0.00585749
+    ],
+    "parcela_ano_base": 0.147421
+   },
+   "amarela|MR-73": {
+    "valor": 0.00438122,
+    "ic95": [
+     0.00332198,
+     0.00551731
+    ],
+    "parcela_ano_base": 0.999999
+   },
+   "azul|MR-73": {
+    "valor": 0.00305751,
+    "ic95": [
+     0.00237119,
+     0.00382433
+    ],
+    "parcela_ano_base": 0.995173
+   }
+  }
+ }
+}

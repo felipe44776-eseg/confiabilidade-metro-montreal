@@ -17,7 +17,7 @@ De que parte do sistema vem cada falha técnica (frota do trem ou setor do equip
   - o sintoma, isto é, a causa atribuída na hora, antes da análise (dicionário nos metadados CKAN do conjunto);
   - as marcas de corte de tração (CAT), porta, freio de emergência (KFS), equipe de urgência e dano.
 - A duração vem dos horários de início e de retomada do "délai service clientèle". Em 100 das 8.530 falhas (1,2%), ela cai fora da faixa oficial "Incident en minutes" e da faixa vizinha, e essas 100 somam 25% de todos os minutos (11.129 de 43.971).
-  - Exemplo: 7 falhas de 1.140 a 1.170 min em Saint-Michel (Azul, outubro de 2024), com faixa oficial "02 min et moins".
+  - Exemplo: 7 falhas de 1.140 a 1.170 min em Saint-Michel (Azul, outubro de 2024), 6 delas com faixa oficial "02 min et moins".
   - Com elas, a média por falha de equipamento fixo da Azul é 21,9 min; pela faixa oficial, 6,0.
   - O critério da spec 001 media as exceções por contagem e não viu o peso em minutos.
 - Os indicadores da STM só contam interrupções de 5 minutos ou mais. Os outros limites publicados são alerta aos usuários acima de 10 min e ônibus substituto acima de 30 min.

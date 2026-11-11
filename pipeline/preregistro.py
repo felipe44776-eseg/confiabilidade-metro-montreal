@@ -107,7 +107,134 @@ def congela_v1(B):
     print("gravado", arquivo("v1"))
 
 
+def congela_v2(nvet=100):
+    """Modelo v2 (spec 018): fontes por frota e setor. Usa os vetores do bootstrap gravados pelo modelo_taxa.py (as mesmas
+    semanas em todos os modelos, então a réplica b da fonte e a da família andam juntas)."""
+    import gzip
+    import modelo_taxa as mt
+    M = "dados/derivados/modelos"
+    tf = json.load(open(f"{M}/taxa_fontes.json", encoding="utf-8"))
+    fam = {c: json.load(open(f"{M}/taxa_{c}.json", encoding="utf-8")) for c in CAUSAS}
+    d = json.load(open(f"{M}/distribuicoes.json", encoding="utf-8"))
+    vet = json.loads(gzip.decompress(open(f"{M}/vetores_bootstrap.json.gz", "rb").read()))
+    painel, _ = mt.monta_painel()
+
+    def vetores(nome, coef):
+        pt = [c["coef"] for c in coef]
+        return [[pt[j] if x is None else x for j, x in enumerate(v)] for v in vet[nome][:nvet]]
+
+    modelos = {f"fam_{c}": {"colunas": [x["termo"] for x in fam[c]["coeficientes"]], "vetores": vetores(f"fam_{c}", fam[c]["coeficientes"])} for c in CAUSAS}
+    mr = tf["mr_empilhado"]
+    modelos["mr_frota"] = {"colunas": [x["termo"] for x in mr["coeficientes"]], "vetores": vetores("mr_frota", mr["coeficientes"])}
+    fontes = {}
+    for f, x in tf["fontes"].items():
+        if f not in mt.FROTAS:
+            reduzido = x["modelo"].startswith("reduzido")
+            modelos[f] = {"tipo": "reduzido" if reduzido else "proprio", "familia": x["familia"], "colunas": [c["termo"] for c in x["coeficientes"]],
+                          "vetores": vetores(f, x["coeficientes"]), "cats": (["linha", "faixa"] if "faixa" in x["modelo"] else ["linha"]) if reduzido else None}
+        linhas = [l for l in LINHAS if f"{l}|{f}" in d["ttr_fonte"]]
+        fontes[f] = {"familia": x["familia"], "frota": mt.FROTAS.get(f),
+                     "formas": {l: d["reescala_fonte"][f"{l}|{f}"]["weibull_reescalado"]["forma"] for l in linhas},
+                     "ttr": {l: {"p_zero": d["ttr_fonte"][f"{l}|{f}"]["p_zero"], "positivos": d["ttr_fonte"][f"{l}|{f}"]["positivos"]} for l in linhas}}
+    corte = str(painel["data_servico"].max())
+    anos = sorted(str(a) for a in painel["ano"].unique())
+    saida = {"versao_modelo": "v2", "descricao": "modelo da revisão de 2026-11 (spec 018): fontes por frota e setor × sintoma; MR empilhado com a parcela da frota",
+             "congelado_em": date.today().isoformat(), "commit_do_codigo": commit_atual(), "corte": corte,
+             "categoricas": list(mt.CATEGORICAS), "indicadores": list(mt.INDICADORES), "referencia": dict(mt.REFERENCIA),
+             "prefixos_herdados": list(mt.PREFIXOS_HERDADOS), "celulas_frota": mt.CELULAS_FROTA,
+             "anos_treino": anos, "regras_ano": {"C": "sorteio entre os anos do treino (principal)", "A": "efeito de 2025"}, "ano_regra_A": "2025",
+             "semente": SEMENTE, "caminhos_por_vetor": CAMINHOS_POR_VETOR, "modelos": modelos, "fontes": fontes}
+    os.makedirs(PASTA, exist_ok=True)
+    with open(arquivo("v2"), "w", encoding="utf-8", newline="\n") as f:
+        json.dump(saida, f, ensure_ascii=False, indent=0)
+    print("gravado", arquivo("v2"))
+
+
+def parcelas_frota():
+    dia, mes = {}, {}
+    with open("dados/derivados/exposicao/frota_diaria.csv", encoding="utf-8") as f:
+        for r in csv.DictReader(f, delimiter=";"):
+            dia[(r["linha"], r["data_servico"], r["frota"])] = float(r["parcela_km_linha"])
+    with open("dados/derivados/exposicao/frota_mensal.csv", encoding="utf-8") as f:
+        for r in csv.DictReader(f, delimiter=";"):
+            if r["parcela_km_linha"]:
+                mes[(r["linha"], r["mes"], r["frota"])] = float(r["parcela_km_linha"])
+    return dia, mes
+
+
+def previsoes_v2(modelo, painel, rng):
+    """Caminhos por linha × mês do modelo v2: cada fonte simulada à parte (renovação no tempo reescalado pela sua taxa,
+    duração da sua amostra) e somada na família."""
+    import pandas as pd
+    teste = painel.sort_values(["linha", "data_servico", "hora"]).reset_index(drop=True)
+    teste["mes"] = teste["data_servico"].str[:7]
+    meses = sorted(teste["mes"].unique())
+    base = teste.assign(ano=modelo["referencia"]["ano"])
+    cat, ind = modelo["categoricas"], modelo["indicadores"]
+    dia, mes_ = parcelas_frota()
+    M = modelo["modelos"]
+    nvet = len(M["fam_MR"]["vetores"])
+    saida = {}
+    for regra in ("C", "A"):
+        tot = {l: np.zeros((nvet * modelo["caminhos_por_vetor"], len(meses))) for l in LINHAS}
+        cinco = {l: np.zeros_like(tot[l]) for l in LINHAS}
+        for f, info in modelo["fontes"].items():
+            frota = info["frota"]
+            for l in info["formas"]:
+                sel = (teste["linha"] == l).to_numpy()
+                rows = base[sel]
+                mes_idx = np.searchsorted(meses, teste.loc[sel, "mes"].to_numpy())
+                off = np.log(rows["exposicao"].to_numpy(float))
+                extra_ano = []
+                if frota:
+                    m = M["mr_frota"]
+                    par = np.array([dia.get((l, d_, frota), 0.0) or mes_.get((l, d_[:7], frota), 0.0) for d_ in rows["data_servico"]])
+                    off = off + np.log(np.maximum(par, 1e-12))
+                    X = desenho(rows, cat, ind, m["colunas"])
+                    if "frota=MR-73" in m["colunas"]:
+                        X[:, m["colunas"].index("frota=MR-73")] = 1.0 if frota == "MR-73" else 0.0
+                    extra_ano = ["frota=MR-73:ano="] if frota == "MR-73" else []
+                    vet, mfam = np.array(m["vetores"]), None
+                elif M[f]["tipo"] == "proprio":
+                    m = M[f]
+                    X, vet, mfam = desenho(rows, cat, ind, m["colunas"]), np.array(m["vetores"]), None
+                else:
+                    m = M[f]
+                    X, vet = desenho(rows, m["cats"], [], m["colunas"]), np.array(m["vetores"])
+                    mfam = M[f"fam_{m['familia']}"]
+                    J = [j for j, c in enumerate(mfam["colunas"]) if c.startswith(tuple(modelo["prefixos_herdados"])) and not c.startswith("ano=")]
+                    Xf = desenho(rows, cat, ind, mfam["colunas"])[:, J]
+                    vfam = np.array(mfam["vetores"])
+                cols = m["colunas"] if not mfam else mfam["colunas"]
+                k = info["formas"][l]
+                p0, pos = info["ttr"][l]["p_zero"], np.array(info["ttr"][l]["positivos"], float)
+                caminho = 0
+                for b in range(nvet):
+                    eta0 = X @ vet[b] + off
+                    if mfam is not None:
+                        eta0 = eta0 + Xf @ vfam[b][J]
+                    for _ in range(modelo["caminhos_por_vetor"]):
+                        a = modelo["anos_treino"][rng.integers(len(modelo["anos_treino"]))] if regra == "C" else modelo["ano_regra_A"]
+                        ef_ano = 0.0
+                        fonte_ano = vfam[b] if mfam is not None else vet[b]
+                        if f"ano={a}" in cols:
+                            ef_ano += fonte_ano[cols.index(f"ano={a}")]
+                        for pre in extra_ano:
+                            if f"{pre}{a}" in m["colunas"]:
+                                ef_ano += vet[b][m["colunas"].index(f"{pre}{a}")]
+                        acum = np.cumsum(np.exp(eta0 + ef_ano))
+                        hora = np.searchsorted(acum, renovacao(acum[-1], k, rng), side="right")
+                        dur = np.where(rng.uniform(size=len(hora)) < p0, 0.0, rng.choice(pos, len(hora))) if len(pos) else np.zeros(len(hora))
+                        tot[l][caminho] += np.bincount(mes_idx[hora], minlength=len(meses))
+                        cinco[l][caminho] += np.bincount(mes_idx[hora[dur >= 5]], minlength=len(meses))
+                        caminho += 1
+        saida[regra] = {"total": tot, "cinco": cinco}
+    return meses, saida
+
+
 def previsoes(modelo, painel, rng):
+    if modelo.get("versao_modelo") == "v2":
+        return previsoes_v2(modelo, painel, rng)
     """Caminhos simulados por linha × mês para os dois alvos e as duas regras do ano."""
     teste = painel.sort_values(["linha", "data_servico", "hora"]).reset_index(drop=True)
     teste["mes"] = teste["data_servico"].str[:7]
@@ -228,11 +355,14 @@ def main():
     acao, versao = sys.argv[1], sys.argv[2]
     arg = lambda n: sys.argv[sys.argv.index(n) + 1] if n in sys.argv else None
     if acao == "congela":
-        if versao != "v1":
-            sys.exit("a versão v2 é congelada pelo modelo da spec 018 (a acrescentar aqui)")
         if os.path.exists(arquivo(versao)) and "--refaz" not in sys.argv:
             sys.exit(f"{arquivo(versao)} já existe: um pré-registro não se refaz depois de commitado")
-        congela_v1(int(arg("--bootstrap") or 100))
+        if versao == "v1":
+            congela_v1(int(arg("--bootstrap") or 100))
+        elif versao == "v2":
+            congela_v2(int(arg("--vetores") or 100))
+        else:
+            sys.exit("versões: v1 (modelo da v1.1.0) e v2 (spec 018)")
     elif acao == "avalia":
         avalia(versao, arg("--de"), arg("--ate"))
     else:

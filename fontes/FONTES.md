@@ -22,13 +22,14 @@ python -I pipeline/verifica_fontes.py --online                      # compara co
 | Integridade | Compara o SHA-256 de cada arquivo com o manifesto |
 | `--baixa-release` | Baixa os dados brutos da Release do GitHub e confere cada hash |
 | `--online` | Baixa de novo cada fonte na origem e diz se o conteúdo é idêntico ao que usamos |
-| `--recalcula` | Refaz, direto dos dados brutos, 25 números publicados, com código próprio que não usa os scripts de análise |
+| `--recalcula` | Refaz, direto dos dados brutos, 38 números publicados (25 até a v1.1.0), com código próprio que não usa os scripts de análise |
 
 O site é publicado por GitHub Actions. Cada publicação roda `--baixa-release --recalcula`, e um erro impede a publicação. O resultado da última execução aparece em https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/fontes/.
 
 **Resultado local em 2026-10-21:**
 - 0 problemas de integridade.
 - 25 números recalculados, sem nenhuma diferença (18 da fase 0 e 7 da fase 1: eventos normalizados, falhas depois da meia-noite, trens às 08:00 nas 4 linhas e horas de chuva congelante).
+- Revisão de 2026-11 (spec 017): 38 números recalculados em 2026-11-10, sem nenhuma diferença. Os 13 novos são os minutos parados pela faixa oficial em cada linha (4) e as falhas de cada uma das 9 fontes, com uma reimplementação própria da regra de duração.
 - Em 2026-10-20, as 27 fontes então registradas foram baixadas de novo: 26 vieram idênticas byte a byte; a 27ª (mobilidade do Google, 98 MB) foi conferida pelo tamanho.
 
 ## 1. Fontes que alimentam o painel e o simulador
@@ -38,7 +39,7 @@ Acesso a todas: 2026-10-20. Hash completo no manifesto.
 | Fonte | Editor e licença | Download | Arquivo | Tamanho e linhas | SHA-256 (início) | Na Release? |
 |---|---|---|---|---|---|---|
 | Incidentes do metrô | STM, CC BY 4.0 | https://donneesouvertes.stm.info/fichiers/Incidents%20m%C3%A9tro.csv | `dados/brutos/stm/incidents_metro.csv` | 7.954.389 bytes; 45.785 incidentes | `03baafef3cc66739` | sim |
-| Quilometragem real das voitures | STM, CC BY 4.0 | https://donneesouvertes.stm.info/fichiers/Kilom%C3%A9trage%20r%C3%A9el.csv | `dados/brutos/stm/km_reel.csv` | 56.529.490 bytes; 559.549 registros | `40b21aca5f136c10` | sim |
+| Quilometragem real das voitures (publicada em 2026-10-23; revisão de 2026-11) | STM, CC BY 4.0 | https://donneesouvertes.stm.info/fichiers/Kilom%C3%A9trage%20r%C3%A9el.csv | `dados/brutos/stm/km_reel.csv` | 93.330.342 bytes; 924.641 registros | `c3428c840cd2d0a5` | sim (`dados-2026-11`) |
 | GTFS da STM | STM, CC BY 4.0; espelho do Mobility Database | https://files.mobilitydatabase.org/mdb-2126/latest.zip | `dados/brutos/gtfs/gtfs_stm_mdb-2126_latest.zip` | 66.986.453 bytes; versão `20261007130000_26N` | `50c8481c9f67de78` | sim |
 | Traçado das linhas e estações | Colaboradores do OpenStreetMap, ODbL 1.0 | Overpass API (consulta no manifesto) | `dados/brutos/osm/overpass_metro_mtl.json` | 8 relações `route=subway`, 69 estações; base OSM de 2026-10-21 01:07 UTC | ver manifesto | sim |
 | Coordenadas das estações (2ª referência) | Wikidata, CC0 | SPARQL em https://query.wikidata.org (consulta no manifesto) | `dados/brutos/wikidata/estacoes_metro_mtl.json` | 102 registros da rede Q392377 | ver manifesto | sim |
@@ -71,6 +72,12 @@ Acesso a todas: 2026-10-20. Hash completo no manifesto.
 - **Formato:** uma linha por composição, por linha e por dia, de 2019-01-01 a 2023-09-30.
 - **Total:** 411,63 milhões de km-carro.
 - **Frotas:** 73 = MR-73 e 10 = MPM-10. **22 registros** de material tipo **63** (15,7 km) entram no total, mas em nenhuma das duas frotas; o efeito é desprezível.
+- **Versão republicada em 2026-10-23 (revisão de 2026-11, Release `dados-2026-11`):**
+  - 2019-01-01 a 2026-09-30, 924.641 registros e 666,57 milhões de km-carro; 26 registros de material tipo 63.
+  - Formato novo: separador ponto e vírgula, data na coluna `Date`, milhar com espaço. O leitor `pipeline/km_real.py` lê os dois formatos.
+  - Nos 57 meses em comum com a cópia de 2026-10-20, os km por mês, linha e frota são iguais: até 2023-09-30 o total continua 411,63 milhões.
+  - A exposição e a parcela da frota do modelo (specs 004 e 018) passam a ser medidas até 2026-06-30, o fim dos incidentes. O painel do site continua com o km real até 2023-09-30, como na v1.1.0 (`km_real.FIM_V1`), e os números dele que dependem do km não mudam.
+  - A cópia de 2026-10-20 (56.529.490 bytes, `40b21aca5f136c10`) continua na Release `dados-2026-10-20` e serve à versão v1.1.0.
 
 ### GTFS da STM
 

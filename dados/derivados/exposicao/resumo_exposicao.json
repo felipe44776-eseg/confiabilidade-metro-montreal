@@ -1,16 +1,16 @@
 {
- "km_carro_total_milhoes": 411.6315,
+ "km_carro_total_milhoes": 666.568,
  "km_carro_por_frota": {
-  "MPM-10": 294258034.4,
-  "MR-63": 15.7,
-  "MR-73": 117373473.9
+  "MPM-10": 497122545.6,
+  "MR-63": 21.9,
+  "MR-73": 169445418.2
  },
  "registros_por_frota": {
-  "MPM-10": 342240,
-  "MR-63": 22,
-  "MR-73": 217266
+  "MPM-10": 583173,
+  "MR-63": 26,
+  "MR-73": 341442
  },
- "total_menos_mr73_e_mpm10_km": 15.72,
+ "total_menos_mr73_e_mpm10_km": 21.9,
  "trens_em_viagem_08h_dia_util": {
   "verde": 26,
   "laranja": 31,
@@ -23,10 +23,10 @@
   "amarela": 2,
   "azul": 9
  },
- "meses_comparados": 228,
+ "meses_comparados": 356,
  "meses_com_erro_acima_de_10pct": 6,
- "pct_meses_dentro": 0.9737,
- "erro_abs_mediano": 0.0042,
+ "pct_meses_dentro": 0.9831,
+ "erro_abs_mediano": 0.005,
  "piores_meses": [
   {
    "linha": "verde",
@@ -59,9 +59,15 @@
    "erro": -0.1077
   }
  ],
- "dias_medidos": 6936,
- "dias_estimados": 4016,
+ "dias_medidos": 10852,
+ "dias_estimados": 100,
  "dias_de_greve": 25,
+ "greve_km_real_sobre_molde_das_faixas": {
+  "min": 0.93,
+  "mediana": 1.356,
+  "max": 2.259,
+  "dias_linha": 96
+ },
  "km_molde_dia_util_trem_km": {
   "verde": 10507.2,
   "laranja": 13981.0,

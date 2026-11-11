@@ -9,7 +9,7 @@ import type { Rng } from './prng';
 import { gamaFuncao } from './prng';
 import type { HorarioDia } from './rede';
 import { MINUTOS_DIA_OPERACAO } from './rede';
-import type { Causa, Cenario, Condicoes, Parametros, Taxa } from './tipos';
+import type { Causa, Cenario, Condicoes, FonteParam, Parametros, Taxa } from './tipos';
 
 /** Faixas horárias do modelo de taxa, em hora de serviço (pipeline/modelo_taxa.py, FAIXAS). */
 export const FAIXAS_HORARIAS: readonly [number, number, string][] = [
@@ -32,7 +32,7 @@ export function condicoesDaHora(cenario: Cenario, hora: number): Condicoes {
 }
 
 /** Produto dos multiplicadores. Nível sem coeficiente (referência ou indicador desligado) vale 1. */
-export function multiplicador(taxa: Taxa, cond: Condicoes): number {
+export function multiplicador(taxa: Pick<Taxa, 'multiplicadores' | 'referencia'>, cond: Condicoes): number {
   let m = 1;
   for (const [fator, niveis] of Object.entries(taxa.multiplicadores)) {
     const nivel = cond[fator] ?? taxa.referencia?.[fator] ?? '0';
@@ -51,6 +51,17 @@ export function taxaAcumulada(params: Parametros, horario: HorarioDia, cenario: 
   const base = taxa.base_por_trem_hora[linha]?.valor;
   // dado ausente nunca vira zero (constituição, princípio 6): taxa zero faria a linha nunca falhar
   if (base === undefined) throw new Error(`parametros.json sem taxa-base de ${causa} para a linha ${linha}`);
+  return acumulaTaxa(taxa, base, horario, cenario, linha);
+}
+
+/** Taxa acumulada de uma fonte do contrato v2 numa linha (spec 019). */
+export function taxaAcumuladaFonte(fonte: FonteParam, horario: HorarioDia, cenario: Cenario, linha: string): Float64Array {
+  const base = fonte.linhas[linha]?.base_por_trem_hora.valor;
+  if (base === undefined) throw new Error(`parametros.json sem taxa-base da fonte ${fonte.id} na linha ${linha}`);
+  return acumulaTaxa(fonte, base, horario, cenario, linha);
+}
+
+function acumulaTaxa(taxa: Pick<Taxa, 'multiplicadores' | 'referencia'>, base: number, horario: HorarioDia, cenario: Cenario, linha: string): Float64Array {
   const trens = horario.trensPorMinuto[linha];
   const acum = new Float64Array(MINUTOS_DIA_OPERACAO + 1);
   const multHora = new Map<number, number>();
@@ -102,6 +113,13 @@ export function renovacaoDe(params: Parametros, linha: string, causa: Causa): Re
   const r = params.renovacao[`${linha}|${causa}`];
   const forma = r && r.forma.valor > 0 ? r.forma.valor : 1;
   return { forma, escalaNormalizada: 1 / gamaFuncao(1 + 1 / forma), escalaArquivo: r?.escala.valor ?? 1 };
+}
+
+/** Renovação de uma fonte do contrato v2: sem ela é erro, não Poisson em silêncio (spec 019). */
+export function renovacaoDaFonte(fonte: FonteParam, linha: string): Renovacao01 {
+  const r = fonte.linhas[linha]?.renovacao;
+  if (!r || !(r.forma.valor > 0)) throw new Error(`parametros.json sem renovação da fonte ${fonte.id} na linha ${linha}`);
+  return { forma: r.forma.valor, escalaNormalizada: 1 / gamaFuncao(1 + 1 / r.forma.valor), escalaArquivo: r.escala.valor };
 }
 
 /**

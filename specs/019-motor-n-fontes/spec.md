@@ -1,6 +1,6 @@
 # 019 — Simulador com várias fontes de falha por linha
 
-**Status:** especificada
+**Status:** implementada com exceções
 **Fase:** revisão de 2026-11
 **Depende de:** 007, 008, 009, 018
 **Revisa:** 007 (motor), 008 (políticas), 009 (Monte Carlo), 011 (cenários), 014 (expansão), 016 (linhas novas)
@@ -31,6 +31,22 @@ O simulador reproduz as falhas e os minutos parados de cada linha quando cada fr
 - **Métricas:** dada uma rodada, quando agregada, então há minutos e falhas por fonte, por família (MR, EF, CC, como antes) e por classe de gravidade (menos de 5, 5 a 10, 10 a 30, 30 min ou mais).
 - **Página:** dada a aba Parâmetros, quando aberta, então mostra uma tabela por fonte. O peso de cada variável (spec 011) continua por família. O mapa e o registro nomeiam a fonte de cada falha.
 - **Link com versão:** dado um link de cenário da v1.1.0, quando aberto, então a página avisa que os números foram revistos em 2026-11 e leva à cópia em `/versoes/v1.1.0/`; os links novos levam a versão.
+
+## Resultado (2026-11-10; dispersão e relatórios em 2026-11-11)
+
+Código em `app/src/motor/contexto.ts` (fontes do contrato v2, `familiaNaLinha`), `taxas.ts` (taxa e renovação por fonte), `dia.ts` (falhas e minutos por fonte, classes de gravidade), `prng.ts` (`hash30`), `mc/rodadas.ts` (vetor estendido opcional), `expansao.ts` e `linhas_novas.ts` (herança pela soma da família) e `app/src/simulador/` (tabela por fonte, link com versão). Testes em `app/tests/motor/referencia_v1.test.ts` e `app/tests/motor/fontes_v2.test.ts`; revalidação em [`revalidacao.md`](../../fontes/verificacao/revalidacao.md) (spec 020).
+
+| Critério | Resultado |
+|---|---|
+| Mesmos números antes da troca de parâmetros | **Atende**: os 198 casos da referência (dias, viagens com linhas novas e expansão; fixture e parâmetros reais da v1.1.0) saíram idênticos depois do passo 1 e continuam idênticos depois do passo 2, no contrato v1 |
+| Fontes do contrato v2; falta de duração ou renovação é erro | **Atende** (testes) |
+| Efeito por tipo de fonte | **Atende**: a família da fonte decide o efeito (trem ou trecho); os locais são da linha × fonte |
+| Políticas por efeito | **Atende**: retirada vale para as fontes de trem, operação degradada para as fixas, como antes por família |
+| Sorteio estável | **Atende** (teste: acrescentar fontes não muda as falhas das outras) |
+| Soma das fontes | **Atende** (teste: a taxa acumulada das fontes de uma família é a da família) |
+| Dispersão (variância ÷ média das falhas por dia útil, linha × família, dentro do IC 95% por blocos semanais do observado em 2025) | **Exceção**: 9 de 12 dentro (v1.1.0: 11 de 12). Abaixo do IC: equipamentos fixos da Verde, 1,06 contra 1,31 (1,14–1,47), porque a soma de fontes independentes agrupa menos. Acima: Amarela, material rodante 1,36 (0,93–1,29) e equipamentos fixos 1,64 (0,93–1,35). O fator diário comum por família, que o critério pede quando a simulada fica abaixo, não entrou nesta rodada: a variância dele teria de ser estimada nos mesmos dias de 2025 usados na validação. Fica como tarefa. A dispersão por mês não foi calculada (`revalidacao.md`) |
+| Métricas por fonte, família e gravidade | **Atende** |
+| Página: tabela por fonte; peso por família; link com versão | **Atende** no código; conferência no navegador na spec 020 |
 
 ## Fora de escopo
 
