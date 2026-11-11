@@ -10,4 +10,4 @@
 - [x] Custo por quadro medido: 0,10 ms no pico; contador de fps na página.
 - [x] Correção do worker do MapLibre 6 nas duas páginas (o mapa não desenhava as fontes sem ele).
 - [x] Teste de ponta a ponta no Chrome sem janela: mapa abre, 58 trens às 07:30 no cenário padrão, falhas listadas, sem erro no console.
-- [ ] Equipe: conferir os fps num notebook comum e o layout no celular, no endereço publicado.
+- [ ] Equipe: conferir os fps num notebook comum e o layout no celular, no endereço publicado. Desde 2026-11-11 (D66), basta o Chrome do notebook da equipe; Firefox, Safari e celular físico ficam fora.

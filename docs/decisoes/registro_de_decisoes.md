@@ -458,3 +458,18 @@ Origem: perguntas da reunião de 2026-10-27 (bitola, fabricantes, via ou trem, t
 - **O que continua valendo:** a publicação confere a integridade das Releases, recalcula 38 números com código próprio e roda o pytest e o vitest antes de cada deploy. A crítica de 2026-11-11 refez os scripts rápidos e conferiu os hashes contra o manifesto.
 - **Consequência:** o critério de reprodução da spec 013 fica atendido só até o código da a7f0594. A spec passa a "implementada com exceções", e o deck e o README dizem isso. Dois comentários em scripts do contrato (`parametros.py` e `distribuicoes.py`) ainda falam da resposta da STM. Ficam como estão, porque mudar o texto muda o código do contrato (`codigo_commit`) e obriga a refazer o `parametros.json`.
 - **Registro:** specs 001, 013, 017 e 020; README, arquitetura, relatório e deck.
+
+### D66 — Fechamento para a entrega: objetivo, navegador, licença e versão de entrega
+
+- **Decisões (da equipe, 2026-11-11):**
+  - **Objetivo:** não há enunciado formal. O trabalho é uma análise de falhas, e basta responder que linha melhor resolve a movimentação das pessoas.
+    - O resumo e a conclusão do relatório passam a dizer a resposta com o nome e o número: a melhor ligação nova é Atwater–Université-de-Montréal (+0,063 p.p.), e a melhor proposta oficial é a Linha Rosa com o prolongamento da Azul até Anjou (+0,036).
+    - A métrica é a disponibilidade dos pares de estações ponderada pela oferta, não a contagem de pessoas, porque não há dado de passageiros.
+  - **Navegador:** basta o site funcionar no Chrome do notebook da equipe. Firefox, Safari e celular físico ficam fora (spec 010).
+  - **Conta do GitHub:** continua a `felipe44776-eseg`, do Felipe. A pergunta da crítica de 2026-10-21 (rodada 2, achado 14) fica respondida pela equipe.
+  - **Licença:** o código e os textos escritos pela equipe ficam sob a MIT (`LICENSE`). Os dados seguem a licença de cada fonte (README, `fontes/FONTES.md`).
+  - **Versão de entrega:** `v1.2.0`, com etiqueta e Release com o zip do site, servida em `/versoes/v1.2.0/` (spec 013).
+- **Verificação feita antes de fechar:** o critério "Soma das fontes" da spec 019 ganhou o teste automático (`app/tests/motor/soma_fontes.test.ts`).
+  - Os 9% abaixo da Azul nos equipamentos fixos, vistos na crítica de 2026-11-11, eram acaso de amostra, e não defeito.
+  - Em 20.000 dias, as 8 combinações linha × família ficam dentro do IC 95%, e a Azul dá z = 0,40.
+- **Registro:** specs 010, 013 e 019; README; relatório.

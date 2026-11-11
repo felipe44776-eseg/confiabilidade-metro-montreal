@@ -11,4 +11,4 @@
 - [x] Nova execução no commit ba19e74 (39556506384), depois das revisões críticas: 48 idênticos, 5 na tolerância, 0 fora.
 - [x] Execução no commit a7f0594 (39609801611), com o comparador que acusa arquivo a mais: 48 idênticos, 5 na tolerância, 0 fora, faltando ou sobrando.
 - [x] `v1.0.0` congelada em 2026-10-21 (etiqueta no commit 6196ad2, Release com o zip do site, `/versoes/v1.0.0/`).
-- [ ] Congelar a versão de entrega no fim do semestre (v1.x).
+- [x] Congelar a versão de entrega: `v1.2.0` em 2026-11-11 (D66), com a etiqueta no commit da entrega, a Release com o zip do site e o site em `/versoes/v1.2.0/`.

@@ -43,7 +43,8 @@ Workflows em `.github/workflows/` (`deploy.yml`, `verifica-fontes.yml`, `reprodu
   - A execução agendada de 2026-11-01 (41312932829) falhou antes do pipeline, na integridade dos JSON da NHL baixados da origem, porque a API mudou a resposta.
   - A equipe decidiu não refazer a reprodução depois da revisão. A agenda mensal foi desligada, e o workflow continua disparável à mão.
   - Os números revistos ficam conferidos pelo deploy (integridade das Releases, 38 números recalculados com código próprio, pytest e vitest) e pela crítica de 2026-11-11, que refez os scripts rápidos e conferiu os hashes contra o manifesto. Os modelos com bootstrap só foram rodados na máquina local.
-- **Versão congelada:** a v1.1.0 (etiqueta no e793bba) é servida em `/versoes/v1.1.0/` e guarda os números de antes da revisão. A versão de entrega segue aberta em `tasks.md`.
+- **Versão congelada:** a v1.1.0 (etiqueta no e793bba) é servida em `/versoes/v1.1.0/` e guarda os números de antes da revisão.
+- **Versão de entrega (critério de congelar a versão final): atende.** É a `v1.2.0` (D66): etiqueta no commit da entrega e Release com o zip do site, servida em `/versoes/v1.2.0/`.
 - **Data do snapshot:** a Release `dados-2026-11` (km real republicado) entrou no rodapé com as anteriores.
 
 ## Fora de escopo

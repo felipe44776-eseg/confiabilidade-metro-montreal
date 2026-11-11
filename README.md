@@ -20,6 +20,7 @@ Projeto da disciplina Sistemas Tolerantes a Falhas (Engenharia de Produção, ES
 | Arquitetura e manutenção | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/docs/arquitetura/ |
 | Versão congelada v1.0.0 | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/versoes/v1.0.0/ |
 | Versão congelada v1.1.0 (antes da revisão de 2026-11) | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/versoes/v1.1.0/ |
+| Versão de entrega v1.2.0 (após a revisão de 2026-11) | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/versoes/v1.2.0/ |
 
 ## Documentação
 
@@ -86,6 +87,8 @@ Os ajustes com bootstrap levam tempo: `modelo_taxa` cerca de 80 minutos (famíli
 
 ## Dados e licenças
 
+- **Código e textos escritos pela equipe:** licença MIT ([`LICENSE`](LICENSE)). Os dados abaixo não mudam de licença por estarem aqui: cada um segue a da sua fonte.
+- **Artigos de referência:** só o da RESS está no repositório (CC BY 4.0); os da IEEE ficam fora (`dados/manuais/LEIAME.md`).
 - **Incidentes, quilometragem e GTFS:** Société de transport de Montréal (STM), dados abertos, CC BY 4.0.
 - **Clima:** Environment and Climate Change Canada, Licença de Governo Aberto do Canadá.
 - **Traçado das linhas:** © colaboradores do OpenStreetMap, ODbL. O arquivo derivado `dados/derivados/geo/linhas.geojson` também é ODbL.
