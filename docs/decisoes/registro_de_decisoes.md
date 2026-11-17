@@ -534,3 +534,23 @@ Origem: perguntas da reunião de 2026-10-27 (bitola, fabricantes, via ou trem, t
   - A STM marca todo incidente de passageiro como "Non affecté". Por isso o efeito do modelo de trem nesses incidentes não dá para testar com estes dados.
 - **Fontes:** o CSV de incidentes da STM, com o hash conferido contra o manifesto; `frota_mensal.csv`; `eventos_tecnicos.csv`. O fabricante e o ano de cada trem não estão nos dados da STM: vêm da Wikipedia (artigos MR-73 e MPM-10, consultados em 2026-11-17), citada no slide. A página da STM sobre o Azur não respondeu na consulta.
 - **Registro:** `docs/apresentacao/gera_deck.py`, os dois HTML e os dois PDF.
+
+### D71 — Efeito da linha separado do efeito do trem, versões comparadas e renovações na amostra
+
+- **Pedido do Felipe (2026-11-17):** três verificações para a análise da equipe.
+- **Efeito da linha contra efeito do trem.** O slide novo lê a regressão que junta trem e linha (`taxa_fontes.json`, `mr_empilhado`).
+  - Na Verde, no mesmo trilho, o MR-73 falha 8,9 vezes mais por trem em circulação em 2025. Entre os anos, de 6,1 a 15,5.
+  - Com o mesmo trem, a linha muda a falha até cerca de 2,3 vezes, e a Laranja é a pior. Na tabela por km ela parece a melhor só porque roda o MPM-10.
+  - Hipótese do modelo: o efeito do trem é o mesmo em todas as linhas, porque só a Verde tem os dois trens.
+  - O slide também mostra as falhas da própria via por linha.
+- **Projetos nas versões anteriores.** A v1.0.0 e a v1.1.0 têm os mesmos números de expansão e usam as mesmas 8.530 falhas técnicas de hoje. Nenhuma versão usou os incidentes de passageiros, então a diferença não vem daí.
+  - Em minutos sem caminho, Atwater–Université-de-Montréal corta cerca de 11% nas duas versões, e a Linha Rosa, cerca de 3%.
+  - O que mudou foi a Rosa com a Azul até Anjou: de −0,4% para −6%. A duração pela faixa oficial (D55) corrigiu a Azul e, com ela, o prolongamento até Anjou.
+  - A tabela de projetos ganhou a coluna da versão anterior.
+- **Renovações durante a amostra.** Levantamento com fontes em `fontes/verificacao/renovacoes_2019_2026.md`.
+  - Houve obras e mudanças durante toda a amostra: Réno-Systèmes 4 e 5, intertravamento, aparelhos de via, os Azur na Verde (2020–2021), Côte-Vertu (2019–2022) e o fechamento de Saint-Michel (out.–nov. 2024).
+  - A troca das pistas de rolamento só começa em outubro de 2026, depois da amostra.
+  - Nos dados, a falha da via por milhão de km fica entre 0,4 e 2,6 em todas as linhas e anos, sem queda permanente. A exceção é 2024 na Amarela (11,2) e na Azul (5,8); na Azul, o pico coincide com Saint-Michel.
+  - O modelo já controla o efeito de cada ano na rede, a frota dia a dia, as horas fechadas e as greves.
+  - O modelo não controla um evento numa linha só, que pode inflar o efeito de linha da via na Amarela e na Azul.
+- **Registro:** `docs/apresentacao/gera_deck.py`, `fontes/verificacao/renovacoes_2019_2026.md`, os dois HTML e os dois PDF.

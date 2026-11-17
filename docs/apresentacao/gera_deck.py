@@ -1283,6 +1283,10 @@ figcaption{font-size:12.5px;color:var(--muted);margin-top:6px}
 .tab-fora td{padding:7px 12px 7px 0;vertical-align:middle}
 .tab-fora td .muted{font-size:13px}
 .tab-fora tr.dest td{background:var(--accent-soft)}
+.tab-reno td{padding:5px 10px 5px 0;font-size:14.5px}
+.tab-anos{font-size:14.5px;width:100%}
+.tab-anos th,.tab-anos td{padding:5px 8px 5px 0}
+.tab-anos td.pico{background:var(--ouro-soft);font-weight:700}
 .lims{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
 .lim{border-top:4px solid var(--turq);padding-top:14px}
 .lim-n{font-size:40px;font-weight:700;color:var(--navy);line-height:1;margin-bottom:10px}
@@ -2144,20 +2148,29 @@ _PROJ = [("Atwater – Université-de-Montréal", "ligação desenhada por nós 
         ("laranja_bois_franc", "Laranja até Bois-Franc", "prolongamento, ramal"),
         ("azul_anjou", "Azul até Anjou", "prolongamento em obras, ramal"))]
 _PROJ.sort(key=lambda t: -t[2]["ganho"]["media"])
+_MPA_V1 = EXP_V1["rede_atual"]["minutosParAno"]["media"]
+_CAND_V1 = {x["id"]: x for x in EXP_V1["candidatas"]["sem_retorno_parcial"]}
+assert "Atwater" in EXP_V1["busca_exaustiva"]["por_ganho"][0]["nome"]
+_NORM_V1_TEC = NORM_V1["tecnicos_uma_linha"]
+assert _NORM_V1_TEC == NORM["tecnicos_uma_linha"] == R["falhas"], "as versões deixaram de usar as mesmas falhas técnicas: revisar a nota"
+def _var_v1(c):
+    x = EXP_V1["busca_exaustiva"]["por_ganho"][0] if c is _MELHOR else _CAND_V1[c["id"]]
+    return -100 * x["minutos_par_ano_evitados"]["media"] / _MPA_V1
 def _lin_proj(nome, desc, c):
     g = c["ganho"]["media"]; ev = c["minutos_par_ano_evitados"]["media"]
     disp = DISP_OD_ATUAL + 100 * g
     cls = ' class="dest"' if c is _MELHOR else ""
     return (f'<tr{cls}><td><b>{esc(nome)}</b><br><span class="muted">{esc(desc)} · {br(c["km"], 1)} km</span></td>'
             f'<td class="num">{br(disp, 3)}%</td><td class="num">{_rot(100 * g)}</td>'
-            f'<td class="num">{br(_MPA - ev)}</td><td class="num">{sn(-100 * ev / _MPA, 0)}%</td></tr>')
+            f'<td class="num">{br(_MPA - ev)}</td><td class="num"><b>{sn(-100 * ev / _MPA, 0)}%</b></td>'
+            f'<td class="num muted">{sn(_var_v1(c), 1 if abs(_var_v1(c)) < 1 else 0)}%</td></tr>')
 PROJETOS = slide("Que linha construir · todos os projetos testados", f"Comparação dos {len(_PROJ)} projetos: só os que criam um caminho novo melhoram a rede", f"""
 <table class="tab tab-proj">
-  <thead><tr><th>Projeto</th><th class="num">Tempo com caminho<br>(disponibilidade)</th><th class="num">Ganho<br>(p.p.)</th><th class="num">Minutos sem caminho<br>por ano, por par</th><th class="num">Variação</th></tr></thead>
-  <tbody><tr class="base"><td><b>Rede de hoje</b></td><td class="num">{br(DISP_OD_ATUAL, 3)}%</td><td class="num">—</td><td class="num">{br(_MPA)}</td><td class="num">—</td></tr>
+  <thead><tr><th>Projeto</th><th class="num">Tempo com caminho<br>(disponibilidade)</th><th class="num">Ganho<br>(p.p.)</th><th class="num">Minutos sem caminho<br>por ano, por par</th><th class="num">Variação</th><th class="num">Variação na<br>v1.0 e v1.1</th></tr></thead>
+  <tbody><tr class="base"><td><b>Rede de hoje</b></td><td class="num">{br(DISP_OD_ATUAL, 3)}%</td><td class="num">—</td><td class="num">{br(_MPA)}</td><td class="num">—</td><td class="num">{br(_MPA_V1)} min</td></tr>
   {"".join(_lin_proj(*p) for p in _PROJ)}</tbody>
 </table>
-<p class="nota">Dia útil, entre os pares de estações de hoje, ponderado pela oferta de trens; de 50 mil a 200 mil estados sorteados por projeto. Os ramais só esticam uma linha: não criam caminho alternativo e somam trechos que podem falhar, por isso pioram.</p>""",
+<p class="nota">Dia útil, entre os pares de estações de hoje, ponderado pela oferta; de 50 mil a 200 mil estados sorteados por projeto. As versões anteriores usam as mesmas {br(_NORM_V1_TEC)} falhas técnicas, sem passageiros; mudou a duração das falhas (faixa oficial da STM), que corrigiu sobretudo a Azul e, com ela, o prolongamento até Anjou. Os ramais pioram porque esticam a linha sem criar caminho novo.</p>""",
 "dados/derivados/simulador/expansao.json (rede_atual, candidatas sem retorno parcial e busca exaustiva); fontes/verificacao/expansao.md",
 f"""<p>Aqui estão todas as hipóteses de projeto que testamos, lado a lado. A coluna mais fácil de ler é a dos minutos: hoje, cada par de estações fica em média {br(_MPA)} minutos por ano sem caminho num dia útil.</p>
 <p>A ligação Atwater–Université-de-Montréal corta mais minutos. A Rosa com a Azul até Anjou é a melhor proposta oficial. Os ramais, inclusive o prolongamento da Azul em obras, pioram um pouco: esticam a linha sem criar outro caminho.</p>""", "compacto")
@@ -2295,6 +2308,97 @@ FROTA = slide("Como as linhas falham · modelo e fabricante dos trens", "Dois tr
 <p>E isso explica boa parte da diferença entre as linhas nas falhas de trem: as linhas só com o MR-73 falham bem mais por km. Na Verde, onde os dois rodam no mesmo trilho, o trem antigo falha cerca de dez vezes mais.</p>
 <p>Para os incidentes de passageiros, os dados não dizem qual trem estava envolvido. Fica para a análise seguinte.</p>""", "compacto")
 
+# efeito da linha e efeito do trem, separados pela regressão (taxa_fontes.json)
+_MEC = {c["termo"]: c for c in TF["mr_empilhado"]["coeficientes"]}
+_RZA = TF["mr_empilhado"]["razao_mr73_mpm10_verde"]
+_VOIE = {f: {c["termo"]: c for c in TF["fontes"][f]["coeficientes"]} for f in ("voie_sintoma_fixo", "voie_sintoma_trem")}
+def _mic(c, d=2):
+    return f'{br(c["multiplicador"], d)} <span class="muted">({br(c["ic95"][0], d)}–{br(c["ic95"][1], d)})</span>'
+_LIN_TREM = {l: _MEC[f"linha={l}"] for l in ("verde", "amarela", "azul")}
+assert all(c["ic95"][1] < 1 for c in _LIN_TREM.values()), "revisar o texto: com o mesmo trem, a Laranja deixou de ser a que mais falha"
+_RZ_MIN = min(_RZA.values(), key=lambda v: v["valor"]); _RZ_MAX = max(_RZA.values(), key=lambda v: v["valor"])
+_LIN_MAX = 1 / min(c["multiplicador"] for c in _LIN_TREM.values())
+def _cel_voie(f, l):
+    return '<td class="num">1</td>' if l == "laranja" else f'<td class="num">{_mic(_VOIE[f]["linha=" + l])}</td>'
+LINHA_TREM = slide("Como as linhas falham · efeito da linha e efeito do trem, separados", f"Com o mesmo trem, a linha muda a falha até {br(_LIN_MAX, 1)} vezes; trocar o trem muda {br(RZ['valor'], 0)} vezes", f"""
+<div class="cols c-50-50">
+  <div>
+    <h3>Falhas de trem: trem e linha no mesmo modelo</h3>
+    <p class="sub">quantas vezes a falha por trem em circulação muda (IC 95%)</p>
+    <table class="tab tab-fora">
+      <tbody>
+        <tr class="dest"><td><b>Efeito do trem</b><br><span class="muted">MR-73 ÷ MPM-10, na Verde, mesmo trilho</span></td><td class="num"><b>{br(RZ["valor"], 1)}</b> <span class="muted">({br(RZ["ic95"][0], 1)}–{br(RZ["ic95"][1], 1)}) em {RZ_ANO}</span><br><span class="muted">de {br(_RZ_MIN["valor"], 1)} a {br(_RZ_MAX["valor"], 1)} entre os anos</span></td></tr>
+        <tr><td><b>Efeito da linha, com o mesmo trem</b><br><span class="muted">Laranja = 1</span></td><td class="num">Verde {_mic(_LIN_TREM["verde"])}<br>Amarela {_mic(_LIN_TREM["amarela"])}<br>Azul {_mic(_LIN_TREM["azul"])}</td></tr>
+      </tbody>
+    </table>
+    <p class="corpo-sm">A linha conta mesmo descontando o trem: teste de razão de verossimilhança {br(TF["mr_empilhado"]["lr_linha_dentro_da_frota"], 1)}, {TF["mr_empilhado"]["gl"]} graus de liberdade, p &lt; 0,001.</p>
+  </div>
+  <div>
+    <h3>Falhas da via, por linha</h3>
+    <p class="sub">quantas vezes a falha da via por trem em circulação muda, Laranja = 1 (IC 95%)</p>
+    <table class="tab tab-fora">
+      <thead><tr><th>Linha</th><th class="num">Via, sintoma fixo</th><th class="num">Via, sintoma de trem</th></tr></thead>
+      <tbody>{"".join(f'<tr><td>{chip(l)}{NOME[l]}</td>{_cel_voie("voie_sintoma_fixo", l)}{_cel_voie("voie_sintoma_trem", l)}</tr>' for l in ORDEM)}</tbody>
+    </table>
+    <p class="corpo-sm muted">A via com sintoma de trem na Amarela inclui os registros de quase zero minuto nos terminais em 2024.</p>
+  </div>
+</div>
+<p class="nota"><b>Leitura:</b> com o mesmo trem, a Laranja é a linha onde o trem mais falha; na tabela anterior ela parece a melhor só porque roda o MPM-10. <b>Hipótese do modelo:</b> o efeito do trem é o mesmo em todas as linhas, porque só a Verde tem os dois trens para comparar.</p>""",
+"dados/derivados/modelos/taxa_fontes.json (mr_empilhado: frota, linha, razao_mr73_mpm10_verde, lr_linha_dentro_da_frota; fontes voie_sintoma_fixo e voie_sintoma_trem)",
+f"""<p>A tabela anterior misturava duas coisas: a linha e o trem. A Amarela e a Azul só têm o trem antigo, e a Laranja só o novo.</p>
+<p>A regressão separa as duas. O trem pesa muito mais: o MR-73 falha cerca de {br(RZ["valor"], 0)} vezes mais que o MPM-10 no mesmo trilho. A linha pesa menos, até cerca de {br(_LIN_MAX, 1)} vezes. Com o mesmo trem, a Laranja é a pior.</p>
+<p>À direita, as falhas da própria via por linha. A Amarela se destaca, mas o intervalo é largo.</p>
+<p>Cuidado: o efeito do trem só pode ser medido na Verde, onde os dois rodam. Supomos que ele vale igual nas outras linhas.</p>""", "compacto")
+
+# renovações durante a amostra (fontes/verificacao/renovacoes_2019_2026.md) e a via por linha e ano
+_KMA = Counter()
+for r in csv.DictReader(open(os.path.join(REPO, "dados", "derivados", "exposicao", "frota_mensal.csv"), encoding="utf-8"), delimiter=";"):
+    if r["mes"] <= _FIM:
+        _KMA[(r["linha"], r["mes"][:4])] += float(r["km_carro"] or 0)
+_VFA = Counter((e["linha"], e["data_servico"][:4]) for e in _E if e["fonte"] == "voie_sintoma_fixo")
+_ANOS_A = [str(a) for a in range(2019, int(_FIM[:4]) + 1)]
+_TXV = {(l, a): _VFA[(l, a)] / (_KMA[(l, a)] / 1e6) for l in ORDEM for a in _ANOS_A}
+_PICOS = {k for k, v in _TXV.items() if v > 4}
+assert _PICOS == {("amarela", "2024"), ("azul", "2024")}, f"revisar o texto do slide das renovações: {_PICOS}"
+_TXV_FORA = [v for k, v in _TXV.items() if k not in _PICOS]
+def _cel_txv(l, a):
+    v = _TXV[(l, a)]; cls = ' class="num pico"' if (l, a) in _PICOS else ' class="num"'
+    return f"<td{cls}>{br(v, 1)}</td>"
+RENOVACOES = slide("Como as linhas falham · renovações durante a amostra", "Houve obras durante toda a amostra, mas a via não muda de patamar em nenhuma linha", f"""
+<div class="cols c-50-50">
+  <div>
+    <h3>O que foi renovado ou mudou, 2019 a 2026</h3>
+    <table class="tab tab-fora tab-reno">
+      <tbody>
+        <tr><td><b>Réno-Systèmes 4 e 5</b><br><span class="muted">energia, sinalização, ventilação, suportes de trilho e barras-guia</span></td><td>todas</td><td class="num">2015–2025</td></tr>
+        <tr><td><b>Intertravamento eletrônico</b><br><span class="muted">16 locais, sem data por estação</span></td><td>todas</td><td class="num">2018 e 2022</td></tr>
+        <tr><td><b>Aparelhos de mudança de via</b></td><td>não informada</td><td class="num">desde 2024</td></tr>
+        <tr><td><b>17 trens Azur</b></td><td>Verde</td><td class="num">2020–2021</td></tr>
+        <tr><td><b>Côte-Vertu:</b> via, sinalização e garagem</td><td>Laranja</td><td class="num">2019–2022</td></tr>
+        <tr><td><b>Saint-Michel, Fabre e D'Iberville fechadas</b></td><td>Azul</td><td class="num">out.–nov. 2024</td></tr>
+        <tr><td><b>Troca das pistas de rolamento</b></td><td>—</td><td class="num">só a partir de out. 2026</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <h3>Falhas da via (sintoma fixo) por milhão de km</h3>
+    <p class="sub">se uma renovação tivesse mudado a via de uma linha, a taxa mudaria de patamar</p>
+    <table class="tab tab-num tab-anos">
+      <thead><tr><th></th>{"".join(f"<th>{a[2:]}</th>" for a in _ANOS_A)}</tr></thead>
+      <tbody>{"".join(f'<tr><td>{chip(l)}{NOME[l]}</td>' + "".join(_cel_txv(l, a) for a in _ANOS_A) + "</tr>" for l in ORDEM)}</tbody>
+    </table>
+    <p class="corpo-sm">Fora de 2024 na Amarela e na Azul, fica entre {br(min(_TXV_FORA), 1)} e {br(max(_TXV_FORA), 1)}, sem queda permanente em nenhuma linha. O pico da Azul coincide com o fechamento de Saint-Michel por vigas degradadas.</p>
+  </div>
+</div>
+<div class="faixa">
+  <div><span class="label">O modelo já controla</span>O efeito de cada ano na rede inteira, a frota medida dia a dia (a chegada dos Azur à Verde) e as horas fechadas e de greve.</div>
+  <div><span class="label">Não controla</span>Um evento numa linha só, como 2024 na Amarela e na Azul: ele pode inflar o efeito de linha da via. Os programas Réno não têm data por linha nas fontes.</div>
+</div>""",
+"fontes/verificacao/renovacoes_2019_2026.md (intervenções, com as URLs); dados/derivados/exposicao/frota_mensal.csv; dados/derivados/eventos/eventos_tecnicos.csv",
+"""<p>A dúvida: se uma linha teve a via renovada no meio da amostra, a comparação entre linhas fica enviesada.</p>
+<p>Houve obras o tempo todo, mas os programas da STM não dizem a data por linha. A troca das pistas de rolamento, que seria a renovação de via mais direta, só começa em outubro de 2026, depois da amostra.</p>
+<p>O teste nos dados: as falhas da via por km ficam no mesmo patamar em todas as linhas de 2019 a 2026. A exceção é 2024 na Amarela e na Azul; na Azul, bate com o fechamento de Saint-Michel. Esse ano pode inflar o efeito de linha da via nessas duas.</p>""", "compacto")
+
 _TX = TAXA
 QA = [
     ("Por que Montreal, e não São Paulo?", "Metrô, CPTM e ViaQuatro só publicam PDF, e a API Direto dos Trens exige token. A STM publica cada incidente de 2019 a 2026, com início, retomada, causa, linha e local, sob CC BY 4.0 (D01)."),
@@ -2322,7 +2426,7 @@ INTERNA = [CAPA_INT, AGENDA, LINHA_TEMPO,
            divisor(2, "Dados", "Como garantimos os números, o que entra no estudo e como tratamos os dados"),
            PROVENIENCIA, DADOS_INC, FORA_TIPO, FORA_LINHA, NORMALIZA,
            divisor(3, "Como as linhas falham", "Indicadores, trens, fatores, falhas em rajadas e linhas que param juntas"),
-           pega("Indicadores por linha"), MEDIDAS, FROTA, pega("Por que as linhas falham · fatores"),
+           pega("Indicadores por linha"), MEDIDAS, FROTA, LINHA_TREM, RENOVACOES, pega("Por que as linhas falham · fatores"),
            pega("Por que as linhas falham · agrupamento"), pega("Por que as linhas falham · linhas que param juntas"),
            divisor(4, "Simulador e linhas novas", "Monte Carlo, políticas de tolerância a falhas e os projetos testados"),
            MONTE_CARLO, pega("Simulador · como funciona"), POLITICAS_O_QUE, pega("Políticas"), VIAGEM,
