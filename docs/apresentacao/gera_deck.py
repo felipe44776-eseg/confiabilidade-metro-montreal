@@ -990,16 +990,16 @@ slide("Limitações", "Três coisas que os dados públicos não trazem", """
 
 # 15 --------------------------------------------------------------
 _DISP = [POL["disponibilidade_dia_util"][l]["media"] * 100 for l in ORDEM]
-slide("Conclusões · após a revisão", f"Linhas com {br(min(_DISP), 1)}% a {br(max(_DISP), 1)}% de disponibilidade num dia útil (simulador), numa rede que depende de poucos pontos", f"""
+slide("Conclusões", f"Linhas com {br(min(_DISP), 1)}% a {br(max(_DISP), 1)}% de disponibilidade num dia útil, numa rede que depende de poucos pontos", f"""
 <ol class="conclusoes">
-  <li><h3>As falhas se agrupam e têm causa comum.</h3><p>No tempo, uma falha dobra ou quase triplica a chance de outra na hora seguinte. No espaço, eventos que param Verde e Laranja juntas tiram a única redundância de rota do centro. Tratar as falhas como independentes subestima o risco.</p></li>
-  <li><h3>A política que mais rende ataca os equipamentos fixos.</h3><p>Eles são mais da metade das falhas. A operação degradada reduz mais os minutos parados do que reservar trens; a reserva protege a oferta.</p></li>
-  <li><h3>Uma linha nova vale pelos caminhos alternativos que cria.</h3><p>Ramais ampliam a cobertura, mas não criam redundância. O maior ponto único de falha é a dependência da Azul em relação à Laranja.</p></li>
+  <li><h3>As falhas vêm em grupos e param linhas juntas.</h3><p>Depois de uma falha, a chance de outra na hora seguinte quase dobra nos trens e quase triplica na via. E eventos nas estações de correspondência param a Laranja junto com as outras. Tratar as falhas como independentes subestima o risco.</p></li>
+  <li><h3>O que mais rende é reabrir a via em marcha lenta.</h3><p>Via, energia e sinalização são mais da metade das falhas. A operação degradada reduz mais os minutos parados do que ter trens de reserva; a reserva garante os trens no começo do dia.</p></li>
+  <li><h3>Uma linha nova vale pelo caminho novo que cria.</h3><p>Prolongamentos esticam a linha sem criar outro caminho. O maior ponto fraco é a Azul depender da Laranja: a ligação Atwater–Université-de-Montréal dá a ela um caminho sem a Laranja.</p></li>
 </ol>
 <div class="faixa">
-  <div><span class="label">Revisão de 2026-11</span>A frota pesa mais que a linha (MR-73 falha cerca de {br(RZ["valor"], 0)} vezes mais que o MPM-10 na Verde), e o surto de 2024 é de registro nos terminais. As três conclusões continuam valendo com os números revistos.</div>
-  <div><span class="label">Limite do modelo</span>O efeito de um ano não se transfere para o seguinte: a previsão precisa carregar a incerteza entre anos. Somar fontes independentes agrupa menos que o observado nos equipamentos fixos da Verde.</div>
-  <div><span class="label">Próximos passos</span>Pedir à STM passageiros diários, posição das subestações e tempo de reparo; repetir o backtest com o motor TypeScript.</div>
+  <div><span class="label">O trem pesa mais que a linha</span>No mesmo trilho, o MR-73, de 1976, falha cerca de {br(RZ["valor"], 0)} vezes mais que o MPM-10, de 2016.</div>
+  <div><span class="label">Limite</span>Medimos os equipamentos, não os passageiros. E o que acontece num ano não se repete igual no seguinte.</div>
+  <div><span class="label">Próximos passos</span>Analisar os incidentes de passageiros e a idade de cada trecho; pedir à STM os passageiros por dia e o tempo de conserto.</div>
 </div>""",
 "docs/relatorio/relatorio.md §7; disponibilidade em dia útil: fontes/verificacao/politicas.md",
 """<p>Três conclusões para a decisão, na ordem das perguntas do início.</p>
@@ -1496,8 +1496,8 @@ RESUMO = slide("Resumo · a resposta antes dos detalhes",
   </div>
 </div>
 <div class="faixa">
-  <div><span class="label">Por que confiar</span>{N_RECALC} números refeitos por um segundo programa, com zero diferença. A validação pré-registrada não passou e continua publicada.</div>
-  <div><span class="label">Versão</span>Números após a revisão de 2026-11 (v1.2.0). A versão anterior continua no ar em /versoes/v1.1.0/.</div>
+  <div><span class="label">Por que confiar</span>{N_RECALC} números refeitos por um segundo programa: zero diferença.</div>
+  <div><span class="label">O que medimos</span>Falhas de trens e de infraestrutura, 2019 a 2026. Incidentes de passageiros ficam fora.</div>
 </div>""",
 "dados/derivados/simulador/expansao.json e politicas.json; docs/relatorio/relatorio.md (Resumo e §7); fontes/verificacao/expansao.md",
 f"""<p>Começar pela resposta: o objetivo do trabalho era dizer que linha melhor resolve a movimentação das pessoas na rede, do ponto de vista de falhas.</p>
@@ -1508,40 +1508,35 @@ f"""<p>Começar pela resposta: o objetivo do trabalho era dizer que linha melhor
 
 CONFIANCA = slide("Confiança e limites", "Por que confiar nos números, e o que o modelo não sabe", f"""
 <div class="kpis kpis-ex">
-  <div class="kpi"><div class="kpi-v">{N_RECALC}</div><div class="kpi-l">números refeitos por um segundo programa a cada publicação: zero diferença</div></div>
-  <div class="kpi"><div class="kpi-v">{br(VERSOES[0][3], 1)}%</div><div class="kpi-l">cobertura da validação pré-registrada contra 2025 e 2026, com 80% exigidos: não passou e continua publicada</div></div>
-  <div class="kpi"><div class="kpi-v">{br(VERSOES[3][3], 1)}%</div><div class="kpi-l">cobertura da regra corrigida, testada em outro período</div></div>
-  <div class="kpi"><div class="kpi-v">{REV_NO_IC} de {N_COMP}</div><div class="kpi-l">médias do simulador, por linha e família, dentro do intervalo do observado em 2025</div></div>
+  <div class="kpi"><div class="kpi-v">{N_RECALC}</div><div class="kpi-l">números refeitos por um segundo programa a cada atualização do site: zero diferença</div></div>
+  <div class="kpi"><div class="kpi-v">{br(VERSOES[0][3], 1)}%</div><div class="kpi-l">previsão de 2025 e 2026 contra o que aconteceu: a meta era 80% dos casos dentro da faixa; não passou, e o resultado continua publicado</div></div>
+  <div class="kpi"><div class="kpi-v">{br(VERSOES[3][3], 1)}%</div><div class="kpi-l">a mesma previsão, com a causa corrigida, testada em outro período</div></div>
+  <div class="kpi"><div class="kpi-v">{REV_NO_IC} de {N_COMP}</div><div class="kpi-l">médias do simulador que caem dentro da faixa do que aconteceu em 2025</div></div>
 </div>
 <div class="cols c-50-50" style="margin-top:26px">
   <div>
     <div class="label">Por que confiar</div>
     <ul class="lista lista-sm">
-      <li><b>Cópia exata dos dados</b> em três Releases do GitHub, com o SHA-256 de cada arquivo.</li>
-      <li><b>O site não é publicado</b> se a conferência ou os testes falham.</li>
-      <li><b>Critério escrito antes</b> de ver o resultado: o que não passa vira exceção, e o critério não muda.</li>
+      <li><b>Cópia exata dos dados</b> guardada no GitHub, com a "impressão digital" de cada arquivo.</li>
+      <li><b>O site não é atualizado</b> se a conferência ou os testes falham.</li>
+      <li><b>Meta escrita antes</b> de ver o resultado: o que não passa fica registrado, e a meta não muda.</li>
     </ul>
   </div>
   <div>
     <div class="label">O que o modelo não sabe</div>
     <ul class="lista lista-sm">
       <li><b>Passageiros por dia:</b> não são públicos. Tudo é ponderado pela oferta de trens.</li>
-      <li><b>Tempo de reparo na oficina:</b> hipótese, com sensibilidade de 0,5 a 4 dias.</li>
-      <li><b>Setores "Service aux trains" e "TCPE":</b> sem definição pública; "energia" é dedução nossa.</li>
-      <li><b>Traçado das candidatas:</b> aproximado em linha reta entre estações.</li>
+      <li><b>Incidentes causados por passageiros ficam fora:</b> a disponibilidade é a dos equipamentos, não a do serviço inteiro.</li>
+      <li><b>Tempo de conserto na oficina:</b> hipótese, de 0,5 a 4 dias.</li>
+      <li><b>Parte dos dados está incompleta:</b> 6% das falhas sem posição; condição do tempo em 45,8% das horas.</li>
     </ul>
   </div>
 </div>""",
 "fontes/FONTES.md; fontes/verificacao/backtest.md e revalidacao.md; specs/012 e 020; docs/relatorio/relatorio.md §5 e §6",
 f"""<p>Dois lados da mesma moeda. À esquerda, o que faz o número ser confiável: dados com hash, um segundo programa que refaz as contas e uma validação com critério escrito antes.</p>
 <p>A validação pré-registrada não passou ({br(VERSOES[0][3], 1)}% contra 80%): 2024 teve um tipo de registro nos terminais que inflou as falhas, e o modelo levou isso para 2025. Não mexemos no critério; testamos a regra nova em outro período.</p>
-<p>À direita, o que fica fora. A principal limitação é não ter passageiros.</p>
+<p>À direita, o que fica fora. A principal limitação é não ter passageiros. E os incidentes causados por passageiros, que também param o serviço, ficaram fora: medimos os equipamentos.</p>
 <p><b>Tempo:</b> 1 min.</p>""")
-
-EXECUTIVA = [CAPA_EXEC, RESUMO, pega("A pergunta"), pega("Indicadores por linha"), pega("Por que as linhas falham · fatores"),
-             pega("Por que as linhas falham · agrupamento"), pega("Por que as linhas falham · linhas que param juntas"), pega("Simulador · como funciona"), pega("Políticas"),
-             pega("Que linha construir"), CONFIANCA, pega("Conclusões"), pega("Confira")]
-monta(EXECUTIVA, OUT_EXEC, "Confiabilidade do metrô de Montreal · apresentação executiva")
 
 # ================================================================ deck interno (equipe): tudo o que foi feito
 import subprocess
@@ -1983,12 +1978,18 @@ def _mmss(s):
 def _assunto(s):
     """Assunto do slide: o começo do sobretítulo, ou o título."""
     return (s["eyebrow"].split(" · ")[0] or "Capa") if s["eyebrow"] else "Capa"
-_TEMPOS = [_seg(s["notas"]) for s in EXECUTIVA]
-assert all(_TEMPOS), "slide da executiva sem tempo nas notas"
-ROTEIRO_EXEC = slide("Para a apresentação à turma", f"A executiva tem {len(EXECUTIVA)} slides e cerca de {round(sum(_TEMPOS) / 60)} minutos", f"""
+ROTEIRO_EXEC = slide("Para a apresentação à turma", "", "", "docs/apresentacao/index.html (notas de cada slide)",
+"""<p>Os tempos somam as notas de cada slide da executiva. A divisão de quem fala é da equipe.</p>""", "compacto")
+
+def preenche_roteiro(execu):
+    """O roteiro da executiva, no deck interno, é montado depois que a lista final da executiva existe."""
+    tempos = [_seg(s["notas"]) for s in execu]
+    assert all(tempos), "slide da executiva sem tempo nas notas"
+    ROTEIRO_EXEC["titulo"] = f"A executiva tem {len(execu)} slides e cerca de {round(sum(tempos) / 60)} minutos"
+    ROTEIRO_EXEC["corpo"] = f"""
 <div class="cols c-60-40">
   <table class="tab tab-rot"><thead><tr><th class="num">#</th><th>Assunto</th><th class="num">Tempo</th><th class="num">Acumulado</th></tr></thead><tbody>
-  {"".join(f'<tr><td class="num">{i}</td><td>{_assunto(s)}</td><td class="num">{_mmss(t)}</td><td class="num muted">{_mmss(sum(_TEMPOS[:i]))}</td></tr>' for i, (s, t) in enumerate(zip(EXECUTIVA, _TEMPOS), 1))}
+  {"".join(f'<tr><td class="num">{i}</td><td>{_assunto(s)}</td><td class="num">{_mmss(t)}</td><td class="num muted">{_mmss(sum(tempos[:i]))}</td></tr>' for i, (s, t) in enumerate(zip(execu, tempos), 1))}
   </tbody></table>
   <div>
     <div class="label">Como usar</div>
@@ -2000,9 +2001,7 @@ ROTEIRO_EXEC = slide("Para a apresentação à turma", f"A executiva tem {len(EX
       <li><b>Tempos</b> vêm das notas de cada slide; a divisão de quem fala é da equipe.</li>
     </ul>
   </div>
-</div>""",
-"docs/apresentacao/index.html (notas de cada slide)",
-"""<p>Os tempos somam as notas de cada slide da executiva. Dá para dividir em blocos: abertura e resposta (1 e 2), medição e modelos (3 a 7), simulador e escolhas (8 a 10), confiança e conclusões (11 a 13).</p>""", "compacto")
+</div>"""
 
 # ---------------------------------------------------------------- slides da interna refeitos com o retorno da equipe (2026-11-17)
 import hashlib
@@ -2103,7 +2102,8 @@ MEDIDAS = slide("Indicadores · confiabilidade além da disponibilidade", "Todas
 """<p>A disponibilidade de todas as linhas fica entre 99,6% e 99,9%, e esse número quase não ajuda a comparar.</p>
 <p>Por isso olhamos também os minutos parados por ano, a chance de passar um dia inteiro sem falha e quanto tempo leva para o serviço voltar. A Verde e a Laranja ficam sem falha em menos da metade dos dias; a Amarela, em três de cada quatro.</p>
 <p>A última linha é a causa provável: na Verde, na Amarela e na Azul, os trens MR-73 somam a maior parte dos minutos parados; na Laranja, a via.</p>
-<p>O nosso objetivo é reduzir o tempo até o serviço voltar.</p>""", "compacto")
+<p>O nosso objetivo é reduzir o tempo até o serviço voltar.</p>
+<p><b>Tempo:</b> 1 min 30 s.</p>""", "compacto")
 
 MONTE_CARLO = slide("Simulador · simulação de Monte Carlo", "Simulamos o mesmo dia milhares de vezes, sorteando as falhas, para ver o que costuma acontecer", """
 <div class="fluxo">
@@ -2121,7 +2121,8 @@ MONTE_CARLO = slide("Simulador · simulação de Monte Carlo", "Simulamos o mesm
 "docs/decisoes/registro_de_decisoes.md (D28, D29); specs/009-monte-carlo; docs/guia_simulador.md",
 """<p>O coração do simulador é a simulação de Monte Carlo: em vez de calcular uma fórmula, simulamos o dia de verdade, trem a trem, milhares de vezes, cada vez com falhas sorteadas de um jeito diferente.</p>
 <p>Por que isso é bom: as falhas são aleatórias, se agrupam e param linhas juntas. Uma fórmula simples não captura isso; a simulação sim.</p>
-<p>Para comparar uma política, simulamos os mesmos dias com e sem ela. Assim a diferença é só da política.</p>""")
+<p>Para comparar uma política, simulamos os mesmos dias com e sem ela. Assim a diferença é só da política.</p>
+<p><b>Tempo:</b> 1 min.</p>""")
 
 POLITICAS_O_QUE = slide("Simulador · o que é cada política", "Seis formas de o metrô tolerar uma falha, testadas no simulador", """
 <div class="cards c3 cards-alto">
@@ -2135,7 +2136,8 @@ POLITICAS_O_QUE = slide("Simulador · o que é cada política", "Seis formas de 
 "app/src/motor/politicas.ts e hipoteses.ts; specs/008-politicas; docs/guia_simulador.md",
 """<p>Antes do resultado, o que é cada política. Todas foram testadas uma de cada vez, nos mesmos dias simulados.</p>
 <p>Operação degradada não é "o metrô ficar lento": é reabrir o trecho com defeito em marcha lenta, em vez de esperar o conserto. Retirada do trem não é tirar o trem da frota para sempre: é tirá-lo da via para a oficina, para os outros andarem.</p>
-<p>Os números em "hipótese" não estão nos dados públicos; podem ser mudados no simulador.</p>""")
+<p>Os números em "hipótese" não estão nos dados públicos; podem ser mudados no simulador.</p>
+<p><b>Tempo:</b> 45 s.</p>""")
 
 # todos os projetos testados, com a disponibilidade de cada um
 _MPA = EXP["rede_atual"]["minutosParAno"]["media"]
@@ -2173,7 +2175,8 @@ PROJETOS = slide("Que linha construir · todos os projetos testados", f"Compara�
 <p class="nota">Dia útil, entre os pares de estações de hoje, ponderado pela oferta; de 50 mil a 200 mil estados sorteados por projeto. As versões anteriores usam as mesmas {br(_NORM_V1_TEC)} falhas técnicas, sem passageiros; mudou a duração das falhas (faixa oficial da STM), que corrigiu sobretudo a Azul e, com ela, o prolongamento até Anjou. Os ramais pioram porque esticam a linha sem criar caminho novo.</p>""",
 "dados/derivados/simulador/expansao.json (rede_atual, candidatas sem retorno parcial e busca exaustiva); fontes/verificacao/expansao.md",
 f"""<p>Aqui estão todas as hipóteses de projeto que testamos, lado a lado. A coluna mais fácil de ler é a dos minutos: hoje, cada par de estações fica em média {br(_MPA)} minutos por ano sem caminho num dia útil.</p>
-<p>A ligação Atwater–Université-de-Montréal corta mais minutos. A Rosa com a Azul até Anjou é a melhor proposta oficial. Os ramais, inclusive o prolongamento da Azul em obras, pioram um pouco: esticam a linha sem criar outro caminho.</p>""", "compacto")
+<p>A ligação Atwater–Université-de-Montréal corta mais minutos. A Rosa com a Azul até Anjou é a melhor proposta oficial. Os ramais, inclusive o prolongamento da Azul em obras, pioram um pouco: esticam a linha sem criar outro caminho.</p>
+<p><b>Tempo:</b> 1 min.</p>""", "compacto")
 
 RESUMO_TEC = slide("Como conferimos e revisamos · resumo", "O que fizemos depois da primeira versão, em quatro pontos", f"""
 <div class="cards c2 cards-alto">
@@ -2306,7 +2309,8 @@ FROTA = slide("Como as linhas falham · modelo e fabricante dos trens", "Dois tr
 "dados/derivados/exposicao/frota_mensal.csv (km real da STM por frota); dados/derivados/eventos/eventos_tecnicos.csv (fontes mr73 e mpm10); taxa_fontes.json; en.wikipedia.org/wiki/MR-73 e /MPM-10 (2026-11-17)",
 """<p>A pergunta: os trens são de modelos e fabricantes diferentes? São. O MR-73 é da Bombardier, dos anos 1970; o MPM-10 é de um consórcio Bombardier e Alstom, de 2016.</p>
 <p>E isso explica boa parte da diferença entre as linhas nas falhas de trem: as linhas só com o MR-73 falham bem mais por km. Na Verde, onde os dois rodam no mesmo trilho, o trem antigo falha cerca de dez vezes mais.</p>
-<p>Para os incidentes de passageiros, os dados não dizem qual trem estava envolvido. Fica para a análise seguinte.</p>""", "compacto")
+<p>Para os incidentes de passageiros, os dados não dizem qual trem estava envolvido. Fica para a análise seguinte.</p>
+<p><b>Tempo:</b> 1 min 15 s.</p>""", "compacto")
 
 # efeito da linha e efeito do trem, separados pela regressão (taxa_fontes.json)
 _MEC = {c["termo"]: c for c in TF["mr_empilhado"]["coeficientes"]}
@@ -2403,7 +2407,7 @@ _TX = TAXA
 QA = [
     ("Por que Montreal, e não São Paulo?", "Metrô, CPTM e ViaQuatro só publicam PDF, e a API Direto dos Trens exige token. A STM publica cada incidente de 2019 a 2026, com início, retomada, causa, linha e local, sob CC BY 4.0 (D01)."),
     ("Por que a abertura do serviço pesa tanto?", f"Entre 5 e 6 h a chance de falha por trem é ×{br(_AB[1][0], 1)} nos trens e ×{br(_AB[2][0], 1)} na via e nos equipamentos. Na energia, ×{br(_TCPE_AB, 1)}: lemos isso como falha ao ligar a rede de manhã, quando tudo é energizado de uma vez."),
-    ("O que é o β da causa comum?", f"A fração das falhas de uma linha que derruba outra junto. Verde com Laranja, nas falhas de equipamento fixo: {br(BETA_VL_EF['beta_a'], 3)}. É pouco, mas é o evento que tira os dois caminhos do centro ao mesmo tempo."),
+    ("Várias linhas param mesmo ao mesmo tempo?", f"A STM registra um incidente só, com várias linhas e uma duração. Foram {len(_CC)}, {_N_CORR} deles numa estação de correspondência, todas na Laranja. Metade durou menos de 5 min. Os dados não dizem se cada linha parou o tempo todo; o simulador supõe que sim."),
     ("Se a validação não passou, por que confiar?", f"O critério foi escrito antes e não mudou. A falha tem causa conhecida (o registro de 2024 nos terminais), a regra nova passou em outro período ({br(VERSOES[3][3], 1)}%) e o simulador revisto reproduz {REV_NO_IC} de {N_COMP} médias de 2025."),
     ("Por que Atwater–Université-de-Montréal, se ninguém propôs essa ligação?", f"Ela saiu de uma busca entre {N_LIGACOES} ligações diretas de até 3 km. É hipótese de traçado, não projeto: o valor dela é mostrar o ponto fraco, a Azul presa à Laranja."),
     ("+0,063 ponto percentual não é pouco?", f"A rede já tem {br(DISP_OD_ATUAL, 1)}% de disponibilidade, e o ganho é quase o dobro da melhor proposta oficial. Na viagem de Atwater a Université-de-Montréal, o tempo sem caminho cai de {LN_SEM[0]} para {LN_SEM[1]} min por dia."),
@@ -2442,4 +2446,11 @@ for i, s in enumerate(INTERNA, 1):
         _AG.append(f'<li><span class="ag-n">{n}</span><span class="ag-t">{t}</span><span class="ag-s">{sub}</span><span class="ag-p">slide {i}</span></li>')
 assert len(_AG) == 5
 AGENDA["corpo"] = '<ol class="agenda">' + "".join(_AG) + "</ol>"
+# ================================================================ deck executivo (turma), versão final com o retorno da equipe (D72)
+EXECUTIVA = [CAPA_EXEC, RESUMO, pega("A pergunta"), MEDIDAS, FROTA, pega("Por que as linhas falham · fatores"),
+             pega("Por que as linhas falham · agrupamento"), pega("Por que as linhas falham · linhas que param juntas"),
+             MONTE_CARLO, POLITICAS_O_QUE, pega("Políticas"), pega("Que linha construir · teste"), PROJETOS,
+             CONFIANCA, pega("Conclusões"), pega("Confira")]
+preenche_roteiro(EXECUTIVA)
+monta(EXECUTIVA, OUT_EXEC, "Confiabilidade do metrô de Montreal · apresentação executiva")
 monta(INTERNA, OUT_INT, "Confiabilidade do metrô de Montreal · apresentação interna da equipe")

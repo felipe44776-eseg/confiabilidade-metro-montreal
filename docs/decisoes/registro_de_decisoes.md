@@ -554,3 +554,30 @@ Origem: perguntas da reunião de 2026-10-27 (bitola, fabricantes, via ou trem, t
   - O modelo já controla o efeito de cada ano na rede, a frota dia a dia, as horas fechadas e as greves.
   - O modelo não controla um evento numa linha só, que pode inflar o efeito de linha da via na Amarela e na Azul.
 - **Registro:** `docs/apresentacao/gera_deck.py`, `fontes/verificacao/renovacoes_2019_2026.md`, os dois HTML e os dois PDF.
+
+### D72 — Versão final da executiva, com o retorno dado na interna
+
+- **Decisão (do Felipe, 2026-11-17):** a executiva recebe as mudanças feitas na interna e passa de 13 para 16 slides, cerca de 18 minutos. A ordem:
+  1. Capa
+  2. Resumo
+  3. Pergunta
+  4. Confiabilidade além da disponibilidade, com a causa provável
+  5. Modelo e fabricante dos trens
+  6. Fatores
+  7. Falhas em grupo
+  8. Linhas que param juntas
+  9. Monte Carlo
+  10. O que é cada política
+  11. Resultado das políticas
+  12. Que linha construir
+  13. Todos os projetos
+  14. Confiança e limites
+  15. Conclusões
+  16. Confira
+- **Saíram da executiva:** os indicadores em barras, substituídos pela tabela de confiabilidade, e o slide do simulador, substituído pelo do Monte Carlo.
+- **Textos em linguagem comum:**
+  - Confiança e limites passa a dizer que os incidentes de passageiros ficam fora, ou seja, que a disponibilidade é a dos equipamentos.
+  - As conclusões trazem o efeito do trem e os próximos passos da equipe: incidentes de passageiros e idade de cada trecho.
+  - A pergunta provável sobre o β virou "várias linhas param mesmo ao mesmo tempo?".
+- **Roteiro:** o roteiro da executiva, no deck interno, passa a ser montado depois da lista final, com os tempos das notas.
+- **Registro:** `docs/apresentacao/gera_deck.py`, os dois HTML e os dois PDF.
