@@ -519,3 +519,18 @@ Origem: perguntas da reunião de 2026-10-27 (bitola, fabricantes, via ou trem, t
 - **Números:** nenhum número de modelo mudou. Os novos vêm de `eventos_causa_comum.csv`, `eventos_tecnicos.csv`, `linhas.json`, `expansao.json`, `taxa_*.json` e do CSV bruto da STM, com asserções.
   - Lemos os códigos de local da STM assim: `LG`, `B`/`BR`, `SN` e `JT` são as estações de correspondência; `L` seguido dos números das linhas, só as linhas; `9999`, sem local. A leitura é nossa: a STM não documenta esses códigos.
 - **Registro:** `docs/apresentacao/gera_deck.py`, os dois HTML e os dois PDF.
+
+### D70 — Incidentes fora do estudo e modelo dos trens, para comparação
+
+- **Decisão (do Felipe, 2026-11-17):** a interna ganha três slides de comparação, para responder a quem perguntar. É o ponto de partida de uma análise que a equipe vai fazer.
+  - **Incidentes fora do estudo, por tipo.** Passageiros, "outros" sem detalhe e operação, comparados com as falhas técnicas: quantidade, duração pela faixa oficial, variação de um dia para outro, entre meses, por ano e por hora.
+  - **Os mesmos incidentes, por linha.** Inclui os tipos de incidente de passageiros.
+  - **Modelo e fabricante dos trens por linha.** Parcela de km de cada frota e falhas de trem por milhão de km.
+- **O que se viu:**
+  - Os "outros" duram até 2 min em 99% dos casos.
+  - Os incidentes de passageiros param 5 min ou mais com a mesma frequência das falhas técnicas (24% contra 23%) e são quase o dobro. A disponibilidade publicada é a dos equipamentos, não a do serviço inteiro.
+  - Passageiros pesam na Verde e na Laranja, e falhas técnicas, na Amarela e na Azul.
+  - O MR-73 tem de 14 a 18 falhas de trem por milhão de km; o MPM-10, de 2 a 3. Isso explica boa parte da diferença técnica entre as linhas.
+  - A STM marca todo incidente de passageiro como "Non affecté". Por isso o efeito do modelo de trem nesses incidentes não dá para testar com estes dados.
+- **Fontes:** o CSV de incidentes da STM, com o hash conferido contra o manifesto; `frota_mensal.csv`; `eventos_tecnicos.csv`. O fabricante e o ano de cada trem não estão nos dados da STM: vêm da Wikipedia (artigos MR-73 e MPM-10, consultados em 2026-11-17), citada no slide. A página da STM sobre o Azur não respondeu na consulta.
+- **Registro:** `docs/apresentacao/gera_deck.py`, os dois HTML e os dois PDF.

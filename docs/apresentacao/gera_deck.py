@@ -1279,6 +1279,10 @@ figcaption{font-size:12.5px;color:var(--muted);margin-top:6px}
 .tab-proj td .muted{font-size:13px}
 .tab-proj tr.dest td{background:var(--accent-soft)}
 .tab-proj tr.base td{color:var(--muted)}
+.tab-fora{font-size:15.5px;line-height:1.3}
+.tab-fora td{padding:7px 12px 7px 0;vertical-align:middle}
+.tab-fora td .muted{font-size:13px}
+.tab-fora tr.dest td{background:var(--accent-soft)}
 .lims{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
 .lim{border-top:4px solid var(--turq);padding-top:14px}
 .lim-n{font-size:40px;font-weight:700;color:var(--navy);line-height:1;margin-bottom:10px}
@@ -2169,6 +2173,128 @@ RESUMO_TEC = slide("Como conferimos e revisamos · resumo", "O que fizemos depoi
 """<p>Um slide para tudo o que veio depois da primeira versão: o teste da previsão, as conferências automáticas, o revisor e a revisão de novembro.</p>
 <p>A mensagem: o resultado não depende de confiar em nós. E quando a previsão não passou, a meta não foi mudada.</p>""")
 
+# ---------------------------------------------------------------- incidentes fora do estudo, comparados, e frota por linha (2026-11-17)
+import datetime as _dt, statistics as _st
+_CATB = {"Autres": "Outros", "Clientèle": "Passageiros", "Équipements fixes": "Técnica", "Matériel roulant": "Técnica",
+         "Exploitation trains": "Operação", "#N/A": "Sem causa"}
+_TIPOS = [("Passageiros", "Passageiros"), ("Outros", "Outros, sem detalhe"), ("Operação", "Operação dos trens"), ("Técnica", "Falhas técnicas (estudadas)")]
+_FIM = max(x["Année civile/mois"] for x in _BRUTOS)
+assert _FIM == "2026-06", _FIM
+_NDIAS = (_dt.date(2026, 6, 30) - _dt.date(2019, 1, 1)).days + 1
+_DIAS_ISO = [(_dt.date(2019, 1, 1) + _dt.timedelta(i)).isoformat() for i in range(_NDIAS)]
+_POR_DIA = {c: Counter() for c, _ in _TIPOS}; _POR_MES = {c: Counter() for c, _ in _TIPOS}; _POR_ANO = {c: Counter() for c, _ in _TIPOS}
+_FAIXA = {c: Counter() for c, _ in _TIPOS}; _HORA = {c: Counter() for c, _ in _TIPOS}
+for x in _BRUTOS:
+    c = _CATB[x["Cause primaire"]]
+    if c not in _POR_DIA:
+        continue
+    _POR_DIA[c][x["Jour calendaire"]] += 1; _POR_MES[c][x["Année civile/mois"]] += 1; _POR_ANO[c][x["Année civile"]] += 1
+    _FAIXA[c][x["Incident en minutes"]] += 1
+    if x["Heure de l'incident"][:2].isdigit():
+        _HORA[c][int(x["Heure de l'incident"][:2]) % 24] += 1
+_MESES = sorted({x["Année civile/mois"] for x in _BRUTOS})
+def _stats(c):
+    n = sum(_FAIXA[c].values()); d = [_POR_DIA[c][k] for k in _DIAS_ISO]; m = [_POR_MES[c][k] for k in _MESES]
+    curto = _FAIXA[c]["02 min et moins"] / n
+    cinco = sum(v for k, v in _FAIXA[c].items() if k[:2].isdigit() and int(k[:2]) >= 5) / n
+    trinta = _FAIXA[c]["30 min et plus"] / n
+    h = _HORA[c]; th = sum(h.values())
+    return dict(n=n, dia=n / _NDIAS, curto=curto, cinco=cinco, trinta=trinta, disp=_st.pvariance(d) / _st.fmean(d),
+                cvm=_st.pstdev(m) / _st.fmean(m), h5=h[5] / th, h78=(h[7] + h[8]) / th, h22=(h[22] + h[23] + h[0]) / th)
+_ST = {c: _stats(c) for c, _ in _TIPOS}
+assert _ST["Técnica"]["n"] == 8619 and _ST["Passageiros"]["n"] == _PRIM["Clientèle"]
+_NOMES_STM = {"Ligne verte": "verde", "Ligne orange": "laranja", "Ligne jaune": "amarela", "Ligne bleue": "azul"}
+_POR_LINHA = {l: Counter() for l in ORDEM}; _CLI_LINHA = {l: Counter() for l in ORDEM}
+for x in _BRUTOS:
+    l = _NOMES_STM.get(x["Ligne"])
+    if l:
+        _POR_LINHA[l][_CATB[x["Cause primaire"]]] += 1
+        if x["Cause primaire"] == "Clientèle":
+            _CLI_LINHA[l][x["Cause secondaire"]] += 1
+_PCT_L = {l: {c: _POR_LINHA[l][c] / sum(_POR_LINHA[l].values()) for c, _ in _TIPOS} for l in ORDEM}
+_CLI_SEM_TREM = all(x["Type de matériel"] == "Non affecté" for x in _BRUTOS if x["Cause primaire"] == "Clientèle")
+_NA_NOTA = ' (todos "Non affecté")' if _CLI_SEM_TREM else ""
+def _lin_fora(c, rot):
+    s = _ST[c]; cls = ' class="dest"' if c == "Técnica" else ""
+    return (f'<tr{cls}><td><b>{rot}</b></td><td class="num">{br(s["n"])}</td><td class="num">{br(s["dia"], 1)}</td>'
+            f'<td class="num">{_pct(s["curto"])}</td><td class="num">{_pct(s["cinco"])}</td><td class="num">{_pct(s["trinta"], 1)}</td>'
+            f'<td class="num">{br(s["disp"], 1)}</td><td class="num">{br(s["cvm"], 2)}</td></tr>')
+
+FORA_TIPO = slide("Dados · os incidentes que ficaram de fora, comparados", "Passageiros param o serviço tanto quanto as falhas técnicas; os \"outros\" quase não param", f"""
+<table class="tab tab-fora">
+  <thead><tr><th>Tipo</th><th class="num">Incidentes</th><th class="num">Por dia</th><th class="num">Até 2 min</th><th class="num">5 min<br>ou mais</th><th class="num">30 min<br>ou mais</th><th class="num">Variação de um dia<br>para outro (1 = acaso)</th><th class="num">Variação entre<br>meses (CV)</th></tr></thead>
+  <tbody>{"".join(_lin_fora(c, rot) for c, rot in _TIPOS)}</tbody>
+</table>
+<div class="tri">
+  <p><b>Passageiros seguem as pessoas:</b> caíram na pandemia ({br(_POR_ANO["Passageiros"]["2019"])} em 2019, {br(_POR_ANO["Passageiros"]["2021"])} em 2021) e voltaram ({br(_POR_ANO["Passageiros"]["2023"])} em 2023). Pesam à noite: {_pct(_ST["Passageiros"]["h22"])} entre 22 h e 1 h, {_pct(_ST["Passageiros"]["h5"])} às 5 h.</p>
+  <p><b>Falhas técnicas seguem os equipamentos:</b> {_pct(_ST["Técnica"]["h5"])} às 5 h, na abertura, e {_pct(_ST["Técnica"]["h78"])} no pico da manhã. São as que mais variam de um dia para outro: vêm em rajadas.</p>
+  <p><b>O que isso quer dizer:</b> a disponibilidade que publicamos é a dos equipamentos, não a do serviço inteiro. Cerca de {br(round(_ST["Passageiros"]["n"] * _ST["Passageiros"]["cinco"], -2))} incidentes de passageiros pararam 5 min ou mais, contra cerca de {br(round(_ST["Técnica"]["n"] * _ST["Técnica"]["cinco"], -2))} falhas técnicas.</p>
+</div>""",
+"dados/brutos/stm/incidents_metro.csv (Cause primaire, Incident en minutes, Heure de l'incident, Jour calendaire; SHA-256 conferido contra o manifesto)",
+"""<p>Comparação para responder a pergunta "e os incidentes que vocês tiraram?".</p>
+<p>Os "outros" são quase todos registros de até 2 minutos: tirá-los não muda o tempo parado. Os de passageiros são outra história: param o serviço com a mesma frequência de paradas longas que as falhas técnicas, e são quase o dobro.</p>
+<p>Ficaram de fora porque o trabalho mede a confiabilidade dos equipamentos. A ressalva precisa ser dita: a disponibilidade é a dos equipamentos, não a do serviço inteiro. Vamos aprofundar essa análise.</p>""", "compacto")
+
+FORA_LINHA = slide("Dados · os incidentes que ficaram de fora, por linha", "Passageiros pesam na Verde e na Laranja; falhas técnicas, na Amarela e na Azul", f"""
+<div class="cols c-60-40">
+  <table class="tab tab-fora">
+    <thead><tr><th>Linha</th><th class="num">Passageiros</th><th class="num">Outros</th><th class="num">Operação</th><th class="num">Falhas técnicas</th><th class="num">Passageiros por<br>falha técnica</th></tr></thead>
+    <tbody>{"".join(f'<tr><td>{chip(l)}<b>{NOME[l]}</b></td>' + "".join(f'<td class="num">{_pct(_PCT_L[l][c])}</td>' for c, _ in _TIPOS) + f'<td class="num"><b>{br(_POR_LINHA[l]["Passageiros"] / _POR_LINHA[l]["Técnica"], 1)}</b></td></tr>' for l in ORDEM)}</tbody>
+  </table>
+  <div>
+    <div class="label">Passageiros, por tipo</div>
+    <table class="tab tab-fora">
+      <thead><tr><th>Linha</th><th class="num">Ato<br>intencional</th><th class="num">Incômodo sem<br>intenção</th><th class="num">Ferido ou<br>doente</th></tr></thead>
+      <tbody>{"".join(f'<tr><td>{chip(l)}{NOME[l]}</td><td class="num">{br(_CLI_LINHA[l]["Méfait volontaire"])}</td><td class="num">{br(_CLI_LINHA[l]["Nuisance involontaire"])}</td><td class="num">{br(_CLI_LINHA[l]["Blessée ou malade"])}</td></tr>' for l in ORDEM)}</tbody>
+    </table>
+  </div>
+</div>
+<p class="nota">Percentual dos incidentes de cada linha (só os registrados numa linha). Verde e Laranja são as linhas com mais estações ({len(SEQ[ROTA["verde"]])} e {len(SEQ[ROTA["laranja"]])}, no GTFS) e as que cruzam o centro. A STM não registra o trem envolvido nos incidentes de passageiros{_NA_NOTA}: com estes dados, não dá para separar o efeito da linha, do movimento de pessoas e do modelo de trem.</p>""",
+"dados/brutos/stm/incidents_metro.csv (Ligne, Cause primaire, Cause secondaire, Type de matériel; SHA-256 conferido contra o manifesto)",
+"""<p>Por linha, o retrato se inverte. Na Verde e na Laranja, há duas vezes mais incidentes de passageiros que falhas técnicas. Na Amarela e na Azul, as falhas técnicas pesam mais.</p>
+<p>Os atos intencionais se concentram na Verde e na Laranja. Por que, ainda não sabemos: pode ser o movimento de pessoas, o tipo de estação ou o trem. Fica para a análise seguinte.</p>""", "compacto")
+
+# modelo e fabricante dos trens, por linha
+_KMF = Counter()
+for r in csv.DictReader(open(os.path.join(REPO, "dados", "derivados", "exposicao", "frota_mensal.csv"), encoding="utf-8"), delimiter=";"):
+    if r["mes"] <= _FIM:
+        _KMF[(r["linha"], r["frota"])] += float(r["km_carro"] or 0)
+_PARC = {l: {f: _KMF[(l, f)] / sum(v for (ll, _f), v in _KMF.items() if ll == l) for f in ("MPM-10", "MR-73")} for l in ORDEM}
+_FTREM = Counter((e["linha"], e["fonte"]) for e in _E if e["fonte"] in ("mr73", "mpm10"))
+def _taxa_frota(l, f):
+    k = _KMF[(l, f)]
+    return _FTREM[(l, {"MR-73": "mr73", "MPM-10": "mpm10"}[f])] / (k / 1e6) if k > 1e6 else None
+_TX_F = {(l, f): _taxa_frota(l, f) for l in ORDEM for f in ("MPM-10", "MR-73")}
+_MR_TX = [v for (l, f), v in _TX_F.items() if f == "MR-73" and v]; _MP_TX = [v for (l, f), v in _TX_F.items() if f == "MPM-10" and v]
+assert max(_MP_TX) < min(_MR_TX), "revisar o texto do slide da frota"
+def _cel_frota(l, f):
+    p = _PARC[l][f]; t = _TX_F[(l, f)]
+    if p < 0.01:
+        return '<td class="num muted">—</td>'
+    return f'<td class="num">{_pct(p)}<br><span class="muted">{br(t, 1)} falhas/Mkm</span></td>'
+FROTA = slide("Como as linhas falham · modelo e fabricante dos trens", "Dois trens de gerações diferentes: o MR-73, de 1976, falha muito mais que o MPM-10, de 2016", f"""
+<div class="cols c-40-60">
+  <div>
+    <div class="caixa caixa-sm"><h3>MR-73</h3><p class="corpo-sm">Fabricado pela Bombardier, na fábrica de La Pocatière (Quebec), entre 1974 e 1980. Em serviço desde 1976.</p></div>
+    <div class="caixa caixa-sm"><h3>MPM-10 (Azur)</h3><p class="corpo-sm">Fabricado por um consórcio da Bombardier com a Alstom. Em serviço desde 2016, na Laranja, e desde 2017, na Verde.</p></div>
+    <p class="corpo-sm muted">Fabricante e anos: Wikipedia, artigos MR-73 e MPM-10, consultados em 2026-11-17. Não estão nos dados da STM.</p>
+  </div>
+  <div>
+    <h3>Que trem roda em cada linha e quanto falha</h3>
+    <p class="sub">parcela dos km dos trens, 2019-01 a {_FIM}, e falhas de trem por milhão de km</p>
+    <table class="tab tab-fora">
+      <thead><tr><th>Linha</th><th class="num">MPM-10 (novo)</th><th class="num">MR-73 (antigo)</th></tr></thead>
+      <tbody>{"".join(f'<tr><td>{chip(l)}<b>{NOME[l]}</b></td>{_cel_frota(l, "MPM-10")}{_cel_frota(l, "MR-73")}</tr>' for l in ORDEM)}</tbody>
+    </table>
+    <p class="corpo-sm">O MR-73 tem de {br(min(_MR_TX), 1)} a {br(max(_MR_TX), 1)} falhas por milhão de km; o MPM-10, de {br(min(_MP_TX), 1)} a {br(max(_MP_TX), 1)}. Na Verde, no mesmo trilho, o MR-73 falha {br(RZ["valor"], 1)} vezes mais por trem-hora em {RZ_ANO} (IC {br(RZ["ic95"][0], 1)}–{br(RZ["ic95"][1], 1)}).</p>
+  </div>
+</div>
+<p class="nota">Por isso a Amarela e a Azul, que só têm o MR-73, têm mais falhas técnicas por km, e a Laranja, só com o MPM-10, tem a menor taxa de falha de trem. Nos incidentes de passageiros, a STM não registra o trem: o efeito do modelo nesses não dá para testar.</p>""",
+"dados/derivados/exposicao/frota_mensal.csv (km real da STM por frota); dados/derivados/eventos/eventos_tecnicos.csv (fontes mr73 e mpm10); taxa_fontes.json; en.wikipedia.org/wiki/MR-73 e /MPM-10 (2026-11-17)",
+"""<p>A pergunta: os trens são de modelos e fabricantes diferentes? São. O MR-73 é da Bombardier, dos anos 1970; o MPM-10 é de um consórcio Bombardier e Alstom, de 2016.</p>
+<p>E isso explica boa parte da diferença entre as linhas nas falhas de trem: as linhas só com o MR-73 falham bem mais por km. Na Verde, onde os dois rodam no mesmo trilho, o trem antigo falha cerca de dez vezes mais.</p>
+<p>Para os incidentes de passageiros, os dados não dizem qual trem estava envolvido. Fica para a análise seguinte.</p>""", "compacto")
+
 _TX = TAXA
 QA = [
     ("Por que Montreal, e não São Paulo?", "Metrô, CPTM e ViaQuatro só publicam PDF, e a API Direto dos Trens exige token. A STM publica cada incidente de 2019 a 2026, com início, retomada, causa, linha e local, sob CC BY 4.0 (D01)."),
@@ -2194,9 +2320,9 @@ QA2 = slide("Para a apresentação · perguntas prováveis (2 de 2)", "Resposta,
 INTERNA = [CAPA_INT, AGENDA, LINHA_TEMPO,
            divisor(1, "Como começamos", "O tema e a pergunta que o trabalho responde"), pega("A pergunta"),
            divisor(2, "Dados", "Como garantimos os números, o que entra no estudo e como tratamos os dados"),
-           PROVENIENCIA, DADOS_INC, NORMALIZA,
-           divisor(3, "Como as linhas falham", "Indicadores, fatores, falhas em rajadas e linhas que param juntas"),
-           pega("Indicadores por linha"), MEDIDAS, pega("Por que as linhas falham · fatores"),
+           PROVENIENCIA, DADOS_INC, FORA_TIPO, FORA_LINHA, NORMALIZA,
+           divisor(3, "Como as linhas falham", "Indicadores, trens, fatores, falhas em rajadas e linhas que param juntas"),
+           pega("Indicadores por linha"), MEDIDAS, FROTA, pega("Por que as linhas falham · fatores"),
            pega("Por que as linhas falham · agrupamento"), pega("Por que as linhas falham · linhas que param juntas"),
            divisor(4, "Simulador e linhas novas", "Monte Carlo, políticas de tolerância a falhas e os projetos testados"),
            MONTE_CARLO, pega("Simulador · como funciona"), POLITICAS_O_QUE, pega("Políticas"), VIAGEM,
