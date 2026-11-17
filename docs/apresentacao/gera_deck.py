@@ -347,14 +347,14 @@ LAR_DENTRO = LAR_SIM["ic95"][0] <= LAR_ANA <= LAR_SIM["ic95"][1] and LAR_SIM["ic
 def faixa_laranja():
     s, (a, b) = LAR_SIM["media"], LAR_SIM["ic95"]
     lo = 100 * math.floor((min(a, LAR_ANA, LAR_PAINEL) - 60) / 100); hi = 100 * math.ceil((max(b, LAR_ANA, LAR_PAINEL) + 220) / 100)  # folga para o rótulo da direita
-    w = 540; h = 118; x0 = 20; x1 = 520
+    w = 540; h = 124; x0 = 20; x1 = 520
     def X(v):
         return x0 + (v - lo) / (hi - lo) * (x1 - x0)
     y = 64
     o = [f'<svg viewBox="0 0 {w} {h}" width="{w}" height="{h}" role="img" aria-label="Laranja: minutos parados por ano, simulador contra painel">']
     for v in range(lo + 100, hi, 100):
         o.append(f'<line x1="{X(v):.1f}" y1="{y - 26}" x2="{X(v):.1f}" y2="{y + 22}" class="grade"/>')
-        o.append(f'<text x="{X(v):.1f}" y="{y + 42}" text-anchor="middle" class="c-tick">{br(v)}</text>')
+        o.append(f'<text x="{X(v):.1f}" y="{y + 50}" text-anchor="middle" class="c-tick">{br(v)}</text>')  # +8 px: o rótulo de baixo encostava (crítica de 2026-11-17, B2)
     o.append(f'<rect x="{X(a):.1f}" y="{y - 9}" width="{X(b) - X(a):.1f}" height="18" rx="4" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.2"><title>IC 95% do simulador: {br(a)} a {br(b)}</title></rect>')
     o.append(f'<circle cx="{X(s):.1f}" cy="{y}" r="7" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/>')
     o.append(f'<text x="{X(s):.1f}" y="{y - 18}" text-anchor="middle" class="c-num c-acc-t">simulador {br(s)}</text>')
@@ -1177,6 +1177,7 @@ figcaption{font-size:12.5px;color:var(--muted);margin-top:6px}
 .tab-num2 .num{white-space:nowrap}
 .tab-dif{font-size:15px;line-height:1.3}
 .tab-dif td{padding:6px 12px 6px 0}
+.tab-crit td{padding:6px 12px 6px 0}
 .tab-dif td:first-child,.tab-dif td:last-child{white-space:nowrap;color:var(--muted)}
 .tab-ad{font-size:15.5px}
 .tab-ad td{padding:7px 14px 7px 0}
@@ -1461,12 +1462,20 @@ N_EXC = sum(s[2] == "implementada com exceções" for s in SPECS)
 assert N_IMPL + N_EXC == len(SPECS)
 REG = _ler("docs", "decisoes", "registro_de_decisoes.md")
 N_DEC = len(re.findall(r"^### D\d\d ", REG, re.M))
-CRITICAS = []  # (data, achados, médios, corrigidos) de fontes/verificacao/critica_*.md
+CRITICAS = []  # (data, achados, altos, médios, corrigidos, exemplo, arquivo) de fontes/verificacao/critica_*.md
 for f in sorted(os.listdir(os.path.join(REPO, "fontes", "verificacao"))):
-    if f.startswith("critica_"):
-        m = re.search(r"(\d+) achados(?: novos)?: (\d+) altos?, (\d+) médios?, (\d+) baixos?\. (\d+) corrigidos", _ler("fontes", "verificacao", f))
-        CRITICAS.append((f[8:18], int(m.group(1)), int(m.group(2)), int(m.group(3)), int(m.group(5))))
-assert len(CRITICAS) == 4 and sum(c[2] for c in CRITICAS) == 0
+    if f.startswith("critica_") and f.endswith(".md"):
+        _txt = _ler("fontes", "verificacao", f)
+        m = re.search(r"(\d+) achados(?: novos)?: (\d+) altos?, (\d+) médios?, (\d+) baixos?\. (\d+) corrigidos", _txt)
+        if m is None:  # crítica ainda sem a frase de resumo (relatório em andamento): fica fora, com aviso (crítica de 2026-11-17, B3)
+            print(f"aviso: {f} sem a frase 'N achados: ...'; fora da tabela de rodadas", file=sys.stderr)
+            continue
+        _ex = re.search(r"^Exemplo para o deck: (.+)$", _txt, re.M)  # críticas novas trazem o exemplo no próprio relatório
+        CRITICAS.append((f[8:18], int(m.group(1)), int(m.group(2)), int(m.group(3)), int(m.group(5)), _ex.group(1).strip() if _ex else None, f))
+assert CRITICAS and sum(c[2] for c in CRITICAS) == 0, "crítica com achado alto: revisar os textos 'nenhum alto'"
+CRIT_ENTREGA = next(c for c in CRITICAS if c[0] == "2026-11-11")  # a 4ª crítica, a da entrega (linha do tempo)
+_NUM_EXT = {1: "Uma", 2: "Duas", 3: "Três", 4: "Quatro", 5: "Cinco", 6: "Seis", 7: "Sete", 8: "Oito", 9: "Nove"}
+N_CRIT_EXT = _NUM_EXT.get(len(CRITICAS), str(len(CRITICAS)))
 VERS = [(t, _git("rev-list", "-n", "1", t)[:7]) for t in ("v1.0.0", "v1.1.0", "v1.2.0")]
 N_FONTES = len(_MAN["fontes"])
 N_PYTEST = int(re.search(r"# (\d+) testes em", _ler("docs", "arquitetura.md")).group(1))
@@ -1506,7 +1515,7 @@ LINHA_TEMPO = slide("Linha do tempo · 2026-10-20 a 2026-11-11", "Do tema à ent
   <div class="tl-n"><div class="tl-d">11-10</div><i class="tl-p"></i><h3>Revisão</h3>
     <p>v1.1.0 congelada antes de mexer; specs 017 a 020; duração pela faixa oficial; falhas por frota e setor. Erro da greve achado no meio da rodada.</p><p class="onde">D55 a D63</p></div>
   <div class="tl-n tl-ouro"><div class="tl-d">11-11</div><i class="tl-p"></i><h3>Entrega</h3>
-    <p>4ª crítica ({CRITICAS[-1][1]} achados); resposta ao objetivo no relatório; licença MIT; <b>v1.2.0</b> congelada.</p><p class="onde">D64 a D66</p></div>
+    <p>4ª crítica ({CRIT_ENTREGA[1]} achados); resposta ao objetivo no relatório; licença MIT; <b>v1.2.0</b> congelada.</p><p class="onde">D64 a D66</p></div>
 </div>
 <p class="nota">Entre 10-26 e 11-09, a verificação semanal conferiu as fontes na origem toda segunda-feira e gravou um relatório datado no repositório.</p>""",
 "git log e etiquetas (git tag); docs/decisoes/registro_de_decisoes.md; fontes/verificacao/online_*.txt",
@@ -1659,18 +1668,22 @@ _EX_CRIT = {"2026-10-21": "O simulador aplicava à greve um multiplicador que a 
             "2026-10-21__": "O teste de fps media uma aba oculta: \"60 fps\" falso (D46 a D48)",
             "2026-11-11": "O rodapé do PDF riscava notas; /versoes/v1.1.0/ dava 404 antes do deploy (D64)"}
 _lc = []
-for i, (data, n, alt, med, cor) in enumerate(CRITICAS):
+for i, (data, n, alt, med, cor, ex, _arq) in enumerate(CRITICAS):
     chave = data + "_" * (i if data == "2026-10-21" else 0)
-    _lc.append(f'<tr><td><b>R{i + 1}</b> · {data}</td><td class="num">{n}</td><td class="num">{med}</td><td class="num">{cor}</td><td>{esc(_EX_CRIT[chave])}</td></tr>')
-CRITICAS_SL = slide("Revisão crítica · agente critico-stf", f"Quatro rodadas de crítica, {sum(c[1] for c in CRITICAS)} achados, e só o que foi reproduzido virou correção", f"""
-<table class="tab"><thead><tr><th>Rodada</th><th class="num">Achados</th><th class="num">Médios</th><th class="num">Corrigidos pelo agente</th><th>Exemplo do que pegou</th></tr></thead>
+    ex = ex or _EX_CRIT.get(chave)
+    assert ex, f"{_arq}: falta a linha 'Exemplo para o deck: ...' no relatório"
+    _lc.append(f'<tr><td><b>R{i + 1}</b> · {data}</td><td class="num">{n}</td><td class="num">{med}</td><td class="num">{cor}</td><td>{esc(ex)}</td></tr>')
+_CRIT_ARQS = [c[6] for c in CRITICAS]
+_CRIT_FONTE = ", ".join(_CRIT_ARQS[:-1]) + " e " + _CRIT_ARQS[-1] if len(_CRIT_ARQS) > 1 else _CRIT_ARQS[0]
+CRITICAS_SL = slide("Revisão crítica · agente critico-stf", f"{N_CRIT_EXT} rodadas de crítica, {sum(c[1] for c in CRITICAS)} achados, e só o que foi reproduzido virou correção", f"""
+<table class="tab tab-crit"><thead><tr><th>Rodada</th><th class="num">Achados</th><th class="num">Médios</th><th class="num">Corrigidos pelo agente</th><th>Exemplo do que pegou</th></tr></thead>
 <tbody>{"".join(_lc)}</tbody></table>
 <div class="faixa">
   <div><span class="label">Como o agente trabalha</span>Roda todos os testes, confere cada número dos documentos contra o arquivo que o gerou, procura defeitos no pipeline, no motor e no site, e grava um relatório datado.</div>
   <div><span class="label">O que ele não faz</span>Não corrige sem reproduzir o defeito. O que não foi reproduzido fica como proposta, e a equipe decide.</div>
 </div>
 <p class="nota">Nenhum achado de gravidade alta em nenhuma rodada. As propostas aceitas viraram decisões no registro.</p>""",
-"fontes/verificacao/critica_2026-10-21.md, _rodada2, _rodada3 e critica_2026-11-11.md; .claude/agents/critico-stf.md; D41 a D48 e D64",
+f"fontes/verificacao/{_CRIT_FONTE}; .claude/agents/critico-stf.md; D41 a D48, D64 e D68",
 """<p>O agente crítico é um revisor automático que tenta derrubar os números. Ele roda antes de cada entrega.</p>
 <p>A coluna "corrigidos" conta só o que o próprio agente corrigiu depois de reproduzir o defeito. As propostas foram decididas pela equipe e aplicadas na sessão principal.</p>""")
 
@@ -1888,7 +1901,7 @@ INTERNA = [CAPA_INT, AGENDA, LINHA_TEMPO, EM_NUMEROS,
            ARQ, pega("Simulador · eventos"), pega("Políticas"), VIAGEM, pega("Que linha construir"),
            divisor(5, "Validação", "Prever o que o modelo não viu, com o critério escrito antes"),
            pega("Validação contra o histórico"), pega("Decisões tomadas depois"),
-           divisor(6, "Publicação e crítica", "Site público, conferência automática e quatro rodadas de revisão"),
+           divisor(6, "Publicação e crítica", f"Site público, conferência automática e {N_CRIT_EXT.lower()} rodadas de revisão"),
            PUBLICACAO, CRITICAS_SL, DIFICULDADES,
            divisor(7, "Revisão de 2026-11", "Falhas por frota e por setor, durações pela faixa oficial e tudo refeito"),
            FONTES9, PROTOCOLO, pega("Revisão de 2026-11 · ressegmentação"), ANTES_DEPOIS, SOMA,

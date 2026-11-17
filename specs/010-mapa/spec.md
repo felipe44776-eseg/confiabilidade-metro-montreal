@@ -35,9 +35,13 @@ Página `/simulador/` (código em `app/src/simulador/`); testes em `app/tests/si
 | Incidente histórico clicável com código, falhas, tipo, status e método | **Atende** |
 | Atribuição ao OpenStreetMap, à STM e ao fornecedor do fundo | **Atende** |
 | Pausar, acelerar e voltar com mapa e indicadores sincronizados | **Atende** |
-| Celular sem rolagem lateral | **Pendente**: layout com gutter de 16 px, não conferido num aparelho. No navegador sem janela em 390×844, a rolagem lateral é zero e nenhum elemento passa da largura (`publicacao/testa_navegador.py`, revisão crítica de 2026-10-21, rodada 3) |
+| Celular sem rolagem lateral | **Pendente** (resultado original): layout com gutter de 16 px, não conferido num aparelho. No navegador sem janela em 390×844, a rolagem lateral é zero e nenhum elemento passa da largura (`publicacao/testa_navegador.py`, revisão crítica de 2026-10-21, rodada 3) |
 | Velocidades de 1 h/s, 10 h/s e 1 dia/s com os dias emendados e o placar (acrescentado em 2026-10-21, D49) | **Atende**: a 1 dia/s, 7 dias emendados em 6 segundos nos dois tamanhos; depois de 15 dias completos, o placar mostrou 48 falhas sorteadas, 3,20 por dia, contra 3,35 esperadas (`fontes/verificacao/navegador_2026-10-21.json`) |
 | Evento vermelho por falha em qualquer velocidade, lista de eventos e marcas na barra (acrescentado em 2026-10-21, D49) | **Atende**: a 1 dia/s, 19 (celular) e 21 (notebook) pulsos vermelhos em 6 segundos, cada um com 2,6 segundos de relógio, e a lista com as 4 últimas falhas (`navegador_2026-10-21.json`); teste de que um quadro em alta velocidade não perde nem repete falha (`app/tests/simulador/animacao.test.ts`) |
+
+### Revisão de escopo de 2026-11-11 (D66), anotada em 2026-11-17
+
+Os critérios e o resultado original acima não mudam. Desde 2026-11-11 (D66), basta o site funcionar no Chrome do notebook da equipe; Firefox, Safari e celular físico ficam fora. Com isso, a linha "Celular sem rolagem lateral" passa de pendente a **exceção declarada**: conferida só no navegador sem janela em 390×844 (rolagem lateral zero de novo em 2026-11-17, `fontes/verificacao/critica_2026-11-17.md`, passo 7), não num aparelho. É corte de escopo antes da conferência, não critério afrouxado depois do resultado. Nota acrescentada pela crítica de 2026-11-17 (achado C2, D68).
 
 ## Fora de escopo
 - Mapa 3D, túneis em profundidade e plantas de estação.

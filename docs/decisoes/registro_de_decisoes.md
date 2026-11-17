@@ -484,8 +484,16 @@ Origem: perguntas da reunião de 2026-10-27 (bitola, fabricantes, via ou trem, t
   - **Logo:** baixado do próprio site. Arquivos, hashes e licenças em `docs/apresentacao/marca/LEIAME.md`.
   - **Contraste:** a turquesa sobre branco não passa de 3:1, então o texto de destaque fica em marinho.
 - **Números:** os novos são lidos dos arquivos gerados (specs, registro, críticas, etiquetas, `viagem.md`, `linhas_novas.md`, JSON da v1.1.0), com asserções que param o script se algo mudar. Nenhum número de modelo mudou.
+  - *Correção de 2026-11-17 (crítica, achado B4):* a frase acima promete mais do que o código faz. Os 198 casos, o 0,1576, o 0,1563 e os 20.000 dias têm asserção; as contagens (specs, decisões, críticas, fontes, testes do pipeline), as etiquetas e os números de `viagem.md` e `linhas_novas.md` são lidos dos arquivos. Ficam digitados no texto do slide, sem asserção, o 1,17→1,73 e o 1,11→1,66 da greve (D63), as 400 falhas (D56), o "48 idênticos, 5 na tolerância" do a7f0594 (spec 013) e o "3,4 vezes na Azul" (D25). Todos batem com a origem em 2026-11-17.
 - **Alternativas:** manter o deck único de 17 slides; usar a paleta do manual de TG (`#000653`), que é para documentos impressos e não para tela.
 - **Consequência:**
   - O logo da ESEG é marca da instituição e fica fora da licença MIT. A Public Sans segue a SIL Open Font License.
   - A v1.2.0 congelada guarda o deck anterior; os decks novos estão no site principal.
 - **Registro:** `docs/apresentacao/gera_deck.py`, `docs/apresentacao/marca/`, README.
+
+### D68 — Crítica de 2026-11-17: o deck interno aceita qualquer número de críticas
+
+- **Decisão (da revisão crítica, 2026-11-17, depois de ver o resultado):** o `gera_deck.py` deixa de exigir exatamente 4 relatórios `critica_*.md`. Crítica sem a frase "N achados: ..." fica fora da tabela, com aviso. Crítica nova traz o exemplo do slide no próprio relatório (linha "Exemplo para o deck: ..."). A linha do tempo procura a crítica de 2026-11-11 pela data. O título, a divisória e o rodapé do slide de críticas contam as rodadas.
+- **Motivo:** com o relatório de hoje na pasta, o script parava (`AttributeError` e depois `assert len(CRITICAS) == 4`) e a interna não se gerava (achado B3).
+- **Também:** o eixo do gráfico da Laranja desce 8 px para o rótulo "analítico" não encostar nos números (B2); `docs/arquitetura.md` com 142 testes e a spec 022 como planejada (A1, A2); correção do texto da D67 (B4); notas datadas nas specs 010 e 013, sem apagar o resultado original (C2, C3); nota da fonte dos símbolos no `marca/LEIAME.md` (B1). Nenhum número de modelo mudou.
+- **Registro:** `fontes/verificacao/critica_2026-11-17.md`, `docs/apresentacao/gera_deck.py`, os dois HTML e os dois PDF.

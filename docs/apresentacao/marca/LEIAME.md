@@ -21,6 +21,8 @@ As cores e a fonte vêm do kit global do site da ESEG (`eseg.edu.br/wp-content/u
 
 A fonte do site é a Public Sans, com títulos em peso 600.
 
+Nos decks (`gera_deck.py`), a Public Sans embutida é só o subconjunto latino (`public-sans-latin-wght.woff2`). Ele não tem os símbolos gregos (`α`, `β`), os sobrescritos e subscritos (`⁻`, `⁰`, `⁸`, `₁₀`) nem as setas (`→`, `←`). Esses glifos caem na fonte do sistema: no Windows, a Segoe UI, que o Chrome embute no PDF. Gerado em outro sistema, o PDF sai com outra fonte nesses símbolos (crítica de 2026-11-17, achado B1).
+
 A turquesa sobre branco tem contraste de 3:1, que basta para gráficos mas não para texto pequeno. Por isso o texto de destaque fica em marinho, e a turquesa só aparece em texto sobre o marinho.
 
 As cores das linhas do metrô (Verde, Laranja, Amarela, Azul) são dados, não marca: seguem as da STM.

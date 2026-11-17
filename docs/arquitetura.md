@@ -89,7 +89,7 @@ cd .. && python -I pipeline/compara_versoes.py                 # antes e depois 
 |---|---|---|
 | `versao` | `2` desde a revisão de 2026-11; o motor ainda lê o contrato `1` (v1.1.0) com os mesmos números | `parametros.py` |
 | `fontes[]` | Contrato v2 (spec 018): 9 fontes, cada uma com `id`, `familia` (`MR` para trem, `EF` para trecho), `rotulo` e status do rótulo, modelo, α, multiplicadores e, por linha, `base_por_trem_hora` (já multiplicada pela parcela da frota), `renovacao` e `ttr`. A ordem do arquivo é a ordem do sorteio; falta de `renovacao` ou de `ttr` é erro | `modelo_taxa.py`, `distribuicoes.py`, `parametros.py` |
-| `frota_por_linha` | Parcela dos km de cada frota em cada linha no ano-base, com status (para o cenário futuro, spec 022) | `exposicao.py` |
+| `frota_por_linha` | Parcela dos km de cada frota em cada linha no ano-base, com status (para o cenário futuro da spec 022, planejada) | `exposicao.py` |
 | `taxas.MR`, `taxas.EF` | Taxa-base por trem-hora de cada linha e multiplicadores por fator, por família (o peso de cada variável na página usa a família) | `modelo_taxa.py` |
 | `renovacao` | Forma e escala da Weibull no tempo reescalado, por linha e família | `distribuicoes.py` |
 | `ttr` | Massa em zero, lognormal e `amostra_positivos` (o sorteio usa a amostra), por linha e família | `distribuicoes.py` + `parametros.py` |
@@ -105,7 +105,7 @@ Mudar o formato exige mudar o esquema em `contratos/`, o `parametros.py`, os tip
 
 ```bash
 python -m pytest pipeline/tests -q                  # 69 testes em 2026-11-11: critérios das specs 001 a 006, 012, 013, 017, 018 e 020
-cd app && npm test                                  # 140 testes em 2026-11-11: motor e interface
+cd app && npm test                                  # 142 testes em 2026-11-17 (25 arquivos): motor e interface
 python -I pipeline/verifica_fontes.py --recalcula   # 38 números recalculados direto dos brutos (25 até a v1.1.0)
 ```
 
