@@ -142,6 +142,8 @@ def mapa_svg(w, h, modo, pad=(24, 96, 24, 96)):
             op = ' opacity="0.28"'
         elif modo == "expansao" and l in ("verde", "amarela"):
             op = ' opacity="0.35"'
+        elif modo == "laranja" and l != "laranja":
+            op = ' opacity="0.3"'
         if l == "amarela":
             out.append(f'<polyline points="{segs(l)}" fill="none" stroke="{BORDA_AMARELA}" stroke-width="{sw + 2.5}" stroke-linecap="round" stroke-linejoin="round"{op}/>')
         out.append(f'<polyline points="{segs(l)}" fill="none" stroke="{COR[l]}" stroke-width="{sw}" stroke-linecap="round" stroke-linejoin="round"{op}><title>Linha {NOME[l]}</title></polyline>')
@@ -174,6 +176,8 @@ def mapa_svg(w, h, modo, pad=(24, 96, 24, 96)):
                    "LONGUEUIL- U. de SHERBROOKE": (0, -14, "middle")},
         "corredor": {"LIONEL-GROULX": (-12, 16, "end"), "BERRI-UQAM": (12, 14, "start"), "SNOWDON": (-12, 5, "end"),
                      "JEAN-TALON": (-12, 2, "end")},
+        "laranja": {"LIONEL-GROULX": (-12, 16, "end"), "BERRI-UQAM": (12, 14, "start"), "SNOWDON": (-12, 5, "end"),
+                    "JEAN-TALON": (-12, 2, "end")},
         "expansao": {"SNOWDON": (-12, 5, "end"), "JEAN-TALON": (-12, 2, "end"), "LIONEL-GROULX": (-2, 22, "middle"),
                      "BERRI-UQAM": (12, 14, "start"), "ATWATER": (12, 2, "start"),
                      "UNIVERSITÉ DE MONTREAL": (-12, -4, "end")},
@@ -183,6 +187,8 @@ def mapa_svg(w, h, modo, pad=(24, 96, 24, 96)):
         cls = "m-lab"
         if modo == "corredor" and n in ("SNOWDON", "JEAN-TALON"):
             cls = "m-lab m-fraco"
+        if modo == "laranja":
+            cls = "m-lab m-acc"
         if modo == "expansao" and n in ("ATWATER", "UNIVERSITÉ DE MONTREAL"):
             cls = "m-lab m-acc"
         out.append(f'<text x="{x + dx:.1f}" y="{y + dy:.1f}" text-anchor="{anc}" class="{cls}">{ROTULO[n]}</text>')
@@ -225,40 +231,53 @@ FATORES = [(nome, mult("MR", t), mult("EF", t)) for nome, t in (  # dados/deriva
     ("Dia de greve (por trem-hora)", "greve"),
 )]
 contem_1 = lambda m: m[1] <= 1 <= m[2]
+_TERMO = {"Abertura do serviço (5 a 6 h)": "faixa=abertura", "Pico da manhã": "faixa=pico_manha", "Mais de 10 cm de neve no solo": "neve_solo=acima_10",
+          "25 °C ou mais": "temp=25_ou_mais", "Abaixo de −15 °C": "temp=abaixo_-15", "Dia de greve (por trem-hora)": "greve"}
+
+def pvalor(c, termo):
+    """p-valor bilateral do teste de Wald, com o erro-padrão do modelo (taxa_*.json)."""
+    x = COEF[c][termo]
+    return math.erfc(abs(x["coef"] / x["ep_modelo"]) / math.sqrt(2))
+
+def p_txt(p):
+    return "p &lt; 0,001" if p < 0.001 else f"p = {br(p, 2)}"
+
+# do maior efeito para o menor (o maior afastamento do 1 entre as duas famílias, na escala log)
+FATORES_ORD = sorted(FATORES, key=lambda f: -max(abs(math.log(f[1][0])), abs(math.log(f[2][0]))))
 
 def floresta():
-    w = 1152; x0 = 290; x1 = 790; lo, hi = math.log(0.45), math.log(4.5)
+    w = 1152; x0 = 300; x1 = 700; lo, hi = math.log(0.45), math.log(4.5)
     def X(v):
         return x0 + (math.log(v) - lo) / (hi - lo) * (x1 - x0)
-    top = 34; rh = 44; n = len(FATORES); h = top + rh * n + 30
-    cMR, cEF = 850, 1012
-    o = [f'<svg viewBox="0 0 {w} {h}" width="{w}" height="{h}" role="img" aria-label="Multiplicadores da taxa de falha com intervalo de 95%">']
-    o.append(f'<text x="0" y="18" class="c-head">Fator</text>')
-    o.append(f'<text x="{x0}" y="18" class="c-head">Multiplicador da taxa por trem-hora (IC 95%, escala log)</text>')
-    o.append(f'<circle cx="{cMR + 6}" cy="13" r="6" fill="var(--ink)"/><text x="{cMR + 17}" y="18" class="c-head2">Material rodante</text>')
-    o.append(f'<rect x="{cEF}" y="7" width="12" height="12" fill="var(--accent)"/><text x="{cEF + 18}" y="18" class="c-head2">Equip. fixos</text>')
+    top = 34; rh = 46; n = len(FATORES_ORD); h = top + rh * n + 30
+    cMR, cEF = 760, 960
+    o = [f'<svg viewBox="0 0 {w} {h}" width="{w}" height="{h}" role="img" aria-label="Fatores que aumentam ou diminuem a falha, com intervalo de 95% e p-valor">']
+    o.append(f'<text x="0" y="18" class="c-head">Fator, do maior efeito ao menor</text>')
+    o.append(f'<text x="{x0}" y="18" class="c-head">Quantas vezes a falha fica mais provável</text>')
+    o.append(f'<circle cx="{cMR + 6}" cy="13" r="6" fill="var(--ink)"/><text x="{cMR + 17}" y="18" class="c-head2">Trens</text>')
+    o.append(f'<rect x="{cEF}" y="7" width="12" height="12" fill="var(--accent)"/><text x="{cEF + 18}" y="18" class="c-head2">Via, energia, sinalização</text>')
     for v in (0.5, 1, 2, 3, 4):
         cls = "ref" if v == 1 else "grade"
         o.append(f'<line x1="{X(v):.1f}" y1="{top - 6}" x2="{X(v):.1f}" y2="{top + rh * n}" class="{cls}"/>')
-        o.append(f'<text x="{X(v):.1f}" y="{top + rh * n + 20}" text-anchor="middle" class="c-tick">{br(v, 1) if v < 1 else br(v)}</text>')
-    o.append(f'<text x="{X(1) + 6:.1f}" y="{top + rh * n + 20}" class="c-tick">= sem efeito</text>')
-    for i, (nome, mr, ef) in enumerate(FATORES):
+        o.append(f'<text x="{X(v):.1f}" y="{top + rh * n + 20}" text-anchor="middle" class="c-tick">×{br(v, 1) if v < 1 else br(v)}</text>')
+    o.append(f'<text x="{X(1) + 16:.1f}" y="{top + rh * n + 20}" class="c-tick">= sem efeito</text>')
+    for i, (nome, mr, ef) in enumerate(FATORES_ORD):
         yc = top + i * rh + rh / 2
         if i % 2 == 0:
             o.append(f'<rect x="0" y="{top + i * rh}" width="{w}" height="{rh}" fill="var(--zebra)"/>')
         o.append(f'<text x="0" y="{yc + 6:.1f}" class="c-lab">{esc(nome)}</text>')
-        for (val, a, b), dy, forma, cor, cx in ((mr, -9, "c", "var(--ink)", cMR), (ef, 9, "q", "var(--accent)", cEF)):
+        for c, (val, a, b), dy, forma, cor, cx in (("MR", mr, -9, "c", "var(--ink)", cMR), ("EF", ef, 9, "q", "var(--accent)", cEF)):
             y = yc + dy
             sig = not (a <= 1 <= b)
             o.append(f'<line x1="{X(a):.1f}" y1="{y:.1f}" x2="{X(b):.1f}" y2="{y:.1f}" stroke="{cor}" stroke-width="2"/>')
             fill = cor if sig else "var(--surface)"
-            tt = f"{br(val, 2)} ({br(a, 2)}–{br(b, 2)})"
+            tt = f"×{br(val, 2)} (IC 95% {br(a, 2)}–{br(b, 2)})"
             if forma == "c":
-                o.append(f'<circle cx="{X(val):.1f}" cy="{y:.1f}" r="6" fill="{fill}" stroke="{cor}" stroke-width="2"><title>Material rodante: {tt}</title></circle>')
+                o.append(f'<circle cx="{X(val):.1f}" cy="{y:.1f}" r="6" fill="{fill}" stroke="{cor}" stroke-width="2"><title>Trens: {tt}</title></circle>')
             else:
-                o.append(f'<rect x="{X(val) - 6:.1f}" y="{y - 6:.1f}" width="12" height="12" fill="{fill}" stroke="{cor}" stroke-width="2"><title>Equipamentos fixos: {tt}</title></rect>')
+                o.append(f'<rect x="{X(val) - 6:.1f}" y="{y - 6:.1f}" width="12" height="12" fill="{fill}" stroke="{cor}" stroke-width="2"><title>Via, energia e sinalização: {tt}</title></rect>')
             cls = "c-num" if sig else "c-num c-fraco"
-            o.append(f'<text x="{cx}" y="{yc + 5:.1f}" class="{cls}">{tt}</text>')
+            o.append(f'<text x="{cx}" y="{yc + 5:.1f}" class="{cls}"><tspan font-weight="650">×{br(val, 2)}</tspan> · {p_txt(pvalor(c, _TERMO[nome]))}</text>')
     o.append("</svg>")
     return "".join(o)
 
@@ -376,12 +395,12 @@ def _pol(chave, nome, sub):  # politicas.json, reparo de 1,0 dia
             sn(p["frota_completa_laranja_pp"]["media"], 1), chave == "operacaoDegradada")
 
 POLITICAS = [_pol(*x) for x in (
-    ("operacaoDegradada", "Operação degradada", "marcha lenta após falha de equipamento fixo"),
-    ("retiradaTrem", "Retirada do trem falho", "só material rodante"),
-    ("tratamentoCausaComum", "Tratamento de causa comum", "redução de 50% (hipótese)"),
-    ("reservaFria", "Reserva fria", "2 trens por linha"),
-    ("retornoParcial", "Retorno parcial", "nas pontas de viagem (hipótese)"),
-    ("rotaAlternativa", "Rota alternativa", "de passageiros"),
+    ("operacaoDegradada", "Operação degradada", "o trecho com defeito reabre em marcha lenta"),
+    ("retiradaTrem", "Retirada do trem com defeito", "o trem sai da via e vai para a oficina"),
+    ("tratamentoCausaComum", "Energia e controle duplicados", "metade dos eventos de várias linhas evitada (hipótese)"),
+    ("reservaFria", "Trens de reserva", "2 trens parados na garagem por linha"),
+    ("retornoParcial", "Retorno parcial", "os trens voltam antes do trecho parado"),
+    ("rotaAlternativa", "Rota alternativa", "o passageiro troca de caminho"),
 )]
 P1, P4 = POL["politicas"]["1"], POL["politicas"]["4"]
 
@@ -585,7 +604,7 @@ slide("A pergunta", "Quanto o metrô falha, por quê, e o que deixaria a rede ma
       <li><b>Quanto cada linha falha</b> e por quanto tempo fica parada? Sob quais condições: hora, clima, eventos?</li>
       <li><b>As falhas são independentes</b> ou se agrupam? Quanto pesa a causa comum, que para duas linhas ao mesmo tempo?</li>
       <li><b>Que políticas</b> de tolerância a falhas mais reduzem a indisponibilidade?</li>
-      <li><b>Que nova ligação</b> deixaria a rede mais confiável como sistema?</li>
+      <li class="principal"><b>Que nova ligação deixaria a rede mais confiável como sistema?</b> <span class="tag">a pergunta principal</span></li>
     </ol>
   </div>
   <div class="caixa">
@@ -680,20 +699,20 @@ _AB, _NEVE, _CALOR, _FRIO, _GREVE = (FATORES[i] for i in (0, 2, 3, 4, 5))
 _TCPE_AB = next(c["multiplicador"] for c in TF["fontes"]["tcpe"]["coeficientes"] if c["termo"] == "faixa=abertura")  # taxa_fontes.json
 assert contem_1(_GREVE[1]) and contem_1(_GREVE[2]), "greve fora de 1: revisar a D42 e o texto do slide 6"
 assert contem_1(_CALOR[1]) and not contem_1(_CALOR[2]) and contem_1(_FRIO[1]) and contem_1(_FRIO[2]), "revisar o texto de calor e frio do slide 6"
-slide("O que muda a taxa de falha · binomial negativa com exposição", f"A abertura do serviço multiplica a taxa de falha por {br(_AB[1][0], 1)} a {br(_AB[2][0], 1)}; neve e calor também pesam", f"""
+assert FATORES_ORD[0] is _AB, "revisar o texto: a abertura deixou de ser o maior efeito"
+slide("Por que as linhas falham · fatores", "Fatores que aumentam ou diminuem a falha, do maior efeito para o menor", f"""
 {floresta()}
 <div class="tri">
-  <p><b>Greve</b> reduz a oferta, mas não muda a taxa por trem-hora: o intervalo contém 1. <span class="tag">após a revisão</span> Com o km de 2025 medido, a exposição dos dias de greve precisou de correção (D63).</p>
-  <p><b>Calor</b> pesa só nos equipamentos fixos (+{br(100 * (_CALOR[2][0] - 1))}%), e vem sobretudo da via. <b>Frio intenso</b> não tem efeito detectável.</p>
-  <p><b>Binomial negativa vence Poisson</b> nas duas causas (α = {br(TAXA["MR"]["alpha_nb"], 2)} e {br(TAXA["EF"]["alpha_nb"], 2)}; p &lt; 10⁻³⁰).</p>
+  <p><b>Como ler:</b> ×2 quer dizer que a falha fica duas vezes mais provável para cada trem em circulação; ×0,5, que cai pela metade. A régua é logarítmica para que ×2 e ×0,5 fiquem à mesma distância do 1.</p>
+  <p><b>p-valor:</b> a chance de ver um efeito desse tamanho se o fator não fizesse nada. Abaixo de 0,05, o efeito é claro. Ponto vazio e número em cinza: não dá para afirmar.</p>
+  <p><b>Destaques:</b> a abertura do serviço é o maior efeito; na energia, ×{br(_TCPE_AB, 1)}, a falha ao ligar a rede. O calor pesa na via e nos equipamentos, não nos trens. Frio intenso e greve não têm efeito claro.</p>
 </div>
-<p class="nota">Vazio e em cinza: intervalo de 95% contém 1. Referência: Laranja, entrepico, dia útil, outono, 5 a 15 °C, sem precipitação. IC por bootstrap em blocos semanais (B = {TAXA["MR"]["bootstrap_b"]}).</p>""",
-"relatório §4.1; fontes/verificacao/modelo_taxa.md e taxa_por_fonte.md; dados/derivados/modelos/taxa_MR.json e taxa_EF.json",
-f"""<p>Cada ponto é quanto um fator multiplica a taxa de falha por trem-hora, com o intervalo de 95%. À direita do 1, aumenta; à esquerda, diminui.</p>
-<p>O maior efeito é a abertura do serviço, das 5 às 6 h: a taxa fica {br(_AB[1][0], 1)} vezes maior no material rodante e {br(_AB[2][0], 1)} vezes nos equipamentos fixos. Por fonte, a abertura eleva todas; na energia (TCPE), a taxa fica {br(_TCPE_AB, 1)} vezes maior, o que lemos como falha ao energizar a rede.</p>
-<p>Neve acumulada acima de 10 cm eleva as duas causas em cerca de {br(100 * (_NEVE[1][0] - 1))}%. Calor de 25 °C ou mais pesa nos equipamentos fixos, e por fonte ele vem sobretudo da via. O frio intenso, que seria o palpite óbvio em Montreal, não aparece.</p>
-<p>A greve só reduz a oferta: por trem que roda, a taxa não muda de forma detectável.</p>
-<p>Após a revisão, com a exposição medida em todo o período, os multiplicadores por família mudam só na segunda casa decimal.</p>
+<p class="nota">Comparação com um dia comum: Laranja, fora do pico, dia útil, outono, de 5 a 15 °C, sem chuva. Intervalo de 95% por reamostragem de semanas inteiras; p-valor pelo erro-padrão do modelo.</p>""",
+"relatório §4.1; fontes/verificacao/modelo_taxa.md e taxa_por_fonte.md; dados/derivados/modelos/taxa_MR.json e taxa_EF.json (multiplicador, ic95, coef e ep_modelo)",
+f"""<p>Cada linha é um fator, do maior efeito para o menor. O ponto mostra quantas vezes a falha fica mais provável, e o traço, o intervalo de 95%.</p>
+<p>O maior efeito é a abertura do serviço, das 5 às 6 h: ×{br(_AB[1][0], 1)} nos trens e ×{br(_AB[2][0], 1)} na via e nos equipamentos. Na energia, ×{br(_TCPE_AB, 1)}: lemos isso como falha ao ligar a rede de manhã.</p>
+<p>Neve acumulada acima de 10 cm aumenta as falhas em cerca de {br(100 * (_NEVE[1][0] - 1))}%. Calor de 25 °C ou mais pesa na via e nos equipamentos. O frio intenso, que seria o palpite óbvio em Montreal, não aparece. A greve só reduz o número de trens: por trem que roda, a chance de falha não muda.</p>
+<p>O p-valor diz o quanto podemos confiar em cada efeito: quanto menor, mais certo.</p>
 <p><b>Tempo:</b> 1 min 30 s.</p>""")
 
 # 7 ---------------------------------------------------------------
@@ -703,78 +722,122 @@ _REJ = sum(not v["compativel_poisson"] for v in _RS)
 _P_EXP = tuple(str(round(math.log10(f(v["p_ks"] for v in _RS)))).replace("-", "−") for f in (max, min))
 _MED = (min(v["media"] for v in _RS), max(v["media"] for v in _RS))
 _FONTE_FORMA = (min(v["weibull_reescalado"]["forma"] for v in DIST["reescala_fonte"].values()), max(v["weibull_reescalado"]["forma"] for v in DIST["reescala_fonte"].values()))
-slide("As falhas se agrupam · teste de reescala do tempo", "Depois de uma falha, a próxima vem mais cedo: o processo não é Poisson", f"""
-<div class="cols c-60-40">
+_FMIN = min(min(v) for v in FORMA.values()); _FMAX = max(max(v) for v in FORMA.values())
+assert _REJ == len(_RS) and _FMAX < 1, "revisar o texto do slide do agrupamento"
+slide("Por que as linhas falham · agrupamento", "Uma falha nunca vem sozinha: depois de uma, a próxima vem mais cedo", f"""
+<div class="cols c-55-45">
   <div>
-    <h3>Forma da Weibull no tempo reescalado</h3>
-    <p class="sub">círculo: material rodante (MR) · quadrado: equipamentos fixos (EF)</p>
-    {pontos_weibull()}
+    <ol class="passos">
+      <li><b>A hipótese mais simples.</b> Se as falhas fossem puro acaso, seriam "sem memória": a chance da próxima não dependeria de quando foi a última. É o processo de Poisson dos livros.</li>
+      <li><b>Por que testamos.</b> O simulador sorteia as falhas. Se elas vêm em rajadas e são sorteadas como puro acaso, o simulador subestima os dias ruins.</li>
+      <li><b>O teste.</b> Descontamos o que já explica a quantidade de falhas (hora, clima, número de trens) e medimos o intervalo entre uma falha e a seguinte. Sem memória, esses intervalos teriam "forma" igual a 1.</li>
+      <li><b>O desvio.</b> A forma deu de {br(_FMIN, 2)} a {br(_FMAX, 2)}, sempre abaixo de 1, nas {len(_RS)} combinações de linha e tipo de falha: sobram intervalos curtos demais. As falhas chegam em grupos.</li>
+    </ol>
   </div>
   <div class="stats">
-    <div class="stat"><div class="stat-v">×{br(_DEF["MR"]["multiplicador"], 2)}</div><div class="stat-l">taxa de material rodante na hora seguinte a uma falha na mesma linha <span class="muted">(IC {br(_DEF["MR"]["ic95_modelo"][0], 2)}–{br(_DEF["MR"]["ic95_modelo"][1], 2)})</span></div></div>
-    <div class="stat"><div class="stat-v">×{br(_DEF["EF"]["multiplicador"], 2)}</div><div class="stat-l">taxa de equipamentos fixos na mesma situação <span class="muted">(IC&#160;{br(_DEF["EF"]["ic95_modelo"][0], 2)}–{br(_DEF["EF"]["ic95_modelo"][1], 2)})</span></div></div>
-    <div class="stat"><div class="stat-v">{_REJ} de {len(_RS)}</div><div class="stat-l">combinações linha × causa em que o teste de reescala rejeita Poisson (p de 10<sup>{_P_EXP[0]}</sup> a 10<sup>{_P_EXP[1]}</sup>)</div></div>
+    <div class="stat"><div class="stat-v">×{br(_DEF["MR"]["multiplicador"], 1)}</div><div class="stat-l">a chance de falha nos <b>trens</b> na hora seguinte a uma falha na mesma linha <span class="muted">(IC {br(_DEF["MR"]["ic95_modelo"][0], 2)}–{br(_DEF["MR"]["ic95_modelo"][1], 2)})</span></div></div>
+    <div class="stat"><div class="stat-v">×{br(_DEF["EF"]["multiplicador"], 1)}</div><div class="stat-l">a chance de falha na <b>via, energia e sinalização</b> na mesma situação <span class="muted">(IC&#160;{br(_DEF["EF"]["ic95_modelo"][0], 2)}–{br(_DEF["EF"]["ic95_modelo"][1], 2)})</span></div></div>
+    <div class="stat"><div class="stat-v">{_REJ} de {len(_RS)}</div><div class="stat-l">combinações em que o teste descarta o puro acaso (p entre 10<sup>{_P_EXP[1]}</sup> e 10<sup>{_P_EXP[0]}</sup>)</div></div>
   </div>
 </div>
-<p class="nota">Com a taxa que muda por hora, clima e oferta, a média reescalada fica entre {br(_MED[0], 2)} e {br(_MED[1], 2)}: a taxa está calibrada. Mesmo assim a forma fica abaixo de 1. Por isso o simulador usa renovação Weibull no tempo reescalado. A Weibull é a melhor família em 23 de 29 estratos. <span class="tag">após a revisão</span> Cada fonte tem a sua forma, de {br(_FONTE_FORMA[0], 2)} (via com sintoma de trem, a mais em rajadas) a {br(_FONTE_FORMA[1], 2)}, sempre abaixo de 1.</p>""",
-"docs/relatorio/relatorio.md §4.1 e §4.2; fontes/verificacao/distribuicoes.md (teste de reescala); fontes/verificacao/modelo_taxa.md (defasagem)",
-"""<p>Forma da Weibull menor que 1 quer dizer que o risco de nova falha é maior logo depois de uma falha. Todas as oito combinações ficam abaixo de 1; a Amarela nos equipamentos fixos é a mais agrupada.</p>
-<p>A pergunta era se isso era só mistura de condições (pico, inverno). O teste de reescala responde que não: mesmo descontando hora, clima e oferta, sobra agrupamento.</p>
-<p>Em linguagem simples: uma falha na hora anterior dobra a chance de outra no material rodante e quase triplica nos equipamentos fixos. Tratar as falhas como independentes subestima o risco.</p>
+<p class="nota">Consequência no simulador: as falhas são sorteadas com essa memória (renovação de Weibull), e não como puro acaso. Tratar as falhas como independentes subestimaria o risco.</p>""",
+"docs/relatorio/relatorio.md §4.1 e §4.2; fontes/verificacao/distribuicoes.md (teste de reescala); fontes/verificacao/modelo_taxa.md (defasagem); distribuicoes.json",
+f"""<p>A pergunta: as falhas acontecem por puro acaso, uma independente da outra? Se sim, o simulador poderia sorteá-las como num dado.</p>
+<p>Testamos e não é assim. Mesmo descontando a hora, o clima e o número de trens, depois de uma falha a próxima vem mais cedo do que o acaso explicaria. Na hora seguinte a uma falha, a chance de outra quase dobra nos trens e quase triplica na via e nos equipamentos.</p>
+<p>Por isso o simulador sorteia as falhas com memória. Se não fizesse isso, subestimaria os dias ruins.</p>
 <p><b>Tempo:</b> 1 min 15 s.</p>""")
 
 # 8 ---------------------------------------------------------------
-slide("Causa comum", "45 eventos param várias linhas ao mesmo tempo, e a Laranja está em 44 deles", f"""
-<div class="cols c-52-48">
+from collections import Counter
+_CC = list(csv.DictReader(open(os.path.join(REPO, "dados", "derivados", "eventos", "eventos_causa_comum.csv"), encoding="utf-8"), delimiter=";"))
+_ESTACOES_CORR = ("Berri-UQAM", "Lionel-Groulx", "Snowdon", "Jean-Talon")
+def _onde_cc(cod):
+    """Código de local da STM: estação de correspondência, só as linhas (L + números das linhas) ou sem local (9999). Leitura nossa dos códigos."""
+    if cod == "9999":
+        return "sem local"
+    if re.fullmatch(r"L\d+", cod):
+        return "só as linhas"
+    for pre, nome in (("LG", "Lionel-Groulx"), ("SN", "Snowdon"), ("JT", "Jean-Talon"), ("B", "Berri-UQAM")):
+        if cod.startswith(pre):
+            return nome
+    raise AssertionError(f"código de local novo na causa comum: {cod}")
+_ONDE = Counter(_onde_cc(e["local_codigo"]) for e in _CC)
+_N_CORR = sum(_ONDE[n] for n in _ESTACOES_CORR)
+_COM_LAR = sum("laranja" in e["linhas"].split(",") for e in _CC)
+_CAT = sum(e["cat"] == "1" for e in _CC)
+_FUMACA = sum(e["sintoma"].startswith("Feu") for e in _CC)
+_EVAC = sum(e["evacuacao"] != "" for e in _CC)
+_SETOR = Counter(e["causa_secundaria"] for e in _CC)
+_CURTO = sum(e["classe_gravidade"] == "menos_de_5" for e in _CC)
+_LONGO = sum(e["classe_gravidade"] == "30_ou_mais" for e in _CC)
+assert len(_CC) == 45 and _COM_LAR == 44 and sum(_ONDE.values()) == 45
+assert all("laranja" in e["linhas"] for e in _CC if _onde_cc(e["local_codigo"]) in _ESTACOES_CORR), "estação de correspondência sem a Laranja"
+assert all(len(e["linhas"].split(",")) == 4 for e in _CC if e["local_codigo"] == "9999")
+_TR = sum(_SETOR[k] for k in ("MR-73", "MPM-10"))
+mapa_lar, _ = mapa_svg(460, 400, "laranja", pad=(16, 96, 16, 104))
+
+def barras_onde():
+    itens = [(n, _ONDE[n], True) for n in _ESTACOES_CORR] + [("Sem local: as 4 linhas", _ONDE["sem local"], False),
+                                                              ("Só as linhas, sem estação", _ONDE["só as linhas"], False)]
+    w = 560; lx = 230; bw_max = 250; rh = 30; bh = 18; top = 4; vmax = max(v for _, v, _ in itens)
+    h = top + rh * len(itens) + 14
+    o = [f'<svg viewBox="0 0 {w} {h}" width="{w}" height="{h}" role="img" aria-label="Onde aconteceram os eventos que pararam várias linhas">']
+    o.append(f'<line x1="{lx}" y1="0" x2="{lx}" y2="{h}" class="eixo"/>')
+    for i, (nome, v, corr) in enumerate(itens):
+        yc = top + i * rh + rh / 2 + (12 if not corr else 0)
+        o.append(f'<text x="{lx - 10}" y="{yc + 5:.1f}" text-anchor="end" class="c-lab c-sm">{esc(nome)}</text>')
+        o.append(barra_h(lx + 1, yc - bh / 2, bw_max * v / vmax, bh, "var(--accent)" if corr else "var(--bar)").replace("/>", f"><title>{esc(nome)}: {v}</title></path>"))
+        o.append(f'<text x="{lx + 1 + bw_max * v / vmax + 8:.1f}" y="{yc + 6:.1f}" class="c-val">{v}</text>')
+    o.append("</svg>")
+    return "".join(o)
+
+slide("Por que as linhas falham · linhas que param juntas", f"A Laranja para junto com as outras porque é a única que cruza as três: {_COM_LAR} dos {len(_CC)} eventos", f"""
+<div class="cols c-40-60">
   <div>
-    <h3>Eventos por grupo de linhas que parou junto</h3>
-    <p class="sub"><i class="sw" style="background:var(--accent)"></i>inclui Verde e Laranja: 31 eventos · <i class="sw" style="background:var(--bar)"></i>demais</p>
-    {barras_grupos()}
+    <figure class="fig-mapa">{mapa_lar}</figure>
+    <p class="corpo-sm cap-mapa">As quatro estações de correspondência da rede ficam na Laranja: Lionel-Groulx (com a Verde), Berri-UQAM (com a Verde e a Amarela), Snowdon e Jean-Talon (com a Azul).</p>
+  </div>
+  <div>
+    <h3>Onde foram os {len(_CC)} eventos que pararam mais de uma linha</h3>
+    <p class="sub"><i class="sw" style="background:var(--accent)"></i>numa estação de correspondência: {_N_CORR} · <i class="sw" style="background:var(--bar)"></i>sem estação no registro</p>
+    {barras_onde()}
     <ul class="lista lista-sm">
-      <li>β da Verde = <b>{br(BETA_VL_V1["beta_a"], 3)}</b> (IC {br(BETA_VL_V1["beta_a_ic95"][0], 3)}–{br(BETA_VL_V1["beta_a_ic95"][1], 3)}) sobre todas as falhas. <span class="tag">após a revisão</span> 40 dos 45 eventos são de equipamento fixo; nas falhas fixas, o β da Verde é <b>{br(BETA_VL_EF["beta_a"], 3)}</b> ({br(BETA_VL_EF["beta_a_ic95"][0], 3)}–{br(BETA_VL_EF["beta_a_ic95"][1], 3)}).</li>
-      <li>Duração média dos 45 eventos: <b>{br(CC_DUR_MEDIA, 1)} min</b>.</li>
+      <li><b>O que aconteceu:</b> fumaça, odor ou produto em {_FUMACA} (com evacuação registrada em {_EVAC} dos {len(_CC)}); energia de tração cortada em {_CAT}. Setores: estações {_SETOR["Service aux stations"]}, energia {_SETOR["Service TCPE"]}, via {_SETOR["Service de la voie"]}, "Service aux trains" {_SETOR["Service aux trains"]}, trens {_TR}.</li>
+      <li><b>Param mesmo ao mesmo tempo?</b> A STM registra um incidente só, com várias linhas e uma duração. {_CURTO} duraram menos de 5 min e {_LONGO}, 30 min ou mais. Os dados não mostram se cada linha ficou parada o tempo todo; o simulador supõe que sim (hipótese).</li>
     </ul>
   </div>
-  <div>
-    <figure class="fig-mapa">{mapa_corr}</figure>
-    <p class="corpo-sm cap-mapa">No centro, Verde e Laranja são o caminho alternativo uma da outra, entre Lionel-Groulx e Berri-UQAM. A redundância supõe falhas independentes; a causa comum quebra essa hipótese.</p>
-  </div>
 </div>""",
-"fontes/verificacao/distribuicoes.md (grupos e β); fontes/verificacao/politicas.md (44 dos 45); docs/relatorio/relatorio.md §4.2 e §7",
-"""<p>Causa comum é a falha que para mais de uma linha ao mesmo tempo, como energia ou controle compartilhados.</p>
-<p>São 45 eventos em 7 grupos. O mais frequente é Verde e Laranja juntas: 12 eventos só das duas, 31 contando os que pararam três ou quatro linhas. E a Laranja aparece em 44 dos 45.</p>
-<p>Por que isso importa: a redundância de rota supõe que os dois caminhos falham de forma independente. O fator β é de cerca de 1% sobre todas as falhas e de cerca de 2% sobre as de equipamento fixo, que é de onde vêm quase todos os eventos. Parece pouco, mas é exatamente o evento que derruba os dois caminhos do centro juntos.</p>
+"dados/derivados/eventos/eventos_causa_comum.csv (linhas, código de local, sintoma, evacuação, corte de tração, setor, classe de duração); leitura dos códigos de local: nossa",
+f"""<p>Pergunta da equipe: por que a Laranja quebra junto com as outras? Porque ela é a única linha que encontra as outras três. Todas as estações de correspondência da rede estão nela.</p>
+<p>Dos {len(_CC)} eventos em que mais de uma linha parou, {_N_CORR} foram numa estação de correspondência. Um caso típico é fumaça ou odor numa estação: ela é evacuada e as duas linhas que passam por ali param. Outros {_ONDE["sem local"]} são da rede inteira, sem local, e {_ONDE["só as linhas"]} citam só as linhas. Em {_CAT}, a energia de tração foi cortada.</p>
+<p>Elas param de verdade ao mesmo tempo? A STM registra um incidente com várias linhas e uma só duração. Metade é curta, menos de 5 minutos. Os dados não dizem se cada linha ficou parada o tempo todo; no simulador, supomos que sim.</p>
 <p><b>Tempo:</b> 1 min 15 s.</p>""")
 
 # 9 ---------------------------------------------------------------
-slide("Simulador · eventos discretos no navegador", "Um simulador da rede, trem a trem, que reproduz o que já sabemos antes de prever", f"""
+slide("Simulador · como funciona", "Um simulador da rede, trem a trem, que reproduz o que já sabemos antes de prever", f"""
 <div class="cols c-50-50">
   <div>
     <div class="label">Como funciona</div>
     <ul class="lista">
-      <li>Motor de eventos discretos em TypeScript. Cada trem segue o horário do GTFS.</li>
-      <li>Falhas sorteadas pela taxa do modelo (hora, clima, oferta, cenário) e pela renovação Weibull.</li>
-      <li>Material rodante para o trem; equipamento fixo bloqueia o trecho nos dois sentidos; causa comum para o grupo de linhas.</li>
-      <li>Monte Carlo em Web Workers: 1.000 dias em cerca de 3 s.</li>
-      <li>Mapa com os trens animados sobre o traçado real. O cenário inteiro, com a semente, fica no link.</li>
+      <li>Cada trem segue o horário real da STM.</li>
+      <li>As falhas são sorteadas com as chances medidas nos dados: hora, clima, frota e a "memória" das falhas.</li>
+      <li>Falha no trem para aquele trem; falha na via, energia ou sinalização bloqueia o trecho nos dois sentidos; um evento de várias linhas para todas elas.</li>
+      <li>Roda no navegador, sem servidor: 1.000 dias em cerca de 3 segundos.</li>
+      <li>O mapa mostra os trens no traçado real, e o link guarda o cenário inteiro.</li>
     </ul>
   </div>
   <div>
-    <div class="label">Validação</div>
+    <div class="label">Antes de prever, ele reproduz o que sabemos</div>
     <div class="val">
       <p><b>Sem falhas,</b> reproduz o horário exatamente: 26, 31, 2 e 9 trens às 08:00.</p>
-      <p><b>Reserva k-de-n contra Markov</b> (Laranja, frota completa com 0, 1 e 2 reservas)</p>
-      <table class="tab tab-num"><thead><tr><th></th><th>0</th><th>1</th><th>2</th></tr></thead>
-        <tbody><tr><td>Simulador</td><td>0,674</td><td>0,939</td><td>0,992</td></tr><tr><td>Markov</td><td>0,671</td><td>0,938</td><td>0,992</td></tr></tbody></table>
-      <p><b>Laranja, minutos por ano:</b> {"o intervalo do simulador contém os dois valores do painel." if LAR_DENTRO else '<span class="tag">após a revisão</span> com a taxa de 2025, abaixo da média de 2019 a 2026 do painel. Contra 2025: ' + f"{REV_NO_IC} de {N_COMP} médias dentro do IC."}</p>
+      <p><b>Laranja, minutos parados por ano:</b> {"a faixa do simulador contém os dois valores calculados pelo painel." if LAR_DENTRO else 'o simulador usa a taxa de 2025, um ano abaixo da média de 2019 a 2026 do painel. Comparado com o próprio ano de 2025, ' + f"{REV_NO_IC} das {N_COMP} médias caem dentro da faixa do observado."}</p>
       {faixa_laranja()}
-      <p class="corpo-sm muted">1 ou 8 processos dão resultado idêntico.</p>
     </div>
   </div>
 </div>""",
 "docs/relatorio/relatorio.md §4.3; specs/007, 008, 009, 010 e 011 (seções Resultado); fontes/verificacao/politicas.md",
 """<p>O simulador põe cada trem do horário real na rede e sorteia as falhas com os modelos dos slides anteriores. Roda inteiro no navegador, sem servidor.</p>
-<p>Antes de usá-lo para prever, conferimos que ele reproduz o que já sabemos: o horário sem falhas, o modelo de Markov da reserva de trens e os minutos parados da Laranja calculados de outros dois jeitos.</p>
+<p>Antes de usá-lo para prever, conferimos que ele reproduz o que já sabemos: o horário sem falhas e os minutos parados da Laranja calculados de outros dois jeitos.</p>
 <p>Após a revisão, a Laranja simulada fica abaixo do painel. Não é defeito: o simulador usa a taxa de 2025, e 2025 ficou abaixo da média de 2019 a 2026. A comparação certa passou a ser contra o próprio ano de 2025, dia a dia, com as condições de cada dia.</p>
 <p>Se der tempo, abrir o simulador ao vivo (link no último slide). Hipótese declarada: separação mínima de 90 s entre trens.</p>
 <p><b>Tempo:</b> 1 min 30 s.</p>""")
@@ -793,32 +856,31 @@ _OD_V1 = -_json_v1("dados/derivados/simulador/politicas.json")["politicas"]["1"]
 assert all(_OD > p[2][0] for p in POLITICAS[1:]), "revisar o título do slide 10: a operação degradada deixou de ser a maior"
 slide("Políticas de tolerância a falhas · dia útil, reparo de 1 dia · após a revisão", f"Operação degradada continua a política que mais reduz minutos parados: −{br(_OD, 1)} por dia útil", f"""
 <table class="tab tab-pol">
-  <thead><tr><th>Política</th><th>Minutos parados a menos por dia útil<br>(soma das 4 linhas, IC 95%)</th><th class="num">Trens-hora<br>perdidos</th><th class="num">Disp. origem-<br>destino (p.p.)</th><th class="num">Frota completa<br>na Laranja (p.p.)</th></tr></thead>
+  <thead><tr><th>Política</th><th>Minutos parados a menos por dia útil<br>(soma das 4 linhas, IC 95%)</th><th class="num">Horas de trem<br>perdidas</th><th class="num">Tempo com<br>caminho (p.p.)</th><th class="num">Dias com todos os<br>trens, Laranja (p.p.)</th></tr></thead>
   <tbody>{linhas_pol}</tbody>
 </table>
 <div class="tri">
-  <p><b>Ataca a causa mais frequente:</b> equipamentos fixos são {br(R["falhas_ef"])} das {br(R["falhas"])} falhas técnicas.</p>
-  <p><b>Reserva fria protege a oferta,</b> não a continuidade. O efeito cresce com o reparo na oficina (hipótese): {sn(P1["reservaFria"]["frota_completa_laranja_pp"]["media"], 1)} p.p. com 1 dia, {sn(P4["reservaFria"]["frota_completa_laranja_pp"]["media"], 0)} p.p. com 4 dias.</p>
+  <p><b>Ataca a causa mais frequente:</b> via, energia e sinalização são {br(R["falhas_ef"])} das {br(R["falhas"])} falhas.</p>
+  <p><b>Trens de reserva não evitam paradas:</b> garantem todos os trens no começo do dia. Na Laranja, {sn(P1["reservaFria"]["frota_completa_laranja_pp"]["media"], 1)} p.p. se o conserto na oficina levar 1 dia; {sn(P4["reservaFria"]["frota_completa_laranja_pp"]["media"], 0)} se levar 4 (hipótese).</p>
   <p><b>Retorno parcial vale mais que rota alternativa</b> ({sn(P1["retornoParcial"]["disp_od_pp"]["media"], 2)} contra {sn(P1["rotaAlternativa"]["disp_od_pp"]["media"], 3)} p.p.): a rede tem poucos caminhos alternativos.</p>
-</div>
-<p class="nota"><span class="tag">após a revisão</span> Na v1.1.0, −{br(_OD_V1, 1)}: a queda vem das durações corrigidas pela faixa oficial (D55).</p>""",
+</div>""",
 "fontes/verificacao/politicas.md e politicas.json (e os da v1.1.0); relatório §4.3; spec 008",
 f"""<p>Cada política foi comparada com "nenhuma política" usando as mesmas falhas sorteadas nas duas versões, para isolar o efeito.</p>
 <p>A operação degradada, liberar o trecho em marcha lenta depois de uma falha de equipamento fixo, é a que mais reduz minutos parados e trens-hora perdidos. Faz sentido: ataca a causa mais frequente. Após a revisão, o ganho ficou menor (−{br(_OD, 1)} contra −{br(_OD_V1, 1)}), porque parte das interrupções longas de equipamento fixo eram registros com a duração contraditória.</p>
-<p>A reserva fria não muda os minutos parados; ela garante a frota completa no início do dia. Quanto vale depende do tempo de reparo na oficina, que a STM não publica: por isso aparece como hipótese.</p>
+<p>Os trens de reserva (2 por linha, parados na garagem) não mudam os minutos parados; eles garantem que o dia comece com todos os trens, mesmo com alguns na oficina. Quanto valem depende do tempo de conserto na oficina, que a STM não publica: por isso aparece como hipótese.</p>
 <p>Retorno parcial e rota alternativa só mudam a disponibilidade origem-destino, e pouco, porque há poucos caminhos alternativos.</p>
 <p><b>Tempo:</b> 1 min 30 s.</p>""", "compacto")
 
 # 11 --------------------------------------------------------------
-slide("Que linha construir · disponibilidade origem-destino, dia útil", "A ligação que mais ajuda dá à Azul um caminho que não passa pela Laranja", f"""
+slide("Que linha construir · teste das linhas novas no simulador", "A ligação que mais ajuda dá à Azul um caminho que não passa pela Laranja", f"""
 <div class="cols c-40-60">
   <div>
     <figure class="fig-mapa">{mapa_exp}</figure>
     <p class="corpo-sm">Hoje a Azul só alcança o resto da rede pela Laranja, em Snowdon e Jean-Talon. Quando a Laranja para, a Azul fica isolada: é o maior ponto único de falha do modelo.</p>
   </div>
   <div>
-    <h3>Ganho sobre a rede atual ({br(DISP_OD_ATUAL, 3)}%), sem retorno parcial</h3>
-    <p class="sub">pontos percentuais, após a revisão; o traçado das candidatas é aproximado</p>
+    <h3>Cada projeto testado: quanto aumenta o tempo com caminho</h3>
+    <p class="sub">entre os pares de estações de hoje (rede atual: {br(DISP_OD_ATUAL, 3)}%), em pontos percentuais; traçado aproximado</p>
     {barras_ganho()}
     <p class="corpo-sm muted">Ramais não criam caminho alternativo e somam trechos que podem falhar. Com retorno parcial (hipótese): Rosa + Azul {_rot(_RP["rosa_2017+azul_anjou"])}; anel {_rot(_RP["laranja_anel_artm_2019"])}; Rosa {_rot(_RP["rosa_2017"])}; ramais 0.</p>
   </div>
@@ -909,22 +971,21 @@ f"""<p>Na reunião de 2026-10-27 a turma perguntou por fabricantes, por via ou t
 <p><b>Tempo:</b> 1 min 30 s.</p>""")
 
 # 14 --------------------------------------------------------------
-slide("Limitações", "O que o modelo não sabe, e como isso aparece nos resultados", """
-<table class="tab tab-lim">
-  <thead><tr><th>Limitação</th><th>Como tratamos</th></tr></thead>
-  <tbody>
-    <tr><td><b>Não há passageiros diários</b></td><td>Todas as métricas são ponderadas pela oferta. A cobertura de bairros novos não entra na escolha da expansão.</td></tr>
-    <tr><td><b>Reparo na oficina e aparelhos de mudança de via</b> não são públicos</td><td>Entram como hipóteses ajustáveis, com sensibilidade (reparo de 0,5 a 4 dias). O retorno parcial usa só as pontas de viagem.</td></tr>
-    <tr><td><b>Setores sem definição pública</b></td><td>"Service aux trains" e "Service TCPE" ficam com o nome da STM; "controle de trens" e "energia" são dedução, sem confirmação da STM.</td></tr>
-    <tr><td><b>Exposição depois de 2023-09</b></td><td><span class="tag">após a revisão</span> Deixou de ser estimada: o km real republicado pela STM cobre o período todo no modelo e no simulador.</td></tr>
-    <tr><td><b>Traçado das candidatas</b></td><td>Aproximação em linha reta entre estações, exceto a Azul até Anjou (em obras no OpenStreetMap).</td></tr>
-    <tr><td><b>Duração registrada</b></td><td>Mede o tempo até o serviço voltar, não o reparo do equipamento. Horários e faixa oficial às vezes se contradizem: vale a faixa nas 100 exceções (D55).</td></tr>
-    <tr><td><b>Dados incompletos</b></td><td>6% das falhas sem posição (sobretudo subestações); condição do tempo só em 45,8% das horas de operação. Aparecem como falta, nunca como zero.</td></tr>
-  </tbody>
-</table>""",
+slide("Limitações", "Três coisas que os dados públicos não trazem", """
+<div class="lims">
+  <div class="lim"><div class="lim-n">1</div><h3>Não há passageiros por dia</h3>
+    <p>Não sabemos quantas pessoas cada falha atinge, só quantos trens e quantos pares de estações ficam sem caminho.</p>
+    <p class="lim-c"><b>Como tratamos:</b> tudo é ponderado pela oferta de trens, e o texto diz isso. A escolha da linha nova não considera bairros novos atendidos.</p></div>
+  <div class="lim"><div class="lim-n">2</div><h3>Não há tempo de conserto na oficina</h3>
+    <p>A STM publica quanto tempo o serviço ficou parado, mas não quanto o trem levou para ser consertado.</p>
+    <p class="lim-c"><b>Como tratamos:</b> entra como hipótese ajustável, de 0,5 a 4 dias, e o resultado é mostrado para cada valor.</p></div>
+  <div class="lim"><div class="lim-n">3</div><h3>Parte dos dados está incompleta</h3>
+    <p>6% das falhas não têm posição na linha (sobretudo subestações), e a condição do tempo só foi registrada em 45,8% das horas de operação.</p>
+    <p class="lim-c"><b>Como tratamos:</b> o que falta aparece como falta, nunca como zero ou como "tempo bom".</p></div>
+</div>""",
 "docs/relatorio/relatorio.md §6; fontes/FONTES.md §6; specs/002 e 003 (Resultado); fontes/verificacao/politicas.md (hipóteses)",
-"""<p>As quatro primeiras são as limitações do relatório. A principal é a falta de passageiros: sem ela, não dá para dizer quantas pessoas cada falha atinge, só quantos trens.</p>
-<p>O que não vem dos dados aparece marcado como hipótese, com análise de sensibilidade, e o simulador mostra o rótulo ao lado do número.</p>
+"""<p>As três limitações que mais pesam. A principal é a falta de passageiros: sem ela, não dá para dizer quantas pessoas cada falha atinge, só quantos trens.</p>
+<p>O que não vem dos dados aparece marcado como hipótese, e o simulador mostra o rótulo ao lado do número.</p>
 <p><b>Tempo:</b> 45 s.</p>""")
 
 # 15 --------------------------------------------------------------
@@ -1137,7 +1198,7 @@ figcaption{font-size:12.5px;color:var(--muted);margin-top:6px}
 .ag-t{grid-column:2;grid-row:1;font-size:21px;font-weight:600;color:var(--navy)}
 .ag-s{grid-column:2/4;grid-row:2;font-size:15px;color:var(--muted);line-height:1.35;margin-top:4px}
 .ag-p{grid-column:3;grid-row:1;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;align-self:center}
-.tl{display:grid;grid-template-columns:repeat(7,1fr);gap:16px;position:relative}
+.tl{display:grid;grid-template-columns:repeat(6,1fr);gap:20px;position:relative}
 .tl::before{content:"";position:absolute;left:0;right:0;top:35px;height:3px;background:var(--rule)}
 .tl-d{font-size:15px;font-weight:700;color:var(--navy);height:24px;white-space:nowrap}
 .tl-p{display:block;width:18px;height:18px;border-radius:50%;background:var(--turq);border:3px solid #fff;box-shadow:0 0 0 1px var(--turq);position:relative;margin:4px 0 16px}
@@ -1187,6 +1248,43 @@ figcaption{font-size:12.5px;color:var(--muted);margin-top:6px}
 .qa-i{border-left:4px solid var(--turq);padding-left:18px}
 .qa-i h3{font-size:21px;line-height:1.3;margin-bottom:10px}
 .qa-i p{font-size:18.5px;line-height:1.48;margin:0}
+/* retorno da equipe (2026-11-17) */
+.perguntas li.principal{background:var(--ouro-soft);border-radius:8px;padding:10px 14px 10px 58px;margin-left:-14px}
+.perguntas li.principal::before{left:12px;top:8px}
+.perguntas li.principal .tag{background:var(--ouro);margin-top:4px}
+.c2{grid-template-columns:repeat(2,1fr)}
+.caixa-sm{padding:14px 18px 12px;margin-bottom:14px}
+.caixa-sm h3{margin-bottom:6px}
+.caixa-sm .corpo-sm{font-size:15px;line-height:1.42;margin:0 0 6px}
+.caixa-sm .lista-sm{font-size:15.5px}
+.caixa-sm .lista-sm li{margin-bottom:3px}
+.caixa .onde{font-size:12.5px;font-weight:600;color:var(--accent-text);margin:4px 0 0}
+.passos-grandes li{font-size:17.5px;margin-bottom:16px;line-height:1.45}
+.rota{display:flex;align-items:center;gap:6px;margin:12px 0 4px;flex-wrap:wrap}
+.pill{display:inline-block;padding:4px 14px;border-radius:999px;color:#fff;font-weight:600;font-size:15px}
+.pill-am{color:var(--ink);box-shadow:inset 0 0 0 1.25px #A38B00}
+.pill-nova{background:#fff;color:var(--navy);border:2px dashed var(--turq)}
+.seta-p{color:var(--muted);font-weight:700}
+.rota-t{font-size:14px;margin:0 4px}
+.mini-kpis{display:flex;gap:28px;margin-top:14px;border-top:1px solid var(--rule);padding-top:12px}
+.mk-v{font-size:34px;font-weight:700;color:var(--navy);line-height:1.05;font-variant-numeric:tabular-nums}
+.mk-l{font-size:14.5px;color:var(--ink-2);margin-top:4px;max-width:230px}
+.tab-med{font-size:15px;line-height:1.28}
+.tab-med td{padding:5px 12px 5px 0;vertical-align:middle}
+.tab-med td .muted{font-size:13px}
+.tab-med th.num,.tab-med td.num{text-align:center}
+.tab-med tr.dest td{background:var(--ouro-soft)}
+.tab-proj{font-size:15.5px;line-height:1.28}
+.tab-proj td{padding:5px 14px 5px 0;vertical-align:middle}
+.tab-proj td .muted{font-size:13px}
+.tab-proj tr.dest td{background:var(--accent-soft)}
+.tab-proj tr.base td{color:var(--muted)}
+.lims{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.lim{border-top:4px solid var(--turq);padding-top:14px}
+.lim-n{font-size:40px;font-weight:700;color:var(--navy);line-height:1;margin-bottom:10px}
+.lim h3{font-size:21px;line-height:1.25;margin-bottom:10px}
+.lim p{font-size:17px;line-height:1.45;margin:0 0 12px}
+.lim .lim-c{font-size:16px;color:var(--ink-2);border-left:3px solid var(--ouro);padding-left:12px}
 /* resumo executivo */
 .resposta{border-left:6px solid var(--ouro);padding:4px 0 0 26px}
 .r-item{display:grid;grid-template-columns:262px 1fr;gap:16px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--rule-2)}
@@ -1432,8 +1530,8 @@ f"""<p>Dois lados da mesma moeda. À esquerda, o que faz o número ser confiáve
 <p>À direita, o que fica fora. A principal limitação é não ter passageiros.</p>
 <p><b>Tempo:</b> 1 min.</p>""")
 
-EXECUTIVA = [CAPA_EXEC, RESUMO, pega("A pergunta"), pega("Indicadores por linha"), pega("O que muda a taxa"),
-             pega("As falhas se agrupam"), pega("Causa comum"), pega("Simulador · eventos"), pega("Políticas"),
+EXECUTIVA = [CAPA_EXEC, RESUMO, pega("A pergunta"), pega("Indicadores por linha"), pega("Por que as linhas falham · fatores"),
+             pega("Por que as linhas falham · agrupamento"), pega("Por que as linhas falham · linhas que param juntas"), pega("Simulador · como funciona"), pega("Políticas"),
              pega("Que linha construir"), CONFIANCA, pega("Conclusões"), pega("Confira")]
 monta(EXECUTIVA, OUT_EXEC, "Confiabilidade do metrô de Montreal · apresentação executiva")
 
@@ -1504,22 +1602,20 @@ LINHA_TEMPO = slide("Linha do tempo · 2026-10-20 a 2026-11-11", "Do tema à ent
 <div class="tl">
   <div class="tl-n"><div class="tl-d">até 10-20</div><i class="tl-p"></i><h3>Tema</h3>
     <p>Comparamos São Paulo e redes europeias. Montreal publica cada incidente com início, fim, causa, linha e local.</p><p class="onde">D01</p></div>
-  <div class="tl-n"><div class="tl-d">10-20</div><i class="tl-p"></i><h3>Fundação</h3>
-    <p>Painel no ar, monorepo SDD, specs 000 a 013 escritas, dados numa Release com hash. O 1º deploy foi bloqueado: o Windows mudou o fim de linha e os hashes.</p><p class="onde">F0 · D02 a D12</p></div>
-  <div class="tl-n tl-ouro"><div class="tl-d">10-21</div><i class="tl-p"></i><h3>Tudo num dia</h3>
-    <p>Dados, modelos, simulador, backtest e publicação (F1 a F6); <b>v1.0.0</b>; relatório e deck; três rodadas de crítica; reprodução do zero sem diferença. À noite, specs 015 e 016.</p><p class="onde">D13 a D54</p></div>
+  <div class="tl-n"><div class="tl-d">10-20</div><i class="tl-p"></i><h3>A base do projeto</h3>
+    <p>Pusemos o site no ar, escrevemos o plano de cada parte do trabalho antes de programar e guardamos uma cópia dos dados da STM, com uma "impressão digital" de cada arquivo para provar que não mudaram.</p><p class="onde">D02 a D12</p></div>
+  <div class="tl-n tl-ouro"><div class="tl-d">10-21</div><i class="tl-p"></i><h3>Primeira versão completa</h3>
+    <p>Dados tratados, modelos, simulador, teste contra 2025 e site: <b>v1.0.0</b>. Relatório, apresentação e as primeiras revisões automáticas.</p><p class="onde">D13 a D54</p></div>
   <div class="tl-n"><div class="tl-d">10-23 e 10-27</div><i class="tl-p"></i><h3>Perguntas novas</h3>
-    <p>A STM republica o km real até 2026-09. Na reunião, perguntas sobre frota, via ou trem e sistemas separados.</p><p class="onde">specs 004 e 017</p></div>
-  <div class="tl-n"><div class="tl-d">11-01</div><i class="tl-p"></i><h3>Reprodução quebra</h3>
-    <p>A execução agendada do <code>reproduz.yml</code> falha: a API da NHL mudou a resposta.</p><p class="onde">D65</p></div>
+    <p>A STM republica a quilometragem dos trens até 2026-09. Na reunião, perguntas sobre frota, via ou trem e sistemas separados.</p><p class="onde">specs 004 e 017</p></div>
   <div class="tl-n"><div class="tl-d">11-10</div><i class="tl-p"></i><h3>Revisão</h3>
-    <p>v1.1.0 congelada antes de mexer; specs 017 a 020; duração pela faixa oficial; falhas por frota e setor. Erro da greve achado no meio da rodada.</p><p class="onde">D55 a D63</p></div>
+    <p>Guardamos a versão anterior e refizemos tudo separando as falhas por frota de trem e por setor. Durações corrigidas pela faixa oficial da STM.</p><p class="onde">D55 a D63</p></div>
   <div class="tl-n tl-ouro"><div class="tl-d">11-11</div><i class="tl-p"></i><h3>Entrega</h3>
-    <p>4ª crítica ({CRIT_ENTREGA[1]} achados); resposta ao objetivo no relatório; licença MIT; <b>v1.2.0</b> congelada.</p><p class="onde">D64 a D66</p></div>
+    <p>Última revisão automática antes da entrega; resposta ao objetivo no relatório; <b>v1.2.0</b> guardada como versão de entrega.</p><p class="onde">D64 a D66</p></div>
 </div>
-<p class="nota">Entre 10-26 e 11-09, a verificação semanal conferiu as fontes na origem toda segunda-feira e gravou um relatório datado no repositório.</p>""",
+<p class="nota">Toda segunda-feira, uma conferência automática baixa as fontes de novo e grava um relatório no repositório.</p>""",
 "git log e etiquetas (git tag); docs/decisoes/registro_de_decisoes.md; fontes/verificacao/online_*.txt",
-"""<p>A linha do tempo mostra o ritmo: a primeira versão completa saiu em dois dias, e a maior parte do tempo depois disso foi para conferir, revisar e corrigir.</p>
+"""<p>A linha do tempo mostra o ritmo: a primeira versão completa saiu cedo, e a maior parte do tempo depois disso foi para conferir, revisar e corrigir.</p>
 <p>Dois marcos em dourado: a v1.0.0 (10-21), primeira versão inteira, e a v1.2.0 (11-11), a versão de entrega.</p>
 <p>O ponto de virada foi a reunião de 10-27: as perguntas sobre frota e sistemas levaram à revisão de 11-10.</p>""")
 
@@ -1578,18 +1674,41 @@ SPECS_SL = slide(f"As {len(SPECS)} specs", f"{N_IMPL} atendem a todos os critér
 """<p>Cada quadrado é uma spec, com o status que está escrito nela. "Com exceção" quer dizer que um critério não foi atingido e o motivo está na própria spec.</p>
 <p>Vale lembrar: exceção não é defeito escondido. É o critério original preservado, com o resultado ao lado.</p>""")
 
-NORMALIZA = slide("Dados · decisões de tratamento", "Como 45.785 incidentes viraram uma tabela de falhas com hora, duração, local e exposição", f"""
-<div class="cards c3 cards-alto">
-  <div class="card"><h3>O que é falha técnica</h3><p>Causa primária "Matériel roulant" (trem) ou "Équipements fixes" (via, sinalização, energia, portas). Mais de uma linha vira causa comum; sem linha fica registrado, fora das métricas.</p><p class="onde">D13</p></div>
-  <div class="card"><h3>Horas e duração</h3><p>Janela de 20 h (05:00 a 01:00). 24:xx e 25:xx são do dia seguinte. Na revisão, quando a duração calculada contradiz a faixa oficial da STM, vale a faixa.</p><p class="onde">D12 · D14 · D55</p></div>
-  <div class="card"><h3>Exposição</h3><p>Trens em viagem por hora no horário do GTFS, calibrados pelo km real de cada dia. Na revisão, o km republicado cobre até 2026-09 e nada mais é estimado.</p><p class="onde">D17 · spec 004</p></div>
-  <div class="card"><h3>Clima</h3><p>Três estações do ECCC: precipitação de McTavish, com o aeroporto de reserva; temperatura e condição da 51157. Condição ausente fica vazia, nunca "seco".</p><p class="onde">D15</p></div>
-  <div class="card"><h3>Eventos externos</h3><p>Jogos do Canadiens (API da NHL, verificado), GP do Canadá e greves de 2025 (não verificados), cada um com URL e status.</p><p class="onde">D16</p></div>
-  <div class="card"><h3>Mapa e local</h3><p>Traçado do OpenStreetMap (não do GTFS); estações casadas com o Wikidata. Códigos de local <code>xSyy</code> deduzidos como a plataforma da 2ª linha.</p><p class="onde">D10 · D11 · spec 002</p></div>
+NORMALIZA = slide("Dados · como tratamos", "Hora padronizada, clima explicado, eventos e mapa", f"""
+<div class="cols c-50-50">
+  <div>
+    <div class="caixa caixa-sm"><h3>A hora foi padronizada</h3>
+      <p class="corpo-sm">O metrô funciona depois da meia-noite, e a STM anota essas horas como 24:30 ou 25:10, ainda no "dia de serviço" anterior. Convertemos tudo para a data e a hora de relógio de Montreal: 24:30 vira 00:30 do dia seguinte.</p>
+      <p class="corpo-sm">O dia de serviço vai das 05:00 à 01:00, 20 horas. É nesse relógio que contamos as horas de operação e o tempo entre falhas. A duração de cada falha é o tempo até o serviço voltar; quando o horário anotado contradiz a faixa oficial da STM, vale a faixa.</p>
+      <p class="onde">D12 · D14 · D55</p></div>
+    <div class="caixa caixa-sm"><h3>Clima: o que consideramos</h3>
+      <p class="corpo-sm">Usamos três estações meteorológicas do governo do Canadá. Chuva e neve vêm da estação do centro (McTavish), perto das linhas, e da do aeroporto quando falta o dado. Temperatura e condição do tempo vêm de uma terceira estação.</p>
+      <p class="corpo-sm">A condição do tempo só foi anotada em 45,8% das horas. Quando falta, fica "sem dado", e nunca contamos como "tempo bom". O que apareceu: neve acumulada e calor aumentam as falhas; frio intenso, não.</p>
+      <p class="onde">D15 · spec 003</p></div>
+  </div>
+  <div>
+    <div class="caixa caixa-sm"><h3>Eventos externos</h3>
+      <ul class="lista lista-sm">
+        <li>Jogos do Canadiens, pela API da NHL</li>
+        <li>Grande Prêmio do Canadá de Fórmula 1</li>
+        <li>Greves de 2025, pela imprensa</li>
+        <li>348 eventos, cada um com link e status: verificado ou não</li>
+      </ul>
+      <p class="onde">D16 · spec 003</p></div>
+    <div class="caixa caixa-sm"><h3>Mapa e local: tecnologias</h3>
+      <ul class="lista lista-sm">
+        <li>OpenStreetMap: o traçado real das linhas</li>
+        <li>Wikidata: a posição de cada estação</li>
+        <li>GTFS da STM: estações e horários dos trens</li>
+        <li>MapLibre: o mapa com os trens no navegador</li>
+      </ul>
+      <p class="onde">D10 · spec 002 · spec 010</p></div>
+  </div>
 </div>""",
-"docs/decisoes/registro_de_decisoes.md (D10 a D17 e D55); specs/001 a 004",
-"""<p>Cada cartão é uma decisão de tratamento dos dados, com o número dela no registro.</p>
-<p>A regra geral: nada some em silêncio. O que não entra numa métrica fica registrado com o motivo, e o dado que falta aparece como falta.</p>""")
+"docs/decisoes/registro_de_decisoes.md (D10, D12, D14 a D16, D55); specs/001 a 003 e 010; spec 003 (45,8% com condição; 348 eventos)",
+"""<p>A hora: a STM anota as horas depois da meia-noite como 24 ou 25 horas. Padronizamos tudo para a hora de relógio, e o dia de serviço passou a ser das 5h à 1h.</p>
+<p>O clima: três estações, a do centro para chuva e neve. Quando o dado falta, ele aparece como falta. Foi assim que vimos que neve e calor pesam, e o frio não.</p>
+<p>A regra geral: nada some em silêncio. O que não entra numa métrica fica registrado com o motivo.</p>""")
 
 ARQ = slide("Simulador · arquitetura", "Python prepara os números; o navegador simula; um segundo programa confere tudo antes de publicar", f"""
 <div class="fluxo">
@@ -1609,32 +1728,38 @@ ARQ = slide("Simulador · arquitetura", "Python prepara os números; o navegador
 """<p>A divisão de trabalho entre linguagens: Python para estatística, TypeScript para simular no navegador. O contrato entre os dois é um único arquivo JSON validado por esquema.</p>
 <p>Ao lado do caminho principal, um segundo programa, escrito à parte, refaz os números-chave direto dos dados brutos. Se der diferença, o site não é publicado.</p>""")
 
-VIAGEM = slide("Simulador · viagem de uma estação a outra · specs 015 e 016", "Na viagem, a ligação nova troca três linhas por uma e corta o tempo sem caminho", f"""
+VG_MIN = re.search(r"\| Minutos por dia sem caminho \| ([\d,]+) \(", _VG).group(1)
+def _pill(l):
+    return f'<span class="pill{" pill-am" if l == "amarela" else ""}" style="background:{COR[l]}">{NOME[l]}</span>'
+_SETA = '<span class="seta-p">→</span>'
+VIAGEM = slide("Simulador · uma viagem de verdade", "Uma viagem com baldeação depende de todas as linhas do caminho: menos linhas, menos tempo parado", f"""
 <div class="cols c-50-50">
-  <div>
-    <h3>Angrignon → Saint-Michel (Verde, Laranja, Azul)</h3>
-    <p class="sub">dia útil, 1.000 dias simulados</p>
-    <table class="tab tab-num2"><tbody>
-      <tr><td>Produto das três linhas, como se falhassem de forma independente</td><td class="num">{VG_PROD}</td></tr>
-      <tr><td>Viagem inteira, simulada (IC 95%)</td><td class="num"><b>{VG_SIM[0]}</b> ({VG_SIM[1]} a {VG_SIM[2]})</td></tr>
-      <tr><td>Dias com ao menos uma interrupção no caminho</td><td class="num">{VG_DIAS}</td></tr>
-    </tbody></table>
-    <p class="corpo-sm">Em série, a viagem é quase o produto dos trechos: a confiabilidade de um caminho cai a cada linha a mais.</p>
+  <div class="caixa">
+    <div class="label">Exemplo 1 · hoje</div>
+    <h3>Angrignon → Saint-Michel</h3>
+    <div class="rota">{_pill("verde")}{_SETA}{_pill("laranja")}{_SETA}{_pill("azul")}</div>
+    <p class="corpo-sm">A viagem só acontece se as três linhas estiverem andando. Se qualquer uma parar, não há caminho.</p>
+    <div class="mini-kpis">
+      <div><div class="mk-v">{VG_MIN} min</div><div class="mk-l">por dia sem caminho, em média</div></div>
+      <div><div class="mk-v">{VG_DIAS}</div><div class="mk-l">dos dias têm ao menos uma interrupção no caminho</div></div>
+    </div>
   </div>
-  <div>
+  <div class="caixa">
+    <div class="label">Exemplo 2 · com a ligação nova</div>
     <h3>Atwater → Université-de-Montréal</h3>
-    <p class="sub">rede atual contra a rede com a ligação nova</p>
-    <table class="tab tab-num2"><thead><tr><th></th><th class="num">hoje</th><th class="num">com a ligação</th></tr></thead><tbody>
-      <tr><td>Tempo programado do caminho (min)</td><td class="num">{LN_PROG[0]}</td><td class="num"><b>{LN_PROG[1]}</b></td></tr>
-      <tr><td>Tempo sem caminho (min por dia)</td><td class="num">{LN_SEM[0]}</td><td class="num"><b>{LN_SEM[1]}</b></td></tr>
-      <tr><td>Noves (−log₁₀ da indisponibilidade)</td><td class="num">{LN_NOVES[0]}</td><td class="num"><b>{LN_NOVES[1]}</b></td></tr>
-    </tbody></table>
-    <p class="corpo-sm">Perto de 100%, a disponibilidade esconde as diferenças; por isso a escala em noves (99% são 2 noves, 99,9% são 3).</p>
+    <div class="rota"><span class="muted rota-t">hoje</span>{_pill("verde")}{_SETA}{_pill("laranja")}{_SETA}{_pill("azul")}<span class="muted rota-t">{LN_PROG[0]} min</span></div>
+    <div class="rota"><span class="muted rota-t">depois</span><span class="pill pill-nova">ligação nova</span><span class="muted rota-t">{LN_PROG[1]} min</span></div>
+    <p class="corpo-sm">Com a ligação, a viagem passa a depender de uma linha só, e não de três.</p>
+    <div class="mini-kpis">
+      <div><div class="mk-v">{LN_SEM[0]} → {LN_SEM[1]}</div><div class="mk-l">minutos por dia sem caminho</div></div>
+    </div>
   </div>
-</div>""",
-"fontes/verificacao/viagem.md e linhas_novas.md; specs/015 e 016; D52 a D54",
-"""<p>Duas perguntas que vieram depois da v1.0.0: como se comporta uma viagem que usa várias linhas, e quanto uma linha nova muda essa viagem.</p>
-<p>O caso de Atwater a Université-de-Montréal mostra o efeito da ligação recomendada do ponto de vista de quem viaja: menos linhas no caminho e muito menos tempo sem caminho.</p>""")
+</div>
+<p class="nota">Dia útil, 1.000 dias simulados. Na viagem do exemplo 1, há caminho em {VG_SIM[0]} do tempo de serviço; parece quase 100%, por isso olhamos os minutos sem caminho e os dias com interrupção.</p>""",
+"fontes/verificacao/viagem.md (Angrignon → Saint-Michel) e linhas_novas.md (Atwater → Université-de-Montréal); specs/015 e 016",
+f"""<p>Este slide olha a rede do ponto de vista de quem viaja.</p>
+<p>Exemplo 1: de Angrignon a Saint-Michel são três linhas. A viagem depende de todas: basta uma parar para não haver caminho. Em média são {VG_MIN} minutos por dia sem caminho, e em {VG_DIAS} dos dias há pelo menos uma interrupção.</p>
+<p>Exemplo 2: de Atwater a Université-de-Montréal, hoje também são três linhas e {LN_PROG[0]} minutos. Com a ligação nova recomendada, é uma linha só, {LN_PROG[1]} minutos, e o tempo sem caminho cai de {LN_SEM[0]} para {LN_SEM[1]} minutos por dia.</p>""")
 
 PUBLICACAO = slide("Publicação · GitHub Pages e Actions", "O site só vai ao ar se a conferência passar, e cada versão fica guardada", f"""
 <div class="cols c-55-45">
@@ -1871,10 +1996,183 @@ ROTEIRO_EXEC = slide("Para a apresentação à turma", f"A executiva tem {len(EX
 "docs/apresentacao/index.html (notas de cada slide)",
 """<p>Os tempos somam as notas de cada slide da executiva. Dá para dividir em blocos: abertura e resposta (1 e 2), medição e modelos (3 a 7), simulador e escolhas (8 a 10), confiança e conclusões (11 a 13).</p>""", "compacto")
 
+# ---------------------------------------------------------------- slides da interna refeitos com o retorno da equipe (2026-11-17)
+import hashlib
+_INC = next(f for f in _MAN["fontes"] if f["id"] == "stm_incidentes")  # fonte com hash no manifesto
+_INC_ARQ = os.path.join(REPO, _INC["arquivo"])
+assert os.path.exists(_INC_ARQ), "falta o CSV de incidentes: python -I pipeline/verifica_fontes.py --baixa-release"
+assert hashlib.sha256(open(_INC_ARQ, "rb").read()).hexdigest() == _INC["sha256"], "CSV de incidentes diferente do manifesto"
+with open(_INC_ARQ, encoding="utf-8-sig", newline="") as _f:
+    _LB = list(csv.reader(_f, delimiter=";"))
+_BRUTOS = [dict(zip(_LB[1], (c.strip() for c in r))) for r in _LB[2:] if len(r) >= len(_LB[1]) and r[0].strip()]  # como em pipeline/normaliza.py
+_PRIM = Counter(x["Cause primaire"] for x in _BRUTOS)
+_SEC = {p: Counter(x["Cause secondaire"] for x in _BRUTOS if x["Cause primaire"] == p) for p in _PRIM}
+_ROT_PRIM = {"Autres": "Outros, sem detalhe", "Clientèle": "Passageiros", "Équipements fixes": "Via, energia, sinalização",
+             "Matériel roulant": "Trens", "Exploitation trains": "Operação dos trens", "#N/A": "Sem causa registrada"}
+assert len(_BRUTOS) == 45785 and set(_PRIM) == set(_ROT_PRIM) and _PRIM["Matériel roulant"] + _PRIM["Équipements fixes"] == 8619
+
+def barras_incidentes():
+    ordem = sorted(_PRIM, key=lambda k: -_PRIM[k])
+    w = 600; lx = 210; bw_max = 300; rh = 34; bh = 20; top = 4; vmax = max(_PRIM.values())
+    h = top + rh * len(ordem) + 6
+    o = [f'<svg viewBox="0 0 {w} {h}" width="{w}" height="{h}" role="img" aria-label="Incidentes da STM por causa">']
+    o.append(f'<line x1="{lx}" y1="0" x2="{lx}" y2="{h}" class="eixo"/>')
+    for i, k in enumerate(ordem):
+        v = _PRIM[k]; yc = top + i * rh + rh / 2; tec = k in ("Matériel roulant", "Équipements fixes")
+        o.append(f'<text x="{lx - 10}" y="{yc + 5:.1f}" text-anchor="end" class="c-lab c-sm{"" if tec else " c-fraco"}">{esc(_ROT_PRIM[k])}</text>')
+        o.append(barra_h(lx + 1, yc - bh / 2, bw_max * v / vmax, bh, "var(--accent)" if tec else "var(--bar)").replace("/>", f"><title>{esc(_ROT_PRIM[k])}: {br(v)}</title></path>"))
+        o.append(f'<text x="{lx + 1 + bw_max * v / vmax + 8:.1f}" y="{yc + 6:.1f}" class="c-val">{br(v)}</text>')
+    o.append("</svg>")
+    return "".join(o)
+
+_CLI = _SEC["Clientèle"]; _AUT = _SEC["Autres"]
+DADOS_INC = slide("Dados · o que entra e o que fica de fora", f"Dos {br(len(_BRUTOS))} incidentes, só {br(_PRIM['Matériel roulant'] + _PRIM['Équipements fixes'])} são falha de trem ou de infraestrutura", f"""
+<div class="cols c-50-50">
+  <div>
+    <h3>Incidentes da STM por causa principal, 2019-01 a 2026-06</h3>
+    <p class="sub"><i class="sw" style="background:var(--accent)"></i>falhas técnicas, o que estudamos · <i class="sw" style="background:var(--bar)"></i>fora do estudo</p>
+    {barras_incidentes()}
+    <p class="corpo-sm muted">Das {br(_PRIM['Matériel roulant'] + _PRIM['Équipements fixes'])} falhas técnicas, {br(R["falhas"])} param uma linha só; 45 param várias (as linhas que param juntas) e 44 não têm linha.</p>
+  </div>
+  <div>
+    <div class="label">O que são os incidentes que não são falha</div>
+    <ul class="lista lista-sm">
+      <li><b>Passageiros ({br(_PRIM["Clientèle"])}):</b> atos intencionais ({br(_CLI["Méfait volontaire"])}), incômodos sem intenção ({br(_CLI["Nuisance involontaire"])}) e pessoa ferida ou doente ({br(_CLI["Blessée ou malade"])}).</li>
+      <li><b>Outros ({br(_PRIM["Autres"])}):</b> {round(100 * _AUT["Autres"] / _PRIM["Autres"])}% sem nenhum detalhe; o resto são causas externas, contratos de obras e fornecedores, e pessoal ou equipamento da STM.</li>
+      <li><b>Operação dos trens ({br(_PRIM["Exploitation trains"])}):</b> procedimentos de operação, não peça com defeito.</li>
+      <li><b>Sem causa registrada ({br(_PRIM["#N/A"])}).</b></li>
+    </ul>
+    <div class="label" style="margin-top:16px">Por que ficaram de fora</div>
+    <p class="corpo-sm">O trabalho mede a confiabilidade dos equipamentos do metrô: trens, via, energia e sinalização. Incidentes de passageiros dependem do comportamento das pessoas, não de uma peça que falha, e "outros" não diz o que aconteceu. Eles também param trens, mas pedem outra solução, de segurança e atendimento.</p>
+  </div>
+</div>""",
+"dados/brutos/stm/incidents_metro.csv (colunas Cause primaire e Cause secondaire; SHA-256 conferido contra o manifesto); docs/decisoes/registro_de_decisoes.md (D13)",
+"""<p>A STM registra todo incidente que atrapalha o metrô. A maior parte não é falha de equipamento: são passageiros, ou incidentes sem detalhe.</p>
+<p>Ficamos com as falhas de trens e de infraestrutura, porque são elas que um sistema tolerante a falhas pode evitar ou contornar. Um passageiro que passa mal também para o trem, mas a solução é outra.</p>""")
+
+PROVENIENCIA = slide("Dados · como garantimos que os números são verdadeiros", "Cinco cuidados para que ninguém precise confiar em quem fez as contas", f"""
+<ol class="passos passos-grandes">
+  <li><b>Guardamos uma cópia exata dos dados.</b> Os arquivos baixados da STM e das outras fontes ficam guardados no GitHub, cada um com uma "impressão digital" (o hash). Se um único caractere mudar, a impressão digital muda.</li>
+  <li><b>Um segundo programa refaz as contas.</b> Escrito à parte, sem usar o programa principal, ele recalcula {N_RECALC} números direto dos dados guardados. Diferença encontrada: zero.</li>
+  <li><b>O site só vai ao ar se tudo bater.</b> A cada atualização, o GitHub confere as impressões digitais, refaz as contas e roda os testes. Se algo falha, o site antigo continua no ar.</li>
+  <li><b>Um revisor automático procura erros.</b> Antes de cada entrega, ele confere cada número dos documentos contra o arquivo de onde saiu e tenta achar defeitos no código.</li>
+  <li><b>As regras foram escritas antes dos resultados.</b> Para cada parte, escrevemos antes o que contaria como sucesso. Quando o resultado não atingiu, isso ficou registrado, e a regra não foi mudada.</li>
+</ol>""",
+"fontes/FONTES.md (manifesto e verificação); pipeline/verifica_fontes.py; .github/workflows/deploy.yml; .claude/agents/critico-stf.md; specs/constitution.md",
+"""<p>Este slide responde à pergunta "como vocês sabem que os números estão certos?".</p>
+<p>O mais importante é o passo 2: um segundo programa, escrito separado, chega aos mesmos números. E o passo 3: se não chegar, o site nem é atualizado.</p>""")
+
+# medidas além da disponibilidade
+_E = list(csv.DictReader(open(os.path.join(REPO, "dados", "derivados", "eventos", "eventos_tecnicos.csv"), encoding="utf-8"), delimiter=";"))
+_GRUPO = {"mr73": "trens MR-73", "mpm10": "trens MPM-10", "mr_outros": "outros trens", "voie_sintoma_trem": "via", "voie_sintoma_fixo": "via",
+          "aux_trains_sintoma_trem": '"Service aux trains"', "aux_trains_sintoma_fixo": '"Service aux trains"', "aux_stations": "estações", "tcpe": "energia (TCPE)"}
+_MIN_G = {l: Counter() for l in ORDEM}
+for e in _E:
+    _MIN_G[e["linha"]][_GRUPO[e["fonte"]]] += float(e["duracao_min"] or 0)
+assert round(sum(sum(c.values()) for c in _MIN_G.values())) == NORM["minutos_total_final"]
+CAUSA_PROV = {l: (_MIN_G[l].most_common(1)[0][0], 100 * _MIN_G[l].most_common(1)[0][1] / sum(_MIN_G[l].values())) for l in ORDEM}
+assert [CAUSA_PROV[l][0] for l in ORDEM] == ["trens MR-73", "via", "trens MR-73", "trens MR-73"], "revisar as notas do slide das medidas"
+def _pct(x, d=0):
+    return br(100 * x, d) + "%"
+_MED_LIN = [
+    ("Disponibilidade", "fração do tempo de serviço com a linha andando", lambda d: _pct(d["disponibilidade"], 2)),
+    ("Minutos parados por ano", "a mesma coisa, em minutos: mostra a diferença que os 99% escondem", lambda d: br(d["min_fora_ano"])),
+    ("Dias sem nenhuma falha", "confiabilidade de um dia de serviço inteiro", lambda d: _pct(d["p_dia_sem_falha"])),
+    ("Falhas por dia", "quantas vezes a linha falha", lambda d: br(d["falhas_por_dia"], 2)),
+    ("Tempo médio até o serviço voltar", "inclui as falhas que nem pararam o serviço", lambda d: br(d["mttr_min"], 1) + " min"),
+    ("9 em cada 10 falhas resolvidas em até", "a cauda: as poucas falhas longas pesam na média", lambda d: f'{d["p90_ttr_min"]} min'),
+    ("Falhas que não chegaram a parar o serviço", "duração registrada de zero minuto", lambda d: _pct(d["pct_sem_interrupcao"])),
+]
+MEDIDAS = slide("Indicadores · confiabilidade além da disponibilidade", "Todas passam de 99,6% de disponibilidade; os minutos parados e os dias sem falha mostram a diferença", f"""
+<table class="tab tab-med">
+  <thead><tr><th>Medida</th>{"".join(f'<th class="num">{chip(l)}{NOME[l]}</th>' for l in ORDEM)}</tr></thead>
+  <tbody>{"".join(f'<tr><td><b>{a}</b><br><span class="muted">{b}</span></td>' + "".join(f'<td class="num">{f(L[l])}</td>' for l in ORDEM) + "</tr>" for a, b, f in _MED_LIN)}
+  <tr class="dest"><td><b>Causa provável</b><br><span class="muted">o que mais soma minutos parados</span></td>{"".join(f'<td class="num"><b>{CAUSA_PROV[l][0]}</b><br><span class="muted">{br(CAUSA_PROV[l][1])}% dos minutos</span></td>' for l in ORDEM)}</tr>
+  </tbody>
+</table>
+<p class="nota"><b>Nosso objetivo:</b> reduzir o tempo até o serviço voltar e o tempo sem caminho. É isso que as políticas e a linha nova atacam; a disponibilidade só muda na segunda casa decimal.</p>""",
+"dados/derivados/painel/linhas.json; dados/derivados/eventos/eventos_tecnicos.csv (minutos por linha e fonte)",
+"""<p>A disponibilidade de todas as linhas fica entre 99,6% e 99,9%, e esse número quase não ajuda a comparar.</p>
+<p>Por isso olhamos também os minutos parados por ano, a chance de passar um dia inteiro sem falha e quanto tempo leva para o serviço voltar. A Verde e a Laranja ficam sem falha em menos da metade dos dias; a Amarela, em três de cada quatro.</p>
+<p>A última linha é a causa provável: na Verde, na Amarela e na Azul, os trens MR-73 somam a maior parte dos minutos parados; na Laranja, a via.</p>
+<p>O nosso objetivo é reduzir o tempo até o serviço voltar.</p>""", "compacto")
+
+MONTE_CARLO = slide("Simulador · simulação de Monte Carlo", "Simulamos o mesmo dia milhares de vezes, sorteando as falhas, para ver o que costuma acontecer", """
+<div class="fluxo">
+  <div class="fx"><div class="label">1 · Sortear</div><p>As falhas do dia: quando, onde e quanto duram, com as chances que medimos nos dados (hora, clima, frota, memória).</p></div><div class="seta">→</div>
+  <div class="fx"><div class="label">2 · Simular</div><p>O dia inteiro, trem a trem, no horário real: cada falha para um trem, um trecho ou várias linhas.</p></div><div class="seta">→</div>
+  <div class="fx"><div class="label">3 · Medir</div><p>Minutos parados, trens perdidos e tempo em que cada par de estações tem caminho.</p></div><div class="seta">→</div>
+  <div class="fx fx-dest"><div class="label">4 · Repetir</div><p>Milhares de dias. A média diz o que costuma acontecer; o intervalo de 95%, o quanto podemos confiar nela.</p></div>
+</div>
+<div class="qa">
+  <div class="qa-i"><h3>Por que sortear?</h3><p>As falhas são aleatórias: um dia só não diz nada. Repetindo muitas vezes, aparecem os dias comuns e os dias ruins.</p></div>
+  <div class="qa-i"><h3>Quantos dias?</h3><p>Até a margem de erro ficar em 5% da média, com teto de 50.000 dias. No navegador, 1.000 dias levam cerca de 3 segundos.</p></div>
+  <div class="qa-i"><h3>Como comparar políticas e linhas?</h3><p>Os mesmos dias sorteados são simulados com e sem a mudança. A diferença mede só o efeito dela, sem o acaso no meio.</p></div>
+  <div class="qa-i"><h3>Dá para repetir?</h3><p>Sim. O sorteio usa uma semente: o mesmo cenário e a mesma semente dão exatamente o mesmo resultado, e o link guarda os dois.</p></div>
+</div>""",
+"docs/decisoes/registro_de_decisoes.md (D28, D29); specs/009-monte-carlo; docs/guia_simulador.md",
+"""<p>O coração do simulador é a simulação de Monte Carlo: em vez de calcular uma fórmula, simulamos o dia de verdade, trem a trem, milhares de vezes, cada vez com falhas sorteadas de um jeito diferente.</p>
+<p>Por que isso é bom: as falhas são aleatórias, se agrupam e param linhas juntas. Uma fórmula simples não captura isso; a simulação sim.</p>
+<p>Para comparar uma política, simulamos os mesmos dias com e sem ela. Assim a diferença é só da política.</p>""")
+
+POLITICAS_O_QUE = slide("Simulador · o que é cada política", "Seis formas de o metrô tolerar uma falha, testadas no simulador", """
+<div class="cards c3 cards-alto">
+  <div class="card"><h3>Operação degradada</h3><p>Quando a via, a energia ou a sinalização falham, o trecho não fica fechado até o conserto. Depois de 5 minutos, os trens voltam a passar devagar, levando 25% mais tempo no trecho, até o reparo terminar.</p><p class="onde">hipóteses: 5 min e 25%</p></div>
+  <div class="card"><h3>Retirada do trem com defeito</h3><p>O trem com defeito não fica parado bloqueando a linha: em 10 minutos ele segue até a estação seguinte, os passageiros descem e ele sai de serviço para a oficina. Os outros trens voltam a andar.</p><p class="onde">hipótese: 10 min</p></div>
+  <div class="card"><h3>Trens de reserva</h3><p>Dois trens por linha ficam parados na garagem, prontos. Quando um trem vai para a oficina, um da reserva entra no lugar. Não evita paradas; garante que o dia comece com todos os trens.</p><p class="onde">hipótese: 2 por linha</p></div>
+  <div class="card"><h3>Retorno parcial</h3><p>Com um trecho bloqueado, os trens dão a volta antes dele, e o resto da linha continua funcionando. Só nos pontos onde o horário já tem retorno.</p><p class="onde">hipótese: só nas pontas</p></div>
+  <div class="card"><h3>Rota alternativa</h3><p>O passageiro troca de caminho e usa outra linha livre, se existir. Mede quanto a rede tem de caminhos redundantes.</p><p class="onde">sem ônibus de substituição</p></div>
+  <div class="card"><h3>Energia e controle duplicados</h3><p>Alimentação elétrica e controle redundantes evitam parte dos eventos que param várias linhas juntas: metade deles, no teste.</p><p class="onde">hipótese: 50%</p></div>
+</div>""",
+"app/src/motor/politicas.ts e hipoteses.ts; specs/008-politicas; docs/guia_simulador.md",
+"""<p>Antes do resultado, o que é cada política. Todas foram testadas uma de cada vez, nos mesmos dias simulados.</p>
+<p>Operação degradada não é "o metrô ficar lento": é reabrir o trecho com defeito em marcha lenta, em vez de esperar o conserto. Retirada do trem não é tirar o trem da frota para sempre: é tirá-lo da via para a oficina, para os outros andarem.</p>
+<p>Os números em "hipótese" não estão nos dados públicos; podem ser mudados no simulador.</p>""")
+
+# todos os projetos testados, com a disponibilidade de cada um
+_MPA = EXP["rede_atual"]["minutosParAno"]["media"]
+_PROJ = [("Atwater – Université-de-Montréal", "ligação desenhada por nós (busca entre ligações de até 3 km)", _MELHOR)] + [
+    (n, d, _CAND[cid]) for cid, n, d in (
+        ("rosa_2017+azul_anjou", "Rosa com a Azul até Anjou", "proposta oficial: Linha Rosa e prolongamento da Azul"),
+        ("rosa_2017", "Linha Rosa", "proposta de 2017, 29 estações"),
+        ("laranja_anel_artm_2019", "Anel da Laranja", "proposta da ARTM, 2019"),
+        ("amarela_longueuil", "Amarela em Longueuil", "prolongamento, ramal"),
+        ("laranja_bois_franc", "Laranja até Bois-Franc", "prolongamento, ramal"),
+        ("azul_anjou", "Azul até Anjou", "prolongamento em obras, ramal"))]
+_PROJ.sort(key=lambda t: -t[2]["ganho"]["media"])
+def _lin_proj(nome, desc, c):
+    g = c["ganho"]["media"]; ev = c["minutos_par_ano_evitados"]["media"]
+    disp = DISP_OD_ATUAL + 100 * g
+    cls = ' class="dest"' if c is _MELHOR else ""
+    return (f'<tr{cls}><td><b>{esc(nome)}</b><br><span class="muted">{esc(desc)} · {br(c["km"], 1)} km</span></td>'
+            f'<td class="num">{br(disp, 3)}%</td><td class="num">{_rot(100 * g)}</td>'
+            f'<td class="num">{br(_MPA - ev)}</td><td class="num">{sn(-100 * ev / _MPA, 0)}%</td></tr>')
+PROJETOS = slide("Que linha construir · todos os projetos testados", f"Comparação dos {len(_PROJ)} projetos: só os que criam um caminho novo melhoram a rede", f"""
+<table class="tab tab-proj">
+  <thead><tr><th>Projeto</th><th class="num">Tempo com caminho<br>(disponibilidade)</th><th class="num">Ganho<br>(p.p.)</th><th class="num">Minutos sem caminho<br>por ano, por par</th><th class="num">Variação</th></tr></thead>
+  <tbody><tr class="base"><td><b>Rede de hoje</b></td><td class="num">{br(DISP_OD_ATUAL, 3)}%</td><td class="num">—</td><td class="num">{br(_MPA)}</td><td class="num">—</td></tr>
+  {"".join(_lin_proj(*p) for p in _PROJ)}</tbody>
+</table>
+<p class="nota">Dia útil, entre os pares de estações de hoje, ponderado pela oferta de trens; de 50 mil a 200 mil estados sorteados por projeto. Os ramais só esticam uma linha: não criam caminho alternativo e somam trechos que podem falhar, por isso pioram.</p>""",
+"dados/derivados/simulador/expansao.json (rede_atual, candidatas sem retorno parcial e busca exaustiva); fontes/verificacao/expansao.md",
+f"""<p>Aqui estão todas as hipóteses de projeto que testamos, lado a lado. A coluna mais fácil de ler é a dos minutos: hoje, cada par de estações fica em média {br(_MPA)} minutos por ano sem caminho num dia útil.</p>
+<p>A ligação Atwater–Université-de-Montréal corta mais minutos. A Rosa com a Azul até Anjou é a melhor proposta oficial. Os ramais, inclusive o prolongamento da Azul em obras, pioram um pouco: esticam a linha sem criar outro caminho.</p>""", "compacto")
+
+RESUMO_TEC = slide("Como conferimos e revisamos · resumo", "O que fizemos depois da primeira versão, em quatro pontos", f"""
+<div class="cards c2 cards-alto">
+  <div class="card"><h3>Testamos a previsão no futuro</h3><p>Treinamos o modelo até 2024 e previmos 2025 e 2026, mês a mês e linha a linha. A meta, escrita antes, era o valor real cair dentro da faixa prevista em pelo menos 80% dos casos; deu {br(VERSOES[0][3], 1)}%. Achamos a causa (um tipo de registro de 2024), corrigimos e testamos em outro período: {br(VERSOES[3][3], 1)}%.</p></div>
+  <div class="card"><h3>Conferência automática</h3><p>A cada atualização do site, um segundo programa refaz {N_RECALC} números e os testes rodam. Toda segunda-feira, as fontes são baixadas de novo e comparadas com a cópia guardada.</p></div>
+  <div class="card"><h3>Revisor automático</h3><p>Antes de cada entrega, um agente revisor tentou derrubar os números e o código: {len(CRITICAS)} rodadas, {sum(c[1] for c in CRITICAS)} problemas apontados, nenhum grave. Só o que ele conseguiu reproduzir virou correção.</p></div>
+  <div class="card"><h3>Revisão de novembro</h3><p>Separamos cada falha pela frota do trem e pelo setor da infraestrutura, e corrigimos durações que contradiziam a STM. A Azul parava metade do que parecia; a frota MR-73 falha cerca de {br(RZ["valor"], 0)} vezes mais que a MPM-10. As conclusões se mantiveram.</p></div>
+</div>""",
+"fontes/verificacao/backtest.md; fontes/FONTES.md; fontes/verificacao/critica_*.md; fontes/verificacao/revisao_2026-11.md; docs/decisoes/registro_de_decisoes.md (D35, D55 a D68)",
+"""<p>Um slide para tudo o que veio depois da primeira versão: o teste da previsão, as conferências automáticas, o revisor e a revisão de novembro.</p>
+<p>A mensagem: o resultado não depende de confiar em nós. E quando a previsão não passou, a meta não foi mudada.</p>""")
+
 _TX = TAXA
 QA = [
     ("Por que Montreal, e não São Paulo?", "Metrô, CPTM e ViaQuatro só publicam PDF, e a API Direto dos Trens exige token. A STM publica cada incidente de 2019 a 2026, com início, retomada, causa, linha e local, sob CC BY 4.0 (D01)."),
-    ("Por que binomial negativa, e não Poisson?", f"A variância das contagens por hora passa da média: α = {br(_TX['MR']['alpha_nb'], 2)} no material rodante e {br(_TX['EF']['alpha_nb'], 2)} nos equipamentos fixos. O teste rejeita Poisson com p &lt; 10⁻³⁰ (D19)."),
+    ("Por que a abertura do serviço pesa tanto?", f"Entre 5 e 6 h a chance de falha por trem é ×{br(_AB[1][0], 1)} nos trens e ×{br(_AB[2][0], 1)} na via e nos equipamentos. Na energia, ×{br(_TCPE_AB, 1)}: lemos isso como falha ao ligar a rede de manhã, quando tudo é energizado de uma vez."),
     ("O que é o β da causa comum?", f"A fração das falhas de uma linha que derruba outra junto. Verde com Laranja, nas falhas de equipamento fixo: {br(BETA_VL_EF['beta_a'], 3)}. É pouco, mas é o evento que tira os dois caminhos do centro ao mesmo tempo."),
     ("Se a validação não passou, por que confiar?", f"O critério foi escrito antes e não mudou. A falha tem causa conhecida (o registro de 2024 nos terminais), a regra nova passou em outro período ({br(VERSOES[3][3], 1)}%) e o simulador revisto reproduz {REV_NO_IC} de {N_COMP} médias de 2025."),
     ("Por que Atwater–Université-de-Montréal, se ninguém propôs essa ligação?", f"Ela saiu de uma busca entre {N_LIGACOES} ligações diretas de até 3 km. É hipótese de traçado, não projeto: o valor dela é mostrar o ponto fraco, a Azul presa à Laranja."),
@@ -1891,22 +2189,20 @@ QA2 = slide("Para a apresentação · perguntas prováveis (2 de 2)", "Resposta,
             "expansao.json; fontes/verificacao/linhas_novas.md; critica_*.md; linhas.json (e na v1.1.0)",
             "<p>A pergunta sobre IA é provável. A resposta honesta é sim, e o projeto foi desenhado para não depender de confiar em quem fez as contas, humano ou IA.</p>")
 
-INTERNA = [CAPA_INT, AGENDA, LINHA_TEMPO, EM_NUMEROS,
-           divisor(1, "Como começamos", "O tema, a pergunta e o método"), pega("A pergunta"), METODO, SPECS_SL,
-           divisor(2, "Dados", "Das fontes públicas a uma tabela de falhas que qualquer pessoa pode refazer"),
-           pega("Antes dos resultados"), pega("Dados · 2019"), NORMALIZA, pega("Indicadores por linha"),
-           divisor(3, "Modelos", "Taxa de falha, agrupamento no tempo e causa comum"),
-           pega("O que muda a taxa"), pega("As falhas se agrupam"), pega("Causa comum"),
-           divisor(4, "Simulador", "A rede trem a trem, no navegador, para comparar políticas e linhas novas"),
-           ARQ, pega("Simulador · eventos"), pega("Políticas"), VIAGEM, pega("Que linha construir"),
-           divisor(5, "Validação", "Prever o que o modelo não viu, com o critério escrito antes"),
-           pega("Validação contra o histórico"), pega("Decisões tomadas depois"),
-           divisor(6, "Publicação e crítica", f"Site público, conferência automática e {N_CRIT_EXT.lower()} rodadas de revisão"),
-           PUBLICACAO, CRITICAS_SL, DIFICULDADES,
-           divisor(7, "Revisão de 2026-11", "Falhas por frota e por setor, durações pela faixa oficial e tudo refeito"),
-           FONTES9, PROTOCOLO, pega("Revisão de 2026-11 · ressegmentação"), ANTES_DEPOIS, SOMA,
-           divisor(8, "Fechamento", "A resposta, as conclusões, o que fica aberto e a apresentação para a turma"),
-           RESUMO, pega("Conclusões"), pega("Limitações"), FECHAMENTO, PENDENCIAS, ROTEIRO_EXEC, QA1, QA2, pega("Confira")]
+# Retorno da equipe em 2026-11-17: a interna fica sem os slides técnicos (projeto em números, método, specs, arquitetura,
+# validação, publicação, críticas, revisão de 2026-11), resumidos em RESUMO_TEC. As definições deles ficam no script para consulta.
+INTERNA = [CAPA_INT, AGENDA, LINHA_TEMPO,
+           divisor(1, "Como começamos", "O tema e a pergunta que o trabalho responde"), pega("A pergunta"),
+           divisor(2, "Dados", "Como garantimos os números, o que entra no estudo e como tratamos os dados"),
+           PROVENIENCIA, DADOS_INC, NORMALIZA,
+           divisor(3, "Como as linhas falham", "Indicadores, fatores, falhas em rajadas e linhas que param juntas"),
+           pega("Indicadores por linha"), MEDIDAS, pega("Por que as linhas falham · fatores"),
+           pega("Por que as linhas falham · agrupamento"), pega("Por que as linhas falham · linhas que param juntas"),
+           divisor(4, "Simulador e linhas novas", "Monte Carlo, políticas de tolerância a falhas e os projetos testados"),
+           MONTE_CARLO, pega("Simulador · como funciona"), POLITICAS_O_QUE, pega("Políticas"), VIAGEM,
+           pega("Que linha construir · teste"), PROJETOS,
+           divisor(5, "Fechamento", "A resposta, as conclusões e a apresentação para a turma"),
+           RESUMO, pega("Conclusões"), RESUMO_TEC, pega("Limitações"), FECHAMENTO, PENDENCIAS, ROTEIRO_EXEC, QA1, QA2, pega("Confira")]
 _AG = []
 for i, s in enumerate(INTERNA, 1):
     if "divisor" in s["classe"]:
@@ -1914,6 +2210,6 @@ for i, s in enumerate(INTERNA, 1):
         t = re.search(r"<h1>(.*?)</h1>", s["corpo"]).group(1)
         sub = re.search(r'lede">(.*?)</p>', s["corpo"]).group(1)
         _AG.append(f'<li><span class="ag-n">{n}</span><span class="ag-t">{t}</span><span class="ag-s">{sub}</span><span class="ag-p">slide {i}</span></li>')
-assert len(_AG) == 8
+assert len(_AG) == 5
 AGENDA["corpo"] = '<ol class="agenda">' + "".join(_AG) + "</ol>"
 monta(INTERNA, OUT_INT, "Confiabilidade do metrô de Montreal · apresentação interna da equipe")

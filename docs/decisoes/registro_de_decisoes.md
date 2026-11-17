@@ -497,3 +497,25 @@ Origem: perguntas da reunião de 2026-10-27 (bitola, fabricantes, via ou trem, t
 - **Motivo:** com o relatório de hoje na pasta, o script parava (`AttributeError` e depois `assert len(CRITICAS) == 4`) e a interna não se gerava (achado B3).
 - **Também:** o eixo do gráfico da Laranja desce 8 px para o rótulo "analítico" não encostar nos números (B2); `docs/arquitetura.md` com 142 testes e a spec 022 como planejada (A1, A2); correção do texto da D67 (B4); notas datadas nas specs 010 e 013, sem apagar o resultado original (C2, C3); nota da fonte dos símbolos no `marca/LEIAME.md` (B1). Nenhum número de modelo mudou.
 - **Registro:** `fontes/verificacao/critica_2026-11-17.md`, `docs/apresentacao/gera_deck.py`, os dois HTML e os dois PDF.
+
+### D69 — Apresentação interna em linguagem simples, com o retorno da equipe
+
+- **Decisão (do Felipe, 2026-11-17, depois de ler a interna):**
+  - A interna passa de 46 para 34 slides, em cinco partes: começo, dados, como as linhas falham, simulador e linhas novas, fechamento.
+  - **Saem** o projeto em números, o método SDD, as 21 specs, a arquitetura, a validação, a publicação, as críticas, o que deu errado e os slides da revisão de 2026-11. Um slide de resumo cobre essa parte técnica; as definições continuam no `gera_deck.py`.
+  - **Entram:**
+    - o que são os incidentes que não são falha (passageiros, "outros" sem detalhe, operação), lidos do CSV da STM com o hash conferido;
+    - a confiabilidade além da disponibilidade (minutos parados, dias sem falha, cauda do tempo até voltar, causa provável por linha);
+    - a simulação de Monte Carlo;
+    - o que é cada política;
+    - a tabela de todos os projetos testados, com a disponibilidade e os minutos sem caminho por par de estações.
+  - **Reescritos em linguagem comum:**
+    - os fatores, em ordem de efeito, com p-valor pelo erro-padrão do modelo e explicação da régua logarítmica;
+    - o agrupamento ("uma falha nunca vem sozinha": o que é "sem memória", por que testamos e qual foi o desvio);
+    - as linhas que param juntas, com o porquê: as quatro correspondências ficam na Laranja e 23 dos 45 eventos foram nelas;
+    - a viagem, o tratamento dos dados e as limitações, que ficam só três.
+  - O termo "binomial negativa" sai dos slides.
+- **Executiva:** os slides compartilhados (pergunta, fatores, agrupamento, linhas que param juntas, simulador, políticas, linhas novas) mudaram junto; ela continua com 13 slides.
+- **Números:** nenhum número de modelo mudou. Os novos vêm de `eventos_causa_comum.csv`, `eventos_tecnicos.csv`, `linhas.json`, `expansao.json`, `taxa_*.json` e do CSV bruto da STM, com asserções.
+  - Lemos os códigos de local da STM assim: `LG`, `B`/`BR`, `SN` e `JT` são as estações de correspondência; `L` seguido dos números das linhas, só as linhas; `9999`, sem local. A leitura é nossa: a STM não documenta esses códigos.
+- **Registro:** `docs/apresentacao/gera_deck.py`, os dois HTML e os dois PDF.

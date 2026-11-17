@@ -15,7 +15,7 @@ Projeto da disciplina Sistemas Tolerantes a Falhas (Engenharia de Produção, ES
 | Simulador | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/simulador/ |
 | Relatório do trabalho | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/relatorio/ |
 | Apresentação executiva (para a turma) | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/apresentacao/ |
-| Apresentação interna (para a equipe: tudo o que foi feito) | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/apresentacao/interna.html |
+| Apresentação interna (para a equipe: o trabalho inteiro em linguagem simples) | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/apresentacao/interna.html |
 | Registro de decisões | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/decisoes/ |
 | Guia do simulador | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/docs/guia/ |
 | Arquitetura e manutenção | https://felipe44776-eseg.github.io/confiabilidade-metro-montreal/docs/arquitetura/ |
@@ -29,7 +29,7 @@ Projeto da disciplina Sistemas Tolerantes a Falhas (Engenharia de Produção, ES
 |---|---|---|
 | Relatório acadêmico | professor e turma | [`docs/relatorio/relatorio.md`](docs/relatorio/relatorio.md) |
 | Apresentação executiva (deck HTML e PDF) | a turma, em aula | [`docs/apresentacao/index.html`](docs/apresentacao/index.html) |
-| Apresentação interna (deck HTML e PDF) | a equipe: o projeto inteiro, com roteiro e perguntas prováveis | [`docs/apresentacao/interna.html`](docs/apresentacao/interna.html) |
+| Apresentação interna (deck HTML e PDF) | a equipe: o trabalho em linguagem simples, com roteiro e perguntas prováveis | [`docs/apresentacao/interna.html`](docs/apresentacao/interna.html) |
 | Registro de decisões, com motivo e alternativas | quem quer saber por que | [`docs/decisoes/registro_de_decisoes.md`](docs/decisoes/registro_de_decisoes.md) |
 | Guia do simulador | quem vai usar a página | [`docs/guia_simulador.md`](docs/guia_simulador.md) |
 | Arquitetura e manutenção | quem vai mexer no código | [`docs/arquitetura.md`](docs/arquitetura.md) |
